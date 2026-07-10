@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <meta name="description" content="Resources & Downloads — VLSI Department, SIET. Syllabus, lab manuals, question papers, and academic resources."/>
+  <title>Resources — VLSI | SIET</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css"/>
+  <link rel="icon" type="image/png" href="../assets/images/department_logo.png"/>
+  <link rel="stylesheet" href="../css/main.css"/>
+  <script>tailwind.config={theme:{extend:{colors:{'ink-navy':'#0b1b33','circuit-blue':'#1652c4','signal-cyan':'#2fe6dd','mist':'#f4f7fb'},fontFamily:{display:['Space Grotesk','sans-serif'],body:['IBM Plex Sans','sans-serif'],mono:['IBM Plex Mono','monospace']}}}}</script>
+</head>
+<body class="font-body antialiased" style="color:#0b1b33;background:#fff">
+
+<div id="loading-screen"><p class="loader-mark">VLSI<span style="color:#2fe6dd">·</span>SIET</p><div class="loader-trace"></div></div>
+<div id="scroll-progress" aria-hidden="true"></div>
+
+<!-- HEADER -->
+<header id="site-header">
+  <div class="max-w-screen-xl mx-auto px-5 lg:px-8 flex items-center justify-between">
+    <a href="../index.html" class="flex items-center gap-3">
+      <img src="../assets/images/college_logo.png" alt="SIET Logo" class="h-9 w-auto object-contain flex-shrink-0" onerror="this.style.display='none'">
+      <img src="../assets/images/department_logo.png" alt="VLSI Logo" class="h-9 w-auto object-contain flex-shrink-0" onerror="this.style.display='none'">
+      <div><p class="brand-text font-display font-semibold text-sm transition-colors">SIET</p><p class="brand-text text-xs opacity-60 mt-0.5 transition-colors">VLSI Design and Technology</p></div>
+    </a>
+    <nav class="hidden lg:flex items-center gap-1">
+      <a href="../index.html#about" class="nav-link px-3.5 py-2 text-sm font-medium rounded-lg transition-all">About</a>
+      <a href="hod.html"            class="nav-link px-3.5 py-2 text-sm font-medium rounded-lg transition-all">HOD</a>
+      <a href="faculty.html"        class="nav-link px-3.5 py-2 text-sm font-medium rounded-lg transition-all">Faculty</a>
+      <a href="students.html"       class="nav-link px-3.5 py-2 text-sm font-medium rounded-lg transition-all">Students</a>
+      <a href="labs.html"           class="nav-link px-3.5 py-2 text-sm font-medium rounded-lg transition-all">Labs</a>
+      <a href="research.html"       class="nav-link px-3.5 py-2 text-sm font-medium rounded-lg transition-all">Research</a>
+      <a href="placements.html"     class="nav-link px-3.5 py-2 text-sm font-medium rounded-lg transition-all">Placements</a>
+      <a href="contact.html"        class="nav-link px-3.5 py-2 text-sm font-medium rounded-lg transition-all">Contact</a>
+    </nav>
+    <a href="resources.html" class="hidden lg:inline-flex btn-primary text-sm font-semibold text-white rounded-xl" style="padding:.55rem 1.15rem;background:#2fe6dd;color:#0b1b33">Resources</a>
+    <button id="menu-toggle" class="lg:hidden nav-link w-10 h-10 flex items-center justify-center rounded-xl" aria-expanded="false" aria-label="Toggle menu">
+      <i class="fa-solid fa-bars text-lg"></i><i class="fa-solid fa-xmark text-lg hidden"></i>
+    </button>
+  </div>
+  <nav id="mobile-menu">
+    <div class="max-w-screen-xl mx-auto px-5 pt-3 pb-5 flex flex-col gap-1" style="background:rgba(11,27,51,.96);backdrop-filter:blur(20px);border-top:1px solid rgba(255,255,255,.08)">
+      <a href="../index.html" class="px-4 py-3 text-sm font-medium text-white/75 hover:text-white rounded-xl hover:bg-white/10 transition-all">Home</a>
+      <a href="faculty.html"  class="px-4 py-3 text-sm font-medium text-white/75 hover:text-white rounded-xl hover:bg-white/10 transition-all">Faculty</a>
+      <a href="labs.html"     class="px-4 py-3 text-sm font-medium text-white/75 hover:text-white rounded-xl hover:bg-white/10 transition-all">Labs</a>
+      <a href="research.html" class="px-4 py-3 text-sm font-medium text-white/75 hover:text-white rounded-xl hover:bg-white/10 transition-all">Research</a>
+      <a href="resources.html" class="px-4 py-3 text-sm font-medium text-white rounded-xl bg-white/10">Resources</a>
+      <a href="contact.html"  class="px-4 py-3 text-sm font-medium text-white/75 hover:text-white rounded-xl hover:bg-white/10 transition-all">Contact</a>
+    </div>
+  </nav>
+</header>
+
+<main>
+  <!-- PAGE HERO -->
+  <section class="relative flex items-end overflow-hidden" style="min-height:38vh;background:linear-gradient(135deg,#0b1b33 0%,#1652c4 100%);padding:8rem 1.25rem 3.5rem">
+    <div aria-hidden="true" style="position:absolute;inset:0;opacity:.11"><svg width="100%" height="100%"><defs><pattern id="ph" width="80" height="80" patternUnits="userSpaceOnUse"><path d="M0 40H80M40 0V80" stroke="#2fe6dd" stroke-width="1" fill="none"/><circle cx="40" cy="40" r="2" fill="#2fe6dd"/></pattern></defs><rect width="100%" height="100%" fill="url(#ph)"/></svg></div>
+    <div class="max-w-screen-xl mx-auto w-full relative z-10">
+      <nav aria-label="Breadcrumb" class="mb-4"><ol class="flex items-center gap-2 text-xs font-mono" style="color:rgba(255,255,255,.45)"><li><a href="../index.html" onmouseover="this.style.color='#2fe6dd'" onmouseout="this.style.color=''">Home</a></li><li><i class="fa-solid fa-chevron-right text-[10px]"></i></li><li style="color:#2fe6dd">Resources</li></ol></nav>
+      <h1 class="font-display font-bold text-3xl md:text-5xl text-white">Resources & Downloads</h1>
+      <p class="mt-2 text-sm md:text-base" style="color:rgba(255,255,255,.55)">Academic materials, lab manuals, question papers, and department documents</p>
+    </div>
+  </section>
+
+  <!-- RESOURCES ACCORDION -->
+  <section class="py-16 bg-white">
+    <div class="max-w-screen-xl mx-auto px-5 lg:px-8">
+
+      <!-- Search -->
+      <div class="max-w-md mx-auto mb-10" data-aos="fade-up">
+        <div class="search-wrapper">
+          <i class="fa-solid fa-search search-icon"></i>
+          <input type="text" id="resource-search" placeholder="Search resources..." class="search-input">
+        </div>
+      </div>
+
+      <div id="accordion-container" class="max-w-3xl mx-auto space-y-3">
+
+        <!-- Syllabus -->
+        <div class="accordion-item" data-aos="fade-up">
+          <button class="accordion-header" onclick="this.parentElement.classList.toggle('is-open')">
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 rounded-xl flex items-center justify-center" style="background:rgba(22,82,196,.1)"><i class="fa-solid fa-book-open" style="color:#1652c4"></i></div>
+              <div><p class="font-display font-semibold text-sm">Syllabus</p><p class="text-xs font-normal mt-0.5" style="color:#5b6478">Course structure and curriculum details</p></div>
+            </div>
+            <i class="fa-solid fa-chevron-down accordion-icon"></i>
+          </button>
+          <div class="accordion-body"><div class="accordion-content">
+            <div class="download-item"><div class="file-info"><div class="file-icon"><i class="fa-solid fa-file-pdf"></i></div><div><p class="text-sm font-medium" style="color:#0b1b33">B.Tech VLSI — Regulation 2021</p><p class="text-xs" style="color:#5b6478">Complete syllabus for all semesters</p></div></div><span class="coming-soon-badge">Coming Soon</span></div>
+            <div class="download-item"><div class="file-info"><div class="file-icon"><i class="fa-solid fa-file-pdf"></i></div><div><p class="text-sm font-medium" style="color:#0b1b33">M.Tech VLSI Design — Regulation 2022</p><p class="text-xs" style="color:#5b6478">PG curriculum and electives</p></div></div><span class="coming-soon-badge">Coming Soon</span></div>
+          </div></div>
+        </div>
+
+        <!-- Regulations -->
+        <div class="accordion-item" data-aos="fade-up" data-aos-delay="60">
+          <button class="accordion-header" onclick="this.parentElement.classList.toggle('is-open')">
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 rounded-xl flex items-center justify-center" style="background:rgba(47,230,221,.1)"><i class="fa-solid fa-scale-balanced" style="color:#2fe6dd"></i></div>
+              <div><p class="font-display font-semibold text-sm">Regulations</p><p class="text-xs font-normal mt-0.5" style="color:#5b6478">Academic regulations and guidelines</p></div>
+            </div>
+            <i class="fa-solid fa-chevron-down accordion-icon"></i>
+          </button>
+          <div class="accordion-body"><div class="accordion-content">
+            <div class="download-item"><div class="file-info"><div class="file-icon"><i class="fa-solid fa-file-lines"></i></div><div><p class="text-sm font-medium" style="color:#0b1b33">Academic Regulations 2021</p><p class="text-xs" style="color:#5b6478">Examination, grading, and attendance rules</p></div></div><span class="coming-soon-badge">Coming Soon</span></div>
+          </div></div>
+        </div>
+
+        <!-- Academic Calendar -->
+        <div class="accordion-item" data-aos="fade-up" data-aos-delay="120">
+          <button class="accordion-header" onclick="this.parentElement.classList.toggle('is-open')">
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 rounded-xl flex items-center justify-center" style="background:rgba(124,58,237,.1)"><i class="fa-solid fa-calendar-days" style="color:#7c3aed"></i></div>
+              <div><p class="font-display font-semibold text-sm">Academic Calendar</p><p class="text-xs font-normal mt-0.5" style="color:#5b6478">Semester schedule and important dates</p></div>
+            </div>
+            <i class="fa-solid fa-chevron-down accordion-icon"></i>
+          </button>
+          <div class="accordion-body"><div class="accordion-content">
+            <div class="download-item"><div class="file-info"><div class="file-icon"><i class="fa-solid fa-calendar"></i></div><div><p class="text-sm font-medium" style="color:#0b1b33">Academic Calendar 2025–2026</p><p class="text-xs" style="color:#5b6478">Odd & Even semester schedule</p></div></div><span class="coming-soon-badge">Coming Soon</span></div>
+          </div></div>
+        </div>
+
+        <!-- Timetable -->
+        <div class="accordion-item" data-aos="fade-up" data-aos-delay="180">
+          <button class="accordion-header" onclick="this.parentElement.classList.toggle('is-open')">
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 rounded-xl flex items-center justify-center" style="background:rgba(5,150,105,.1)"><i class="fa-solid fa-clock" style="color:#059669"></i></div>
+              <div><p class="font-display font-semibold text-sm">Timetable</p><p class="text-xs font-normal mt-0.5" style="color:#5b6478">Class and lab schedules</p></div>
+            </div>
+            <i class="fa-solid fa-chevron-down accordion-icon"></i>
+          </button>
+          <div class="accordion-body"><div class="accordion-content">
+            <div class="download-item"><div class="file-info"><div class="file-icon"><i class="fa-solid fa-table-cells"></i></div><div><p class="text-sm font-medium" style="color:#0b1b33">I Year Timetable</p><p class="text-xs" style="color:#5b6478">Even Semester 2025–26</p></div></div><span class="coming-soon-badge">Coming Soon</span></div>
+            <div class="download-item"><div class="file-info"><div class="file-icon"><i class="fa-solid fa-table-cells"></i></div><div><p class="text-sm font-medium" style="color:#0b1b33">II Year Timetable</p><p class="text-xs" style="color:#5b6478">Even Semester 2025–26</p></div></div><span class="coming-soon-badge">Coming Soon</span></div>
+            <div class="download-item"><div class="file-info"><div class="file-icon"><i class="fa-solid fa-table-cells"></i></div><div><p class="text-sm font-medium" style="color:#0b1b33">III Year Timetable</p><p class="text-xs" style="color:#5b6478">Even Semester 2025–26</p></div></div><span class="coming-soon-badge">Coming Soon</span></div>
+            <div class="download-item"><div class="file-info"><div class="file-icon"><i class="fa-solid fa-table-cells"></i></div><div><p class="text-sm font-medium" style="color:#0b1b33">IV Year Timetable</p><p class="text-xs" style="color:#5b6478">Even Semester 2025–26</p></div></div><span class="coming-soon-badge">Coming Soon</span></div>
+          </div></div>
+        </div>
+
+        <!-- Lab Manuals -->
+        <div class="accordion-item" data-aos="fade-up" data-aos-delay="240">
+          <button class="accordion-header" onclick="this.parentElement.classList.toggle('is-open')">
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 rounded-xl flex items-center justify-center" style="background:rgba(217,119,6,.1)"><i class="fa-solid fa-flask-vial" style="color:#d97706"></i></div>
+              <div><p class="font-display font-semibold text-sm">Lab Manuals</p><p class="text-xs font-normal mt-0.5" style="color:#5b6478">Laboratory experiment guides and procedures</p></div>
+            </div>
+            <i class="fa-solid fa-chevron-down accordion-icon"></i>
+          </button>
+          <div class="accordion-body"><div class="accordion-content">
+            <div class="download-item"><div class="file-info"><div class="file-icon"><i class="fa-solid fa-file-pdf"></i></div><div><p class="text-sm font-medium" style="color:#0b1b33">VLSI Design Lab Manual</p><p class="text-xs" style="color:#5b6478">Cadence Virtuoso experiments</p></div></div><span class="coming-soon-badge">Coming Soon</span></div>
+            <div class="download-item"><div class="file-info"><div class="file-icon"><i class="fa-solid fa-file-pdf"></i></div><div><p class="text-sm font-medium" style="color:#0b1b33">FPGA Lab Manual</p><p class="text-xs" style="color:#5b6478">Xilinx Vivado experiments</p></div></div><span class="coming-soon-badge">Coming Soon</span></div>
+            <div class="download-item"><div class="file-info"><div class="file-icon"><i class="fa-solid fa-file-pdf"></i></div><div><p class="text-sm font-medium" style="color:#0b1b33">Embedded Systems Lab Manual</p><p class="text-xs" style="color:#5b6478">ARM/AVR programming experiments</p></div></div><span class="coming-soon-badge">Coming Soon</span></div>
+          </div></div>
+        </div>
+
+        <!-- Question Papers -->
+        <div class="accordion-item" data-aos="fade-up" data-aos-delay="300">
+          <button class="accordion-header" onclick="this.parentElement.classList.toggle('is-open')">
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 rounded-xl flex items-center justify-center" style="background:rgba(239,68,68,.1)"><i class="fa-solid fa-file-circle-question" style="color:#ef4444"></i></div>
+              <div><p class="font-display font-semibold text-sm">Question Papers</p><p class="text-xs font-normal mt-0.5" style="color:#5b6478">Previous year university question papers</p></div>
+            </div>
+            <i class="fa-solid fa-chevron-down accordion-icon"></i>
+          </button>
+          <div class="accordion-body"><div class="accordion-content">
+            <div class="download-item"><div class="file-info"><div class="file-icon"><i class="fa-solid fa-file-lines"></i></div><div><p class="text-sm font-medium" style="color:#0b1b33">End Semester Papers — 2024</p><p class="text-xs" style="color:#5b6478">All subjects, all years</p></div></div><span class="coming-soon-badge">Coming Soon</span></div>
+            <div class="download-item"><div class="file-info"><div class="file-icon"><i class="fa-solid fa-file-lines"></i></div><div><p class="text-sm font-medium" style="color:#0b1b33">Internal Assessment Papers — 2024</p><p class="text-xs" style="color:#5b6478">CAT-I, CAT-II, Model exams</p></div></div><span class="coming-soon-badge">Coming Soon</span></div>
+          </div></div>
+        </div>
+
+        <!-- Notes -->
+        <div class="accordion-item" data-aos="fade-up" data-aos-delay="360">
+          <button class="accordion-header" onclick="this.parentElement.classList.toggle('is-open')">
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 rounded-xl flex items-center justify-center" style="background:rgba(22,82,196,.1)"><i class="fa-solid fa-notes-medical" style="color:#1652c4"></i></div>
+              <div><p class="font-display font-semibold text-sm">Notes & Study Materials</p><p class="text-xs font-normal mt-0.5" style="color:#5b6478">Faculty-prepared course notes</p></div>
+            </div>
+            <i class="fa-solid fa-chevron-down accordion-icon"></i>
+          </button>
+          <div class="accordion-body"><div class="accordion-content">
+            <div class="download-item"><div class="file-info"><div class="file-icon"><i class="fa-solid fa-file-pdf"></i></div><div><p class="text-sm font-medium" style="color:#0b1b33">Digital VLSI Design Notes</p><p class="text-xs" style="color:#5b6478">By Dr. B. Kumar — Semester V</p></div></div><span class="coming-soon-badge">Coming Soon</span></div>
+            <div class="download-item"><div class="file-info"><div class="file-icon"><i class="fa-solid fa-file-pdf"></i></div><div><p class="text-sm font-medium" style="color:#0b1b33">Analog Circuit Design Notes</p><p class="text-xs" style="color:#5b6478">By Dr. C. Verma — Semester VI</p></div></div><span class="coming-soon-badge">Coming Soon</span></div>
+          </div></div>
+        </div>
+
+      </div>
+
+      <div class="mt-14 text-center" data-aos="fade-up">
+        <div class="inline-flex items-center gap-2 px-5 py-3 rounded-2xl text-sm" style="background:#f4f7fb;color:#5b6478">
+          <i class="fa-solid fa-circle-info" style="color:#1652c4"></i>
+          Resources will be uploaded soon. Check back regularly for updates.
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- FOOTER -->
+<footer style="background:#0b1b33;color:rgba(255,255,255,.5)">
+  <div class="max-w-screen-xl mx-auto px-5 lg:px-8 py-16">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
+      <div>
+        <div class="flex items-center gap-3 mb-4">
+          <div class="w-10 h-10 rounded-xl flex items-center justify-center text-white font-mono font-semibold text-xs" style="background:linear-gradient(135deg,#1652c4,#2fe6dd)">VLSI</div>
+          <div><p class="font-display font-semibold text-sm text-white">SIET</p><p class="text-xs opacity-60">VLSI Design & Technology</p></div>
+        </div>
+        <p class="text-xs leading-relaxed opacity-60">Department of VLSI Design and Technology, Sri Shakthi Institute of Engineering and Technology, Coimbatore.</p>
+        <a href="https://www.linkedin.com/" target="_blank" class="inline-flex items-center gap-2 mt-4 text-xs hover:text-white transition-colors" style="color:#2fe6dd"><i class="fa-brands fa-linkedin"></i> LinkedIn</a>
+      </div>
+      <div>
+        <h4 class="font-display font-semibold text-sm text-white mb-4">Quick Links</h4>
+        <ul class="space-y-2 text-xs"><li><a href="../index.html" class="hover:text-white transition-colors">Home</a></li><li><a href="faculty.html" class="hover:text-white transition-colors">Faculty</a></li><li><a href="students.html" class="hover:text-white transition-colors">Students</a></li><li><a href="labs.html" class="hover:text-white transition-colors">Laboratories</a></li><li><a href="research.html" class="hover:text-white transition-colors">Research</a></li><li><a href="placements.html" class="hover:text-white transition-colors">Placements</a></li></ul>
+      </div>
+      <div>
+        <h4 class="font-display font-semibold text-sm text-white mb-4">Academics</h4>
+        <ul class="space-y-2 text-xs"><li><a href="resources.html" class="hover:text-white transition-colors">Resources & Downloads</a></li><li><a href="gallery.html" class="hover:text-white transition-colors">Gallery</a></li><li><a href="achievements.html" class="hover:text-white transition-colors">Achievements</a></li><li><a href="workshops.html" class="hover:text-white transition-colors">Workshops</a></li><li><a href="events.html" class="hover:text-white transition-colors">Events</a></li></ul>
+      </div>
+      <div>
+        <h4 class="font-display font-semibold text-sm text-white mb-4">Contact</h4>
+        <ul class="space-y-3 text-xs"><li class="flex items-start gap-2"><i class="fa-solid fa-location-dot mt-0.5" style="color:#2fe6dd"></i>Sri Shakthi Institute of Engineering and Technology, Coimbatore, Tamil Nadu</li><li class="flex items-center gap-2"><i class="fa-solid fa-envelope" style="color:#2fe6dd"></i>vlsi@sfriet.ac.in</li><li class="flex items-center gap-2"><i class="fa-solid fa-phone" style="color:#2fe6dd"></i>+91-422-XXXXXXX</li><li class="flex items-center gap-2"><i class="fa-solid fa-clock" style="color:#2fe6dd"></i>Mon-Sat: 9:00 AM - 5:00 PM</li></ul>
+      </div>
+    </div>
+    <div class="mt-12 pt-6 flex flex-col md:flex-row justify-between items-center gap-4 text-xs" style="border-top:1px solid rgba(255,255,255,.1)">
+      <p>&copy; 2026 Department of VLSI Design and Technology, SIET. All rights reserved.</p>
+      <div class="flex items-center gap-4"><a href="privacy.html" class="hover:text-white transition-colors">Privacy Policy</a><a href="#" onclick="window.scrollTo({top:0,behavior:'smooth'});return false" class="hover:text-white transition-colors">Back to Top ↑</a></div>
+    </div>
+  </div>
+</footer>
+
+<button id="back-to-top" aria-label="Back to top"><i class="fa-solid fa-arrow-up text-sm"></i></button>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+<script src="../js/main.js"></script>
+<script>
+AOS.init({duration:700,once:true,offset:60});
+
+// Resource search functionality
+document.getElementById('resource-search')?.addEventListener('input', function() {
+    const q = this.value.toLowerCase();
+    document.querySelectorAll('.accordion-item').forEach(item => {
+        const text = item.textContent.toLowerCase();
+        item.style.display = text.includes(q) ? '' : 'none';
+    });
+});
+</script>
+</body>
+</html>

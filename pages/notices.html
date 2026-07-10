@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Notice Board — VLSI | SIET</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css"/>
+  <link rel="icon" type="image/png" href="../assets/images/department_logo.png"/>
+  <link rel="stylesheet" href="../css/main.css"/>
+  <script>tailwind.config={theme:{extend:{colors:{'ink-navy':'#0b1b33','circuit-blue':'#1652c4','signal-cyan':'#2fe6dd','mist':'#f4f7fb'},fontFamily:{display:['Space Grotesk','sans-serif'],body:['IBM Plex Sans','sans-serif'],mono:['IBM Plex Mono','monospace']}}}}</script>
+  <style>
+    .cat-btn{transition:all .25s;}
+    .cat-btn.active{color:#fff!important;}
+    .notice-item{transition:background .2s,transform .2s,box-shadow .2s;}
+    .notice-item:hover{background:#f4f7fb;transform:translateX(4px);}
+    .new-badge{animation:pulse-badge 2s ease-in-out infinite;}
+    @keyframes pulse-badge{0%,100%{opacity:1}50%{opacity:.6}}
+  </style>
+</head>
+<body class="font-body antialiased" style="color:#0b1b33;background:#fff">
+<div id="loading-screen"><p class="loader-mark">VLSI<span style="color:#2fe6dd">·</span>SIET</p><div class="loader-trace"></div></div>
+<div id="scroll-progress" aria-hidden="true"></div>
+<header id="site-header">
+  <div class="max-w-screen-xl mx-auto px-5 lg:px-8 flex items-center justify-between">
+    <a href="../index.html" class="flex items-center gap-3">
+      <img src="../assets/images/college_logo.png" alt="SIET Logo" class="h-9 w-auto object-contain flex-shrink-0" onerror="this.src='https://via.placeholder.com/100x40?text=SIET'">
+      <img src="../assets/images/department_logo.png" alt="VLSI Logo" class="h-9 w-auto object-contain flex-shrink-0" onerror="this.src='https://via.placeholder.com/100x40?text=VLSI'">
+      <div><p class="brand-text font-display font-semibold text-sm transition-colors">SIET</p><p class="brand-text text-xs opacity-60 mt-0.5 transition-colors">VLSI Design and Technology</p></div>
+    </a>
+    <nav class="hidden lg:flex items-center gap-1">
+      <a href="../index.html" class="nav-link px-3.5 py-2 text-sm font-medium rounded-lg transition-all">Home</a>
+      <a href="faculty.html"  class="nav-link px-3.5 py-2 text-sm font-medium rounded-lg transition-all">Faculty</a>
+      <a href="students.html" class="nav-link px-3.5 py-2 text-sm font-medium rounded-lg transition-all">Students</a>
+      <a href="events.html"   class="nav-link px-3.5 py-2 text-sm font-medium rounded-lg transition-all">Events</a>
+      <a href="resources.html" class="nav-link px-3.5 py-2 text-sm font-medium rounded-lg transition-all">Resources</a>
+      <a href="contact.html"  class="nav-link px-3.5 py-2 text-sm font-medium rounded-lg transition-all">Contact</a>
+    </nav>
+    <a href="resources.html" class="hidden lg:inline-flex btn-primary text-sm font-semibold text-white rounded-xl" style="padding:.55rem 1.15rem">Resources</a>
+    <button id="menu-toggle" class="lg:hidden nav-link w-10 h-10 flex items-center justify-center rounded-xl" aria-expanded="false" aria-label="Toggle menu">
+      <i class="fa-solid fa-bars text-lg"></i><i class="fa-solid fa-xmark text-lg hidden"></i>
+    </button>
+  </div>
+  <nav id="mobile-menu">
+    <div class="max-w-screen-xl mx-auto px-5 pt-3 pb-5 flex flex-col gap-1" style="background:rgba(11,27,51,.96);backdrop-filter:blur(20px);border-top:1px solid rgba(255,255,255,.08)">
+      <a href="../index.html" class="px-4 py-3 text-sm font-medium text-white/75 hover:text-white rounded-xl hover:bg-white/10 transition-all">Home</a>
+      <a href="events.html"   class="px-4 py-3 text-sm font-medium text-white/75 hover:text-white rounded-xl hover:bg-white/10 transition-all">Events</a>
+      <a href="contact.html"  class="px-4 py-3 text-sm font-medium text-white/75 hover:text-white rounded-xl hover:bg-white/10 transition-all">Contact</a>
+    </div>
+  </nav>
+</header>
+
+<main>
+  <section class="relative flex items-end overflow-hidden" style="min-height:38vh;background:linear-gradient(135deg,#0b1b33 0%,#1652c4 100%);padding:8rem 1.25rem 3.5rem">
+    <div aria-hidden="true" style="position:absolute;inset:0;opacity:.11"><svg width="100%" height="100%"><defs><pattern id="ph" width="80" height="80" patternUnits="userSpaceOnUse"><path d="M0 40H80M40 0V80" stroke="#2fe6dd" stroke-width="1" fill="none"/><circle cx="40" cy="40" r="2" fill="#2fe6dd"/></pattern></defs><rect width="100%" height="100%" fill="url(#ph)"/></svg></div>
+    <div class="max-w-screen-xl mx-auto w-full relative z-10">
+      <nav class="mb-4"><ol class="flex items-center gap-2 text-xs font-mono" style="color:rgba(255,255,255,.45)"><li><a href="../index.html" onmouseover="this.style.color='#2fe6dd'" onmouseout="this.style.color=''">Home</a></li><li><i class="fa-solid fa-chevron-right text-[10px]"></i></li><li style="color:#2fe6dd">Notice Board</li></ol></nav>
+      <h1 class="font-display font-bold text-3xl md:text-5xl text-white">Notice Board</h1>
+      <p class="mt-2 text-sm md:text-base" style="color:rgba(255,255,255,.55)">Official announcements, academic updates, and department circulars</p>
+    </div>
+  </section>
+
+  <section class="py-16 bg-white">
+    <div class="max-w-screen-xl mx-auto px-5 lg:px-8">
+      <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
+
+        <!-- Filter sidebar -->
+        <aside class="lg:col-span-1" data-aos="fade-right">
+          <!-- Search -->
+          <div class="mb-5">
+            <label class="block text-xs font-mono uppercase tracking-wide mb-2" style="color:#5b6478">Search Notices</label>
+            <div class="relative">
+              <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-xs" style="color:#aab4c8"></i>
+              <input type="search" id="notice-search" placeholder="Type to search…"
+                style="width:100%;padding:.65rem 1rem .65rem 2.4rem;border:1.5px solid #e2e8f0;border-radius:.75rem;font-size:.82rem;outline:none;transition:border-color .25s,box-shadow .25s"
+                onfocus="this.style.borderColor='#1652c4';this.style.boxShadow='0 0 0 3px rgba(22,82,196,.1)'"
+                onblur="this.style.borderColor='#e2e8f0';this.style.boxShadow=''"/>
+            </div>
+          </div>
+          <!-- Categories -->
+          <div class="mb-5">
+            <p class="text-xs font-mono uppercase tracking-wide mb-3" style="color:#5b6478">Category</p>
+            <div class="flex flex-col gap-2" id="cat-btns">
+              <button class="cat-btn active text-left px-4 py-2.5 rounded-xl text-sm font-medium border transition-all" data-cat="all" style="background:#1652c4;border-color:#1652c4;color:#fff">All Notices</button>
+              <button class="cat-btn text-left px-4 py-2.5 rounded-xl text-sm font-medium border transition-all" data-cat="exam" style="border-color:#e2e8f0;color:#5b6478">📝 Examinations</button>
+              <button class="cat-btn text-left px-4 py-2.5 rounded-xl text-sm font-medium border transition-all" data-cat="academic" style="border-color:#e2e8f0;color:#5b6478">📚 Academic</button>
+              <button class="cat-btn text-left px-4 py-2.5 rounded-xl text-sm font-medium border transition-all" data-cat="placement" style="border-color:#e2e8f0;color:#5b6478">💼 Placements</button>
+              <button class="cat-btn text-left px-4 py-2.5 rounded-xl text-sm font-medium border transition-all" data-cat="event" style="border-color:#e2e8f0;color:#5b6478">🎯 Events</button>
+              <button class="cat-btn text-left px-4 py-2.5 rounded-xl text-sm font-medium border transition-all" data-cat="scholarship" style="border-color:#e2e8f0;color:#5b6478">🏅 Scholarships</button>
+              <button class="cat-btn text-left px-4 py-2.5 rounded-xl text-sm font-medium border transition-all" data-cat="general" style="border-color:#e2e8f0;color:#5b6478">📌 General</button>
+            </div>
+          </div>
+          <!-- Stats box -->
+          <div class="surface-card rounded-2xl p-5">
+            <p class="text-xs font-mono uppercase tracking-wide mb-4" style="color:#5b6478">Quick Stats</p>
+            <div class="space-y-3">
+              <div class="flex justify-between items-center">
+                <span class="text-xs" style="color:#5b6478">Total Notices</span>
+                <span class="font-mono font-bold text-sm" style="color:#1652c4" id="stat-total">0</span>
+              </div>
+              <div class="flex justify-between items-center">
+                <span class="text-xs" style="color:#5b6478">New (last 7 days)</span>
+                <span class="font-mono font-bold text-sm" style="color:#2fe6dd" id="stat-new">0</span>
+              </div>
+            </div>
+          </div>
+        </aside>
+
+        <!-- Notices list -->
+        <div class="lg:col-span-3" data-aos="fade-left">
+          <div class="surface-card rounded-2xl overflow-hidden" id="notices-list"></div>
+          <p class="mt-5 text-center text-xs font-mono" style="color:#aab4c8" id="no-results" style="display:none">No notices found for this filter.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer style="background:#0b1b33;padding:1.5rem;text-align:center;font-size:.78rem;color:rgba(255,255,255,.3)">
+  <p>&copy; <span id="current-year">2026</span> VLSI Department, SIET &nbsp;·&nbsp; <a href="../index.html" style="color:rgba(255,255,255,.4)" onmouseover="this.style.color='#fff'" onmouseout="this.style.color=''">Back to Home</a></p>
+</footer>
+<button id="back-to-top" aria-label="Back to top"><i class="fa-solid fa-arrow-up text-sm"></i></button>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+<script src="../js/main.js"></script>
+<script>
+AOS.init({duration:700,once:true,offset:60});
+
+var catColors={exam:'#1652c4',academic:'#0b6e8c',placement:'#166444',event:'#8c4516',scholarship:'#6416c4',general:'#5b6478'};
+var catLabels={exam:'Examinations',academic:'Academic',placement:'Placements',event:'Events',scholarship:'Scholarships',general:'General'};
+
+var notices=[
+  {id:1, date:'2026-06-28',cat:'exam',     isNew:true,  title:'Semester End Examination Timetable Released — July 2026',     body:'The timetable for Semester IV, VI, and VIII end examinations has been published. Students must collect their hall tickets from the department office by July 10.', attach:true},
+  {id:2, date:'2026-06-27',cat:'placement',isNew:true,  title:'Internship Registration Open for Pre-Final Year Students',     body:'Students of III year (V semester) can register for summer internships through the placement portal. Last date: July 5. Minimum CGPA 6.5 required.',attach:false},
+  {id:3, date:'2026-06-25',cat:'event',    isNew:true,  title:'ELECNOVA 2026 — Registration Now Open for All Events',        body:'Register for paper presentation, project expo, circuit debugging, and coding contest before July 8. Team events: 2–4 members. Individual events: solo.', attach:false},
+  {id:4, date:'2026-06-24',cat:'academic', isNew:true,  title:'Lab Manual Submission Deadline Extended to July 5',            body:'The deadline for submission of completed lab manuals for III and V semester subjects has been extended to July 5. Late submissions will attract a mark deduction.', attach:false},
+  {id:5, date:'2026-06-22',cat:'scholarship',isNew:false,title:'Tamil Nadu Merit Scholarship — Application Window Open',     body:'Students with CGPA ≥ 8.0 can apply for the Tamil Nadu Government Merit Scholarship for AY 2026-27. Application forms available at the department office.', attach:true},
+  {id:6, date:'2026-06-20',cat:'general',  isNew:false, title:'Guest Lecture Venue Changed — RF & Wireless Systems Talk',     body:'The guest lecture by Mr. [Name], Ericsson India, scheduled for June 25 has been shifted from Seminar Hall 2 to the Main Auditorium due to high registrations.',attach:false},
+  {id:7, date:'2026-06-18',cat:'academic', isNew:false, title:'Revised Academic Calendar for AY 2026-27 Released',            body:'The revised academic calendar including semester dates, exam schedules, holidays, and event windows has been uploaded to the resources section.',attach:true},
+  {id:8, date:'2026-06-15',cat:'placement',isNew:false, title:'Campus Drive — Nexora Semiconductors on July 15',             body:'Nexora Semiconductors will conduct an on-campus recruitment drive on July 15 for VLSI final year students. Eligible: CGPA ≥ 6.5, no active backlogs. Register by July 8.',attach:false},
+  {id:9, date:'2026-06-12',cat:'exam',     isNew:false, title:'Arrear Examination Schedule — May/June 2026',                  body:'Students with arrear papers must register through the examination portal before June 20. Examination fee must be paid at the accounts section.',attach:true},
+  {id:10,date:'2026-06-10',cat:'event',    isNew:false, title:'IEEE Student Branch — Technical Quiz Competition',             body:'IEEE Student Branch, SIET VLSI is organising an inter-college technical quiz on June 28. Teams of 3. Registration fee: ₹150 per team. Cash prize: ₹5000.',attach:false},
+  {id:11,date:'2026-06-08',cat:'scholarship',isNew:false,title:'AICTE Pragati Scholarship for Girl Students',                body:'Girl students of III and V semester can apply for the AICTE Pragati Scholarship. Family income must be below ₹8L per annum. Documents required at department office.',attach:true},
+  {id:12,date:'2026-06-05',cat:'general',  isNew:false, title:'Anti-Ragging Committee — Zero Tolerance Policy Reminder',     body:'All students are reminded that any form of ragging on or off campus is punishable under the UGC Anti-Ragging Regulations. Report incidents: 1800-180-5522.',attach:false},
+];
+
+var filtered=notices;
+
+function fmtDate(iso){
+  var d=new Date(iso);
+  return d.toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'numeric'});
+}
+
+function isNewNotice(dateStr){
+  var diff=(new Date()-new Date(dateStr))/(1000*60*60*24);
+  return diff<=7;
+}
+
+function renderNotices(list){
+  var el=document.getElementById('notices-list');
+  document.getElementById('no-results').style.display=list.length?'none':'block';
+  if(!list.length){el.innerHTML='';return;}
+  el.innerHTML=list.map(function(n,i){
+    var cc=catColors[n.cat]||'#5b6478';
+    var cl=catLabels[n.cat]||n.cat;
+    var isNew=isNewNotice(n.date);
+    return [
+      '<div class="notice-item px-6 py-5 flex gap-4 items-start '+(i<list.length-1?'border-b':'')+'\" style="border-color:#e2e8f0">',
+        '<div class="flex-shrink-0 mt-0.5">',
+          isNew?'<span class="new-badge inline-block w-2.5 h-2.5 rounded-full" style="background:#2fe6dd;box-shadow:0 0 0 3px rgba(47,230,221,.2)"></span>'
+              :'<span class="inline-block w-2.5 h-2.5 rounded-full" style="background:#e2e8f0"></span>',
+        '</div>',
+        '<div class="flex-1 min-w-0">',
+          '<div class="flex flex-wrap items-center gap-2 mb-1.5">',
+            isNew?'<span class="text-[10px] font-mono font-bold px-2 py-0.5 rounded-full" style="background:#2fe6dd;color:#0b1b33">NEW</span>':'',
+            '<span class="text-[10px] font-mono px-2 py-0.5 rounded-full" style="background:'+cc+'20;color:'+cc+'">'+cl+'</span>',
+            '<span class="text-xs font-mono" style="color:#aab4c8">'+fmtDate(n.date)+'</span>',
+          '</div>',
+          '<h3 class="font-display font-semibold text-sm leading-snug mb-1.5" style="color:#0b1b33">'+n.title+'</h3>',
+          '<p class="text-xs leading-relaxed" style="color:#5b6478">'+n.body+'</p>',
+          n.attach?'<a href="#" class="mt-2 inline-flex items-center gap-1.5 text-xs font-semibold" style="color:#1652c4"><i class="fa-solid fa-paperclip text-[10px]"></i>View Attachment</a>':'',
+        '</div>',
+      '</div>'
+    ].join('');
+  }).join('');
+
+  document.getElementById('stat-total').textContent=notices.length;
+  document.getElementById('stat-new').textContent=notices.filter(function(n){return isNewNotice(n.date);}).length;
+}
+renderNotices(notices);
+
+// Category filter
+document.querySelectorAll('.cat-btn').forEach(function(btn){
+  btn.addEventListener('click',function(){
+    document.querySelectorAll('.cat-btn').forEach(function(b){
+      b.classList.remove('active'); b.style.background=''; b.style.borderColor='#e2e8f0'; b.style.color='#5b6478';
+    });
+    btn.classList.add('active'); btn.style.background='#1652c4'; btn.style.borderColor='#1652c4'; btn.style.color='#fff';
+    var cat=btn.dataset.cat;
+    filtered=cat==='all'?notices:notices.filter(function(n){return n.cat===cat;});
+    renderNotices(filtered);
+  });
+});
+
+// Search
+document.getElementById('notice-search').addEventListener('input',function(){
+  var q=this.value.toLowerCase();
+  var base=filtered.length?filtered:notices;
+  renderNotices(q?base.filter(function(n){return (n.title+n.body).toLowerCase().includes(q);}):filtered);
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Events — VLSI | SIET</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css"/>
+  <link rel="icon" type="image/png" href="../assets/images/department_logo.png"/>
+  <link rel="stylesheet" href="../css/main.css"/>
+  <script>tailwind.config={theme:{extend:{colors:{'ink-navy':'#0b1b33','circuit-blue':'#1652c4','signal-cyan':'#2fe6dd','mist':'#f4f7fb'},fontFamily:{display:['Space Grotesk','sans-serif'],body:['IBM Plex Sans','sans-serif'],mono:['IBM Plex Mono','monospace']}}}}</script>
+  <style>
+    .ev-tab{transition:all .25s;border-bottom:2px solid transparent;}
+    .ev-tab.active{color:#1652c4;border-color:#1652c4;}
+    .ev-card{transition:transform .3s,box-shadow .3s,border-color .3s;}
+    .ev-card:hover{transform:translateY(-5px);box-shadow:0 20px 40px -18px rgba(11,27,51,.2);border-color:rgba(22,82,196,.3);}
+    .cat-dot{width:8px;height:8px;border-radius:999px;display:inline-block;flex-shrink:0;}
+  </style>
+</head>
+<body class="font-body antialiased" style="color:#0b1b33;background:#fff">
+<div id="loading-screen"><p class="loader-mark">VLSI<span style="color:#2fe6dd">·</span>SIET</p><div class="loader-trace"></div></div>
+<div id="scroll-progress" aria-hidden="true"></div>
+
+<header id="site-header">
+  <div class="max-w-screen-xl mx-auto px-5 lg:px-8 flex items-center justify-between">
+    <a href="../index.html" class="flex items-center gap-3">
+      <img src="../assets/images/college_logo.png" alt="SIET Logo" class="h-9 w-auto object-contain flex-shrink-0" onerror="this.src='https://via.placeholder.com/100x40?text=SIET'">
+      <img src="../assets/images/department_logo.png" alt="VLSI Logo" class="h-9 w-auto object-contain flex-shrink-0" onerror="this.src='https://via.placeholder.com/100x40?text=VLSI'">
+      <div><p class="brand-text font-display font-semibold text-sm transition-colors">SIET</p><p class="brand-text text-xs opacity-60 mt-0.5 transition-colors">VLSI Design and Technology</p></div>
+    </a>
+    <nav class="hidden lg:flex items-center gap-1">
+      <a href="../index.html#about" class="nav-link px-3.5 py-2 text-sm font-medium rounded-lg transition-all">About</a>
+      <a href="faculty.html"        class="nav-link px-3.5 py-2 text-sm font-medium rounded-lg transition-all">Faculty</a>
+      <a href="students.html" class="nav-link px-3.5 py-2 text-sm font-medium rounded-lg transition-all">Students</a>
+      <a href="labs.html"           class="nav-link px-3.5 py-2 text-sm font-medium rounded-lg transition-all">Labs</a>
+      <a href="events.html"         class="nav-link px-3.5 py-2 text-sm font-medium rounded-lg transition-all" style="color:#2fe6dd">Events</a>
+      <a href="workshops.html"      class="nav-link px-3.5 py-2 text-sm font-medium rounded-lg transition-all">Workshops</a>
+      <a href="achievements.html"   class="nav-link px-3.5 py-2 text-sm font-medium rounded-lg transition-all">Achievements</a>
+      <a href="contact.html"        class="nav-link px-3.5 py-2 text-sm font-medium rounded-lg transition-all">Contact</a>
+    </nav>
+    <a href="resources.html" class="hidden lg:inline-flex btn-primary text-sm font-semibold text-white rounded-xl" style="padding:.55rem 1.15rem">Resources</a>
+    <button id="menu-toggle" class="lg:hidden nav-link w-10 h-10 flex items-center justify-center rounded-xl" aria-expanded="false" aria-label="Toggle menu">
+      <i class="fa-solid fa-bars text-lg"></i><i class="fa-solid fa-xmark text-lg hidden"></i>
+    </button>
+  </div>
+  <nav id="mobile-menu">
+    <div class="max-w-screen-xl mx-auto px-5 pt-3 pb-5 flex flex-col gap-1" style="background:rgba(11,27,51,.96);backdrop-filter:blur(20px);border-top:1px solid rgba(255,255,255,.08)">
+      <a href="../index.html" class="px-4 py-3 text-sm font-medium text-white/75 hover:text-white rounded-xl hover:bg-white/10 transition-all">Home</a>
+      <a href="workshops.html" class="px-4 py-3 text-sm font-medium text-white/75 hover:text-white rounded-xl hover:bg-white/10 transition-all">Workshops</a>
+      <a href="contact.html"   class="px-4 py-3 text-sm font-medium text-white/75 hover:text-white rounded-xl hover:bg-white/10 transition-all">Contact</a>
+    </div>
+  </nav>
+</header>
+
+<main>
+  <section class="relative flex items-end overflow-hidden" style="min-height:40vh;background:linear-gradient(135deg,#0b1b33 0%,#1652c4 100%);padding:8rem 1.25rem 3.5rem">
+    <div aria-hidden="true" style="position:absolute;inset:0;opacity:.11"><svg width="100%" height="100%"><defs><pattern id="ph" width="80" height="80" patternUnits="userSpaceOnUse"><path d="M0 40H80M40 0V80" stroke="#2fe6dd" stroke-width="1" fill="none"/><circle cx="40" cy="40" r="2" fill="#2fe6dd"/></pattern></defs><rect width="100%" height="100%" fill="url(#ph)"/></svg></div>
+    <div class="max-w-screen-xl mx-auto w-full relative z-10">
+      <nav aria-label="Breadcrumb" class="mb-4"><ol class="flex items-center gap-2 text-xs font-mono" style="color:rgba(255,255,255,.45)"><li><a href="../index.html" onmouseover="this.style.color='#2fe6dd'" onmouseout="this.style.color=''">Home</a></li><li><i class="fa-solid fa-chevron-right text-[10px]"></i></li><li style="color:#2fe6dd">Events</li></ol></nav>
+      <h1 class="font-display font-bold text-3xl md:text-5xl text-white">Events</h1>
+      <p class="mt-2 text-sm md:text-base" style="color:rgba(255,255,255,.55)">Symposiums, expert talks, competitions, and department celebrations</p>
+    </div>
+  </section>
+
+  <!-- Tab bar -->
+  <div class="sticky top-[80px] z-40 bg-white" style="border-bottom:1px solid #e2e8f0">
+    <div class="max-w-screen-xl mx-auto px-5 lg:px-8 flex gap-0">
+      <button class="ev-tab active px-6 py-4 text-sm font-semibold" id="tab-upcoming" onclick="switchEvTab('upcoming')">
+        <i class="fa-solid fa-calendar-plus mr-2"></i>Upcoming
+        <span id="badge-upcoming" class="ml-2 px-2 py-0.5 text-xs rounded-full text-white" style="background:#1652c4;font-family:'IBM Plex Mono',monospace"></span>
+      </button>
+      <button class="ev-tab px-6 py-4 text-sm font-semibold" id="tab-past" onclick="switchEvTab('past')" style="color:#5b6478">
+        <i class="fa-solid fa-clock-rotate-left mr-2"></i>Past Events
+      </button>
+    </div>
+  </div>
+
+  <!-- Upcoming events -->
+  <section id="panel-upcoming" class="py-16 bg-white">
+    <div class="max-w-screen-xl mx-auto px-5 lg:px-8">
+      <!-- Legend -->
+      <div class="flex flex-wrap gap-5 mb-10" data-aos="fade-up">
+        <span class="flex items-center gap-2 text-xs font-mono" style="color:#5b6478"><span class="cat-dot" style="background:#1652c4"></span>Symposium</span>
+        <span class="flex items-center gap-2 text-xs font-mono" style="color:#5b6478"><span class="cat-dot" style="background:#0b6e8c"></span>Expert Talk</span>
+        <span class="flex items-center gap-2 text-xs font-mono" style="color:#5b6478"><span class="cat-dot" style="background:#166444"></span>Workshop</span>
+        <span class="flex items-center gap-2 text-xs font-mono" style="color:#5b6478"><span class="cat-dot" style="background:#8c4516"></span>Competition</span>
+        <span class="flex items-center gap-2 text-xs font-mono" style="color:#5b6478"><span class="cat-dot" style="background:#c41652"></span>Cultural</span>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="upcoming-grid"></div>
+    </div>
+  </section>
+
+  <!-- Past events -->
+  <section id="panel-past" class="py-16 bg-white" style="display:none">
+    <div class="max-w-screen-xl mx-auto px-5 lg:px-8">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="past-grid"></div>
+    </div>
+  </section>
+</main>
+
+<footer style="background:#0b1b33;padding:1.5rem;text-align:center;font-size:.78rem;color:rgba(255,255,255,.3)">
+  <p>&copy; <span id="current-year">2026</span> VLSI Department, SIET &nbsp;·&nbsp; <a href="../index.html" style="color:rgba(255,255,255,.4)" onmouseover="this.style.color='#fff'" onmouseout="this.style.color=''">Back to Home</a></p>
+</footer>
+<button id="back-to-top" aria-label="Back to top"><i class="fa-solid fa-arrow-up text-sm"></i></button>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+<script src="../js/main.js"></script>
+<script>
+AOS.init({duration:700,once:true,offset:60});
+
+var catColors = {symposium:'#1652c4',talk:'#0b6e8c',workshop:'#166444',competition:'#8c4516',cultural:'#c41652',alumni:'#6416c4'};
+
+var upcomingEvents = [
+  { cat:"symposium",   day:"14", month:"JUL", year:"2026", title:"ELECNOVA 2026 — National Technical Symposium", venue:"Main Auditorium", time:"9:00 AM", desc:"Annual national-level technical symposium featuring paper presentations, project expo, workshops, and guest lectures from industry leaders.", reg:true },
+  { cat:"talk",        day:"21", month:"JUL", year:"2026", title:"Expert Talk: 5G Networks & Open RAN Architecture", venue:"Seminar Hall 2", time:"2:00 PM", desc:"Industry expert from Ericsson India speaks on 5G NR, Open RAN, and what it means for VLSI engineers entering the workforce.", reg:true },
+  { cat:"workshop",    day:"02", month:"AUG", year:"2026", title:"Hands-on: PCB Design & Rapid Prototyping", venue:"Electronics Lab 3", time:"10:00 AM", desc:"Full-day workshop — design a PCB in KiCad, generate Gerbers, fabricate using lab's CNC milling machine, and solder live.", reg:true },
+  { cat:"competition", day:"10", month:"AUG", year:"2026", title:"Circuit Debugging Challenge 2026", venue:"Electronics Lab 1", time:"10:00 AM", desc:"Inter-batch circuit debugging competition. Teams of 2 race to identify and fix faults in pre-built PCBs within a time limit.", reg:true },
+  { cat:"alumni",      day:"16", month:"AUG", year:"2026", title:"Alumni Meet & Mentorship Day 2026", venue:"Dept Block Lawn", time:"4:00 PM", desc:"Annual alumni gathering — networking, mentorship panels, career guidance sessions, and department project showcase.", reg:false },
+  { cat:"cultural",    day:"28", month:"AUG", year:"2026", title:"Freshers' Day 2026 — Welcome Celebration", venue:"College Auditorium", time:"5:30 PM", desc:"Welcome event for the new batch — cultural performances, faculty introductions, and department orientation.", reg:false },
+];
+
+var pastEvents = [
+  { cat:"symposium",   day:"14", month:"MAR", year:"2026", title:"ELECNOVA 2025 — National Technical Symposium", venue:"Main Auditorium", time:"9:00 AM", desc:"800+ participants from 40 colleges. Best paper and best project awards presented. Keynote by IEEE Fellow from IIT Madras.", reg:false },
+  { cat:"workshop",    day:"14", month:"MAR", year:"2026", title:"PCB Design & Fabrication Workshop", venue:"Electronics Lab 3", time:"10:00 AM", desc:"85 students. End-to-end PCB design and fabrication. Students took home a self-designed board.", reg:false },
+  { cat:"talk",        day:"18", month:"DEC", year:"2025", title:"Industry Talk — 5G Architecture & Beyond", venue:"Main Auditorium", time:"2:00 PM", desc:"220 attendees. Expert from Ericsson India. Live 5G signal measurement demo.", reg:false },
+  { cat:"workshop",    day:"22", month:"NOV", year:"2025", title:"Embedded Systems Workshop — RTOS", venue:"Embedded Lab", time:"10:00 AM", desc:"75 students. FreeRTOS on STM32. Motor control application built from scratch.", reg:false },
+  { cat:"competition", day:"10", month:"OCT", year:"2025", title:"HackVLSI — Department Hackathon 2025", venue:"All Labs", time:"9:00 AM", desc:"24-hour hackathon. 30 teams. Problem statements from IoT, VLSI, and signal processing domains.", reg:false },
+  { cat:"alumni",      day:"20", month:"SEP", year:"2025", title:"Alumni Guest Lecture Series — Batch 2020", venue:"Seminar Hall 1", time:"3:00 PM", desc:"4 alumni from TCS, Infosys, and Intel shared career journeys, placement tips, and industry insights.", reg:false },
+];
+
+function buildEventGrid(events, containerId){
+  var g = document.getElementById(containerId);
+  g.innerHTML = events.map(function(ev, i){
+    var c = catColors[ev.cat]||'#1652c4';
+    return [
+      '<article class="ev-card surface-card rounded-2xl overflow-hidden" data-aos="fade-up" data-aos-delay="'+(i%3*70)+'">',
+        '<div class="flex items-stretch">',
+          /* Date badge */
+          '<div class="flex flex-col items-center justify-center px-5 py-6 flex-shrink-0" style="background:'+c+';min-width:5rem">',
+            '<span class="font-display font-bold text-white text-3xl leading-none">'+ev.day+'</span>',
+            '<span class="font-mono text-white text-xs mt-1 opacity-75">'+ev.month+'</span>',
+            '<span class="font-mono text-white text-xs opacity-50">'+ev.year+'</span>',
+          '</div>',
+          /* Content */
+          '<div class="p-5 flex-1 min-w-0">',
+            '<div class="flex items-center gap-2 mb-2">',
+              '<span class="cat-dot" style="background:'+c+'"></span>',
+              '<span class="text-[10px] font-mono uppercase tracking-wide" style="color:'+c+'">'+ev.cat+'</span>',
+            '</div>',
+            '<h3 class="font-display font-semibold text-sm leading-snug mb-2" style="color:#0b1b33">'+ev.title+'</h3>',
+            '<p class="text-xs leading-relaxed mb-3" style="color:#5b6478">'+ev.desc.substring(0,90)+'…</p>',
+            '<div class="flex flex-wrap gap-3 mb-3" style="font-size:.72rem;color:#aab4c8">',
+              '<span><i class="fa-solid fa-location-dot mr-1" style="color:#2fe6dd"></i>'+ev.venue+'</span>',
+              '<span><i class="fa-solid fa-clock mr-1" style="color:#2fe6dd"></i>'+ev.time+'</span>',
+            '</div>',
+            ev.reg
+              ? '<a href="#" class="inline-flex items-center gap-1.5 text-xs font-semibold text-white rounded-lg px-3 py-1.5 transition-all" style="background:'+c+'" onmouseover="this.style.opacity=\'.85\'" onmouseout="this.style.opacity=\'1\'"><i class="fa-solid fa-registered text-[10px]"></i>Register Now</a>'
+              : '<span class="inline-flex items-center gap-1.5 text-xs font-mono rounded-lg px-3 py-1.5" style="background:#f4f7fb;color:#aab4c8">Event Completed</span>',
+          '</div>',
+        '</div>',
+      '</article>'
+    ].join('');
+  }).join('');
+}
+
+buildEventGrid(upcomingEvents, 'upcoming-grid');
+buildEventGrid(pastEvents, 'past-grid');
+document.getElementById('badge-upcoming').textContent = upcomingEvents.length;
+
+function switchEvTab(which){
+  ['upcoming','past'].forEach(function(t){
+    document.getElementById('panel-'+t).style.display = (t===which)?'block':'none';
+    var btn = document.getElementById('tab-'+t);
+    if(t===which){ btn.classList.add('active'); btn.style.color=''; }
+    else          { btn.classList.remove('active'); btn.style.color='#5b6478'; }
+  });
+}
+</script>
+</body>
+</html>
