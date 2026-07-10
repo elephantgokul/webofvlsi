@@ -1,7 +1,7 @@
 // js/api.js — Centralized API utility for Google Apps Script communication
 // Department of VLSI Design and Technology, SIET
 
-const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbypPWlc7QRVgFBvG2vzNGYfUFkXqUpk9UXfHx9WEa2o_1FjUNtDC4JYXBW2zNCkJ6Ek/exec";
+const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxtiC0y8Gwzr0gj5Mcb1wJaSogr44lWI2PlYQQOVj-wbTOKw2EyJmXvhnibGlRr7Idc/exec";
 
 const API_CACHE_PREFIX = "vlsi_api_";
 const API_CACHE_TTL = 5 * 60 * 1000; // 5 minutes
