@@ -9,10 +9,12 @@
   const screen = document.getElementById("loading-screen");
   if (!screen) return;
 
-  window.addEventListener("load", () => {
-    // small minimum dwell so the load animation isn't a flash on fast connections
-    setTimeout(() => screen.classList.add("is-hidden"), 500);
-  });
+  function hide() {
+    screen.classList.add("is-hidden");
+  }
+
+  window.addEventListener("load", () => setTimeout(hide, 500));
+  setTimeout(hide, 4000); // fail-safe: even if a resource breaks, screen won't stick
 })();
 
 /* ---- Header: sticky background + mobile menu --------------------------- */
