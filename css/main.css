@@ -201,8 +201,30 @@ textarea:focus-visible {
 
 #hero {
   position: relative;
+  isolation: isolate;
   background: radial-gradient(120% 100% at 15% 10%, var(--ink-navy-light) 0%, var(--ink-navy) 55%, #081326 100%);
   overflow: hidden;
+}
+
+.hero-bg-video {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  pointer-events: none;
+  background: radial-gradient(120% 100% at 15% 10%, var(--ink-navy-light) 0%, var(--ink-navy) 55%, #081326 100%);
+}
+
+.hero-video-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: rgba(0, 0, 0, 0.45);
+  pointer-events: none;
 }
 
 /* Faint tiled circuit-grid texture */
@@ -210,10 +232,15 @@ textarea:focus-visible {
   content: "";
   position: absolute;
   inset: 0;
+  z-index: 2;
   opacity: 0.16;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 120 120'%3E%3Cg fill='none' stroke='%232fe6dd' stroke-width='1'%3E%3Cpath d='M0 60H40M80 60H120M60 0V40M60 80V120'/%3E%3Ccircle cx='60' cy='60' r='3'/%3E%3Ccircle cx='40' cy='60' r='2'/%3E%3Ccircle cx='80' cy='60' r='2'/%3E%3Ccircle cx='60' cy='40' r='2'/%3E%3Ccircle cx='60' cy='80' r='2'/%3E%3C/g%3E%3C/svg%3E");
   background-size: 120px 120px;
   pointer-events: none;
+}
+
+.hero-scroll-cue {
+  z-index: 10;
 }
 
 .hero-trace-line {

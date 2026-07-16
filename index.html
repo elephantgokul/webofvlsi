@@ -137,14 +137,15 @@
            style="min-height:100svh;padding:7rem 1.25rem 5rem">
 
     <!-- Background Video -->
-    <video autoplay muted loop playsinline preload="metadata"
-           style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;z-index:0;">
-      <source src="assets/video/hero_bg.mp4" type="video/mp4">
+    <video class="hero-bg-video" autoplay muted loop playsinline preload="metadata" aria-hidden="true" tabindex="-1">
+      <source src="assets/video/department-video.mp4" type="video/mp4">
+      <source src="assets/video.mp4" type="video/mp4">
+      <source src="video.mp4" type="video/mp4">
       Your browser does not support the video tag.
     </video>
 
     <!-- Dark Overlay -->
-    <div aria-hidden="true" style="position:absolute;inset:0;background-color:rgba(0,0,0,0.6);z-index:0;"></div>
+    <div class="hero-video-overlay" aria-hidden="true"></div>
 
     <!-- Hero content -->
     <div class="relative z-10 max-w-4xl mx-auto">
@@ -204,7 +205,7 @@
     </div>
 
     <!-- Scroll cue -->
-    <div class="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-3">
+    <div class="hero-scroll-cue absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-3">
       <div class="scroll-cue" aria-hidden="true"></div>
       <span class="text-white/25 text-xs font-mono tracking-[.22em]">SCROLL</span>
     </div>
