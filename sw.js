@@ -10,14 +10,13 @@ var ASSETS = [
   "/js/main.js",
   "/js/animations.js",
   "/js/sliders.js",
-  "/js/api.js",
   "/js/hod.js",
   "/js/faculty.js",
   "/js/students.js",
   "/js/student-detail.js",
   "/js/achievements.js",
   "/js/search.js",
-  "/data/site-data.js",
+  "/assets/data/hod.json",
   "/assets/data/students.json",
   "/assets/data/faculty.json",
   "/pages/hod.html",
@@ -84,3 +83,4 @@ self.addEventListener("fetch", function(e){
     );
   }
 });
+

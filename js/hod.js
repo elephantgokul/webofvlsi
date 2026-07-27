@@ -2,14 +2,24 @@ document.addEventListener('DOMContentLoaded', function() {
     var profileContainer = document.getElementById('hod-profile');
     if (!profileContainer) return;
 
-    var hod = siteData.hod;
+    profileContainer.innerHTML = '<div class="text-center py-10"><i class="fa-solid fa-circle-notch fa-spin text-3xl" style="color:#1652c4"></i><p class="mt-4 text-sm text-gray-500">Loading HOD Profile...</p></div>';
 
-    if (!hod) {
-        profileContainer.innerHTML = '<div class="text-center py-10 text-gray-500">HOD profile data not available.</div>';
-        return;
-    }
-
-    renderHODProfile(hod);
+    fetch('../assets/data/hod.json')
+        .then(function(res) {
+            if (!res.ok) throw new Error('HTTP ' + res.status);
+            return res.json();
+        })
+        .then(function(hod) {
+            if (!hod) {
+                profileContainer.innerHTML = '<div class="text-center py-10 text-gray-500">HOD profile data not available.</div>';
+                return;
+            }
+            renderHODProfile(hod);
+        })
+        .catch(function(err) {
+            console.error("Error loading HOD data:", err);
+            profileContainer.innerHTML = '<div class="text-center py-10 text-red-500">Failed to load HOD profile.</div>';
+        });
 
     function renderHODProfile(hod) {
         var photoHtml = hod.photoUrl
