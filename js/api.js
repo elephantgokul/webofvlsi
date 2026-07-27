@@ -1,142 +1,89 @@
-// js/api.js — Centralized API utility for Google Apps Script communication
-// Department of VLSI Design and Technology, SIET
+var siteData = (function() {
 
-const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxtiC0y8Gwzr0gj5Mcb1wJaSogr44lWI2PlYQQOVj-wbTOKw2EyJmXvhnibGlRr7Idc/exec";
+  function normalizeStudents(students) {
+    return (students || []).map(function(student) {
+      var registerNo = student.registerNo || student.rollno || "";
+      var image = student.image || student.photoUrl || "";
+      return Object.assign({}, student, {
+        achievement: student.achievement || "",
+        description: student.description || "",
+        linkedin: student.linkedin || "",
+        github: student.github || "",
+        registerNo: registerNo,
+        rollno: student.rollno || registerNo,
+        image: image,
+        photoUrl: student.photoUrl || image,
+        batch: student.batch || getBatchFromRegisterNo(registerNo),
+        yearToken: getStudentYearToken(student.year)
+      });
+    });
+  }
 
-const API_CACHE_PREFIX = "vlsi_api_";
-const API_CACHE_TTL = 5 * 60 * 1000; // 5 minutes
+  function getStudentYearToken(year) {
+    var text = String(year || "").toUpperCase();
+    if (text.indexOf("IV") !== -1) return "IV";
+    if (text.indexOf("III") !== -1) return "III";
+    if (text.indexOf("II") !== -1) return "II";
+    if (text.indexOf("I") !== -1) return "I";
+    return "";
+  }
 
-/**
- * Fetch data from the Apps Script API with optional action parameter.
- * Uses sessionStorage caching to avoid redundant calls.
- * @param {string} [action] - Optional action parameter (e.g., 'faculty', 'hod', 'students')
- * @returns {Promise<Object>} The API response data
- */
-async function fetchWithAction(action) {
-    const cacheKey = API_CACHE_PREFIX + (action || "all");
+  function getBatchFromRegisterNo(registerNo) {
+    var match = String(registerNo || "").match(/^(\d{2})/);
+    return match ? "20" + match[1] : "";
+  }
 
-    // Check sessionStorage cache
-    try {
-        const cached = sessionStorage.getItem(cacheKey);
-        if (cached) {
-            const { data, timestamp } = JSON.parse(cached);
-            if (Date.now() - timestamp < API_CACHE_TTL) {
-                return data;
-            }
-            sessionStorage.removeItem(cacheKey);
-        }
-    } catch (e) { /* sessionStorage not available, continue */ }
+  var data = {
+    hod: {
+      name: "Dr. A. Sharma",
+      designation: "Head of Department",
+      qualification: "M.Tech, Ph.D. (VLSI Design)",
+      message: "Welcome to the Department of VLSI Design and Technology at Sri Shakthi Institute of Engineering and Technology. Our department is committed to excellence in education and research in the fields of VLSI, Embedded Systems, and Nanotechnology. We believe in a hands-on, industry-aligned approach that ensures our students are prepared to meet the challenges of the rapidly evolving semiconductor industry. Our state-of-the-art laboratories, experienced faculty, and strong industry partnerships provide an ideal environment for learning and innovation.",
+      contact: "hod.vlsi@sfriet.ac.in",
+      phone: "+91-422-XXXXXXX",
+      researchInterests: ["Low Power VLSI Design", "Nanoelectronics", "Mixed Signal IC Design", "System-on-Chip Architecture"],
+      photoUrl: ""
+    },
+    faculty: [
+      { id: 1, name: "Dr. P. Dhilipkumar", designation: "Associate Professor & Head", qualification: "M.E., Ph.D.", specialization: "VLSI Design and Technology", email: "dhilipkumarece@siet.ac.in", orcid: "", image: "assets/images/faculty/dhilipkumar.jpg", photoUrl: "assets/images/faculty/dhilipkumar.jpg" },
+      { id: 2, name: "Mrs. C. Prema", designation: "Assistant Professor", qualification: "M.E.", specialization: "VLSI Design and Technology", email: "Premacece@siet.ac.in", orcid: "", image: "assets/images/faculty/prema.jpg", photoUrl: "assets/images/faculty/prema.jpg" },
+      { id: 3, name: "Mrs. P. Priscillasophia", designation: "Assistant Professor", qualification: "M.E.", specialization: "VLSI Design and Technology", email: "Priscillasophiaece@siet.ac.in", orcid: "", image: "assets/images/faculty/priscillasophia.jpg", photoUrl: "assets/images/faculty/priscillasophia.jpg" },
+      { id: 4, name: "Mrs. T. Renita Pearlin", designation: "Assistant Professor", qualification: "M.E.", specialization: "VLSI Design and Technology", email: "Trenitacdc@siet.ac.in", orcid: "", image: "assets/images/faculty/renita.jpg", photoUrl: "assets/images/faculty/renita.jpg" },
+      { id: 5, name: "Mrs. R. Vasanthi", designation: "Assistant Professor", qualification: "M.E.", specialization: "VLSI Design and Technology", email: "Vasanthiece@siet.ac.in", orcid: "", image: "assets/images/faculty/vasanthi.jpg", photoUrl: "assets/images/faculty/vasanthi.jpg" }
+    ],
+    students: [
+      {
+        id: 1,
+        name: "Gokul P",
+        registerNo: "24VL008",
+        year: "III Year",
+        email: "psivam574@gmail.com",
+        achievement: "1. Attendance Monitoring System\n\nAchievement:\n\nDeveloped AI Attendance Monitoring System\n2. Money Management System\n\nAchievement:\n\nBuilt Money Management System\n3. Internships\n\nAchievement:\n\nCompleted 6 Industry Internships\n4. Technical Skills\n\nAchievement:\n\nDeveloped Strong VLSI & Software Skills",
+        description: "Designed and deployed a web-based attendance management system with real-time tracking, advisor dashboard, and automated reports. Created a web application for expense tracking, budget planning, and monthly financial reports. Gained hands-on experience in VLSI, Digital Hardware Design, SystemVerilog, PCB Design, Embedded Systems, Python, and OOP. Built expertise in SystemVerilog, Digital Hardware Design, Python, Web Development, and GitHub through projects and internships.",
+        image: "assets/images/students/gokul.jpg",
+        linkedin: "GOKUL P",
+        github: "https://github.com/elephantgokul"
+      },
+      {
+        id: 2,
+        name: "Tharun R",
+        registerNo: "24VL048",
+        year: "III Year",
+        email: "rajeshtharun2318@gmail.com",
+        achievement: "Attended 6 internships\n2-days offline workshop at IIT Madras\n5-days offline workshop at college for Hands-On training on Synopsys\n2-days Hands-On workshop on Digital Hardware Implementation with Altera(Intel) FPGAs\nStudent Presenter at PCB LAB on Tech Park Inaugural event.\n3 real time projects using Synopsys and 4 working on...\nB.A in HINDI (Completed 8 MADRAS PRACHAR SABHA EXAMS)",
+        description: "6 technical internships in areas such as VLSI Design, Embedded Systems, PCB Design, and software technologies, gaining practical industry exposure. Participated in a 2-day offline workshop at IIT Madras, a 5-day hands-on training program on Synopsys EDA tools, and a 2-day workshop on Digital Hardware Implementation using Altera (Intel) FPGAs. Served as a Student Presenter at the PCB LAB Tech Park Inaugural Event, showcasing technical knowledge and project skills. Completed 3 real-time VLSI projects using Synopsys tools and currently working on 4 additional projects to enhance design and verification expertise. Additionally, completed 8 examinations under Madras Prachar Sabha for Hindi proficiency, demonstrating dedication towards language learning and continuous skill development.",
+        image: "assets/images/students/tharunrajesh.jpg",
+        linkedin: "https://linkedin.com/in/Tharun Rajesh",
+        github: ""
+      }
+    ]
+  };
 
-    // Build URL with action parameter
-    let url = APPS_SCRIPT_URL;
-    if (action) {
-        url += (url.includes("?") ? "&" : "?") + "action=" + encodeURIComponent(action);
-    }
+  data.students = normalizeStudents(data.students);
 
-    // Retry logic (max 2 attempts)
-    for (let attempt = 0; attempt < 2; attempt++) {
-        try {
-            const controller = new AbortController();
-            const timeoutId = setTimeout(() => controller.abort(), 10000); // 10s timeout
-
-            const response = await fetch(url, {
-                method: "GET",
-                redirect: "follow",
-                signal: controller.signal
-            });
-            clearTimeout(timeoutId);
-
-            if (!response.ok) {
-                throw new Error(`HTTP ${response.status}: ${response.statusText}`);
-            }
-
-            const text = await response.text();
-            let data;
-            try {
-                data = JSON.parse(text);
-            } catch (parseErr) {
-                console.warn("[API] Response is not valid JSON. Using fallback data.", parseErr);
-                return getFallbackData();
-            }
-
-            // Cache the successful response
-            try {
-                sessionStorage.setItem(cacheKey, JSON.stringify({
-                    data: data,
-                    timestamp: Date.now()
-                }));
-            } catch (e) { /* ignore storage errors */ }
-
-            return data;
-
-        } catch (error) {
-            console.warn(`[API] Attempt ${attempt + 1} failed:`, error.message);
-            if (attempt === 1) {
-                console.warn("[API] All attempts failed. Using fallback data.");
-                return getFallbackData();
-            }
-            // Wait 1s before retry
-            await new Promise(r => setTimeout(r, 1000));
-        }
-    }
-
-    return getFallbackData();
-}
-
-/**
- * Fetch all department data (HOD + Faculty + Students).
- * This is the main entry point used by page scripts.
- * @returns {Promise<Object>}
- */
-async function fetchDepartmentData() {
-    return fetchWithAction(null);
-}
-
-/**
- * Clear all API caches
- */
-function clearApiCache() {
-    try {
-        Object.keys(sessionStorage).forEach(key => {
-            if (key.startsWith(API_CACHE_PREFIX)) {
-                sessionStorage.removeItem(key);
-            }
-        });
-    } catch (e) { /* ignore */ }
-}
-
-/**
- * Fallback data used when the API is unreachable or returns invalid data.
- * This ensures the website always displays content.
- */
-function getFallbackData() {
-    return {
-        hod: {
-            name: "Dr. A. Sharma",
-            designation: "Head of Department",
-            qualification: "M.Tech, Ph.D. (VLSI Design)",
-            message: "Welcome to the Department of VLSI Design and Technology at Sri Shakthi Institute of Engineering and Technology. Our department is committed to excellence in education and research in the fields of VLSI, Embedded Systems, and Nanotechnology. We believe in a hands-on, industry-aligned approach that ensures our students are prepared to meet the challenges of the rapidly evolving semiconductor industry. Our state-of-the-art laboratories, experienced faculty, and strong industry partnerships provide an ideal environment for learning and innovation.",
-            contact: "hod.vlsi@sfriet.ac.in",
-            phone: "+91-422-XXXXXXX",
-            researchInterests: ["Low Power VLSI Design", "Nanoelectronics", "Mixed Signal IC Design", "System-on-Chip Architecture"],
-            photoUrl: ""
-        },
-        faculty: [
-            { id: 1, name: "Dr. B. Kumar", designation: "Professor", qualification: "Ph.D. (VLSI Design)", specialization: "VLSI Design, Digital IC", email: "bkumar@sfriet.ac.in", orcid: "0000-0001-2345-6789", photoUrl: "" },
-            { id: 2, name: "Dr. C. Verma", designation: "Associate Professor", qualification: "Ph.D. (Embedded Systems)", specialization: "Embedded Systems, ARM Architecture", email: "cverma@sfriet.ac.in", orcid: "0000-0002-3456-7890", photoUrl: "" },
-            { id: 3, name: "Mr. D. Singh", designation: "Assistant Professor", qualification: "M.Tech (Signal Processing)", specialization: "Signal Processing, DSP", email: "dsingh@sfriet.ac.in", orcid: "", photoUrl: "" },
-            { id: 4, name: "Ms. E. Reddy", designation: "Assistant Professor", qualification: "M.Tech (Communication)", specialization: "RF & Antenna, Microwave", email: "ereddy@sfriet.ac.in", orcid: "", photoUrl: "" },
-            { id: 5, name: "Dr. F. Khan", designation: "Professor", qualification: "Ph.D. (IoT)", specialization: "IoT & Networks, Wireless Sensor Networks", email: "fkhan@sfriet.ac.in", orcid: "0000-0003-4567-8901", photoUrl: "" },
-            { id: 6, name: "Dr. G. Patel", designation: "Assistant Professor", qualification: "Ph.D. (VLSI)", specialization: "VLSI Design, FPGA Implementation", email: "gpatel@sfriet.ac.in", orcid: "0000-0004-5678-9012", photoUrl: "" }
-        ],
-        students: [
-            { id: 1, name: "Aarav Patel", batch: "2024", year: "IV", rollno: "VLSI001", email: "aarav.p@sfriet.ac.in", photoUrl: "" },
-            { id: 2, name: "Diya Sharma", batch: "2024", year: "IV", rollno: "VLSI002", email: "diya.s@sfriet.ac.in", photoUrl: "" },
-            { id: 3, name: "Vihaan Kumar", batch: "2025", year: "III", rollno: "VLSI035", email: "vihaan.k@sfriet.ac.in", photoUrl: "" },
-            { id: 4, name: "Myra Singh", batch: "2025", year: "III", rollno: "VLSI036", email: "myra.s@sfriet.ac.in", photoUrl: "" },
-            { id: 5, name: "Kabir Verma", batch: "2026", year: "II", rollno: "VLSI080", email: "kabir.v@sfriet.ac.in", photoUrl: "" },
-            { id: 6, name: "Ananya Reddy", batch: "2026", year: "II", rollno: "VLSI081", email: "ananya.r@sfriet.ac.in", photoUrl: "" },
-            { id: 7, name: "Arjun Das", batch: "2027", year: "I", rollno: "VLSI120", email: "arjun.d@sfriet.ac.in", photoUrl: "" }
-        ]
-    };
-}
+  return {
+    hod: data.hod,
+    faculty: data.faculty,
+    students: data.students
+  };
+})();

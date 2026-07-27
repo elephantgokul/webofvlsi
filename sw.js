@@ -2,7 +2,7 @@
    Service Worker — SIET VLSI
    Strategy: Cache-first for assets, Network-first for HTML
    ========================================================= */
-var CACHE  = "siet-VLSI-v2";
+var CACHE  = "siet-VLSI-v3";
 var ASSETS = [
   "/",
   "/index.html",
@@ -14,6 +14,7 @@ var ASSETS = [
   "/js/hod.js",
   "/js/faculty.js",
   "/js/students.js",
+  "/js/student-detail.js",
   "/js/search.js",
   "/data/site-data.js",
   "/pages/hod.html",
@@ -30,6 +31,7 @@ var ASSETS = [
   "/pages/contact.html",
   "/pages/resources.html",
   "/pages/students.html",
+  "/pages/student-detail.html",
   "/pages/research.html",
   "/pages/privacy.html",
   "/404.html",
