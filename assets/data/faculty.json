@@ -7,8 +7,8 @@
     "specialization": "VLSI Design and Technology",
     "email": "dhilipkumarece@siet.ac.in",
     "orcid": "",
-    "image": "assets/images/faculty/dhilipkumar.jpg",
-    "photoUrl": "assets/images/faculty/dhilipkumar.jpg"
+    "image": "assets/images/staff/dhilipkumar.jpg",
+    "photoUrl": "assets/images/staff/dhilipkumar.jpg"
   },
   {
     "id": 2,
@@ -18,8 +18,8 @@
     "specialization": "VLSI Design and Technology",
     "email": "Premacece@siet.ac.in",
     "orcid": "",
-    "image": "assets/images/faculty/prema.jpg",
-    "photoUrl": "assets/images/faculty/prema.jpg"
+    "image": "assets/images/staff/prema.jpg",
+    "photoUrl": "assets/images/staff/prema.jpg"
   },
   {
     "id": 3,
@@ -29,8 +29,8 @@
     "specialization": "VLSI Design and Technology",
     "email": "Priscillasophiaece@siet.ac.in",
     "orcid": "",
-    "image": "assets/images/faculty/priscillasophia.jpg",
-    "photoUrl": "assets/images/faculty/priscillasophia.jpg"
+    "image": "assets/images/staff/priscillasophia.jpg",
+    "photoUrl": "assets/images/staff/priscillasophia.jpg"
   },
   {
     "id": 4,
@@ -40,8 +40,8 @@
     "specialization": "VLSI Design and Technology",
     "email": "Trenitacdc@siet.ac.in",
     "orcid": "",
-    "image": "assets/images/faculty/renita.jpg",
-    "photoUrl": "assets/images/faculty/renita.jpg"
+    "image": "assets/images/staff/renita.jpg",
+    "photoUrl": "assets/images/staff/renita.jpg"
   },
   {
     "id": 5,
@@ -51,7 +51,7 @@
     "specialization": "VLSI Design and Technology",
     "email": "Vasanthiece@siet.ac.in",
     "orcid": "",
-    "image": "assets/images/faculty/vasanthi.jpg",
-    "photoUrl": "assets/images/faculty/vasanthi.jpg"
+    "image": "assets/images/staff/vasanthi.jpg",
+    "photoUrl": "assets/images/staff/vasanthi.jpg"
   }
 ]
