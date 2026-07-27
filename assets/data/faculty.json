@@ -1,0 +1,57 @@
+[
+  {
+    "id": 1,
+    "name": "Dr. P. Dhilipkumar",
+    "designation": "Associate Professor & Head",
+    "qualification": "M.E., Ph.D.",
+    "specialization": "VLSI Design and Technology",
+    "email": "dhilipkumarece@siet.ac.in",
+    "orcid": "",
+    "image": "assets/images/faculty/dhilipkumar.jpg",
+    "photoUrl": "assets/images/faculty/dhilipkumar.jpg"
+  },
+  {
+    "id": 2,
+    "name": "Mrs. C. Prema",
+    "designation": "Assistant Professor",
+    "qualification": "M.E.",
+    "specialization": "VLSI Design and Technology",
+    "email": "Premacece@siet.ac.in",
+    "orcid": "",
+    "image": "assets/images/faculty/prema.jpg",
+    "photoUrl": "assets/images/faculty/prema.jpg"
+  },
+  {
+    "id": 3,
+    "name": "Mrs. P. Priscillasophia",
+    "designation": "Assistant Professor",
+    "qualification": "M.E.",
+    "specialization": "VLSI Design and Technology",
+    "email": "Priscillasophiaece@siet.ac.in",
+    "orcid": "",
+    "image": "assets/images/faculty/priscillasophia.jpg",
+    "photoUrl": "assets/images/faculty/priscillasophia.jpg"
+  },
+  {
+    "id": 4,
+    "name": "Mrs. T. Renita Pearlin",
+    "designation": "Assistant Professor",
+    "qualification": "M.E.",
+    "specialization": "VLSI Design and Technology",
+    "email": "Trenitacdc@siet.ac.in",
+    "orcid": "",
+    "image": "assets/images/faculty/renita.jpg",
+    "photoUrl": "assets/images/faculty/renita.jpg"
+  },
+  {
+    "id": 5,
+    "name": "Mrs. R. Vasanthi",
+    "designation": "Assistant Professor",
+    "qualification": "M.E.",
+    "specialization": "VLSI Design and Technology",
+    "email": "Vasanthiece@siet.ac.in",
+    "orcid": "",
+    "image": "assets/images/faculty/vasanthi.jpg",
+    "photoUrl": "assets/images/faculty/vasanthi.jpg"
+  }
+]

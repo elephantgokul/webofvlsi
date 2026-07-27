@@ -2,15 +2,25 @@ document.addEventListener('DOMContentLoaded', function() {
     var grid = document.getElementById('faculty-grid');
     if (!grid) return;
 
-    var facultyList = siteData.faculty || [];
+    grid.innerHTML = '<div class="col-span-full text-center py-10"><i class="fa-solid fa-circle-notch fa-spin text-3xl" style="color:#1652c4"></i><p class="mt-4 text-sm text-gray-500">Loading Faculty Data...</p></div>';
 
-    if (facultyList.length === 0) {
-        grid.innerHTML = '<div class="col-span-full text-center py-10 text-gray-500">No faculty data available.</div>';
-        return;
-    }
-
-    renderFaculty(facultyList);
-    setupFilters();
+    fetch('../assets/data/faculty.json')
+        .then(function(res) {
+            if (!res.ok) throw new Error('HTTP ' + res.status);
+            return res.json();
+        })
+        .then(function(facultyList) {
+            if (!facultyList || facultyList.length === 0) {
+                grid.innerHTML = '<div class="col-span-full text-center py-10 text-gray-500">No faculty data available.</div>';
+                return;
+            }
+            renderFaculty(facultyList);
+            setupFilters();
+        })
+        .catch(function(err) {
+            console.error("Error loading faculty data:", err);
+            grid.innerHTML = '<div class="col-span-full text-center py-10 text-red-500">Failed to load faculty data.</div>';
+        });
 
     function renderFaculty(facultyList) {
         grid.innerHTML = '';
@@ -36,7 +46,7 @@ document.addEventListener('DOMContentLoaded', function() {
             var specialization = fac.specialization || '';
 
             var photoHtml = photoSrc
-                ? '<div class="relative w-20 h-20 rounded-full">' + photoFallback + '<img src="' + escapeHtml(photoSrc) + '" alt="' + escapeHtml(fac.name) + '" class="absolute inset-0 w-20 h-20 rounded-full object-cover shadow-lg border-2 border-white bg-white" onerror="this.style.display=\'none\'"></div>'
+                ? '<div class="relative w-20 h-20 rounded-full">' + photoFallback + '<img src="' + escapeHtml(photoSrc) + '" alt="' + escapeHtml(fac.name) + '" loading="lazy" class="absolute inset-0 w-20 h-20 rounded-full object-cover shadow-lg border-2 border-white bg-white" onerror="this.style.display=\'none\'"></div>'
                 : photoFallback;
 
             var card = document.createElement('article');
@@ -79,7 +89,6 @@ document.addEventListener('DOMContentLoaded', function() {
     function setupFilters() {
         var btns = document.querySelectorAll('.filter-btn');
         var items = document.querySelectorAll('.faculty-item');
-
         btns.forEach(function(btn) {
             btn.addEventListener('click', function() {
                 btns.forEach(function(b) {
@@ -88,7 +97,6 @@ document.addEventListener('DOMContentLoaded', function() {
                     b.style.color = '#5b6478';
                 });
                 btn.classList.add('active');
-
                 var f = btn.dataset.filter;
                 items.forEach(function(item) {
                     if (f === 'all' || item.dataset.spec === f) {

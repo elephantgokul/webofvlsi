@@ -144,39 +144,12 @@
 
       <!-- Student Tab -->
       <div class="tab-panel" id="tab-student-ach">
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6" data-aos="fade-up">
-          <div class="surface-card rounded-2xl p-7">
-            <div class="flex items-center gap-3 mb-4">
-              <div class="w-10 h-10 rounded-xl flex items-center justify-center" style="background:rgba(239,68,68,.1)"><i class="fa-solid fa-code" style="color:#ef4444"></i></div>
-              <div><h3 class="font-display font-semibold text-sm" style="color:#0b1b33">Smart India Hackathon</h3><span class="text-[10px] font-mono" style="color:#1652c4">2024</span></div>
-            </div>
-            <p class="text-xs" style="color:#5b6478">Team VLSI Innovators secured 1st place in SIH Grand Finale for their IoT-based air quality monitoring solution.</p>
-          </div>
-          <div class="surface-card rounded-2xl p-7">
-            <div class="flex items-center gap-3 mb-4">
-              <div class="w-10 h-10 rounded-xl flex items-center justify-center" style="background:rgba(22,82,196,.1)"><i class="fa-solid fa-microchip" style="color:#1652c4"></i></div>
-              <div><h3 class="font-display font-semibold text-sm" style="color:#0b1b33">VLSI Design Contest</h3><span class="text-[10px] font-mono" style="color:#1652c4">2024</span></div>
-            </div>
-            <p class="text-xs" style="color:#5b6478">Aarav Patel won 2nd Prize in National VLSI Design Contest organized by Cadence Design Systems.</p>
-          </div>
-          <div class="surface-card rounded-2xl p-7">
-            <div class="flex items-center gap-3 mb-4">
-              <div class="w-10 h-10 rounded-xl flex items-center justify-center" style="background:rgba(5,150,105,.1)"><i class="fa-solid fa-robot" style="color:#059669"></i></div>
-              <div><h3 class="font-display font-semibold text-sm" style="color:#0b1b33">Robocon Zonals</h3><span class="text-[10px] font-mono" style="color:#1652c4">2023</span></div>
-            </div>
-            <p class="text-xs" style="color:#5b6478">Team SIET Robotics qualified for Robocon Zonal Finals with their autonomous navigation robot.</p>
-          </div>
-          <div class="surface-card rounded-2xl p-7">
-            <div class="flex items-center gap-3 mb-4">
-              <div class="w-10 h-10 rounded-xl flex items-center justify-center" style="background:rgba(124,58,237,.1)"><i class="fa-solid fa-lightbulb" style="color:#7c3aed"></i></div>
-              <div><h3 class="font-display font-semibold text-sm" style="color:#0b1b33">Project Expo Winner</h3><span class="text-[10px] font-mono" style="color:#1652c4">2024</span></div>
-            </div>
-            <p class="text-xs" style="color:#5b6478">Diya Sharma's project "FPGA-Based Real-Time Gesture Recognition" won Best Project at Anna University Expo.</p>
-          </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6" id="student-achievements-grid" data-aos="fade-up">
+          <!-- Injected dynamically by achievements.js -->
         </div>
       </div>
 
-      <p class="mt-10 text-center text-xs" style="color:#5b6478"><i class="fa-solid fa-circle-info mr-1" style="color:#1652c4"></i> Content will be updated with complete achievement records.</p>
+      <p class="mt-10 text-center text-xs" style="color:#5b6478"><i class="fa-solid fa-circle-info mr-1" style="color:#1652c4"></i> Add new students to <code class="font-mono" style="color:#1652c4">assets/data/students.json</code> to display them here.</p>
     </div>
   </section>
 </main>
@@ -217,6 +190,7 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
 <script src="../js/main.js"></script>
+<script src="../js/achievements.js"></script>
 <script>
 AOS.init({duration:700,once:true,offset:60});
 
