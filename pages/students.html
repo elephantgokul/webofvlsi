@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <meta name="description" content="Students — VLSI Department, SIET"/>
+  <title>Students — VLSI | SIET</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css"/>
+  <link rel="icon" type="image/png" href="../assets/images/department_logo.png"/>
+  <link rel="stylesheet" href="../css/main.css"/>
+  <script>tailwind.config={theme:{extend:{colors:{'ink-navy':'#0b1b33','circuit-blue':'#1652c4','signal-cyan':'#2fe6dd','mist':'#f4f7fb'},fontFamily:{display:['Space Grotesk','sans-serif'],body:['IBM Plex Sans','sans-serif'],mono:['IBM Plex Mono','monospace']}}}}</script>
+</head>
+<body class="font-body antialiased" style="color:#0b1b33;background:#fff">
+
+<div id="loading-screen"><p class="loader-mark">VLSI<span style="color:#2fe6dd">·</span>SIET</p><div class="loader-trace"></div></div>
+<div id="scroll-progress" aria-hidden="true"></div>
+
+<!-- HEADER -->
+<header id="site-header">
+  <div class="max-w-screen-xl mx-auto px-5 lg:px-8 flex items-center justify-between">
+    <a href="../index.html" class="flex items-center gap-3">
+      <img src="../assets/images/college_logo.png" alt="SIET Logo" class="h-9 w-auto object-contain flex-shrink-0" onerror="this.style.display='none'">
+      <img src="../assets/images/department_logo.png" alt="VLSI Logo" class="h-9 w-auto object-contain flex-shrink-0" onerror="this.style.display='none'">
+      <div><p class="brand-text font-display font-semibold text-sm transition-colors">SIET</p><p class="brand-text text-xs opacity-60 mt-0.5 transition-colors">VLSI Design and Technology</p></div>
+    </a>
+    <nav class="hidden lg:flex items-center gap-1">
+      <a href="../index.html#about" class="nav-link px-3.5 py-2 text-sm font-medium rounded-lg transition-all">About</a>
+      <a href="hod.html"            class="nav-link px-3.5 py-2 text-sm font-medium rounded-lg transition-all">HOD</a>
+      <a href="faculty.html"        class="nav-link px-3.5 py-2 text-sm font-medium rounded-lg transition-all">Faculty</a>
+      <a href="students.html"       class="nav-link px-3.5 py-2 text-sm font-medium rounded-lg transition-all" style="color:#2fe6dd">Students</a>
+      <a href="labs.html"           class="nav-link px-3.5 py-2 text-sm font-medium rounded-lg transition-all">Labs</a>
+      <a href="achievements.html"   class="nav-link px-3.5 py-2 text-sm font-medium rounded-lg transition-all">Achievements</a>
+      <a href="placements.html"     class="nav-link px-3.5 py-2 text-sm font-medium rounded-lg transition-all">Placements</a>
+      <a href="contact.html"        class="nav-link px-3.5 py-2 text-sm font-medium rounded-lg transition-all">Contact</a>
+    </nav>
+    <a href="resources.html" class="hidden lg:inline-flex btn-primary text-sm font-semibold text-white rounded-xl" style="padding:.55rem 1.15rem">Resources</a>
+    <button id="menu-toggle" class="lg:hidden nav-link w-10 h-10 flex items-center justify-center rounded-xl" aria-expanded="false" aria-label="Toggle menu">
+      <i class="fa-solid fa-bars text-lg"></i><i class="fa-solid fa-xmark text-lg hidden"></i>
+    </button>
+  </div>
+  <nav id="mobile-menu">
+    <div class="max-w-screen-xl mx-auto px-5 pt-3 pb-5 flex flex-col gap-1" style="background:rgba(11,27,51,.96);backdrop-filter:blur(20px);border-top:1px solid rgba(255,255,255,.08)">
+      <a href="../index.html" class="px-4 py-3 text-sm font-medium text-white/75 hover:text-white rounded-xl hover:bg-white/10 transition-all">Home</a>
+      <a href="hod.html"      class="px-4 py-3 text-sm font-medium text-white/75 hover:text-white rounded-xl hover:bg-white/10 transition-all">HOD</a>
+      <a href="faculty.html"  class="px-4 py-3 text-sm font-medium text-white/75 hover:text-white rounded-xl hover:bg-white/10 transition-all">Faculty</a>
+      <a href="students.html" class="px-4 py-3 text-sm font-medium text-white rounded-xl bg-white/10">Students</a>
+      <a href="labs.html"     class="px-4 py-3 text-sm font-medium text-white/75 hover:text-white rounded-xl hover:bg-white/10 transition-all">Labs</a>
+      <a href="research.html" class="px-4 py-3 text-sm font-medium text-white/75 hover:text-white rounded-xl hover:bg-white/10 transition-all">Research</a>
+      <a href="contact.html"  class="px-4 py-3 text-sm font-medium text-white/75 hover:text-white rounded-xl hover:bg-white/10 transition-all">Contact</a>
+      <a href="resources.html" class="mt-2 btn-primary text-sm font-semibold text-white px-4 py-3 rounded-xl text-center">Resources & Downloads</a>
+    </div>
+  </nav>
+</header>
+
+<main>
+  <!-- PAGE HERO -->
+  <section class="relative flex items-end overflow-hidden" style="min-height:38vh;background:linear-gradient(135deg,#0b1b33 0%,#1652c4 100%);padding:8rem 1.25rem 3.5rem">
+    <div aria-hidden="true" style="position:absolute;inset:0;opacity:.11"><svg width="100%" height="100%"><defs><pattern id="ph" width="80" height="80" patternUnits="userSpaceOnUse"><path d="M0 40H80M40 0V80" stroke="#2fe6dd" stroke-width="1" fill="none"/><circle cx="40" cy="40" r="2" fill="#2fe6dd"/></pattern></defs><rect width="100%" height="100%" fill="url(#ph)"/></svg></div>
+    <div class="max-w-screen-xl mx-auto w-full relative z-10">
+      <nav aria-label="Breadcrumb" class="mb-4"><ol class="flex items-center gap-2 text-xs font-mono" style="color:rgba(255,255,255,.45)"><li><a href="../index.html" style="transition:color .2s" onmouseover="this.style.color='#2fe6dd'" onmouseout="this.style.color=''">Home</a></li><li><i class="fa-solid fa-chevron-right text-[10px]"></i></li><li style="color:#2fe6dd">Students</li></ol></nav>
+      <h1 class="font-display font-bold text-3xl md:text-5xl text-white">Our Students</h1>
+      <p class="mt-2 text-sm md:text-base" style="color:rgba(255,255,255,.55)">Meet the brilliant minds shaping the future of VLSI and Embedded Systems</p>
+    </div>
+  </section>
+
+  <!-- FILTERS & SEARCH & VIEW TOGGLE -->
+  <section class="py-8 bg-mist border-b" style="border-color:#e2e8f0">
+    <div class="max-w-screen-xl mx-auto px-5 lg:px-8">
+      <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4">
+        <!-- Filter pills -->
+        <div class="flex flex-wrap gap-2.5" id="filter-buttons" role="group" aria-label="Filter by year">
+          <button data-filter="all" class="filter-btn active px-4 py-2 rounded-xl text-sm font-medium border" style="border-color:#e2e8f0;color:#0b1b33">All Students</button>
+          <button data-filter="IV" class="filter-btn px-4 py-2 rounded-xl text-sm font-medium border" style="border-color:#e2e8f0;color:#5b6478">Final Year (IV)</button>
+          <button data-filter="III" class="filter-btn px-4 py-2 rounded-xl text-sm font-medium border" style="border-color:#e2e8f0;color:#5b6478">Third Year (III)</button>
+          <button data-filter="II" class="filter-btn px-4 py-2 rounded-xl text-sm font-medium border" style="border-color:#e2e8f0;color:#5b6478">Second Year (II)</button>
+          <button data-filter="I" class="filter-btn px-4 py-2 rounded-xl text-sm font-medium border" style="border-color:#e2e8f0;color:#5b6478">First Year (I)</button>
+        </div>
+
+        <!-- Search + View Toggle -->
+        <div class="flex items-center gap-3 w-full lg:w-auto">
+          <div class="search-wrapper flex-1 lg:w-64">
+            <i class="fa-solid fa-search search-icon"></i>
+            <input type="text" id="student-search" placeholder="Search by name or roll no..." class="search-input">
+          </div>
+          <div class="view-toggle">
+            <button id="view-card" class="view-toggle-btn active" title="Card View"><i class="fa-solid fa-grip"></i> Cards</button>
+            <button id="view-table" class="view-toggle-btn" title="Table View"><i class="fa-solid fa-table-list"></i> Table</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STUDENTS GRID -->
+  <section class="py-16 bg-white">
+    <div class="max-w-screen-xl mx-auto px-5 lg:px-8">
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6" id="students-grid">
+        <!-- Student cards injected dynamically by students.js -->
+      </div>
+
+      <div class="mt-14 text-center" data-aos="fade-up">
+        <div class="inline-flex items-center gap-2 px-5 py-3 rounded-2xl text-sm" style="background:#f4f7fb;color:#5b6478">
+          <i class="fa-solid fa-circle-info" style="color:#1652c4"></i>
+          Data loads dynamically from Google Apps Script. Card and table views available.
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- FOOTER -->
+<footer style="background:#0b1b33;color:rgba(255,255,255,.5)">
+  <div class="max-w-screen-xl mx-auto px-5 lg:px-8 py-16">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
+      <div>
+        <div class="flex items-center gap-3 mb-4">
+          <div class="w-10 h-10 rounded-xl flex items-center justify-center text-white font-mono font-semibold text-xs" style="background:linear-gradient(135deg,#1652c4,#2fe6dd)">VLSI</div>
+          <div><p class="font-display font-semibold text-sm text-white">SIET</p><p class="text-xs opacity-60">VLSI Design & Technology</p></div>
+        </div>
+        <p class="text-xs leading-relaxed opacity-60">Department of VLSI Design and Technology, Sri Shakthi Institute of Engineering and Technology, Coimbatore.</p>
+        <a href="https://www.linkedin.com/" target="_blank" class="inline-flex items-center gap-2 mt-4 text-xs hover:text-white transition-colors" style="color:#2fe6dd"><i class="fa-brands fa-linkedin"></i> LinkedIn</a>
+      </div>
+      <div>
+        <h4 class="font-display font-semibold text-sm text-white mb-4">Quick Links</h4>
+        <ul class="space-y-2 text-xs"><li><a href="../index.html" class="hover:text-white transition-colors">Home</a></li><li><a href="faculty.html" class="hover:text-white transition-colors">Faculty</a></li><li><a href="students.html" class="hover:text-white transition-colors">Students</a></li><li><a href="labs.html" class="hover:text-white transition-colors">Laboratories</a></li><li><a href="research.html" class="hover:text-white transition-colors">Research</a></li><li><a href="placements.html" class="hover:text-white transition-colors">Placements</a></li></ul>
+      </div>
+      <div>
+        <h4 class="font-display font-semibold text-sm text-white mb-4">Academics</h4>
+        <ul class="space-y-2 text-xs"><li><a href="resources.html" class="hover:text-white transition-colors">Resources & Downloads</a></li><li><a href="gallery.html" class="hover:text-white transition-colors">Gallery</a></li><li><a href="achievements.html" class="hover:text-white transition-colors">Achievements</a></li><li><a href="workshops.html" class="hover:text-white transition-colors">Workshops</a></li><li><a href="events.html" class="hover:text-white transition-colors">Events</a></li></ul>
+      </div>
+      <div>
+        <h4 class="font-display font-semibold text-sm text-white mb-4">Contact</h4>
+        <ul class="space-y-3 text-xs"><li class="flex items-start gap-2"><i class="fa-solid fa-location-dot mt-0.5" style="color:#2fe6dd"></i>Sri Shakthi Institute of Engineering and Technology, Coimbatore, Tamil Nadu</li><li class="flex items-center gap-2"><i class="fa-solid fa-envelope" style="color:#2fe6dd"></i>vlsi@sfriet.ac.in</li><li class="flex items-center gap-2"><i class="fa-solid fa-phone" style="color:#2fe6dd"></i>+91-422-XXXXXXX</li><li class="flex items-center gap-2"><i class="fa-solid fa-clock" style="color:#2fe6dd"></i>Mon-Sat: 9:00 AM - 5:00 PM</li></ul>
+      </div>
+    </div>
+    <div class="mt-12 pt-6 flex flex-col md:flex-row justify-between items-center gap-4 text-xs" style="border-top:1px solid rgba(255,255,255,.1)">
+      <p>&copy; 2026 Department of VLSI Design and Technology, SIET. All rights reserved.</p>
+      <div class="flex items-center gap-4"><a href="privacy.html" class="hover:text-white transition-colors">Privacy Policy</a><a href="#" onclick="window.scrollTo({top:0,behavior:'smooth'});return false" class="hover:text-white transition-colors">Back to Top ↑</a></div>
+    </div>
+  </div>
+</footer>
+
+<button id="back-to-top" aria-label="Back to top"><i class="fa-solid fa-arrow-up text-sm"></i></button>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+<script src="../js/main.js"></script>
+<script src="../js/api.js"></script>
+<script src="../js/students.js"></script>
+<script>AOS.init({duration:700,once:true,offset:60});</script>
+</body>
+</html>

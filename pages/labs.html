@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <meta name="description" content="Laboratories — VLSI Department, SIET. 8 specialized labs with industry-grade equipment."/>
+  <title>Laboratories — VLSI | SIET</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css"/>
+  <link rel="icon" type="image/png" href="../assets/images/department_logo.png"/>
+  <link rel="stylesheet" href="../css/main.css"/>
+  <script>tailwind.config={theme:{extend:{colors:{'ink-navy':'#0b1b33','circuit-blue':'#1652c4','signal-cyan':'#2fe6dd','mist':'#f4f7fb'},fontFamily:{display:['Space Grotesk','sans-serif'],body:['IBM Plex Sans','sans-serif'],mono:['IBM Plex Mono','monospace']}}}}</script>
+  <style>
+    .lab-card { cursor:pointer; transition:transform .35s ease,box-shadow .35s ease,border-color .35s ease; }
+    .lab-card:hover { transform:translateY(-6px); box-shadow:0 28px 52px -20px rgba(11,27,51,.22); border-color:rgba(22,82,196,.3); }
+    /* Modal */
+    #lab-modal { position:fixed;inset:0;z-index:200;display:flex;align-items:center;justify-content:center;padding:1.25rem;opacity:0;visibility:hidden;transition:opacity .3s,visibility .3s; }
+    #lab-modal.is-open { opacity:1;visibility:visible; }
+    #lab-modal-backdrop { position:absolute;inset:0;background:rgba(11,27,51,.65);backdrop-filter:blur(6px); }
+    #lab-modal-box { position:relative;z-index:1;background:#fff;border-radius:1.5rem;max-width:720px;width:100%;max-height:90vh;overflow-y:auto;box-shadow:0 40px 80px -24px rgba(11,27,51,.4); }
+  </style>
+</head>
+<body class="font-body antialiased" style="color:#0b1b33;background:#fff">
+<div id="loading-screen"><p class="loader-mark">VLSI<span style="color:#2fe6dd">·</span>SIET</p><div class="loader-trace"></div></div>
+<div id="scroll-progress" aria-hidden="true"></div>
+
+<!-- HEADER -->
+<header id="site-header">
+  <div class="max-w-screen-xl mx-auto px-5 lg:px-8 flex items-center justify-between">
+    <a href="../index.html" class="flex items-center gap-3">
+      <img src="../assets/images/college_logo.png" alt="SIET Logo" class="h-9 w-auto object-contain flex-shrink-0" onerror="this.src='https://via.placeholder.com/100x40?text=SIET'">
+      <img src="../assets/images/department_logo.png" alt="VLSI Logo" class="h-9 w-auto object-contain flex-shrink-0" onerror="this.src='https://via.placeholder.com/100x40?text=VLSI'">
+      <div><p class="brand-text font-display font-semibold text-sm transition-colors">SIET</p><p class="brand-text text-xs opacity-60 mt-0.5 transition-colors">VLSI Design and Technology</p></div>
+    </a>
+    <nav class="hidden lg:flex items-center gap-1">
+      <a href="../index.html#about" class="nav-link px-3.5 py-2 text-sm font-medium rounded-lg transition-all">About</a>
+      <a href="hod.html"            class="nav-link px-3.5 py-2 text-sm font-medium rounded-lg transition-all">HOD</a>
+      <a href="faculty.html"        class="nav-link px-3.5 py-2 text-sm font-medium rounded-lg transition-all">Faculty</a>
+      <a href="students.html" class="nav-link px-3.5 py-2 text-sm font-medium rounded-lg transition-all">Students</a>
+      <a href="labs.html"           class="nav-link px-3.5 py-2 text-sm font-medium rounded-lg transition-all" style="color:#2fe6dd">Labs</a>
+      <a href="achievements.html"   class="nav-link px-3.5 py-2 text-sm font-medium rounded-lg transition-all">Achievements</a>
+      <a href="placements.html"     class="nav-link px-3.5 py-2 text-sm font-medium rounded-lg transition-all">Placements</a>
+      <a href="contact.html"        class="nav-link px-3.5 py-2 text-sm font-medium rounded-lg transition-all">Contact</a>
+    </nav>
+    <a href="resources.html" class="hidden lg:inline-flex btn-primary text-sm font-semibold text-white rounded-xl" style="padding:.55rem 1.15rem">Resources</a>
+    <button id="menu-toggle" class="lg:hidden nav-link w-10 h-10 flex items-center justify-center rounded-xl" aria-expanded="false" aria-label="Toggle menu">
+      <i class="fa-solid fa-bars text-lg"></i><i class="fa-solid fa-xmark text-lg hidden"></i>
+    </button>
+  </div>
+  <nav id="mobile-menu">
+    <div class="max-w-screen-xl mx-auto px-5 pt-3 pb-5 flex flex-col gap-1" style="background:rgba(11,27,51,.96);backdrop-filter:blur(20px);border-top:1px solid rgba(255,255,255,.08)">
+      <a href="../index.html" class="px-4 py-3 text-sm font-medium text-white/75 hover:text-white rounded-xl hover:bg-white/10 transition-all">Home</a>
+      <a href="faculty.html"  class="px-4 py-3 text-sm font-medium text-white/75 hover:text-white rounded-xl hover:bg-white/10 transition-all">Faculty</a>
+      <a href="students.html" class="nav-link px-3.5 py-2 text-sm font-medium rounded-lg transition-all">Students</a>
+      <a href="contact.html"  class="px-4 py-3 text-sm font-medium text-white/75 hover:text-white rounded-xl hover:bg-white/10 transition-all">Contact</a>
+    </div>
+  </nav>
+</header>
+
+<main>
+  <!-- HERO -->
+  <section class="relative flex items-end overflow-hidden" style="min-height:40vh;background:linear-gradient(135deg,#0b1b33 0%,#1652c4 100%);padding:8rem 1.25rem 3.5rem">
+    <div aria-hidden="true" style="position:absolute;inset:0;opacity:.11"><svg width="100%" height="100%"><defs><pattern id="ph" width="80" height="80" patternUnits="userSpaceOnUse"><path d="M0 40H80M40 0V80" stroke="#2fe6dd" stroke-width="1" fill="none"/><circle cx="40" cy="40" r="2" fill="#2fe6dd"/></pattern></defs><rect width="100%" height="100%" fill="url(#ph)"/></svg></div>
+    <div class="max-w-screen-xl mx-auto w-full relative z-10">
+      <nav aria-label="Breadcrumb" class="mb-4"><ol class="flex items-center gap-2 text-xs font-mono" style="color:rgba(255,255,255,.45)"><li><a href="../index.html" style="transition:color .2s" onmouseover="this.style.color='#2fe6dd'" onmouseout="this.style.color=''">Home</a></li><li><i class="fa-solid fa-chevron-right text-[10px]"></i></li><li style="color:#2fe6dd">Laboratories</li></ol></nav>
+      <h1 class="font-display font-bold text-3xl md:text-5xl text-white">Our Laboratories</h1>
+      <p class="mt-2 text-sm md:text-base" style="color:rgba(255,255,255,.55)">8 specialised labs — industry-grade instruments, real circuits, real problems</p>
+    </div>
+  </section>
+
+  <!-- STATS STRIP -->
+  <section class="py-10 bg-mist" style="border-bottom:1px solid #e2e8f0">
+    <div class="max-w-screen-xl mx-auto px-5 lg:px-8">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-5">
+        <div class="text-center"><p class="font-display font-bold text-3xl" style="color:#1652c4">8</p><p class="text-xs font-mono uppercase tracking-widest mt-1" style="color:#5b6478">Labs</p></div>
+        <div class="text-center"><p class="font-display font-bold text-3xl" style="color:#1652c4">200+</p><p class="text-xs font-mono uppercase tracking-widest mt-1" style="color:#5b6478">Instruments</p></div>
+        <div class="text-center"><p class="font-display font-bold text-3xl" style="color:#1652c4">15+</p><p class="text-xs font-mono uppercase tracking-widest mt-1" style="color:#5b6478">Software Tools</p></div>
+        <div class="text-center"><p class="font-display font-bold text-3xl" style="color:#1652c4">600+</p><p class="text-xs font-mono uppercase tracking-widest mt-1" style="color:#5b6478">Students per Year</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LAB CARDS GRID -->
+  <section class="py-20 bg-white">
+    <div class="max-w-screen-xl mx-auto px-5 lg:px-8">
+      <div class="text-center mb-14" data-aos="fade-up">
+        <p class="eyebrow-tag font-mono text-xs uppercase tracking-widest mb-3" style="color:#1652c4">Click any lab for full details</p>
+        <h2 class="font-display font-bold text-3xl md:text-4xl" style="color:#0b1b33">Department Laboratories</h2>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6" id="labs-grid">
+        <!-- JS renders cards -->
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- LAB DETAIL MODAL -->
+<div id="lab-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+  <div id="lab-modal-backdrop"></div>
+  <div id="lab-modal-box">
+    <!-- Hero band -->
+    <div id="modal-hero" class="relative flex items-end" style="min-height:160px;padding:2rem;border-radius:1.5rem 1.5rem 0 0">
+      <div style="position:absolute;inset:0;opacity:.12" aria-hidden="true"><svg width="100%" height="100%"><defs><pattern id="mp" width="60" height="60" patternUnits="userSpaceOnUse"><path d="M0 30H60M30 0V60" stroke="#2fe6dd" stroke-width="1" fill="none"/></pattern></defs><rect width="100%" height="100%" fill="url(#mp)"/></svg></div>
+      <div class="relative z-10">
+        <p class="font-mono text-xs mb-2" style="color:rgba(255,255,255,.5)" id="modal-lab-no"></p>
+        <h2 class="font-display font-bold text-xl text-white" id="modal-title"></h2>
+      </div>
+      <button id="modal-close" class="absolute top-4 right-4 w-9 h-9 rounded-xl flex items-center justify-center transition-all" style="background:rgba(255,255,255,.15);color:#fff" onmouseover="this.style.background='rgba(255,255,255,.3)'" onmouseout="this.style.background='rgba(255,255,255,.15)'" aria-label="Close">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </div>
+    <!-- Body -->
+    <div class="p-7 md:p-8 space-y-6">
+      <p class="leading-relaxed text-sm" style="color:#5b6478" id="modal-desc"></p>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+        <!-- Equipment -->
+        <div>
+          <h4 class="font-display font-semibold text-sm mb-3 flex items-center gap-2" style="color:#0b1b33">
+            <i class="fa-solid fa-screwdriver-wrench" style="color:#1652c4"></i> Key Equipment
+          </h4>
+          <ul id="modal-equipment" class="space-y-2"></ul>
+        </div>
+        <!-- Software -->
+        <div>
+          <h4 class="font-display font-semibold text-sm mb-3 flex items-center gap-2" style="color:#0b1b33">
+            <i class="fa-solid fa-laptop-code" style="color:#1652c4"></i> Software &amp; Tools
+          </h4>
+          <ul id="modal-software" class="space-y-2"></ul>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-5 pt-2">
+        <!-- Faculty in-charge -->
+        <div class="rounded-2xl p-5" style="background:#f4f7fb">
+          <p class="text-xs font-mono uppercase tracking-wide mb-2" style="color:#5b6478">Faculty In-Charge</p>
+          <p class="font-display font-semibold text-sm" style="color:#0b1b33" id="modal-faculty"></p>
+        </div>
+        <!-- Safety / capacity -->
+        <div class="rounded-2xl p-5" style="background:#f4f7fb">
+          <p class="text-xs font-mono uppercase tracking-wide mb-2" style="color:#5b6478">Capacity</p>
+          <p class="font-display font-semibold text-sm" style="color:#0b1b33" id="modal-capacity"></p>
+        </div>
+      </div>
+
+      <div class="flex flex-wrap gap-3 pt-2">
+        <a href="#" class="btn-primary flex items-center gap-2 rounded-xl text-sm font-semibold text-white" style="padding:.6rem 1.25rem">
+          <i class="fa-solid fa-book text-xs"></i> Lab Manual
+        </a>
+        <a href="#" class="flex items-center gap-2 rounded-xl text-sm font-semibold border transition-all" style="padding:.6rem 1.25rem;border-color:#e2e8f0;color:#5b6478" onmouseover="this.style.borderColor='#1652c4';this.style.color='#1652c4'" onmouseout="this.style.borderColor='#e2e8f0';this.style.color='#5b6478'">
+          <i class="fa-solid fa-images text-xs"></i> Photo Gallery
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer style="background:#0b1b33;padding:1.5rem;text-align:center;font-size:.78rem;color:rgba(255,255,255,.3)">
+  <p>&copy; <span id="current-year">2026</span> VLSI Department, SIET &nbsp;·&nbsp;
+     <a href="../index.html" style="color:rgba(255,255,255,.4);transition:color .2s" onmouseover="this.style.color='#fff'" onmouseout="this.style.color=''">Back to Home</a>
+  </p>
+</footer>
+<button id="back-to-top" aria-label="Back to top"><i class="fa-solid fa-arrow-up text-sm"></i></button>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+<script src="../js/main.js"></script>
+<script>
+AOS.init({duration:700,once:true,offset:60});
+
+var labsData = [
+  {
+    no:"LAB 01", name:"Electronic Circuits Lab",
+    icon:"fa-wave-square", accent:"#1652c4",
+    desc:"Foundational lab covering BJT, FET, op-amp, and oscillator circuits. Students build and test analog circuits using industry-grade oscilloscopes and function generators.",
+    equipment:["Digital Storage Oscilloscope (2 GHz)","Function Generator (20 MHz)","DC Power Supply (0–30V dual)","Digital Multimeter","Bread-boards & PCB stations"],
+    software:["LTSpice","Multisim","PSPICE"],
+    faculty:"Dr. [Faculty Name], Associate Professor",
+    capacity:"30 students / session"
+  },
+  {
+    no:"LAB 02", name:"Digital Electronics Lab",
+    icon:"fa-microchip", accent:"#0b6e8c",
+    desc:"Hands-on lab for combinational and sequential logic design. Students implement and verify Boolean circuits, counters, multiplexers, and flip-flops using IC kits and FPGA boards.",
+    equipment:["FPGA Development Boards (Xilinx Artix-7)","Logic Analyzers","IC Trainer Kits","LED & 7-segment display panels"],
+    software:["Xilinx Vivado","ModelSim","Logisim"],
+    faculty:"Mr. [Faculty Name], Assistant Professor",
+    capacity:"30 students / session"
+  },
+  {
+    no:"LAB 03", name:"Signals & Systems Lab",
+    icon:"fa-signal", accent:"#166444",
+    desc:"Simulation-heavy lab where students analyse continuous and discrete-time signals, implement filters, and verify theoretical results using MATLAB and LabVIEW.",
+    equipment:["High-performance workstations (32 GB RAM)","NI myDAQ interface","Audio spectrum analyser","Digital signal processor trainer kit"],
+    software:["MATLAB + Simulink","LabVIEW NXG","GNU Octave"],
+    faculty:"Dr. [Faculty Name], Professor",
+    capacity:"32 students / session"
+  },
+  {
+    no:"LAB 04", name:"VLSI Design Lab",
+    icon:"fa-draw-polygon", accent:"#6416c4",
+    desc:"Advanced IC design lab equipped with Cadence and Synopsys EDA tools. Students design CMOS circuits from schematic through layout, DRC/LVS, and sign-off.",
+    equipment:["High-end Linux workstations","Cadence Virtuoso Setup","Synopsys Design Compiler","IC Layout stations"],
+    software:["Cadence Virtuoso","Synopsys Design Compiler","Hspice","Mentor Calibre"],
+    faculty:"Dr. [Faculty Name], Professor & HoD",
+    capacity:"24 students / session"
+  },
+  {
+    no:"LAB 05", name:"Embedded Systems Lab",
+    icon:"fa-cpu", accent:"#8c4516",
+    desc:"Practical lab for programming ARM Cortex-M based microcontrollers, interfacing sensors and actuators, and developing RTOS-based embedded applications.",
+    equipment:["STM32 Nucleo Boards","Raspberry Pi 4","Arduino Mega/Uno","8051 Development kits","Sensor & actuator module kits"],
+    software:["STM32CubeIDE","Keil µVision","FreeRTOS","Arduino IDE"],
+    faculty:"Dr. [Faculty Name], Associate Professor",
+    capacity:"30 students / session"
+  },
+  {
+    no:"LAB 06", name:"Communication Systems Lab",
+    icon:"fa-tower-broadcast", accent:"#0b3366",
+    desc:"Lab covering AM/FM modulation, PCM, and digital modulation schemes. Students observe real waveforms, measure BER, and understand channel effects using RF trainers.",
+    equipment:["AM/FM Trainer kits","PCM & TDM Trainer kits","Spectrum Analyser (3 GHz)","RF signal generators","OFDM demonstration setup"],
+    software:["MATLAB Communications Toolbox","GNU Radio","Simulink"],
+    faculty:"Ms. [Faculty Name], Assistant Professor",
+    capacity:"30 students / session"
+  },
+  {
+    no:"LAB 07", name:"Microwave & Antenna Lab",
+    icon:"fa-wifi", accent:"#0b6644",
+    desc:"Specialised lab for RF and microwave measurements. Students characterise antennas, measure S-parameters, design and test patch antennas and waveguide components.",
+    equipment:["Vector Network Analyser (8.5 GHz)","Microwave test bench (X-band)","Anechoic chamber (compact range)","Patch antenna fabrication setup","VSWR meter"],
+    software:["HFSS","CST Microwave Studio","ADS (Advanced Design System)"],
+    faculty:"Mr. [Faculty Name], Assistant Professor",
+    capacity:"20 students / session"
+  },
+  {
+    no:"LAB 08", name:"IoT & Wireless Networks Lab",
+    icon:"fa-network-wired", accent:"#166444",
+    desc:"Industry-sponsored lab for IoT prototype development. Students design end-to-end IoT systems — from sensor node hardware to cloud dashboards — using LoRa, MQTT, and AWS IoT.",
+    equipment:["LoRa gateway & end-nodes","ESP32/ESP8266 dev boards","Raspberry Pi server cluster","Industrial sensor kits","3D printer for enclosures"],
+    software:["AWS IoT Core","Node-RED","MQTT Broker","ThingsBoard"],
+    faculty:"Ms. [Faculty Name], Assistant Professor",
+    capacity:"28 students / session"
+  }
+];
+
+// Build lab cards
+var grid = document.getElementById('labs-grid');
+grid.innerHTML = labsData.map(function(lab, i){
+  return [
+    '<article class="lab-card surface-card rounded-2xl overflow-hidden" data-index="'+i+'" ',
+      'data-aos="fade-up" data-aos-delay="'+(i%4*60)+'" ',
+      'tabindex="0" role="button" aria-label="View '+lab.name+' details">',
+      '<div class="h-32 flex items-center justify-center relative" style="background:linear-gradient(135deg,'+lab.accent+','+lab.accent+'dd)">',
+        '<div aria-hidden="true" style="position:absolute;inset:0;opacity:.15"><svg width="100%" height="100%"><defs><pattern id="lg'+i+'" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M0 20H40M20 0V40" stroke="#2fe6dd" stroke-width=".8" fill="none"/></pattern></defs><rect width="100%" height="100%" fill="url(#lg'+i+')"/></svg></div>',
+        '<i class="fa-solid '+lab.icon+' text-4xl text-white relative z-10" style="opacity:.9"></i>',
+        '<span class="absolute top-3 left-3 font-mono text-xs" style="color:rgba(255,255,255,.5)">'+lab.no+'</span>',
+      '</div>',
+      '<div class="p-5">',
+        '<h3 class="font-display font-semibold text-sm mb-2" style="color:#0b1b33">'+lab.name+'</h3>',
+        '<p class="text-xs leading-relaxed mb-4" style="color:#5b6478">'+lab.desc.substring(0,100)+'…</p>',
+        '<div class="flex flex-wrap gap-1.5 mb-4">',
+          lab.software.slice(0,3).map(function(s){ return '<span class="px-2 py-0.5 rounded-md text-[10px] font-mono" style="background:#f0f4ff;color:#1652c4">'+s+'</span>'; }).join(''),
+        '</div>',
+        '<div class="flex items-center justify-between pt-3" style="border-top:1px solid #e2e8f0">',
+          '<span class="text-xs font-mono" style="color:#aab4c8">'+lab.capacity+'</span>',
+          '<span class="flex items-center gap-1 text-xs font-semibold" style="color:#1652c4">Details <i class="fa-solid fa-arrow-right" style="font-size:.65rem"></i></span>',
+        '</div>',
+      '</div>',
+    '</article>'
+  ].join('');
+}).join('');
+
+// Modal logic
+var modal = document.getElementById('lab-modal');
+var modalHero = document.getElementById('modal-hero');
+
+function openModal(idx){
+  var lab = labsData[idx];
+  document.getElementById('modal-lab-no').textContent = lab.no;
+  document.getElementById('modal-title').textContent = lab.name;
+  document.getElementById('modal-desc').textContent = lab.desc;
+  document.getElementById('modal-faculty').textContent = lab.faculty;
+  document.getElementById('modal-capacity').textContent = lab.capacity;
+  modalHero.style.background = 'linear-gradient(135deg,'+lab.accent+','+lab.accent+'cc)';
+  document.getElementById('modal-equipment').innerHTML = lab.equipment.map(function(e){
+    return '<li class="flex gap-2 items-start text-xs" style="color:#5b6478"><i class="fa-solid fa-circle-dot mt-0.5" style="color:#2fe6dd;font-size:.55rem;flex-shrink:0"></i>'+e+'</li>';
+  }).join('');
+  document.getElementById('modal-software').innerHTML = lab.software.map(function(s){
+    return '<li class="flex gap-2 items-center"><span class="px-2.5 py-1 rounded-lg text-xs font-mono" style="background:#f0f4ff;color:#1652c4">'+s+'</span></li>';
+  }).join('');
+  modal.classList.add('is-open');
+  document.body.style.overflow='hidden';
+}
+function closeModal(){
+  modal.classList.remove('is-open');
+  document.body.style.overflow='';
+}
+
+document.querySelectorAll('.lab-card').forEach(function(card){
+  card.addEventListener('click', function(){ openModal(parseInt(this.dataset.index)); });
+  card.addEventListener('keydown', function(e){ if(e.key==='Enter'||e.key===' ') openModal(parseInt(this.dataset.index)); });
+});
+document.getElementById('modal-close').addEventListener('click', closeModal);
+document.getElementById('lab-modal-backdrop').addEventListener('click', closeModal);
+document.addEventListener('keydown', function(e){ if(e.key==='Escape') closeModal(); });
+</script>
+</body>
+</html>
