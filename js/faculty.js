@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', async () => {
+﻿document.addEventListener('DOMContentLoaded', async () => {
     const grid = document.getElementById('faculty-grid');
     if (!grid) return;
 
@@ -41,10 +41,19 @@ document.addEventListener('DOMContentLoaded', async () => {
             let badgeBg = isProf ? '#1652c4' : (isAssoc ? '#7eb6ff' : '#2fe6a0');
             let badgeColor = isProf ? '#fff' : (isAssoc ? '#0b1b33' : '#0a3320');
             let outerBg = isProf ? 'linear-gradient(145deg,#e8edf5,#d0daea)' : (isAssoc ? 'linear-gradient(145deg,#edf0f5,#d8dae8)' : 'linear-gradient(145deg,#e8f5ee,#ceeada)');
+            
+            const rawPhoto = fac.photoUrl || fac.image;
+            const photoSrc = typeof resolveSupabaseImageUrl === 'function'
+                ? resolveSupabaseImageUrl(rawPhoto, (typeof SUPABASE_BUCKETS !== 'undefined' ? SUPABASE_BUCKETS.faculty : 'faculty'), rawPhoto)
+                : resolveAssetPath(rawPhoto);
+            
+            const photoFallback = `<div class="w-20 h-20 rounded-full flex items-center justify-center" style="background:${bgGradient}"><i class="fa-solid fa-user text-white text-3xl"></i></div>`;
+            const designationLabel = (fac.designation || '').replace('Assistant Professor', 'Asst. Prof').replace('Associate Professor', 'Assoc. Prof');
+            const specialization = fac.specialization || '';
 
-            const photoHtml = fac.photoUrl 
-                ? `<img src="${fac.photoUrl}" alt="${fac.name}" class="w-20 h-20 rounded-full object-cover shadow-lg border-2 border-white">`
-                : `<div class="w-20 h-20 rounded-full flex items-center justify-center" style="background:${bgGradient}"><i class="fa-solid fa-user text-white text-3xl"></i></div>`;
+            const photoHtml = photoSrc
+                ? `<div class="relative w-20 h-20 rounded-full">${photoFallback}<img src="${escapeHtml(photoSrc)}" alt="${escapeHtml(fac.name)}" class="absolute inset-0 w-20 h-20 rounded-full object-cover shadow-lg border-2 border-white bg-white" onerror="this.style.display='none'"></div>`
+                : photoFallback;
 
             const card = document.createElement('article');
             card.className = 'faculty-item faculty-card surface-card rounded-2xl overflow-hidden';
@@ -55,20 +64,20 @@ document.addEventListener('DOMContentLoaded', async () => {
             card.innerHTML = `
               <div class="h-44 flex items-center justify-center relative" style="background:${outerBg}">
                 ${photoHtml}
-                <span class="absolute top-3 right-3 px-2.5 py-1 rounded-lg text-xs font-mono font-medium" style="background:${badgeBg};color:${badgeColor}">${fac.designation.replace('Assistant Professor', 'Asst. Prof').replace('Associate Professor', 'Assoc. Prof')}</span>
+                <span class="absolute top-3 right-3 px-2.5 py-1 rounded-lg text-xs font-mono font-medium" style="background:${badgeBg};color:${badgeColor}">${escapeHtml(designationLabel)}</span>
               </div>
               <div class="p-5">
-                <h3 class="font-display font-semibold text-sm" style="color:#0b1b33">${fac.name}</h3>
-                <p class="text-xs mt-0.5 mb-3 font-medium" style="color:#1652c4">${fac.designation}</p>
+                <h3 class="font-display font-semibold text-sm" style="color:#0b1b33">${escapeHtml(fac.name)}</h3>
+                <p class="text-xs mt-0.5 mb-3 font-medium" style="color:#1652c4">${escapeHtml(fac.designation)}</p>
                 <div class="space-y-1.5 mb-4 text-[0.75rem]" style="color:#5b6478">
-                  <p><i class="fa-solid fa-graduation-cap w-4" style="color:#2fe6dd"></i> ${fac.qualification}</p>
-                  <p><i class="fa-solid fa-flask w-4" style="color:#2fe6dd"></i> ${fac.specialization}</p>
+                  <p><i class="fa-solid fa-graduation-cap w-4" style="color:#2fe6dd"></i> ${escapeHtml(fac.qualification)}</p>
+                  <p><i class="fa-solid fa-flask w-4" style="color:#2fe6dd"></i> ${escapeHtml(specialization)}</p>
                 </div>
                 <div class="flex flex-wrap gap-1.5 mb-4">
-                    ${fac.specialization.split(',').map(s => `<span class="px-2 py-0.5 rounded-md text-[10px] font-mono" style="background:#f0f4ff;color:#1652c4">${s.trim()}</span>`).join('')}
+                    ${specialization.split(',').map(s => `<span class="px-2 py-0.5 rounded-md text-[10px] font-mono" style="background:#f0f4ff;color:#1652c4">${escapeHtml(s.trim())}</span>`).join('')}
                 </div>
                 <div class="flex gap-2 pt-3" style="border-top:1px solid #e2e8f0">
-                  <a href="mailto:${fac.email}" aria-label="Email" title="Email" class="w-8 h-8 rounded-lg flex items-center justify-center text-xs transition-all" style="background:#f0f4ff;color:#1652c4" onmouseover="this.style.background='#1652c4';this.style.color='#fff'" onmouseout="this.style.background='#f0f4ff';this.style.color='#1652c4'"><i class="fa-solid fa-envelope"></i></a>
+                  <a href="mailto:${escapeHtml(fac.email)}" aria-label="Email" title="Email" class="w-8 h-8 rounded-lg flex items-center justify-center text-xs transition-all" style="background:#f0f4ff;color:#1652c4" onmouseover="this.style.background='#1652c4';this.style.color='#fff'" onmouseout="this.style.background='#f0f4ff';this.style.color='#1652c4'"><i class="fa-solid fa-envelope"></i></a>
                   ${fac.orcid ? `<a href="https://orcid.org/${fac.orcid}" target="_blank" aria-label="ORCID" title="ORCID" class="w-8 h-8 rounded-lg flex items-center justify-center text-xs transition-all" style="background:#f0f4ff;color:#1652c4" onmouseover="this.style.background='#1652c4';this.style.color='#fff'" onmouseout="this.style.background='#f0f4ff';this.style.color='#1652c4'"><i class="fa-brands fa-orcid"></i></a>` : ''}
                 </div>
               </div>
@@ -76,7 +85,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             grid.appendChild(card);
         });
         
-        // Re-init AOS for new elements
+        // Re-init AOS for dynamically loaded elements
         if (typeof AOS !== 'undefined') {
             AOS.refreshHard();
         }
@@ -105,5 +114,11 @@ document.addEventListener('DOMContentLoaded', async () => {
                 });
             });
         });
+    }
+
+    function escapeHtml(value) {
+        const div = document.createElement('div');
+        div.textContent = value == null ? '' : String(value);
+        return div.innerHTML;
     }
 });

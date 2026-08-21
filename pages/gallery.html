@@ -1,9 +1,9 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
 <head>
   <meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-  <meta name="description" content="Gallery — Department of VLSI Design and Technology, SIET. Photos from labs, workshops, events, and campus life."/>
-  <title>Gallery — VLSI | SIET</title>
+  <meta name="description" content="Campus & Lab Gallery â€” Department of VLSI Design and Technology, SIET."/>
+  <title>Gallery â€” VLSI | SIET</title>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet"/>
@@ -16,7 +16,7 @@
 </head>
 <body class="font-body antialiased" style="color:#0b1b33;background:#fff">
 
-<div id="loading-screen"><p class="loader-mark">VLSI<span style="color:#2fe6dd">·</span>SIET</p><div class="loader-trace"></div></div>
+<div id="loading-screen"><p class="loader-mark">VLSI<span style="color:#2fe6dd">Â·</span>SIET</p><div class="loader-trace"></div></div>
 <div id="scroll-progress" aria-hidden="true"></div>
 
 <!-- HEADER -->
@@ -33,7 +33,8 @@
       <a href="faculty.html"        class="nav-link px-3.5 py-2 text-sm font-medium rounded-lg transition-all">Faculty</a>
       <a href="students.html"       class="nav-link px-3.5 py-2 text-sm font-medium rounded-lg transition-all">Students</a>
       <a href="labs.html"           class="nav-link px-3.5 py-2 text-sm font-medium rounded-lg transition-all">Labs</a>
-      <a href="research.html"       class="nav-link px-3.5 py-2 text-sm font-medium rounded-lg transition-all">Research</a>
+      <a href="gallery.html"        class="nav-link px-3.5 py-2 text-sm font-medium rounded-lg transition-all" style="color:#2fe6dd">Gallery</a>
+      <a href="achievements.html"   class="nav-link px-3.5 py-2 text-sm font-medium rounded-lg transition-all">Achievements</a>
       <a href="placements.html"     class="nav-link px-3.5 py-2 text-sm font-medium rounded-lg transition-all">Placements</a>
       <a href="contact.html"        class="nav-link px-3.5 py-2 text-sm font-medium rounded-lg transition-all">Contact</a>
     </nav>
@@ -46,7 +47,8 @@
     <div class="max-w-screen-xl mx-auto px-5 pt-3 pb-5 flex flex-col gap-1" style="background:rgba(11,27,51,.96);backdrop-filter:blur(20px);border-top:1px solid rgba(255,255,255,.08)">
       <a href="../index.html" class="px-4 py-3 text-sm font-medium text-white/75 hover:text-white rounded-xl hover:bg-white/10 transition-all">Home</a>
       <a href="faculty.html"  class="px-4 py-3 text-sm font-medium text-white/75 hover:text-white rounded-xl hover:bg-white/10 transition-all">Faculty</a>
-      <a href="labs.html"     class="px-4 py-3 text-sm font-medium text-white/75 hover:text-white rounded-xl hover:bg-white/10 transition-all">Labs</a>
+      <a href="students.html" class="nav-link px-3.5 py-2 text-sm font-medium rounded-lg transition-all">Students</a>
+      <a href="gallery.html"  class="px-4 py-3 text-sm font-medium text-white rounded-xl bg-white/10">Gallery</a>
       <a href="contact.html"  class="px-4 py-3 text-sm font-medium text-white/75 hover:text-white rounded-xl hover:bg-white/10 transition-all">Contact</a>
     </div>
   </nav>
@@ -81,62 +83,13 @@
   <section class="py-16 bg-white">
     <div class="max-w-screen-xl mx-auto px-5 lg:px-8">
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5" id="gallery-grid">
-
-        <div class="gallery-card" data-category="labs" data-aos="fade-up">
-          <div class="w-full h-full flex items-center justify-center"><i class="fa-solid fa-microchip text-4xl" style="color:rgba(47,230,221,.4)"></i></div>
-          <div class="gallery-overlay"><p class="text-white text-xs font-medium">VLSI Design Lab</p></div>
-        </div>
-        <div class="gallery-card" data-category="labs" data-aos="fade-up" data-aos-delay="60">
-          <div class="w-full h-full flex items-center justify-center"><i class="fa-solid fa-code text-4xl" style="color:rgba(47,230,221,.4)"></i></div>
-          <div class="gallery-overlay"><p class="text-white text-xs font-medium">FPGA Lab — Xilinx Boards</p></div>
-        </div>
-        <div class="gallery-card" data-category="workshops" data-aos="fade-up" data-aos-delay="120">
-          <div class="w-full h-full flex items-center justify-center"><i class="fa-solid fa-chalkboard-user text-4xl" style="color:rgba(47,230,221,.4)"></i></div>
-          <div class="gallery-overlay"><p class="text-white text-xs font-medium">IoT Workshop 2024</p></div>
-        </div>
-        <div class="gallery-card" data-category="seminars" data-aos="fade-up" data-aos-delay="180">
-          <div class="w-full h-full flex items-center justify-center"><i class="fa-solid fa-users-rectangle text-4xl" style="color:rgba(47,230,221,.4)"></i></div>
-          <div class="gallery-overlay"><p class="text-white text-xs font-medium">Guest Lecture — VLSI Industry Trends</p></div>
-        </div>
-        <div class="gallery-card" data-category="events" data-aos="fade-up" data-aos-delay="0">
-          <div class="w-full h-full flex items-center justify-center"><i class="fa-solid fa-trophy text-4xl" style="color:rgba(47,230,221,.4)"></i></div>
-          <div class="gallery-overlay"><p class="text-white text-xs font-medium">Annual Tech Fest — Circuit Quest</p></div>
-        </div>
-        <div class="gallery-card" data-category="campus" data-aos="fade-up" data-aos-delay="60">
-          <div class="w-full h-full flex items-center justify-center"><i class="fa-solid fa-building-columns text-4xl" style="color:rgba(47,230,221,.4)"></i></div>
-          <div class="gallery-overlay"><p class="text-white text-xs font-medium">SIET Main Building</p></div>
-        </div>
-        <div class="gallery-card" data-category="workshops" data-aos="fade-up" data-aos-delay="120">
-          <div class="w-full h-full flex items-center justify-center"><i class="fa-solid fa-screwdriver-wrench text-4xl" style="color:rgba(47,230,221,.4)"></i></div>
-          <div class="gallery-overlay"><p class="text-white text-xs font-medium">Embedded Systems FDP</p></div>
-        </div>
-        <div class="gallery-card" data-category="labs" data-aos="fade-up" data-aos-delay="180">
-          <div class="w-full h-full flex items-center justify-center"><i class="fa-solid fa-wave-square text-4xl" style="color:rgba(47,230,221,.4)"></i></div>
-          <div class="gallery-overlay"><p class="text-white text-xs font-medium">Analog Electronics Lab</p></div>
-        </div>
-        <div class="gallery-card" data-category="events" data-aos="fade-up" data-aos-delay="0">
-          <div class="w-full h-full flex items-center justify-center"><i class="fa-solid fa-medal text-4xl" style="color:rgba(47,230,221,.4)"></i></div>
-          <div class="gallery-overlay"><p class="text-white text-xs font-medium">Hackathon Winners — Team VLSI</p></div>
-        </div>
-        <div class="gallery-card" data-category="seminars" data-aos="fade-up" data-aos-delay="60">
-          <div class="w-full h-full flex items-center justify-center"><i class="fa-solid fa-person-chalkboard text-4xl" style="color:rgba(47,230,221,.4)"></i></div>
-          <div class="gallery-overlay"><p class="text-white text-xs font-medium">IEEE Conference Presentation</p></div>
-        </div>
-        <div class="gallery-card" data-category="campus" data-aos="fade-up" data-aos-delay="120">
-          <div class="w-full h-full flex items-center justify-center"><i class="fa-solid fa-tree text-4xl" style="color:rgba(47,230,221,.4)"></i></div>
-          <div class="gallery-overlay"><p class="text-white text-xs font-medium">Green Campus</p></div>
-        </div>
-        <div class="gallery-card" data-category="labs" data-aos="fade-up" data-aos-delay="180">
-          <div class="w-full h-full flex items-center justify-center"><i class="fa-solid fa-network-wired text-4xl" style="color:rgba(47,230,221,.4)"></i></div>
-          <div class="gallery-overlay"><p class="text-white text-xs font-medium">Embedded Systems Lab</p></div>
-        </div>
-
+        <!-- Rendered dynamically by Supabase Storage gallery loader -->
       </div>
 
       <div class="mt-14 text-center" data-aos="fade-up">
         <div class="inline-flex items-center gap-2 px-5 py-3 rounded-2xl text-sm" style="background:#f4f7fb;color:#5b6478">
-          <i class="fa-solid fa-camera" style="color:#1652c4"></i>
-          Gallery images will be connected to Google Drive. Share the Drive folder with images to populate.
+          <i class="fa-solid fa-cloud-arrow-up" style="color:#1652c4"></i>
+          Gallery images load dynamically from Supabase Storage (public 'gallery' bucket).
         </div>
       </div>
     </div>
@@ -144,8 +97,8 @@
 </main>
 
 <!-- Lightbox Modal -->
-<div class="lightbox-overlay" id="lightbox" onclick="this.classList.remove('is-active')">
-  <button class="lightbox-close" aria-label="Close"><i class="fa-solid fa-xmark"></i></button>
+<div class="lightbox-overlay" id="lightbox" onclick="closeLightbox()">
+  <button class="lightbox-close" aria-label="Close" onclick="closeLightbox()"><i class="fa-solid fa-xmark"></i></button>
   <div class="lightbox-content" id="lightbox-content" onclick="event.stopPropagation()">
     <!-- Image will be injected here -->
   </div>
@@ -178,7 +131,7 @@
     </div>
     <div class="mt-12 pt-6 flex flex-col md:flex-row justify-between items-center gap-4 text-xs" style="border-top:1px solid rgba(255,255,255,.1)">
       <p>&copy; 2026 Department of VLSI Design and Technology, SIET. All rights reserved.</p>
-      <div class="flex items-center gap-4"><a href="privacy.html" class="hover:text-white transition-colors">Privacy Policy</a><a href="#" onclick="window.scrollTo({top:0,behavior:'smooth'});return false" class="hover:text-white transition-colors">Back to Top ↑</a></div>
+      <div class="flex items-center gap-4"><a href="privacy.html" class="hover:text-white transition-colors">Privacy Policy</a><a href="#" onclick="window.scrollTo({top:0,behavior:'smooth'});return false" class="hover:text-white transition-colors">Back to Top â†‘</a></div>
     </div>
   </div>
 </footer>
@@ -187,15 +140,21 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
 <script src="../js/main.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="../js/supabase-config.js"></script>
+
 <script>
 AOS.init({duration:700,once:true,offset:60});
 
 function filterGallery(category, btn) {
-    // Update buttons
-    document.querySelectorAll('#gallery-filters .filter-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('#gallery-filters .filter-btn').forEach(b => {
+        b.classList.remove('active');
+        b.style.color = '#5b6478';
+        b.style.borderColor = '#e2e8f0';
+    });
     btn.classList.add('active');
+    btn.style.color = '#0b1b33';
 
-    // Filter cards
     document.querySelectorAll('#gallery-grid .gallery-card').forEach(card => {
         if (category === 'all' || card.dataset.category === category) {
             card.style.display = '';
@@ -203,6 +162,91 @@ function filterGallery(category, btn) {
             card.style.display = 'none';
         }
     });
+}
+
+function openLightbox(imgSrc, caption) {
+    var lb = document.getElementById('lightbox');
+    var content = document.getElementById('lightbox-content');
+    if (!lb || !content) return;
+    content.innerHTML = '<img src="' + imgSrc + '" alt="' + (caption || '') + '" class="max-h-[80vh] max-w-full rounded-2xl object-contain shadow-2xl mx-auto"><p class="text-white text-center mt-3 text-sm font-medium">' + (caption || '') + '</p>';
+    lb.classList.add('is-active');
+}
+
+function closeLightbox() {
+    var lb = document.getElementById('lightbox');
+    if (lb) lb.classList.remove('is-active');
+}
+
+// Dynamic Gallery Loader
+document.addEventListener('DOMContentLoaded', async function() {
+    var galleryGrid = document.getElementById('gallery-grid');
+    if (!galleryGrid) return;
+
+    var defaultItems = [
+      { name: "VLSI Design Lab", category: "labs", icon: "fa-microchip" },
+      { name: "FPGA Lab â€” Xilinx Boards", category: "labs", icon: "fa-code" },
+      { name: "IoT Workshop 2024", category: "workshops", icon: "fa-chalkboard-user" },
+      { name: "Guest Lecture â€” VLSI Industry Trends", category: "seminars", icon: "fa-users-rectangle" },
+      { name: "Annual Tech Fest â€” Circuit Quest", category: "events", icon: "fa-trophy" },
+      { name: "SIET Main Building", category: "campus", icon: "fa-building-columns" },
+      { name: "Embedded Systems FDP", category: "workshops", icon: "fa-screwdriver-wrench" },
+      { name: "Analog Electronics Lab", category: "labs", icon: "fa-wave-square" },
+      { name: "Hackathon Winners â€” Team VLSI", category: "events", icon: "fa-medal" },
+      { name: "IEEE Conference Presentation", category: "seminars", icon: "fa-person-chalkboard" },
+      { name: "Green Campus", category: "campus", icon: "fa-tree" },
+      { name: "Embedded Systems Lab", category: "labs", icon: "fa-network-wired" }
+    ];
+
+    try {
+      var bucketName = (typeof SUPABASE_BUCKETS !== 'undefined' && SUPABASE_BUCKETS.gallery) ? SUPABASE_BUCKETS.gallery : 'gallery';
+      var files = [];
+      if (typeof listSupabaseBucketFiles === 'function') {
+        files = await listSupabaseBucketFiles(bucketName);
+      }
+
+      if (files && files.length > 0) {
+        galleryGrid.innerHTML = files.map(function(file, index) {
+          var title = file.name.replace(/\.[^/.]+$/, "").replace(/[-_]/g, " ");
+          var cat = 'events';
+          var lower = file.name.toLowerCase();
+          if (lower.includes('lab')) cat = 'labs';
+          else if (lower.includes('workshop') || lower.includes('fdp')) cat = 'workshops';
+          else if (lower.includes('seminar') || lower.includes('talk') || lower.includes('lecture')) cat = 'seminars';
+          else if (lower.includes('campus') || lower.includes('building')) cat = 'campus';
+
+          return [
+            '<div class="gallery-card cursor-pointer group" data-category="' + cat + '" data-aos="fade-up" data-aos-delay="' + ((index % 4) * 60) + '" onclick="openLightbox(\'' + escapeAttr(file.publicUrl) + '\', \'' + escapeAttr(title) + '\')">',
+              '<img src="' + escapeAttr(file.publicUrl) + '" alt="' + escapeAttr(title) + '" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" onerror="this.parentElement.style.display=\'none\'">',
+              '<div class="gallery-overlay"><p class="text-white text-xs font-medium">' + escapeHtml(title) + '</p></div>',
+            '</div>'
+          ].join('');
+        }).join('');
+      } else {
+        // Fallback default gallery cards
+        galleryGrid.innerHTML = defaultItems.map(function(item, index) {
+          return [
+            '<div class="gallery-card" data-category="' + item.category + '" data-aos="fade-up" data-aos-delay="' + ((index % 4) * 60) + '">',
+              '<div class="w-full h-full flex items-center justify-center"><i class="fa-solid ' + item.icon + ' text-4xl" style="color:rgba(47,230,221,.4)"></i></div>',
+              '<div class="gallery-overlay"><p class="text-white text-xs font-medium">' + escapeHtml(item.name) + '</p></div>',
+            '</div>'
+          ].join('');
+        }).join('');
+      }
+    } catch(err) {
+      console.warn("[Gallery] Error loading Supabase gallery images:", err);
+    }
+
+    if (typeof AOS !== 'undefined') AOS.refreshHard();
+});
+
+function escapeHtml(value) {
+    const div = document.createElement('div');
+    div.textContent = value == null ? '' : String(value);
+    return div.innerHTML;
+}
+
+function escapeAttr(value) {
+    return String(value || '').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
 }
 </script>
 </body>

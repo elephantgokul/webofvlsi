@@ -2,8 +2,8 @@
 <html lang="en" class="scroll-smooth">
 <head>
   <meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-  <meta name="description" content="Students — VLSI Department, SIET"/>
-  <title>Students — VLSI | SIET</title>
+  <meta name="description" content="Student Achievement Detail - VLSI Department, SIET"/>
+  <title>Student Detail - VLSI | SIET</title>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet"/>
@@ -61,52 +61,20 @@
   <section class="relative flex items-end overflow-hidden" style="min-height:38vh;background:linear-gradient(135deg,#0b1b33 0%,#1652c4 100%);padding:8rem 1.25rem 3.5rem">
     <div aria-hidden="true" style="position:absolute;inset:0;opacity:.11"><svg width="100%" height="100%"><defs><pattern id="ph" width="80" height="80" patternUnits="userSpaceOnUse"><path d="M0 40H80M40 0V80" stroke="#2fe6dd" stroke-width="1" fill="none"/><circle cx="40" cy="40" r="2" fill="#2fe6dd"/></pattern></defs><rect width="100%" height="100%" fill="url(#ph)"/></svg></div>
     <div class="max-w-screen-xl mx-auto w-full relative z-10">
-      <nav aria-label="Breadcrumb" class="mb-4"><ol class="flex items-center gap-2 text-xs font-mono" style="color:rgba(255,255,255,.45)"><li><a href="../index.html" style="transition:color .2s" onmouseover="this.style.color='#2fe6dd'" onmouseout="this.style.color=''">Home</a></li><li><i class="fa-solid fa-chevron-right text-[10px]"></i></li><li style="color:#2fe6dd">Students</li></ol></nav>
-      <h1 class="font-display font-bold text-3xl md:text-5xl text-white">Our Students</h1>
-      <p class="mt-2 text-sm md:text-base" style="color:rgba(255,255,255,.55)">Meet the brilliant minds shaping the future of VLSI and Embedded Systems</p>
+      <nav aria-label="Breadcrumb" class="mb-4"><ol class="flex items-center gap-2 text-xs font-mono" style="color:rgba(255,255,255,.45)"><li><a href="../index.html" style="transition:color .2s" onmouseover="this.style.color='#2fe6dd'" onmouseout="this.style.color=''">Home</a></li><li><i class="fa-solid fa-chevron-right text-[10px]"></i></li><li><a href="students.html" style="transition:color .2s" onmouseover="this.style.color='#2fe6dd'" onmouseout="this.style.color=''">Students</a></li><li><i class="fa-solid fa-chevron-right text-[10px]"></i></li><li style="color:#2fe6dd">Detail</li></ol></nav>
+      <h1 class="font-display font-bold text-3xl md:text-5xl text-white">Student Detail</h1>
+      <p class="mt-2 text-sm md:text-base" style="color:rgba(255,255,255,.55)">Achievement profile and student information</p>
     </div>
   </section>
 
-  <!-- FILTERS & SEARCH & VIEW TOGGLE -->
-  <section class="py-8 bg-mist border-b" style="border-color:#e2e8f0">
-    <div class="max-w-screen-xl mx-auto px-5 lg:px-8">
-      <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4">
-        <!-- Filter pills -->
-        <div class="flex flex-wrap gap-2.5" id="filter-buttons" role="group" aria-label="Filter by year">
-          <button data-filter="all" class="filter-btn active px-4 py-2 rounded-xl text-sm font-medium border" style="border-color:#e2e8f0;color:#0b1b33">All Students</button>
-          <button data-filter="IV" class="filter-btn px-4 py-2 rounded-xl text-sm font-medium border" style="border-color:#e2e8f0;color:#5b6478">Final Year (IV)</button>
-          <button data-filter="III" class="filter-btn px-4 py-2 rounded-xl text-sm font-medium border" style="border-color:#e2e8f0;color:#5b6478">Third Year (III)</button>
-          <button data-filter="II" class="filter-btn px-4 py-2 rounded-xl text-sm font-medium border" style="border-color:#e2e8f0;color:#5b6478">Second Year (II)</button>
-          <button data-filter="I" class="filter-btn px-4 py-2 rounded-xl text-sm font-medium border" style="border-color:#e2e8f0;color:#5b6478">First Year (I)</button>
-        </div>
-
-        <!-- Search + View Toggle -->
-        <div class="flex items-center gap-3 w-full lg:w-auto">
-          <div class="search-wrapper flex-1 lg:w-64">
-            <i class="fa-solid fa-search search-icon"></i>
-            <input type="text" id="student-search" placeholder="Search by name or roll no..." class="search-input">
-          </div>
-          <div class="view-toggle">
-            <button id="view-card" class="view-toggle-btn active" title="Card View"><i class="fa-solid fa-grip"></i> Cards</button>
-            <button id="view-table" class="view-toggle-btn" title="Table View"><i class="fa-solid fa-table-list"></i> Table</button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- STUDENTS GRID -->
+  <!-- STUDENT DETAIL -->
   <section class="py-16 bg-white">
     <div class="max-w-screen-xl mx-auto px-5 lg:px-8">
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6" id="students-grid">
-        <!-- Student cards injected dynamically by students.js -->
+      <div class="mb-6">
+        <a href="students.html" class="inline-flex items-center gap-2 text-sm font-semibold hover:underline" style="color:#1652c4"><i class="fa-solid fa-arrow-left text-xs"></i> Back to Students</a>
       </div>
-
-      <div class="mt-14 text-center" data-aos="fade-up">
-        <div class="inline-flex items-center gap-2 px-5 py-3 rounded-2xl text-sm" style="background:#f4f7fb;color:#5b6478">
-          <i class="fa-solid fa-circle-info" style="color:#1652c4"></i>
-          Data loads dynamically from Google Apps Script. Card and table views available.
-        </div>
+      <div id="student-detail-root">
+        <!-- Student detail injected dynamically by student-detail.js -->
       </div>
     </div>
   </section>
@@ -149,7 +117,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
 <script src="../js/main.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>`r`n<script src="../js/supabase-config.js"></script>`r`n<script src="../js/api.js"></script>
-<script src="../js/students.js"></script>
+<script src="../js/student-detail.js"></script>
 <script>AOS.init({duration:700,once:true,offset:60});</script>
 </body>
 </html>

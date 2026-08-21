@@ -1,4 +1,4 @@
-// js/hod.js — HOD profile renderer, loads data from api.js
+﻿// js/hod.js â€” HOD profile renderer, loads data from api.js & Supabase Storage
 document.addEventListener('DOMContentLoaded', async () => {
     const profileContainer = document.getElementById('hod-profile');
     if (!profileContainer) return;
@@ -26,12 +26,17 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     function renderHODProfile(hod) {
-        const photoHtml = hod.photoUrl
-            ? `<img src="${hod.photoUrl}" alt="${hod.name}" class="w-40 h-40 rounded-full object-cover border-4 border-white/25 shadow-2xl">`
+        const rawPhoto = hod.photoUrl || hod.image;
+        const photoSrc = typeof resolveSupabaseImageUrl === 'function'
+            ? resolveSupabaseImageUrl(rawPhoto, (typeof SUPABASE_BUCKETS !== 'undefined' ? SUPABASE_BUCKETS.faculty : 'faculty'), rawPhoto)
+            : resolveAssetPath(rawPhoto);
+
+        const photoHtml = photoSrc
+            ? `<img src="${escapeHtml(photoSrc)}" alt="${escapeHtml(hod.name)}" class="w-40 h-40 rounded-full object-cover mx-auto mb-4 border-4 border-blue-600" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="hod-photo-placeholder" style="display:none"><i class="fa-solid fa-user text-white text-5xl"></i></div>`
             : `<div class="hod-photo-placeholder"><i class="fa-solid fa-user text-white text-5xl"></i></div>`;
 
         const researchTags = (hod.researchInterests || []).map(tag =>
-            `<span class="research-tag">${tag}</span>`
+            `<span class="research-tag">${escapeHtml(tag)}</span>`
         ).join('');
 
         profileContainer.innerHTML = `
@@ -43,18 +48,18 @@ document.addEventListener('DOMContentLoaded', async () => {
                             ${photoHtml}
                         </div>
                         <div class="hod-info-section text-center">
-                            <h2 class="font-display font-bold text-xl" style="color:#0b1b33">${hod.name}</h2>
-                            <p class="text-sm font-medium mt-1" style="color:#1652c4">${hod.designation || 'Head of Department'}</p>
-                            <p class="text-xs mt-1" style="color:#5b6478">${hod.qualification}</p>
+                            <h2 class="font-display font-bold text-xl" style="color:#0b1b33">${escapeHtml(hod.name)}</h2>
+                            <p class="text-sm font-medium mt-1" style="color:#1652c4">${escapeHtml(hod.designation || 'Head of Department')}</p>
+                            <p class="text-xs mt-1" style="color:#5b6478">${escapeHtml(hod.qualification)}</p>
 
                             <div class="mt-6 pt-5 space-y-3" style="border-top:1px solid #e2e8f0">
                                 ${hod.contact ? `<div class="flex items-center justify-center gap-2 text-xs" style="color:#5b6478">
                                     <i class="fa-solid fa-envelope" style="color:#2fe6dd"></i>
-                                    <a href="mailto:${hod.contact}" class="hover:underline" style="color:#1652c4">${hod.contact}</a>
+                                    <a href="mailto:${escapeHtml(hod.contact)}" class="hover:underline" style="color:#1652c4">${escapeHtml(hod.contact)}</a>
                                 </div>` : ''}
                                 ${hod.phone ? `<div class="flex items-center justify-center gap-2 text-xs" style="color:#5b6478">
                                     <i class="fa-solid fa-phone" style="color:#2fe6dd"></i>
-                                    <span>${hod.phone}</span>
+                                    <span>${escapeHtml(hod.phone)}</span>
                                 </div>` : ''}
                             </div>
                         </div>
@@ -69,7 +74,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                             <i class="fa-solid fa-quote-left" style="color:#1652c4"></i> Message from the HOD
                         </h3>
                         <blockquote style="border-left:3px solid #1652c4;padding-left:1.25rem;margin:0">
-                            <p style="color:#5b6478;line-height:1.85;font-size:.9rem;font-style:italic">${hod.message}</p>
+                            <p style="color:#5b6478;line-height:1.85;font-size:.9rem;font-style:italic">${escapeHtml(hod.message)}</p>
                         </blockquote>
                     </div>
 
@@ -108,5 +113,11 @@ document.addEventListener('DOMContentLoaded', async () => {
         `;
 
         if (typeof AOS !== 'undefined') AOS.refreshHard();
+    }
+
+    function escapeHtml(value) {
+        const div = document.createElement('div');
+        div.textContent = value == null ? '' : String(value);
+        return div.innerHTML;
     }
 });
