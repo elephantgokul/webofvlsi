@@ -142,17 +142,30 @@ function getBatchFromRegisterNo(registerNo) {
     return match ? "20" + match[1] + " - 20" + (parseInt(match[1], 10) + 4) : "2024 - 2028";
 }
 
-/**
- * Clear all API caches
- */
-function clearApiCache() {
-    try {
-        Object.keys(sessionStorage).forEach(key => {
-            if (key.startsWith(API_CACHE_PREFIX)) {
-                sessionStorage.removeItem(key);
-            }
-        });
-    } catch (e) { /* ignore */ }
+function withDefaultStudentFields(data) {
+    const source = data || getFallbackData();
+    if (!Array.isArray(source.students)) return source;
+
+    return Object.assign({}, source, {
+        students: source.students.map(student => {
+            const registerNo = student.registerNo || student.rollno || "";
+            const image = student.image || student.photoUrl || "";
+
+            return Object.assign({
+                achievement: "",
+                description: "",
+                linkedin: "",
+                github: ""
+            }, student, {
+                registerNo: registerNo,
+                rollno: student.rollno || registerNo,
+                image: image,
+                photoUrl: student.photoUrl || image,
+                batch: student.batch || getBatchFromRegisterNo(registerNo),
+                yearToken: getStudentYearToken(student.year)
+            });
+        })
+    });
 }
 
 /**
