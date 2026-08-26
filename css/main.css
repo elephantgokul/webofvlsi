@@ -1,4 +1,4 @@
-/* =========================================================================
+﻿/* =========================================================================
    SIET · DEPARTMENT OF VLSI — CUSTOM STYLESHEET
    Tailwind (CDN) handles utility classes. This file holds:
    design tokens, the signal-trace signature motif, and anything Tailwind
@@ -83,14 +83,14 @@ textarea:focus-visible {
 #loading-screen {
   position: fixed;
   inset: 0;
-  z-index: 100;
+  z-index: 9999;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   gap: 1rem;
   background: var(--ink-navy);
-  transition: opacity 0.6s ease, visibility 0.6s ease;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
 }
 
 #loading-screen.is-hidden {

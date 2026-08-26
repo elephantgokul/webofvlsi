@@ -14,15 +14,29 @@ window.escapeHtml = escapeHtml;
 
 /* ---- Loading screen ---------------------------------------------------- */
 (function loadingScreen() {
-  const screen = document.getElementById("loading-screen");
-  if (!screen) return;
-
   function hide() {
-    screen.classList.add("is-hidden");
+    var screen = document.getElementById("loading-screen");
+    if (screen) {
+      screen.classList.add("is-hidden");
+      setTimeout(function() {
+        if (screen && screen.parentNode) {
+          screen.style.display = "none";
+        }
+      }, 300);
+    }
   }
 
-  window.addEventListener("load", () => setTimeout(hide, 500));
-  setTimeout(hide, 4000); // fail-safe: even if a resource breaks, screen won't stick
+  // Dismiss immediately when DOM is ready or after brief 150ms animation
+  if (document.readyState === "complete" || document.readyState === "interactive") {
+    setTimeout(hide, 150);
+  } else {
+    document.addEventListener("DOMContentLoaded", function() {
+      setTimeout(hide, 150);
+    });
+  }
+
+  window.addEventListener("load", hide);
+  setTimeout(hide, 800); // Fail-safe: dismiss after 800ms max so it NEVER gets stuck
 })();
 
 /* ---- Header: sticky background + mobile menu --------------------------- */
