@@ -1,4 +1,4 @@
-﻿// js/hod.js â€” HOD profile renderer, loads data from api.js & Supabase Storage
+﻿// js/hod.js  -  HOD profile renderer, loads data from api.js & Supabase Storage
 document.addEventListener('DOMContentLoaded', async () => {
     const profileContainer = document.getElementById('hod-profile');
     if (!profileContainer) return;

@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', async () => {
+﻿document.addEventListener('DOMContentLoaded', async () => {
     const root = document.getElementById('student-detail-root');
     if (!root) return;
 
@@ -126,11 +126,11 @@ document.addEventListener('DOMContentLoaded', async () => {
         const paragraphs = text.split(/\n\s*\n/);
         return paragraphs.map(p => {
             const lines = p.trim().split('\n');
-            const isBulletGroup = lines.every(l => /^[-*â€¢]|\s*-\s+/.test(l.trim()));
+            const isBulletGroup = lines.every(l => /^[-*•]|\s*-\s+/.test(l.trim()));
             
             if (isBulletGroup) {
                 const items = lines.map(l => {
-                    const clean = l.replace(/^[-*â€¢\s]+/, '').trim();
+                    const clean = l.replace(/^[-*•\s]+/, '').trim();
                     return `<li class="flex items-start gap-2 mb-1.5"><span class="w-1.5 h-1.5 rounded-full mt-2 flex-shrink-0" style="background:#1652c4"></span><span>${escapeHtml(clean)}</span></li>`;
                 }).join('');
                 return `<ul class="space-y-1 mb-4 pl-1">${items}</ul>`;
@@ -139,8 +139,8 @@ document.addEventListener('DOMContentLoaded', async () => {
             // Mixed or regular paragraph with single lines
             const formattedLines = lines.map(l => {
                 const trimmed = l.trim();
-                if (/^[-*â€¢]/.test(trimmed)) {
-                    const clean = trimmed.replace(/^[-*â€¢\s]+/, '').trim();
+                if (/^[-*•]/.test(trimmed)) {
+                    const clean = trimmed.replace(/^[-*•\s]+/, '').trim();
                     return `<div class="flex items-start gap-2 my-1 pl-2"><span class="w-1.5 h-1.5 rounded-full mt-2 flex-shrink-0" style="background:#1652c4"></span><span>${escapeHtml(clean)}</span></div>`;
                 }
                 return escapeHtml(trimmed);

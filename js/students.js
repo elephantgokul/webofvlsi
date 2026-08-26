@@ -1,4 +1,4 @@
-// js/students.js â€” Student data renderer with search, filter, view toggle, and Supabase Storage integration
+﻿// js/students.js  -  Student data renderer with search, filter, view toggle, and Supabase Storage integration
 document.addEventListener('DOMContentLoaded', async () => {
     const grid = document.getElementById('students-grid');
     if (!grid) return;
@@ -92,7 +92,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 : '';
             
             const achText = student.achievementTitle || student.achievement || '';
-            const cleanAch = achText.replace(/^[-*â€¢\d.\s]+/, '').split('\n')[0];
+            const cleanAch = achText.replace(/^[-*•\d.\s]+/, '').split('\n')[0];
             const achievementPreview = cleanAch
                 ? `<p class="text-xs line-clamp-2 mt-2 pt-2" style="color:#5b6478;border-top:1px dashed #e2e8f0"><i class="fa-solid fa-trophy mr-1 text-[10px]" style="color:#d97706"></i>${escapeHtml(cleanAch)}</p>`
                 : '';

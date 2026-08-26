@@ -35,11 +35,7 @@
     <p class="mt-8 text-sm" style="color:var(--clr-text-muted)">The app works offline for previously visited pages.</p>
   </div>
   <script>
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.addEventListener('controllerchange', function() {
-        window.location.reload();
-      });
-    }
+    // Offline script
   </script>
 </body>
 </html>

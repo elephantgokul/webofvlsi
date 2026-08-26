@@ -1,6 +1,6 @@
-﻿// js/supabase-config.js â€” Centralized Supabase Configuration & Storage Utilities
+﻿// js/supabase-config.js  -  Centralized Supabase Configuration & Storage Utilities
 // Department of VLSI Design and Technology, SIET
-// Vanilla JS only â€” NO ES6 module imports/exports (loaded via plain <script> tag)
+// Vanilla JS only  -  NO ES6 module imports/exports (loaded via plain <script> tag)
 
 (function (window) {
   'use strict';
