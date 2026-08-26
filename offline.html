@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <meta name="description" content="Offline - SIET VLSI Department"/>
+  <title>Offline — VLSI | SIET</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="icon" type="image/png" href="assets/images/department_logo.png"/>
+  <script>tailwind.config={theme:{extend:{colors:{'ink-navy':'#0b1b33','circuit-blue':'#1652c4','signal-cyan':'#2fe6dd','mist':'#f4f7fb'},fontFamily:{display:['Space Grotesk','sans-serif'],body:['IBM Plex Sans','sans-serif'],mono:['IBM Plex Mono','monospace']}}}}</script>
+  <style>
+    :root { --clr-bg:#fff; --clr-surface:#fff; --clr-text-primary:#0b1b33; --clr-text-secondary:#5b6478; --clr-accent:#1652c4; --clr-cyan:#2fe6dd; }
+    html.dark { --clr-bg:#0a1628; --clr-surface:#111e35; --clr-text-primary:#e8edf5; --clr-text-secondary:#8899b4; --clr-accent:#4d8bff; --clr-cyan:#2fe6dd; }
+    body { font-family:'IBM Plex Sans',sans-serif; background:var(--clr-bg); color:var(--clr-text-primary); }
+  </style>
+</head>
+<body class="font-body antialiased min-h-screen flex items-center justify-center px-4">
+  <div class="text-center max-w-md">
+    <div class="w-24 h-24 mx-auto mb-6 rounded-2xl flex items-center justify-center" style="background:linear-gradient(135deg,var(--clr-accent),var(--clr-cyan))">
+      <i class="fa-solid fa-wifi-slash text-4xl text-white"></i>
+    </div>
+    <h1 class="font-display text-3xl font-bold mb-3" style="color:var(--clr-text-primary)">You're Offline</h1>
+    <p class="mb-6" style="color:var(--clr-text-secondary)">No internet connection detected. Some features may be unavailable.</p>
+    <div class="space-y-3">
+      <button onclick="window.location.reload()" class="btn-primary w-full sm:w-auto px-6 py-3" style="background:var(--clr-accent);color:white;border:none;border-radius:0.75rem;font-weight:600;cursor:pointer">
+        <i class="fa-solid fa-rotate mr-2"></i>Try Again
+      </button>
+      <a href="index.html" class="btn-secondary w-full sm:w-auto px-6 py-3 inline-block" style="background:var(--clr-surface);color:var(--clr-text-primary);border:1px solid var(--clr-border);border-radius:0.75rem;font-weight:500;text-decoration:none">
+        <i class="fa-solid fa-house mr-2"></i>Go Home
+      </a>
+    </div>
+    <p class="mt-8 text-sm" style="color:var(--clr-text-muted)">The app works offline for previously visited pages.</p>
+  </div>
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.addEventListener('controllerchange', function() {
+        window.location.reload();
+      });
+    }
+  </script>
+</body>
+</html>

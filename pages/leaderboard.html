@@ -2,8 +2,8 @@
 <html lang="en" class="scroll-smooth">
 <head>
   <meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-  <meta name="description" content="Student Profile - SIET VLSI Department"/>
-  <title>Student Profile — VLSI | SIET</title>
+  <meta name="description" content="Student Achievement Leaderboard - SIET VLSI Department"/>
+  <title>Leaderboard — VLSI | SIET</title>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet"/>
@@ -31,7 +31,7 @@
         <a href="faculty.html" class="nav-link px-3 py-2 rounded-lg text-sm font-medium">Faculty</a>
         <a href="hod.html" class="nav-link px-3 py-2 rounded-lg text-sm font-medium">HOD</a>
         <a href="gallery.html" class="nav-link px-3 py-2 rounded-lg text-sm font-medium">Gallery</a>
-        <a href="leaderboard.html" class="nav-link px-3 py-2 rounded-lg text-sm font-medium">Leaderboard</a>
+        <a href="leaderboard.html" class="nav-link px-3 py-2 rounded-lg text-sm font-medium active" aria-current="page">Leaderboard</a>
         <a href="stats.html" class="nav-link px-3 py-2 rounded-lg text-sm font-medium">Stats</a>
         <a href="calendar.html" class="nav-link px-3 py-2 rounded-lg text-sm font-medium">Calendar</a>
         <a href="contact.html" class="nav-link px-3 py-2 rounded-lg text-sm font-medium">Contact</a>
@@ -51,7 +51,7 @@
       <a href="faculty.html" class="nav-link block px-3 py-2 rounded-lg text-sm font-medium">Faculty</a>
       <a href="hod.html" class="nav-link block px-3 py-2 rounded-lg text-sm font-medium">HOD</a>
       <a href="gallery.html" class="nav-link block px-3 py-2 rounded-lg text-sm font-medium">Gallery</a>
-      <a href="leaderboard.html" class="nav-link block px-3 py-2 rounded-lg text-sm font-medium">Leaderboard</a>
+      <a href="leaderboard.html" class="nav-link block px-3 py-2 rounded-lg text-sm font-medium active" aria-current="page">Leaderboard</a>
       <a href="stats.html" class="nav-link block px-3 py-2 rounded-lg text-sm font-medium">Stats</a>
       <a href="calendar.html" class="nav-link block px-3 py-2 rounded-lg text-sm font-medium">Calendar</a>
       <a href="contact.html" class="nav-link block px-3 py-2 rounded-lg text-sm font-medium">Contact</a>
@@ -64,92 +64,56 @@
     <nav class="flex items-center gap-2 text-sm mb-8" aria-label="Breadcrumb" style="color:var(--clr-text-secondary)">
       <a href="../index.html" class="hover:text-accent">Home</a>
       <i class="fa-solid fa-chevron-right text-xs"></i>
-      <a href="students.html" class="hover:text-accent">Students</a>
-      <i class="fa-solid fa-chevron-right text-xs"></i>
-      <span class="text-primary font-medium" aria-current="page" id="breadcrumb-name">Student Profile</span>
+      <span class="text-primary font-medium" aria-current="page">Leaderboard</span>
     </nav>
+    <header class="mb-10">
+      <h1 class="font-display text-4xl sm:text-5xl font-bold mb-3" style="color:var(--clr-text-primary)">Achievement Leaderboard</h1>
+      <p class="text-lg max-w-2xl" style="color:var(--clr-text-secondary)">Ranking students by computed achievement score from internships, publications, projects, hackathons & VLSI tool expertise</p>
+    </header>
   </section>
 
   <section class="max-w-7xl mx-auto" data-aos="fade-up" data-aos-delay="100">
-    <div id="student-detail-root">
-      <div class="surface-card overflow-hidden mb-8" style="border:1px solid var(--clr-border)">
-        <div class="md:flex">
-          <div class="md:w-64 flex-shrink-0 relative">
-            <img id="student-photo" src="" alt="" class="w-full h-64 md:h-full object-cover" onerror="this.src='https://picsum.photos/seed/student/400/500'"/>
-            <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
-            <div class="absolute bottom-0 left-0 right-0 p-6 text-white">
-              <h1 id="student-name" class="font-display text-2xl sm:text-3xl font-bold mb-1"></h1>
-              <p id="student-regno" class="text-sm opacity-90 font-mono"></p>
-            </div>
+    <div class="surface-card p-6 mb-8" style="border:1px solid var(--clr-border)">
+      <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
+        <div class="flex flex-wrap items-center gap-3">
+          <label for="year-filter" class="text-sm font-medium" style="color:var(--clr-text-secondary)">Filter by Year:</label>
+          <div class="flex gap-2" role="group" aria-label="Year filter">
+            <button class="filter-btn active px-4 py-2 rounded-xl text-sm font-medium" data-year="all" aria-pressed="true">All Years</button>
+            <button class="filter-btn px-4 py-2 rounded-xl text-sm font-medium" data-year="I" aria-pressed="false">I Year</button>
+            <button class="filter-btn px-4 py-2 rounded-xl text-sm font-medium" data-year="II" aria-pressed="false">II Year</button>
+            <button class="filter-btn px-4 py-2 rounded-xl text-sm font-medium" data-year="III" aria-pressed="false">III Year</button>
+            <button class="filter-btn px-4 py-2 rounded-xl text-sm font-medium" data-year="IV" aria-pressed="false">IV Year</button>
           </div>
-          <div class="flex-1 p-6 sm:p-8">
-            <div class="flex flex-wrap items-center gap-3 mb-4">
-              <span id="student-year" class="badge badge-primary text-sm"></span>
-              <span id="student-batch" class="badge badge-cyan text-sm"></span>
-            </div>
-            <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-6 text-sm">
-              <div>
-                <p class="text-muted font-mono text-xs mb-1">University No.</p>
-                <p id="student-univno" style="color:var(--clr-text-primary)"></p>
-              </div>
-              <div>
-                <p class="text-muted font-mono text-xs mb-1">Email</p>
-                <p><a id="student-email" href="" class="hover:text-accent transition-colors" style="color:var(--clr-text-secondary)"></a></p>
-              </div>
-              <div>
-                <p class="text-muted font-mono text-xs mb-1">Phone</p>
-                <p id="student-phone" style="color:var(--clr-text-secondary)"></p>
-              </div>
-              <div>
-                <p class="text-muted font-mono text-xs mb-1">Links</p>
-                <div class="flex gap-2" id="student-links"></div>
-              </div>
-            </div>
-            <div class="flex flex-wrap gap-3" id="student-skills"></div>
-          </div>
+        </div>
+        <div class="relative max-w-xs w-full">
+          <i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2" style="color:var(--clr-text-muted)"></i>
+          <input type="search" id="leaderboard-search" placeholder="Search by name..." class="search-input w-full pl-10 pr-4 py-2.5 rounded-xl text-sm" aria-label="Search students by name" style="background:var(--clr-surface);border:1px solid var(--clr-border);color:var(--clr-text-primary)">
         </div>
       </div>
+      <div class="text-center text-sm" style="color:var(--clr-text-muted)" id="leaderboard-stats"></div>
+    </div>
 
-      <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        <div class="lg:col-span-2 space-y-8">
-          <section class="surface-card p-6" data-aos="fade-up" style="border:1px solid var(--clr-border)">
-            <h2 class="font-display text-xl font-semibold mb-4 flex items-center gap-2" style="color:var(--clr-text-primary)"><i class="fa-solid fa-trophy text-accent"></i>Achievements</h2>
-            <div id="student-achievements" class="prose max-w-none" style="color:var(--clr-text-secondary);line-height:1.8"></div>
-          </section>
+    <div id="leaderboard-podium" class="leaderboard-podium mb-10" role="region" aria-label="Top 3 podium"></div>
 
-          <section class="surface-card p-6" data-aos="fade-up" data-aos-delay="100" style="border:1px solid var(--clr-border)">
-            <div class="flex items-center justify-between mb-4">
-              <h2 class="font-display text-xl font-semibold flex items-center gap-2" style="color:var(--clr-text-primary)"><i class="fa-solid fa-clock-rotate-left text-cyan"></i>Achievement Timeline</h2>
-              <button id="export-pdf-btn" class="btn-secondary" aria-label="Download achievement timeline as PDF"><i class="fa-solid fa-file-pdf mr-2"></i>Download PDF</button>
-            </div>
-            <div id="student-timeline"></div>
-          </section>
-
-          <section class="surface-card p-6" data-aos="fade-up" data-aos-delay="200" style="border:1px solid var(--clr-border)">
-            <h2 class="font-display text-xl font-semibold mb-4 flex items-center gap-2" style="color:var(--clr-text-primary)"><i class="fa-solid fa-medal text-yellow-500"></i>Achievement Score Breakdown</h2>
-            <div id="score-breakdown" class="space-y-2"></div>
-          </section>
-        </div>
-
-        <aside class="space-y-6">
-          <div class="surface-card p-6" data-aos="fade-up" style="border:1px solid var(--clr-border)">
-            <h3 class="font-display font-semibold mb-4" style="color:var(--clr-text-primary)">Quick Actions</h3>
-            <div class="space-y-3">
-              <a href="mailto:" id="action-email" class="btn-secondary w-full justify-center"><i class="fa-solid fa-envelope mr-2"></i>Send Email</a>
-              <a href="tel:" id="action-phone" class="btn-secondary w-full justify-center"><i class="fa-solid fa-phone mr-2"></i>Call</a>
-              <a href="#" id="action-linkedin" target="_blank" rel="noopener" class="btn-secondary w-full justify-center"><i class="fa-brands fa-linkedin mr-2"></i>LinkedIn Profile</a>
-              <a href="#" id="action-github" target="_blank" rel="noopener" class="btn-secondary w-full justify-center"><i class="fa-brands fa-github mr-2"></i>GitHub Profile</a>
-            </div>
-          </div>
-
-          <div class="surface-card p-6" data-aos="fade-up" data-aos-delay="100" style="border:1px solid var(--clr-border)">
-            <h3 class="font-display font-semibold mb-4" style="color:var(--clr-text-primary)">Related</h3>
-            <div class="space-y-2">
-              <a href="leaderboard.html" class="btn-secondary w-full justify-center"><i class="fa-solid fa-ranking-star mr-2"></i>View Leaderboard</a>
-              <a href="students.html" class="btn-secondary w-full justify-center"><i class="fa-solid fa-users mr-2"></i>All Students</a>
-            </div>
-          </div>
-        </aside>
+    <div class="surface-card overflow-hidden" style="border:1px solid var(--clr-border)">
+      <div class="overflow-x-auto">
+        <table class="leaderboard-table" role="table" aria-label="Student rankings">
+          <thead>
+            <tr style="background:var(--clr-surface-2)">
+              <th class="rank-col" scope="col">Rank</th>
+              <th scope="col">Student</th>
+              <th scope="col" class="hidden md:table-cell">Year</th>
+              <th scope="col" class="hidden lg:table-cell">Score</th>
+              <th scope="col">Breakdown</th>
+              <th scope="col">Skills</th>
+            </tr>
+          </thead>
+          <tbody id="leaderboard-body"></tbody>
+        </table>
+      </div>
+      <div id="leaderboard-empty" class="hidden py-12 text-center" style="color:var(--clr-text-secondary)">
+        <i class="fa-solid fa-trophy text-4xl mb-3" style="color:var(--clr-text-muted)"></i>
+        <p>No students match your filters</p>
       </div>
     </div>
   </section>
@@ -206,13 +170,12 @@
 <button id="back-to-top" class="hidden fixed bottom-6 right-6 p-3 rounded-full shadow-lg z-40 transition-all" aria-label="Back to top" style="background:var(--clr-accent);color:white"><i class="fa-solid fa-arrow-up text-sm"></i></button>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script src="../js/main.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="../js/supabase-config.js"></script>
 <script src="../js/api.js"></script>
-<script src="../js/student-detail.js"></script>
+<script src="../js/leaderboard.js"></script>
 <script>AOS.init({duration:700,once:true,offset:60});</script>
 </body>
 </html>
