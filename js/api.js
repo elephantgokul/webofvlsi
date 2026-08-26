@@ -1,4 +1,4 @@
-﻿// js/api.js â€” Centralized API utility for Google Apps Script & Supabase integration
+// js/api.js â€” Centralized API utility for Google Apps Script & Supabase integration
 // Department of VLSI Design and Technology, SIET
 
 const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxtiC0y8Gwzr0gj5Mcb1wJaSogr44lWI2PlYQQOVj-wbTOKw2EyJmXvhnibGlRr7Idc/exec";
@@ -133,39 +133,13 @@ function getStudentYearToken(year) {
     if (text.includes("IV")) return "IV";
     if (text.includes("III")) return "III";
     if (text.includes("II")) return "II";
-    if (text.includes("I")) return "I";
+    if (/\bI\b/.test(text) || text === "I" || text.includes("FIRST") || text.includes("I YEAR")) return "I";
     return "III";
 }
 
 function getBatchFromRegisterNo(registerNo) {
     const match = String(registerNo || "").match(/^(\d{2})/);
     return match ? "20" + match[1] + " - 20" + (parseInt(match[1], 10) + 4) : "2024 - 2028";
-}
-
-function withDefaultStudentFields(data) {
-    const source = data || getFallbackData();
-    if (!Array.isArray(source.students)) return source;
-
-    return Object.assign({}, source, {
-        students: source.students.map(student => {
-            const registerNo = student.registerNo || student.rollno || "";
-            const image = student.image || student.photoUrl || "";
-
-            return Object.assign({
-                achievement: "",
-                description: "",
-                linkedin: "",
-                github: ""
-            }, student, {
-                registerNo: registerNo,
-                rollno: student.rollno || registerNo,
-                image: image,
-                photoUrl: student.photoUrl || image,
-                batch: student.batch || getBatchFromRegisterNo(registerNo),
-                yearToken: getStudentYearToken(student.year)
-            });
-        })
-    });
 }
 
 /**
@@ -346,7 +320,7 @@ function getFallbackData() {
                 description: "6 technical internships in areas such as VLSI Design, Embedded Systems, PCB Design, and software technologies. 3 real time projects using Synopsys EDA tools and working on advanced semiconductor architectures.",
                 image: "tharun-r.jpg",
                 photoUrl: "tharun-r.jpg",
-                linkedin: "https://linkedin.com/in/Tharun Rajesh",
+                linkedin: "https://www.linkedin.com/search/results/all/?keywords=Tharun%20Rajesh",
                 github: ""
             },
             {

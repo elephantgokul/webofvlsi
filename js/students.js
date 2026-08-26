@@ -1,4 +1,4 @@
-﻿// js/students.js â€” Student data renderer with search, filter, view toggle, and Supabase Storage integration
+// js/students.js â€” Student data renderer with search, filter, view toggle, and Supabase Storage integration
 document.addEventListener('DOMContentLoaded', async () => {
     const grid = document.getElementById('students-grid');
     if (!grid) return;
@@ -229,64 +229,25 @@ document.addEventListener('DOMContentLoaded', async () => {
         if (text.includes('IV')) return 'IV';
         if (text.includes('III')) return 'III';
         if (text.includes('II')) return 'II';
-        if (text.includes('I')) return 'I';
-        return '';
-    }
-
-    function getYearLabel(student) {
-        const year = String(student.year || student.yearToken || '').trim();
-        if (!year) return 'Year';
-        return year.toLowerCase().includes('year') ? year : `Year ${year}`;
-    }
-
-    function getBatchFromRegisterNo(registerNo) {
-        const match = String(registerNo || '').match(/^(\d{2})/);
-        return match ? '20' + match[1] : '';
-    }
-
-    function resolveAssetPath(src) {
-        const value = String(src || '');
-        if (!value || /^(https?:|data:|\/|\.\.?\/)/i.test(value)) return value;
-        return value.indexOf('assets/') === 0 ? '../' + value : value;
-    }
-
-    function escapeHtml(value) {
-        const div = document.createElement('div');
-        div.textContent = value == null ? '' : String(value);
-        return div.innerHTML;
-    }
-
-    function normalizeStudent(student) {
-        const registerNo = student.registerNo || student.rollno || '';
-        const image = student.image || student.photoUrl || '';
-        return Object.assign({}, student, {
-            registerNo: registerNo,
-            rollno: student.rollno || registerNo,
-            image: image,
-            photoUrl: student.photoUrl || image,
-            batch: student.batch || getBatchFromRegisterNo(registerNo),
-            yearToken: student.yearToken || getYearToken(student.year)
-        });
-    }
-
-    function getYearToken(year) {
-        const text = String(year || '').toUpperCase();
-        if (text.includes('IV')) return 'IV';
-        if (text.includes('III')) return 'III';
-        if (text.includes('II')) return 'II';
-        if (text.includes('I')) return 'I';
+        if (text.match(/\bI\b/) || text === 'I' || text.includes('FIRST') || text.includes('I YEAR')) return 'I';
         return 'III';
     }
 
     function getYearLabel(student) {
         const year = String(student.year || student.yearToken || '').trim();
         if (!year) return 'III Year';
-        return year.toLowerCase().includes('year') ? year : `Year ${year}`;
+        return year.toLowerCase().includes('year') ? year : `${year} Year`;
     }
 
     function getBatchFromRegisterNo(registerNo) {
         const match = String(registerNo || '').match(/^(\d{2})/);
         return match ? "20" + match[1] + " - 20" + (parseInt(match[1], 10) + 4) : "2024 - 2028";
+    }
+
+    function resolveAssetPath(src) {
+        const value = String(src || '');
+        if (!value || /^(https?:|data:|\/|\.\.?\/)/i.test(value)) return value;
+        return value.indexOf('assets/') === 0 ? '../' + value : value;
     }
 
     function escapeHtml(value) {

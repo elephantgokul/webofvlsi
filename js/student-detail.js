@@ -1,4 +1,4 @@
-﻿document.addEventListener('DOMContentLoaded', async () => {
+document.addEventListener('DOMContentLoaded', async () => {
     const root = document.getElementById('student-detail-root');
     if (!root) return;
 
@@ -184,14 +184,14 @@
         if (text.includes('IV')) return 'IV';
         if (text.includes('III')) return 'III';
         if (text.includes('II')) return 'II';
-        if (text.includes('I')) return 'I';
+        if (text.match(/\bI\b/) || text === 'I' || text.includes('FIRST') || text.includes('I YEAR')) return 'I';
         return 'III';
     }
 
     function getYearLabel(student) {
         const year = String(student.year || student.yearToken || '').trim();
         if (!year) return 'III Year';
-        return year.toLowerCase().includes('year') ? year : `Year ${year}`;
+        return year.toLowerCase().includes('year') ? year : `${year} Year`;
     }
 
     function getBatchFromRegisterNo(registerNo) {
