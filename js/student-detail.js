@@ -1,223 +1,218 @@
-function computeScore(achievement, student) {
-  var text = (achievement || '').toLowerCase();
-  var score = 0;
-  var breakdown = {};
+document.addEventListener('DOMContentLoaded', async () => {
+    const root = document.getElementById('student-detail-root');
+    if (!root) return;
 
-  var patterns = [
-    { key: 'internship', regex: /internship/gi, points: 15, label: 'Internships' },
-    { key: 'hackathon', regex: /hackathon/gi, points: 20, label: 'Hackathons' },
-    { key: 'project', regex: /project/gi, points: 10, label: 'Projects' },
-    { key: 'publication', regex: /publication|paper|ieee/gi, points: 30, label: 'Publications' },
-    { key: 'patent', regex: /patent/gi, points: 50, label: 'Patents' },
-    { key: 'workshop', regex: /workshop|training/gi, points: 8, label: 'Workshops' },
-    { key: 'firstPlace', regex: /first place|winner|rank 1/gi, points: 40, label: 'First Place' },
-    { key: 'vlsiTools', regex: /synopsys|cadence|vlsi/gi, points: 5, label: 'VLSI Tools' },
-    { key: 'github', regex: /github\.com/gi, points: 10, label: 'GitHub Profile' },
-    { key: 'linkedin', regex: /linkedin\.com/gi, points: 5, label: 'LinkedIn Profile' },
-    { key: 'universityNo', regex: null, points: 3, label: 'University No.' }
-  ];
+    const params = new URLSearchParams(window.location.search);
+    const studentId = params.get('id');
 
-  patterns.forEach(function(p) {
-    if (p.regex) {
-      var matches = text.match(p.regex);
-      if (matches) {
-        breakdown[p.key] = { count: matches.length, points: matches.length * p.points, label: p.label };
-        score += matches.length * p.points;
-      }
-    }
-  });
-
-  if (student.universityNo) {
-    breakdown.universityNo = { count: 1, points: 3, label: 'University No.' };
-    score += 3;
-  }
-
-  return { score: score, breakdown: breakdown };
-}
-
-function extractSkills(achievement) {
-  var text = (achievement || '').toLowerCase();
-  var skills = [];
-  var skillPatterns = {
-    'Synopsys': /synopsys/gi,
-    'Cadence': /cadence/gi,
-    'VLSI': /vlsi/gi,
-    'Verilog': /verilog/gi,
-    'SystemVerilog': /systemverilog|system-verilog/gi,
-    'VHDL': /vhdl/gi,
-    'Python': /python/gi,
-    'C/C++': /c\+\+|c\/c\+\+/gi,
-    'MATLAB': /matlab/gi,
-    'Tanner': /tanner/gi,
-    'SPICE': /spice/gi,
-    'FPGA': /fpga/gi,
-    'ASIC': /asic/gi,
-    'RTL': /rtl/gi,
-    'DFT': /dft\b/gi,
-    'STA': /sta\b|static timing/gi,
-    'CDC': /cdc\b|clock domain/gi,
-    'Low Power': /low power|upf|cpf/gi,
-    'Physical Design': /physical design|place.*route|pnr/gi,
-    'Verification': /verification|uvm|ovm/gi,
-    'Analog': /analog/gi,
-    'Layout': /layout/gi
-  };
-
-  Object.entries(skillPatterns).forEach(function(_ref) {
-    var name = _ref[0], regex = _ref[1];
-    if (regex.test(text)) skills.push(name);
-  });
-
-  return skills;
-}
-
-function buildTimeline(achievement) {
-  var lines = achievement.split(/\n|•|-\s+|\*\s+/).map(function(l){ return l.trim(); }).filter(Boolean);
-  return lines.map(function(line, i) {
-    var yearMatch = line.match(/\b(20\d{2})\b/);
-    return {
-      text: line.replace(/^\d+\.\s*/, ''),
-      year: yearMatch ? yearMatch[1] : null,
-      index: i
-    };
-  });
-}
-
-function renderTimeline(milestones) {
-  if (!milestones.length) return '<p style="color:var(--clr-text-muted)">No timeline data available</p>';
-  return '<div class="achievement-timeline">' +
-    milestones.map(function(m, i) {
-      return [
-        '<div class="timeline-item" data-aos="fade-left" data-aos-delay="' + (i * 60) + '">',
-          '<div class="timeline-dot"></div>',
-          '<div class="timeline-card surface-card rounded-xl p-4">',
-            m.year ? '<span class="timeline-year">' + m.year + '</span>' : '',
-            '<p class="text-sm" style="color:var(--clr-text-secondary);line-height:1.7">' + escapeHtml(m.text) + '</p>',
-          '</div>',
-        '</div>'
-      ].join('');
-    }).join('') +
-  '</div>';
-}
-
-async function exportStudentPDF(student) {
-  var btn = document.getElementById('export-pdf-btn');
-  if (!btn) return;
-  btn.disabled = true;
-  btn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin mr-2"></i>Generating\u2026';
-  try {
-    var el = document.getElementById('student-detail-root');
-    if (!el) throw new Error('Content element not found');
-    var canvas = await html2canvas(el, { scale: 2, useCORS: true, backgroundColor: '#ffffff' });
-    var imgData = canvas.toDataURL('image/png');
-    var jsPDF = window.jspdf?.jsPDF || window.jsPDF;
-    if (!jsPDF) throw new Error('jsPDF not loaded');
-    var pdf = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
-    var w = pdf.internal.pageSize.getWidth();
-    var h = (canvas.height * w) / canvas.width;
-    pdf.addImage(imgData, 'PNG', 0, 0, w, h);
-    var filename = 'achievement-' + (student.registerNo || student.name || 'student').replace(/\s+/g,'-') + '.pdf';
-    pdf.save(filename);
-    window.showToast('PDF downloaded!', 'success');
-  } catch(err) {
-    console.error('[PDF Export] Error:', err);
-    window.showToast('PDF export failed. Try again.', 'error');
-  } finally {
-    btn.disabled = false;
-    btn.innerHTML = '<i class="fa-solid fa-file-pdf mr-2"></i>Download PDF';
-  }
-}
-
-async function initStudentDetail() {
-  var urlParams = new URLSearchParams(window.location.search);
-  var id = urlParams.get('id');
-  if (!id) {
-    document.getElementById('student-detail-root').innerHTML = '<div class="surface-card p-12 text-center" style="border:1px solid var(--clr-border)"><i class="fa-solid fa-user-slash text-4xl mb-3" style="color:var(--clr-text-muted)"></i><p style="color:var(--clr-text-secondary)">No student ID provided</p></div>';
-    return;
-  }
-
-  try {
-    var data = await window.fetchDepartmentData();
-    var student = (data.students || []).find(function(s) { return s.registerNo === id || s.name === id; });
-
-    if (!student) {
-      document.getElementById('student-detail-root').innerHTML = '<div class="surface-card p-12 text-center" style="border:1px solid var(--clr-border)"><i class="fa-solid fa-user-slash text-4xl mb-3" style="color:var(--clr-text-muted)"></i><p style="color:var(--clr-text-secondary)">Student not found</p></div>';
-      return;
+    if (!studentId) {
+        root.innerHTML = '<div class="surface-card rounded-2xl p-8 text-center text-red-500">Student ID is required in URL.</div>';
+        return;
     }
 
-    var computed = computeScore(student.achievement, student);
-    var skills = extractSkills(student.achievement);
-    var milestones = buildTimeline(student.achievement);
+    root.innerHTML = `
+      <div class="surface-card rounded-2xl p-8 text-center">
+        <i class="fa-solid fa-circle-notch fa-spin text-3xl" style="color:#1652c4"></i>
+        <p class="mt-4 text-sm" style="color:#5b6478">Loading Student Details...</p>
+      </div>
+    `;
 
-    document.title = student.name + ' \u2014 VLSI | SIET';
-    document.getElementById('breadcrumb-name').textContent = student.name;
+    try {
+        const data = await fetchDepartmentData();
+        const students = (data.students || []).map(normalizeStudent);
+        const qId = String(studentId).toLowerCase().trim();
+        const student = students.find(s =>
+            String(s.id).toLowerCase() === qId ||
+            String(s.registerNo).toLowerCase() === qId ||
+            String(s.rollno).toLowerCase() === qId ||
+            String(s.universityNo || '').toLowerCase() === qId ||
+            String(s.name).toLowerCase() === qId
+        );
 
-    document.getElementById('student-photo').src = student.photoUrl || 'https://picsum.photos/seed/' + encodeURIComponent(student.name) + '/400/500';
-    document.getElementById('student-photo').alt = student.name;
-    document.getElementById('student-name').textContent = student.name;
-    document.getElementById('student-regno').textContent = student.registerNo || '';
-    document.getElementById('student-year').textContent = student.year || '';
-    document.getElementById('student-batch').textContent = student.batch || '';
-    document.getElementById('student-univno').textContent = student.universityNo || 'N/A';
-    document.getElementById('student-email').textContent = student.email || 'N/A';
-    document.getElementById('student-email').href = 'mailto:' + (student.email || '');
-    document.getElementById('student-phone').textContent = student.phone || 'N/A';
+        if (!student) {
+            root.innerHTML = '<div class="surface-card rounded-2xl p-8 text-center text-gray-500">Student not found.</div>';
+            return;
+        }
 
-    var linksContainer = document.getElementById('student-links');
-    var linksHtml = '';
-    if (student.linkedin) linksHtml += '<a href="' + escapeHtml(student.linkedin) + '" target="_blank" rel="noopener" class="text-lg hover:text-cyan transition-colors" style="color:var(--clr-text-muted)" aria-label="LinkedIn"><i class="fa-brands fa-linkedin"></i></a>';
-    if (student.github) linksHtml += '<a href="' + escapeHtml(student.github) + '" target="_blank" rel="noopener" class="text-lg hover:text-cyan transition-colors" style="color:var(--clr-text-muted)" aria-label="GitHub"><i class="fa-brands fa-github"></i></a>';
-    linksContainer.innerHTML = linksHtml || '<span style="color:var(--clr-text-muted)">No links</span>';
+        renderStudent(student);
+    } catch (error) {
+        console.error("Error loading student detail:", error);
+        root.innerHTML = '<div class="surface-card rounded-2xl p-8 text-center text-red-500">Failed to load student detail. Please try again later.</div>';
+    }
 
-    var skillsContainer = document.getElementById('student-skills');
-    skillsContainer.innerHTML = skills.slice(0, 12).map(function(s) {
-      return '<span class="badge badge-primary">' + escapeHtml(s) + '</span>';
-    }).join('') || '<span style="color:var(--clr-text-muted)">No skills detected</span>';
+    function renderStudent(student) {
+        const yearColors = {
+            'IV': { bg: 'linear-gradient(135deg,#1652c4,#2fe6dd)', badge: '#1652c4', text: '#fff' },
+            'III': { bg: 'linear-gradient(135deg,#7c3aed,#a78bfa)', badge: '#7c3aed', text: '#fff' },
+            'II': { bg: 'linear-gradient(135deg,#059669,#34d399)', badge: '#059669', text: '#fff' },
+            'I': { bg: 'linear-gradient(135deg,#d97706,#fbbf24)', badge: '#d97706', text: '#fff' }
+        };
+        const colors = yearColors[student.yearToken] || yearColors['III'];
+        const yearLabel = getYearLabel(student);
+        const registerNo = student.registerNo || student.rollno || '';
+        const rawPhoto = student.photoUrl || student.image;
+        const photoSrc = typeof resolveSupabaseImageUrl === 'function'
+            ? resolveSupabaseImageUrl(rawPhoto, (typeof SUPABASE_BUCKETS !== 'undefined' ? SUPABASE_BUCKETS.students : 'students'), rawPhoto)
+            : resolveAssetPath(rawPhoto);
 
-    document.getElementById('student-achievements').innerHTML = '<p style="white-space:pre-wrap">' + escapeHtml(student.achievement || 'No achievements recorded') + '</p>';
+        const photoFallback = `<div class="w-20 h-20 rounded-full flex items-center justify-center" style="background:${colors.bg}"><i class="fa-solid fa-user-graduate text-white text-2xl"></i></div>`;
+        const photoHtml = photoSrc
+            ? `<div class="relative w-20 h-20 rounded-full">${photoFallback}<img src="${escapeHtml(photoSrc)}" alt="${escapeHtml(student.name)}" class="absolute inset-0 w-20 h-20 rounded-full object-cover shadow-lg border-2 border-white bg-white" onerror="this.style.display='none'"></div>`
+            : photoFallback;
+        const linksHtml = renderLinks(student);
+        const achievementHtml = renderAchievement(student);
 
-    document.getElementById('student-timeline').innerHTML = renderTimeline(milestones);
+        const univLine = student.universityNo
+            ? `<p><i class="fa-solid fa-id-badge w-4" style="color:#2fe6dd"></i> Univ No: <span class="font-mono">${escapeHtml(student.universityNo)}</span></p>`
+            : '';
+        const progLine = student.programme
+            ? `<p><i class="fa-solid fa-graduation-cap w-4" style="color:#2fe6dd"></i> ${escapeHtml(student.programme)}</p>`
+            : '';
 
-    var breakdownContainer = document.getElementById('score-breakdown');
-    var breakdownHtml = '';
-    var totalScore = computed.score;
-    Object.entries(computed.breakdown).forEach(function(_ref) {
-      var key = _ref[0], val = _ref[1];
-      var pct = totalScore > 0 ? Math.round((val.points / totalScore) * 100) : 0;
-      breakdownHtml += [
-        '<div class="flex items-center gap-3">',
-          '<span class="text-sm font-medium w-36" style="color:var(--clr-text-secondary)">' + escapeHtml(val.label) + '</span>',
-          '<div class="flex-1 h-2 bg-surface-2 rounded-full overflow-hidden" style="background:var(--clr-surface-2)">',
-            '<div class="h-full bg-gradient-to-r from-accent to-cyan rounded-full transition-all duration-1000" style="width:' + pct + '%;background:linear-gradient(90deg,var(--clr-accent),var(--clr-cyan))"></div>',
-          '</div>',
-          '<span class="text-sm font-mono w-16 text-right" style="color:var(--clr-text-primary)">+' + val.points + '</span>',
-        '</div>'
-      ].join('');
-    });
-    breakdownHtml += '<div class="pt-2 border-t border-default flex items-center justify-between" style="border-color:var(--clr-border)"><span class="font-semibold" style="color:var(--clr-text-primary)">Total Score</span><span class="font-display text-xl font-bold" style="color:var(--clr-accent)">' + totalScore + '</span></div>';
-    breakdownContainer.innerHTML = breakdownHtml;
+        root.innerHTML = `
+          <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <article class="surface-card rounded-2xl overflow-hidden" data-aos="fade-up">
+              <div class="h-44 flex items-center justify-center relative" style="background:linear-gradient(145deg,#e8edf5,#d0daea)">
+                ${photoHtml}
+                <span class="absolute top-3 right-3 px-2.5 py-1 rounded-lg text-xs font-mono font-medium" style="background:${colors.badge};color:${colors.text}">${escapeHtml(yearLabel)}</span>
+              </div>
+              <div class="p-5">
+                <h2 class="font-display font-semibold text-lg" style="color:#0b1b33">${escapeHtml(student.name)}</h2>
+                <p class="text-xs mt-0.5 mb-4 font-mono font-semibold" style="color:#1652c4">Roll No: ${escapeHtml(registerNo)}</p>
+                <div class="space-y-2 text-[0.8rem]" style="color:#5b6478">
+                  ${univLine}
+                  ${progLine}
+                  <p><i class="fa-solid fa-envelope w-4" style="color:#2fe6dd"></i> <a href="mailto:${escapeHtml(student.email)}" class="hover:underline" style="color:#1652c4">${escapeHtml(student.email)}</a></p>
+                  ${student.batch ? `<p><i class="fa-solid fa-calendar w-4" style="color:#2fe6dd"></i> Batch ${escapeHtml(student.batch)}</p>` : ''}
+                </div>
+                ${linksHtml ? `<div class="flex flex-wrap gap-2 pt-4 mt-4" style="border-top:1px solid #e2e8f0">${linksHtml}</div>` : ''}
+              </div>
+            </article>
 
-    document.getElementById('action-email').href = 'mailto:' + (student.email || '');
-    document.getElementById('action-phone').href = 'tel:' + (student.phone || '');
-    document.getElementById('action-linkedin').href = student.linkedin || '#';
-    document.getElementById('action-github').href = student.github || '#';
-    if (!student.linkedin) document.getElementById('action-linkedin').classList.add('opacity-50', 'pointer-events-none');
-    if (!student.github) document.getElementById('action-github').classList.add('opacity-50', 'pointer-events-none');
+            <article class="surface-card rounded-2xl p-6 lg:col-span-2 space-y-6" data-aos="fade-up" data-aos-delay="80">
+              <div>
+                <p class="text-xs font-mono uppercase tracking-widest font-semibold mb-2" style="color:#1652c4">ACHIEVEMENT</p>
+                <h3 class="font-display font-bold text-lg md:text-xl" style="color:#0b1b33">${escapeHtml(student.achievementTitle || 'Technical Achievements & Training')}</h3>
+              </div>
+              
+              <div class="text-sm leading-relaxed" style="color:#5b6478">
+                ${achievementHtml}
+              </div>
 
-    document.getElementById('export-pdf-btn').addEventListener('click', function() { exportStudentPDF(student); });
+              ${student.description ? `
+              <div class="pt-6" style="border-top:1px solid #e2e8f0">
+                <p class="text-xs font-mono uppercase tracking-widest font-semibold mb-2" style="color:#1652c4">DESCRIPTION & OBJECTIVES</p>
+                <div class="text-sm leading-relaxed" style="color:#5b6478">
+                  ${formatContent(student.description)}
+                </div>
+              </div>
+              ` : ''}
+            </article>
+          </div>
+        `;
 
-    if (typeof AOS !== 'undefined') AOS.refreshHard();
+        if (typeof AOS !== 'undefined') AOS.refreshHard();
+    }
 
-  } catch (err) {
-    console.error('[Student Detail] Error:', err);
-    document.getElementById('student-detail-root').innerHTML = '<div class="surface-card p-12 text-center" style="border:1px solid var(--clr-border)"><i class="fa-solid fa-triangle-exclamation text-4xl mb-3" style="color:var(--clr-text-muted)"></i><p style="color:var(--clr-text-secondary)">Failed to load student data</p></div>';
-  }
-}
+    function renderAchievement(student) {
+        const achievement = String(student.achievement || '').trim();
+        if (!achievement) {
+            return '<p class="text-sm italic" style="color:#5b6478">No achievements listed yet.</p>';
+        }
+        return formatContent(achievement);
+    }
 
-document.addEventListener('DOMContentLoaded', initStudentDetail);
+    function formatContent(text) {
+        const paragraphs = text.split(/\n\s*\n/);
+        return paragraphs.map(p => {
+            const lines = p.trim().split('\n');
+            const isBulletGroup = lines.every(l => /^[-*â€¢]|\s*-\s+/.test(l.trim()));
+            
+            if (isBulletGroup) {
+                const items = lines.map(l => {
+                    const clean = l.replace(/^[-*â€¢\s]+/, '').trim();
+                    return `<li class="flex items-start gap-2 mb-1.5"><span class="w-1.5 h-1.5 rounded-full mt-2 flex-shrink-0" style="background:#1652c4"></span><span>${escapeHtml(clean)}</span></li>`;
+                }).join('');
+                return `<ul class="space-y-1 mb-4 pl-1">${items}</ul>`;
+            }
 
-function escapeHtml(v) {
-  var d = document.createElement('div');
-  d.textContent = v == null ? '' : String(v);
-  return d.innerHTML;
-}
+            // Mixed or regular paragraph with single lines
+            const formattedLines = lines.map(l => {
+                const trimmed = l.trim();
+                if (/^[-*â€¢]/.test(trimmed)) {
+                    const clean = trimmed.replace(/^[-*â€¢\s]+/, '').trim();
+                    return `<div class="flex items-start gap-2 my-1 pl-2"><span class="w-1.5 h-1.5 rounded-full mt-2 flex-shrink-0" style="background:#1652c4"></span><span>${escapeHtml(clean)}</span></div>`;
+                }
+                return escapeHtml(trimmed);
+            }).join('<br>');
+
+            return `<p class="mb-4">${formattedLines}</p>`;
+        }).join('');
+    }
+
+    function renderLinks(student) {
+        const links = [];
+        const githubHref = getExternalHref(student.github, 'github');
+        const linkedinHref = getExternalHref(student.linkedin, 'linkedin');
+
+        if (githubHref) {
+            links.push(`<a href="${escapeHtml(githubHref)}" target="_blank" rel="noopener" aria-label="GitHub" title="GitHub" class="w-8 h-8 rounded-lg flex items-center justify-center text-xs transition-all" style="background:#f0f4ff;color:#1652c4" onmouseover="this.style.background='#1652c4';this.style.color='#fff'" onmouseout="this.style.background='#f0f4ff';this.style.color='#1652c4'"><i class="fa-brands fa-github"></i></a>`);
+        }
+
+        if (linkedinHref) {
+            links.push(`<a href="${escapeHtml(linkedinHref)}" target="_blank" rel="noopener" aria-label="LinkedIn" title="LinkedIn" class="w-8 h-8 rounded-lg flex items-center justify-center text-xs transition-all" style="background:#f0f4ff;color:#1652c4" onmouseover="this.style.background='#1652c4';this.style.color='#fff'" onmouseout="this.style.background='#f0f4ff';this.style.color='#1652c4'"><i class="fa-brands fa-linkedin-in"></i></a>`);
+        }
+
+        return links.join('');
+    }
+
+    function normalizeStudent(student) {
+        const registerNo = student.registerNo || student.rollno || '';
+        const image = student.image || student.photoUrl || '';
+        return Object.assign({}, student, {
+            registerNo: registerNo,
+            rollno: student.rollno || registerNo,
+            image: image,
+            photoUrl: student.photoUrl || image,
+            batch: student.batch || getBatchFromRegisterNo(registerNo),
+            yearToken: student.yearToken || getYearToken(student.year)
+        });
+    }
+
+    function getYearToken(year) {
+        const text = String(year || '').toUpperCase();
+        if (text.includes('IV')) return 'IV';
+        if (text.includes('III')) return 'III';
+        if (text.includes('II')) return 'II';
+        if (text.match(/\bI\b/) || text === 'I' || text.includes('FIRST') || text.includes('I YEAR')) return 'I';
+        return 'III';
+    }
+
+    function getYearLabel(student) {
+        const year = String(student.year || student.yearToken || '').trim();
+        if (!year) return 'III Year';
+        return year.toLowerCase().includes('year') ? year : `${year} Year`;
+    }
+
+    function getBatchFromRegisterNo(registerNo) {
+        const match = String(registerNo || '').match(/^(\d{2})/);
+        return match ? "20" + match[1] + " - 20" + (parseInt(match[1], 10) + 4) : "2024 - 2028";
+    }
+
+    function getExternalHref(value, type) {
+        const raw = String(value || '').trim();
+        if (!raw) return '';
+        if (/^https?:\/\//i.test(raw)) return raw.replace(/\s/g, '%20');
+        if (/^www\./i.test(raw)) return 'https://' + raw.replace(/\s/g, '%20');
+        if (/^(github|linkedin)\.com\//i.test(raw)) return 'https://' + raw.replace(/\s/g, '%20');
+        if (type === 'github' && !/\s/.test(raw)) return 'https://github.com/' + encodeURIComponent(raw);
+        if (type === 'linkedin') return 'https://www.linkedin.com/search/results/all/?keywords=' + encodeURIComponent(raw);
+        return '';
+    }
+
+    function escapeHtml(value) {
+        const div = document.createElement('div');
+        div.textContent = value == null ? '' : String(value);
+        return div.innerHTML;
+    }
+});

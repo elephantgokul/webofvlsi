@@ -1,68 +1,147 @@
+/* =========================================================================
+   MAIN.JS — core interactions (no build step, no ES modules: this file is
+   loaded with a plain <script defer> tag so the site works by just opening
+   index.html, with no local server required)
+   ========================================================================= */
+
+/* ---- Utility: escapeHtml ------------------------------------------------ */
 function escapeHtml(v) {
   var d = document.createElement('div');
   d.textContent = v == null ? '' : String(v);
   return d.innerHTML;
 }
+window.escapeHtml = escapeHtml;
 
-function initTheme() {
-  var saved = localStorage.getItem('siet-dark');
-  if (saved !== null) {
-    if (saved === 'true') document.documentElement.classList.add('dark');
-    return;
-  }
-  var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-  if (prefersDark) {
-    document.documentElement.classList.add('dark');
-    localStorage.setItem('siet-dark', 'true');
-  }
-}
+/* ---- Loading screen ---------------------------------------------------- */
+(function loadingScreen() {
+  const screen = document.getElementById("loading-screen");
+  if (!screen) return;
 
-function toggleTheme() {
-  var isDark = document.documentElement.classList.toggle('dark');
-  localStorage.setItem('siet-dark', isDark);
-}
-
-document.addEventListener('DOMContentLoaded', function() {
-  initTheme();
-
-  var themeToggle = document.getElementById('theme-toggle');
-  if (themeToggle) {
-    themeToggle.addEventListener('click', toggleTheme);
-    themeToggle.setAttribute('aria-label', 'Toggle dark mode');
+  function hide() {
+    screen.classList.add("is-hidden");
   }
 
-  var backToTop = document.getElementById('back-to-top');
-  if (backToTop) {
-    window.addEventListener('scroll', function() {
-      backToTop.classList.toggle('visible', window.scrollY > 300);
+  window.addEventListener("load", () => setTimeout(hide, 500));
+  setTimeout(hide, 4000); // fail-safe: even if a resource breaks, screen won't stick
+})();
+
+/* ---- Header: sticky background + mobile menu --------------------------- */
+(function headerNav() {
+  const header = document.getElementById("site-header");
+  const menuToggle = document.getElementById("menu-toggle");
+  const mobileMenu = document.getElementById("mobile-menu");
+  if (!header) return;
+
+  const SCROLL_THRESHOLD = 60;
+
+  function onScroll() {
+    header.classList.toggle("is-scrolled", window.scrollY > SCROLL_THRESHOLD);
+  }
+  onScroll();
+  window.addEventListener("scroll", onScroll, { passive: true });
+
+  if (menuToggle && mobileMenu) {
+    menuToggle.addEventListener("click", () => {
+      const isOpen = mobileMenu.classList.toggle("is-open");
+      menuToggle.setAttribute("aria-expanded", String(isOpen));
+      menuToggle.querySelector(".fa-bars")?.classList.toggle("hidden", isOpen);
+      menuToggle.querySelector(".fa-xmark")?.classList.toggle("hidden", !isOpen);
     });
-    backToTop.addEventListener('click', function() {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+
+    // close mobile menu after tapping a link
+    mobileMenu.querySelectorAll("a").forEach((link) => {
+      link.addEventListener("click", () => {
+        mobileMenu.classList.remove("is-open");
+        menuToggle.setAttribute("aria-expanded", "false");
+        menuToggle.querySelector(".fa-bars")?.classList.remove("hidden");
+        menuToggle.querySelector(".fa-xmark")?.classList.add("hidden");
+      });
     });
   }
+})();
 
-  var mobileMenuBtn = document.getElementById('mobile-menu-btn');
-  var mobileMenu = document.getElementById('mobile-menu');
-  if (mobileMenuBtn && mobileMenu) {
-    mobileMenuBtn.addEventListener('click', function() {
-      var expanded = mobileMenuBtn.getAttribute('aria-expanded') === 'true';
-      mobileMenuBtn.setAttribute('aria-expanded', !expanded);
-      mobileMenu.classList.toggle('hidden');
+/* ---- Smooth scroll with fixed-header offset ----------------------------- */
+(function smoothScroll() {
+  const HEADER_OFFSET = 84;
+
+  document.querySelectorAll('a[href^="#"]').forEach((link) => {
+    link.addEventListener("click", (e) => {
+      const id = link.getAttribute("href");
+      if (!id || id === "#") return;
+      const target = document.querySelector(id);
+      if (!target) return;
+
+      e.preventDefault();
+      const top = target.getBoundingClientRect().top + window.scrollY - HEADER_OFFSET;
+      window.scrollTo({ top, behavior: "smooth" });
     });
-  }
+  });
+})();
 
-  var currentPath = window.location.pathname.split('/').pop() || 'index.html';
-  document.querySelectorAll('.nav-link').forEach(function(link) {
-    var href = link.getAttribute('href');
-    if (href && (href === currentPath || (currentPath === '' && href === 'index.html') || (href.includes(currentPath) && currentPath !== 'index.html'))) {
-      link.classList.add('active');
-    }
+/* ---- Scroll progress bar ------------------------------------------------- */
+(function scrollProgress() {
+  const bar = document.getElementById("scroll-progress");
+  if (!bar) return;
+
+  function update() {
+    const scrollTop = window.scrollY;
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const progress = docHeight > 0 ? scrollTop / docHeight : 0;
+    bar.style.transform = `scaleX(${progress})`;
+  }
+  update();
+  window.addEventListener("scroll", update, { passive: true });
+  window.addEventListener("resize", update);
+})();
+
+/* ---- Back to top button --------------------------------------------------- */
+(function backToTop() {
+  const btn = document.getElementById("back-to-top");
+  if (!btn) return;
+
+  function toggle() {
+    btn.classList.toggle("is-visible", window.scrollY > 500);
+  }
+  toggle();
+  window.addEventListener("scroll", toggle, { passive: true });
+
+  btn.addEventListener("click", () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  });
+})();
+
+/* ---- Footer year ----------------------------------------------------------- */
+(function footerYear() {
+  const el = document.getElementById("current-year");
+  if (el) el.textContent = String(new Date().getFullYear());
+})();
+
+/* ---- Dark Mode toggle --------------------------------------------------- */
+(function darkMode() {
+  // Inject button into every page
+  var btn = document.createElement('button');
+  btn.id = 'dark-toggle';
+  btn.setAttribute('aria-label', 'Toggle dark mode');
+  btn.innerHTML = '<i class="fa-solid fa-moon text-sm"></i>';
+  document.body.appendChild(btn);
+
+  var root = document.documentElement;
+  var isDark = localStorage.getItem('siet-dark') === 'true';
+  if (isDark) { root.classList.add('dark'); updateIcon(true); }
+
+  btn.addEventListener('click', function () {
+    isDark = !isDark;
+    root.classList.toggle('dark', isDark);
+    localStorage.setItem('siet-dark', isDark);
+    updateIcon(isDark);
   });
 
-  if (typeof AOS !== 'undefined') {
-    AOS.init({ duration: 700, once: true, offset: 60 });
+  function updateIcon(dark) {
+    btn.innerHTML = dark
+      ? '<i class="fa-solid fa-sun text-sm" style="color:#fbbf24"></i>'
+      : '<i class="fa-solid fa-moon text-sm"></i>';
   }
-});
+})();
 
 /* ---- Universal Toast System ---- */
 (function toastSystem() {
@@ -71,19 +150,6 @@ document.addEventListener('DOMContentLoaded', function() {
   container.setAttribute('aria-live', 'polite');
   container.setAttribute('role', 'status');
   document.body.appendChild(container);
-
-  var style = document.createElement('style');
-  style.textContent = [
-    '#toast-container{position:fixed;bottom:1.5rem;right:1.5rem;z-index:9999;display:flex;flex-direction:column;gap:.75rem;pointer-events:none}',
-    '.toast{pointer-events:all;display:flex;align-items:center;gap:.75rem;padding:.9rem 1.25rem;border-radius:1rem;font-size:.85rem;font-family:"IBM Plex Sans",sans-serif;box-shadow:0 8px 32px rgba(11,27,51,.18);backdrop-filter:blur(12px);min-width:260px;max-width:380px;transform:translateX(120%);transition:transform .35s cubic-bezier(.34,1.56,.64,1),opacity .35s;opacity:0}',
-    '.toast.is-visible{transform:translateX(0);opacity:1}',
-    '.toast--success{background:linear-gradient(135deg,#0d7a5f,#059669);color:#fff}',
-    '.toast--error{background:linear-gradient(135deg,#b91c1c,#dc2626);color:#fff}',
-    '.toast--info{background:linear-gradient(135deg,#1652c4,#2fe6dd);color:#fff}',
-    '.toast--warning{background:linear-gradient(135deg,#d97706,#fbbf24);color:#0b1b33}',
-    '.toast-close{margin-left:auto;background:none;border:none;color:inherit;opacity:.7;cursor:pointer;font-size:1rem;padding:0;line-height:1}'
-  ].join('');
-  document.head.appendChild(style);
 
   window.showToast = function(message, type, duration) {
     type = type || 'info'; duration = duration || 4000;
@@ -133,5 +199,3 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('install-no').addEventListener('click', function() { banner.remove(); });
   });
 })();
-
-window.escapeHtml = escapeHtml;
