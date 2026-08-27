@@ -1,4 +1,4 @@
-﻿/* =========================================================================
+/* =========================================================================
    SIET · DEPARTMENT OF VLSI — CUSTOM STYLESHEET
    Tailwind (CDN) handles utility classes. This file holds:
    design tokens, the signal-trace signature motif, and anything Tailwind
@@ -89,7 +89,7 @@ textarea:focus-visible {
   align-items: center;
   justify-content: center;
   gap: 1rem;
-  background: var(--ink-navy);
+  background: #ffffff;
   transition: opacity 0.3s ease, visibility 0.3s ease;
 }
 
@@ -103,13 +103,14 @@ textarea:focus-visible {
   font-family: var(--font-mono);
   font-size: 1.75rem;
   letter-spacing: 0.2em;
-  color: var(--paper);
+  color: #0b1b33;
+  font-weight: 600;
 }
 
 .loader-trace {
   width: 140px;
-  height: 2px;
-  background: rgba(255, 255, 255, 0.15);
+  height: 3px;
+  background: #e2e8f0;
   position: relative;
   overflow: hidden;
   border-radius: 999px;
@@ -120,8 +121,21 @@ textarea:focus-visible {
   position: absolute;
   inset: 0;
   width: 40%;
-  background: linear-gradient(90deg, transparent, var(--signal-cyan), transparent);
+  background: linear-gradient(90deg, transparent, #1652c4, transparent);
   animation: trace-sweep 1.1s ease-in-out infinite;
+}
+
+html.dark #loading-screen {
+  background: #0a1628;
+}
+html.dark .loader-mark {
+  color: #e8edf5;
+}
+html.dark .loader-trace {
+  background: rgba(255, 255, 255, 0.15);
+}
+html.dark .loader-trace::after {
+  background: linear-gradient(90deg, transparent, var(--signal-cyan), transparent);
 }
 
 @keyframes trace-sweep {
