@@ -128,33 +128,6 @@ window.escapeHtml = escapeHtml;
   if (el) el.textContent = String(new Date().getFullYear());
 })();
 
-/* ---- Dark Mode toggle --------------------------------------------------- */
-(function darkMode() {
-  // Inject button into every page
-  var btn = document.createElement('button');
-  btn.id = 'dark-toggle';
-  btn.setAttribute('aria-label', 'Toggle dark mode');
-  btn.innerHTML = '<i class="fa-solid fa-moon text-sm"></i>';
-  document.body.appendChild(btn);
-
-  var root = document.documentElement;
-  var isDark = localStorage.getItem('siet-dark') === 'true';
-  if (isDark) { root.classList.add('dark'); updateIcon(true); }
-
-  btn.addEventListener('click', function () {
-    isDark = !isDark;
-    root.classList.toggle('dark', isDark);
-    localStorage.setItem('siet-dark', isDark);
-    updateIcon(isDark);
-  });
-
-  function updateIcon(dark) {
-    btn.innerHTML = dark
-      ? '<i class="fa-solid fa-sun text-sm" style="color:#fbbf24"></i>'
-      : '<i class="fa-solid fa-moon text-sm"></i>';
-  }
-})();
-
 /* ---- Universal Toast System ---- */
 (function toastSystem() {
   var container = document.createElement('div');

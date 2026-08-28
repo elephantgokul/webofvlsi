@@ -15,7 +15,7 @@
   <script>tailwind.config={theme:{extend:{colors:{'ink-navy':'#0b1b33','circuit-blue':'#1652c4','signal-cyan':'#2fe6dd','mist':'#f4f7fb'},fontFamily:{display:['Space Grotesk','sans-serif'],body:['IBM Plex Sans','sans-serif'],mono:['IBM Plex Mono','monospace']}}}}</script>
 </head>
 <body class="font-body antialiased" style="color:#0b1b33;background:#fff">
-<div id="loading-screen"><p class="loader-mark">VLSI<span style="color:#2fe6dd">-</span>SIET</p><div class="loader-trace"></div></div>
+<div id="loading-screen"><p class="loader-mark">VLSI<span style="color:#1652c4">-</span>SIET</p><div class="loader-trace"></div></div>
 <div id="scroll-progress" aria-hidden="true"></div>
 
 <header id="site-header">
@@ -31,7 +31,7 @@
       <a href="students.html" class="nav-link px-3.5 py-2 text-sm font-medium rounded-lg transition-all">Students</a>
       <a href="labs.html"           class="nav-link px-3.5 py-2 text-sm font-medium rounded-lg transition-all">Labs</a>
       <a href="achievements.html"   class="nav-link px-3.5 py-2 text-sm font-medium rounded-lg transition-all">Achievements</a>
-      <a href="placements.html"     class="nav-link px-3.5 py-2 text-sm font-medium rounded-lg transition-all" style="color:#2fe6dd">Placements</a>
+      <a href="placements.html"     class="nav-link px-3.5 py-2 text-sm font-medium rounded-lg transition-all" style="color:#1652c4">Placements</a>
       <a href="contact.html"        class="nav-link px-3.5 py-2 text-sm font-medium rounded-lg transition-all">Contact</a>
     </nav>
     <a href="resources.html" class="hidden lg:inline-flex btn-primary text-sm font-semibold text-white rounded-xl" style="padding:.55rem 1.15rem">Resources</a>
@@ -40,23 +40,23 @@
     </button>
   </div>
   <nav id="mobile-menu">
-    <div class="max-w-screen-xl mx-auto px-5 pt-3 pb-5 flex flex-col gap-1" style="background:rgba(11,27,51,.96);backdrop-filter:blur(20px);border-top:1px solid rgba(255,255,255,.08)">
-      <a href="../index.html" class="px-4 py-3 text-sm font-medium text-white/75 hover:text-white rounded-xl hover:bg-white/10 transition-all">Home</a>
-      <a href="faculty.html"  class="px-4 py-3 text-sm font-medium text-white/75 hover:text-white rounded-xl hover:bg-white/10 transition-all">Faculty</a>
+    <div class="max-w-screen-xl mx-auto px-5 pt-3 pb-5 flex flex-col gap-1" style="background:rgba(255,255,255,.98);backdrop-filter:blur(20px);border-top:1px solid #e2e8f0;box-shadow:0 12px 24px -6px rgba(11,27,51,0.08)">
+      <a href="../index.html" class="px-4 py-3 text-sm font-medium text-slate-700 hover:text-blue-600 rounded-xl hover:bg-blue-50 transition-all">Home</a>
+      <a href="faculty.html"  class="px-4 py-3 text-sm font-medium text-slate-700 hover:text-blue-600 rounded-xl hover:bg-blue-50 transition-all">Faculty</a>
       <a href="students.html" class="nav-link px-3.5 py-2 text-sm font-medium rounded-lg transition-all">Students</a>
-      <a href="contact.html"  class="px-4 py-3 text-sm font-medium text-white/75 hover:text-white rounded-xl hover:bg-white/10 transition-all">Contact</a>
+      <a href="contact.html"  class="px-4 py-3 text-sm font-medium text-slate-700 hover:text-blue-600 rounded-xl hover:bg-blue-50 transition-all">Contact</a>
     </div>
   </nav>
 </header>
 
 <main>
   <!-- HERO -->
-  <section class="relative flex items-end overflow-hidden" style="min-height:40vh;background:linear-gradient(135deg,#0b1b33 0%,#1652c4 100%);padding:8rem 1.25rem 3.5rem">
-    <div aria-hidden="true" style="position:absolute;inset:0;opacity:.11"><svg width="100%" height="100%"><defs><pattern id="ph" width="80" height="80" patternUnits="userSpaceOnUse"><path d="M0 40H80M40 0V80" stroke="#2fe6dd" stroke-width="1" fill="none"/><circle cx="40" cy="40" r="2" fill="#2fe6dd"/></pattern></defs><rect width="100%" height="100%" fill="url(#ph)"/></svg></div>
+  <section class="relative flex items-end overflow-hidden" style="min-height:40vh;background:linear-gradient(135deg,#f0f7ff 0%,#e0f0fe 100%);border-bottom:1px solid #bfdbfe;padding:8rem 1.25rem 3.5rem">
+    <div aria-hidden="true" style="position:absolute;inset:0;opacity:.11"><svg width="100%" height="100%"><defs><pattern id="ph" width="80" height="80" patternUnits="userSpaceOnUse"><path d="M0 40H80M40 0V80" stroke="#93c5fd" stroke-width="1" fill="none"/><circle cx="40" cy="40" r="2" fill="#93c5fd"/></pattern></defs><rect width="100%" height="100%" fill="url(#ph)"/></svg></div>
     <div class="max-w-screen-xl mx-auto w-full relative z-10">
-      <nav aria-label="Breadcrumb" class="mb-4"><ol class="flex items-center gap-2 text-xs font-mono" style="color:rgba(255,255,255,.45)"><li><a href="../index.html" onmouseover="this.style.color='#2fe6dd'" onmouseout="this.style.color=''">Home</a></li><li><i class="fa-solid fa-chevron-right text-[10px]"></i></li><li style="color:#2fe6dd">Placements</li></ol></nav>
-      <h1 class="font-display font-bold text-3xl md:text-5xl text-white">Placements</h1>
-      <p class="mt-2 text-sm md:text-base" style="color:rgba(255,255,255,.55)">Placement updates for the first graduating batch will be shared here</p>
+      <nav aria-label="Breadcrumb" class="mb-4"><ol class="flex items-center gap-2 text-xs font-mono" style="color:#5b6478"><li><a href="../index.html" onmouseover="this.style.color='#2fe6dd'" onmouseout="this.style.color=''">Home</a></li><li><i class="fa-solid fa-chevron-right text-[10px]"></i></li><li style="color:#1652c4">Placements</li></ol></nav>
+      <h1 class="font-display font-bold text-3xl md:text-5xl" style="color:#0b1b33">Placements</h1>
+      <p class="mt-2 text-sm md:text-base" style="color:#5b6478">Placement updates for the first graduating batch will be shared here</p>
     </div>
   </section>
   <section class="py-20 bg-mist" aria-label="Placement updates">
