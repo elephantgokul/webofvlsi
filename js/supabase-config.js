@@ -1,4 +1,4 @@
-﻿// js/supabase-config.js  -  Centralized Supabase Configuration & Storage Utilities
+// js/supabase-config.js  -  Centralized Supabase Configuration & Storage Utilities
 // Department of VLSI Design and Technology, SIET
 // Vanilla JS only  -  NO ES6 module imports/exports (loaded via plain <script> tag)
 
@@ -8,8 +8,8 @@
   /* =========================================================================
      1. SUPABASE CREDENTIALS
      ========================================================================= */
-  var SUPABASE_URL = "https://jwtynencyqwiybsspiih.supabase.co";
-  var SUPABASE_ANON_KEY = "sb_publishable_kAvMvNusvtNF0W0VZe9Uhw_h15G05As";
+  var SUPABASE_URL = "https://fptnqolkmagfyjpedbix.supabase.co";
+  var SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZwdG5xb2xrbWFnZnlqcGVkYml4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODc1MjkzNjQsImV4cCI6MjEwMzEwNTM2NH0.NdByMySJ_hRyX3F3OB5sUlxF8kEuXYCHd0_9B__iuWA";
 
   /* =========================================================================
      2. PUBLIC STORAGE BUCKET NAMES
