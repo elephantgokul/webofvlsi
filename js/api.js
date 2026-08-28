@@ -1,91 +1,72 @@
-﻿// js/api.js  -  Centralized API utility for Google Apps Script & Supabase integration
+// js/api.js  -  Centralized API utility for Google Apps Script & Supabase integration
 // Department of VLSI Design and Technology, SIET
 
 const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxtiC0y8Gwzr0gj5Mcb1wJaSogr44lWI2PlYQQOVj-wbTOKw2EyJmXvhnibGlRr7Idc/exec";
 
 const API_CACHE_PREFIX = "vlsi_api_";
-const API_CACHE_TTL = 5 * 60 * 1000; // 5 minutes
+const API_CACHE_TTL = 30 * 60 * 1000; // 30 minutes cache
 
 /**
- * Fetch data from the Apps Script API with optional action parameter.
- * Uses sessionStorage caching to avoid redundant calls.
- * @param {string} [action] - Optional action parameter (e.g., 'faculty', 'hod', 'students')
- * @returns {Promise<Object>} The API response data
+ * Fetch data from the Apps Script API with zero latency.
+ * Instantly returns cached/fallback data and refreshes in the background.
+ * @param {string} [action] - Optional action parameter
+ * @returns {Promise<Object>}
  */
 async function fetchWithAction(action) {
     const cacheKey = API_CACHE_PREFIX + (action || "all");
 
-    // Direct file opens should not depend on a network API round-trip.
-    if (typeof window !== "undefined" && window.location && window.location.protocol === "file:") {
-        return getFallbackData();
+    // 1. Instantly check localStorage or sessionStorage for zero-latency load
+    let cachedData = null;
+    try {
+        const raw = localStorage.getItem(cacheKey) || sessionStorage.getItem(cacheKey);
+        if (raw) {
+            const parsed = JSON.parse(raw);
+            if (parsed && parsed.data) {
+                cachedData = parsed.data;
+                if (Date.now() - parsed.timestamp < API_CACHE_TTL) {
+                    return cachedData;
+                }
+            }
+        }
+    } catch (e) {}
+
+    // 2. If we have cached data, return it immediately and revalidate in background
+    if (cachedData) {
+        revalidateInBackground(action, cacheKey);
+        return cachedData;
     }
 
-    // Check sessionStorage cache
-    try {
-        const cached = sessionStorage.getItem(cacheKey);
-        if (cached) {
-            const { data, timestamp } = JSON.parse(cached);
-            if (Date.now() - timestamp < API_CACHE_TTL) {
-                return data;
-            }
-            sessionStorage.removeItem(cacheKey);
-        }
-    } catch (e) { /* sessionStorage not available, continue */ }
+    // 3. Return fallback immediately (0ms latency) and revalidate in background
+    const fallback = getFallbackData();
+    revalidateInBackground(action, cacheKey);
+    return fallback;
+}
 
-    // Build URL with action parameter
+function revalidateInBackground(action, cacheKey) {
     let url = APPS_SCRIPT_URL;
     if (action) {
         url += (url.includes("?") ? "&" : "?") + "action=" + encodeURIComponent(action);
     }
 
-    // Retry logic (max 2 attempts)
-    for (let attempt = 0; attempt < 2; attempt++) {
-        try {
-            const controller = new AbortController();
-            const timeoutId = setTimeout(() => controller.abort(), 10000); // 10s timeout
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 3000);
 
-            const response = await fetch(url, {
-                method: "GET",
-                redirect: "follow",
-                signal: controller.signal
-            });
+    fetch(url, { method: "GET", redirect: "follow", signal: controller.signal })
+        .then(res => res.ok ? res.text() : Promise.reject(new Error(res.statusText)))
+        .then(text => {
             clearTimeout(timeoutId);
-
-            if (!response.ok) {
-                throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+            const data = JSON.parse(text);
+            if (data && (data.students || data.faculty || data.hod)) {
+                try {
+                    const payload = JSON.stringify({ data: data, timestamp: Date.now() });
+                    localStorage.setItem(cacheKey, payload);
+                    sessionStorage.setItem(cacheKey, payload);
+                } catch (e) {}
             }
-
-            const text = await response.text();
-            let data;
-            try {
-                data = JSON.parse(text);
-            } catch (parseErr) {
-                console.warn("[API] Response is not valid JSON. Using fallback data.", parseErr);
-                return getFallbackData();
-            }
-
-            // Cache the successful response
-            try {
-                sessionStorage.setItem(cacheKey, JSON.stringify({
-                    data: data,
-                    timestamp: Date.now()
-                }));
-            } catch (e) { /* ignore storage errors */ }
-
-            return data;
-
-        } catch (error) {
-            console.warn(`[API] Attempt ${attempt + 1} failed:`, error.message);
-            if (attempt === 1) {
-                console.warn("[API] All attempts failed. Using fallback data.");
-                return getFallbackData();
-            }
-            // Wait 1s before retry
-            await new Promise(r => setTimeout(r, 1000));
-        }
-    }
-
-    return getFallbackData();
+        })
+        .catch(() => {
+            clearTimeout(timeoutId);
+        });
 }
 
 /**

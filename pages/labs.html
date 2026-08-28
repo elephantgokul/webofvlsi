@@ -105,7 +105,7 @@
     <div id="modal-hero" class="relative flex items-end" style="min-height:160px;padding:2rem;border-radius:1.5rem 1.5rem 0 0">
       <div style="position:absolute;inset:0;opacity:.12" aria-hidden="true"><svg width="100%" height="100%"><defs><pattern id="mp" width="60" height="60" patternUnits="userSpaceOnUse"><path d="M0 30H60M30 0V60" stroke="#2fe6dd" stroke-width="1" fill="none"/></pattern></defs><rect width="100%" height="100%" fill="url(#mp)"/></svg></div>
       <div class="relative z-10">
-        <p class="font-mono text-xs mb-2" style="color:rgba(255,255,255,.5)" id="modal-lab-no"></p>
+        <p class="font-mono text-xs mb-2" style="color:#5b6478" id="modal-lab-no"></p>
         <h2 class="font-display font-bold text-xl text-white" id="modal-title"></h2>
       </div>
       <button id="modal-close" class="absolute top-4 right-4 w-9 h-9 rounded-xl flex items-center justify-center transition-all" style="background:rgba(255,255,255,.15);color:#fff" onmouseover="this.style.background='rgba(255,255,255,.3)'" onmouseout="this.style.background='rgba(255,255,255,.15)'" aria-label="Close">
@@ -158,7 +158,7 @@
   </div>
 </div>
 
-<footer style="background:#0b1b33;padding:1.5rem;text-align:center;font-size:.78rem;color:rgba(255,255,255,.3)">
+<footer style="background:#f8fafc;border-top:1px solid #e2e8f0;color:#5b6478">
   <p>&copy; <span id="current-year">2026</span> VLSI Department, SIET &nbsp;·&nbsp;
      <a href="../index.html" style="color:rgba(255,255,255,.4);transition:color .2s" onmouseover="this.style.color='#fff'" onmouseout="this.style.color=''">Back to Home</a>
   </p>
@@ -255,7 +255,7 @@ grid.innerHTML = labsData.map(function(lab, i){
       '<div class="h-32 flex items-center justify-center relative" style="background:linear-gradient(135deg,'+lab.accent+','+lab.accent+'dd)">',
         '<div aria-hidden="true" style="position:absolute;inset:0;opacity:.15"><svg width="100%" height="100%"><defs><pattern id="lg'+i+'" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M0 20H40M20 0V40" stroke="#2fe6dd" stroke-width=".8" fill="none"/></pattern></defs><rect width="100%" height="100%" fill="url(#lg'+i+')"/></svg></div>',
         '<i class="fa-solid '+lab.icon+' text-4xl text-white relative z-10" style="opacity:.9"></i>',
-        '<span class="absolute top-3 left-3 font-mono text-xs" style="color:rgba(255,255,255,.5)">'+lab.no+'</span>',
+        '<span class="absolute top-3 left-3 font-mono text-xs" style="color:#5b6478">'+lab.no+'</span>',
       '</div>',
       '<div class="p-5">',
         '<h3 class="font-display font-semibold text-sm mb-2" style="color:#0b1b33">'+lab.name+'</h3>',

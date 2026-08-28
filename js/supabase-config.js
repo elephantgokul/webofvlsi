@@ -174,11 +174,9 @@
       return raw;
     }
 
-    // If Supabase is configured with real credentials, build public Supabase Storage URL
-    if (isConfigured() && bucket) {
-      var filename = raw.split('/').pop();
-      return getSupabasePublicUrl(bucket, filename);
-    }
+    // Instantly return local asset path for 0ms latency with zero network 404 delays
+    var localPath = getLocalAssetFallback(raw, bucket);
+    if (localPath) return localPath;
 
     // Otherwise resolve as a local path relative to current page location
     if (raw.indexOf('assets/') === 0) {

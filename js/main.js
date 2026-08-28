@@ -26,17 +26,15 @@ window.escapeHtml = escapeHtml;
     }
   }
 
-  // Dismiss immediately when DOM is ready or after brief 150ms animation
+  // Dismiss immediately when DOM is ready for zero latency
   if (document.readyState === "complete" || document.readyState === "interactive") {
-    setTimeout(hide, 150);
+    hide();
   } else {
-    document.addEventListener("DOMContentLoaded", function() {
-      setTimeout(hide, 150);
-    });
+    document.addEventListener("DOMContentLoaded", hide);
   }
 
   window.addEventListener("load", hide);
-  setTimeout(hide, 800); // Fail-safe: dismiss after 800ms max so it NEVER gets stuck
+  setTimeout(hide, 300); // Fail-safe: dismiss after 300ms max so it NEVER gets stuck
 })();
 
 /* ---- Header: sticky background + mobile menu --------------------------- */
