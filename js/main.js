@@ -197,3 +197,31 @@ window.addEventListener("load", function () {
     try { AOS.refresh(); } catch (e) {}
   }
 });
+
+/* ---- Hero Video Autoplay Assurance -------------------------------------- */
+(function heroVideoAutoplay() {
+  function ensureVideoPlaying() {
+    var video = document.querySelector(".hero-bg-video");
+    if (!video) return;
+    video.muted = true;
+    video.defaultMuted = true;
+    var p = video.play();
+    if (p !== undefined) {
+      p.catch(function () {
+        document.addEventListener("click", function () {
+          video.play().catch(function () {});
+        }, { once: true });
+        document.addEventListener("touchstart", function () {
+          video.play().catch(function () {});
+        }, { once: true });
+      });
+    }
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", ensureVideoPlaying);
+  } else {
+    ensureVideoPlaying();
+  }
+  window.addEventListener("load", ensureVideoPlaying);
+})();
