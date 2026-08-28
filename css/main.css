@@ -217,15 +217,23 @@ textarea:focus-visible {
   object-fit: cover;
   object-position: center;
   pointer-events: none;
-  opacity: 0.9;
+  opacity: 1;
 }
 
 .hero-video-overlay {
   position: absolute;
   inset: 0;
   z-index: 1;
-  background: linear-gradient(180deg, rgba(240, 247, 255, 0.15) 0%, rgba(244, 247, 251, 0.35) 100%);
+  background: transparent;
   pointer-events: none;
+}
+
+.hero-line {
+  text-shadow: 0 2px 14px rgba(255, 255, 255, 0.8), 0 1px 4px rgba(11, 27, 51, 0.15);
+}
+
+.hero-subhead {
+  text-shadow: 0 1px 8px rgba(255, 255, 255, 0.9);
 }
 
 /* Faint tiled circuit-grid texture */
