@@ -191,6 +191,19 @@
     return raw;
   }
 
+  function getLocalAssetFallback(pathOrFilename, bucket) {
+    var raw = String(pathOrFilename || '').trim();
+    if (!raw) return '';
+    if (/^(https?:|data:)/i.test(raw)) return '';
+    var filename = raw.split('/').pop();
+    var isInsidePagesFolder = typeof window !== 'undefined' &&
+      window.location &&
+      window.location.pathname.replace(/\\/g, '/').includes('/pages/');
+    var prefix = isInsidePagesFolder ? '../assets/images/' : 'assets/images/';
+    var folder = (bucket === 'faculty') ? 'faculty/' : ((bucket === 'students') ? 'students/' : '');
+    return prefix + folder + filename;
+  }
+
   /* =========================================================================
      5. EXPORT TO GLOBAL WINDOW OBJECT
      ========================================================================= */
@@ -202,5 +215,6 @@
   window.getSupabasePublicUrl = getSupabasePublicUrl;
   window.listSupabaseBucketFiles = listSupabaseBucketFiles;
   window.resolveSupabaseImageUrl = resolveSupabaseImageUrl;
+  window.getLocalAssetFallback = getLocalAssetFallback;
 
 })(typeof window !== 'undefined' ? window : this);

@@ -1,4 +1,4 @@
-﻿// js/hod.js  -  HOD profile renderer, loads data from api.js & Supabase Storage
+// js/hod.js  -  HOD profile renderer, loads data from api.js & Supabase Storage
 document.addEventListener('DOMContentLoaded', async () => {
     const profileContainer = document.getElementById('hod-profile');
     if (!profileContainer) return;
@@ -31,8 +31,12 @@ document.addEventListener('DOMContentLoaded', async () => {
             ? resolveSupabaseImageUrl(rawPhoto, (typeof SUPABASE_BUCKETS !== 'undefined' ? SUPABASE_BUCKETS.faculty : 'faculty'), rawPhoto)
             : resolveAssetPath(rawPhoto);
 
+        const localFallback = typeof getLocalAssetFallback === 'function'
+            ? getLocalAssetFallback(rawPhoto, 'faculty')
+            : resolveAssetPath(rawPhoto);
+
         const photoHtml = photoSrc
-            ? `<img src="${escapeHtml(photoSrc)}" alt="${escapeHtml(hod.name)}" class="w-40 h-40 rounded-full object-cover mx-auto mb-4 border-4 border-blue-600" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="hod-photo-placeholder" style="display:none"><i class="fa-solid fa-user text-white text-5xl"></i></div>`
+            ? `<img src="${escapeHtml(photoSrc)}" alt="${escapeHtml(hod.name)}" class="w-40 h-40 rounded-full object-cover mx-auto mb-4 border-4 border-blue-600" data-fallback="${escapeHtml(localFallback)}" onerror="if(this.dataset.fallback && this.src !== this.dataset.fallback){ this.src = this.dataset.fallback; } else { this.style.display='none'; if(this.nextElementSibling) this.nextElementSibling.style.display='flex'; }"><div class="hod-photo-placeholder" style="display:none"><i class="fa-solid fa-user text-white text-5xl"></i></div>`
             : `<div class="hod-photo-placeholder"><i class="fa-solid fa-user text-white text-5xl"></i></div>`;
 
         const researchTags = (hod.researchInterests || []).map(tag =>

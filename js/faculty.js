@@ -1,4 +1,4 @@
-﻿document.addEventListener('DOMContentLoaded', async () => {
+document.addEventListener('DOMContentLoaded', async () => {
     const grid = document.getElementById('faculty-grid');
     if (!grid) return;
 
@@ -47,12 +47,16 @@
                 ? resolveSupabaseImageUrl(rawPhoto, (typeof SUPABASE_BUCKETS !== 'undefined' ? SUPABASE_BUCKETS.faculty : 'faculty'), rawPhoto)
                 : resolveAssetPath(rawPhoto);
             
+            const localFallback = typeof getLocalAssetFallback === 'function'
+                ? getLocalAssetFallback(rawPhoto, 'faculty')
+                : resolveAssetPath(rawPhoto);
+            
             const photoFallback = `<div class="w-20 h-20 rounded-full flex items-center justify-center" style="background:${bgGradient}"><i class="fa-solid fa-user text-white text-3xl"></i></div>`;
             const designationLabel = (fac.designation || '').replace('Assistant Professor', 'Asst. Prof').replace('Associate Professor', 'Assoc. Prof');
             const specialization = fac.specialization || '';
 
             const photoHtml = photoSrc
-                ? `<div class="relative w-20 h-20 rounded-full">${photoFallback}<img src="${escapeHtml(photoSrc)}" alt="${escapeHtml(fac.name)}" class="absolute inset-0 w-20 h-20 rounded-full object-cover shadow-lg border-2 border-white bg-white" onerror="this.style.display='none'"></div>`
+                ? `<div class="relative w-20 h-20 rounded-full">${photoFallback}<img src="${escapeHtml(photoSrc)}" alt="${escapeHtml(fac.name)}" class="absolute inset-0 w-20 h-20 rounded-full object-cover shadow-lg border-2 border-white bg-white" data-fallback="${escapeHtml(localFallback)}" onerror="if(this.dataset.fallback && this.src !== this.dataset.fallback){ this.src = this.dataset.fallback; } else { this.style.display='none'; }"></div>`
                 : photoFallback;
 
             const card = document.createElement('article');

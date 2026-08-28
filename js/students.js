@@ -1,4 +1,4 @@
-﻿// js/students.js  -  Student data renderer with search, filter, view toggle, and Supabase Storage integration
+// js/students.js  -  Student data renderer with search, filter, view toggle, and Supabase Storage integration
 document.addEventListener('DOMContentLoaded', async () => {
     const grid = document.getElementById('students-grid');
     if (!grid) return;
@@ -97,8 +97,12 @@ document.addEventListener('DOMContentLoaded', async () => {
                 ? `<p class="text-xs line-clamp-2 mt-2 pt-2" style="color:#5b6478;border-top:1px dashed #e2e8f0"><i class="fa-solid fa-trophy mr-1 text-[10px]" style="color:#d97706"></i>${escapeHtml(cleanAch)}</p>`
                 : '';
 
+            const localFallback = typeof getLocalAssetFallback === 'function'
+                ? getLocalAssetFallback(rawPhoto, 'students')
+                : resolveAssetPath(rawPhoto);
+
             const photoHtml = photoSrc
-                ? `<div class="relative w-16 h-16 rounded-full">${photoFallback}<img src="${escapeHtml(photoSrc)}" alt="${escapeHtml(student.name)}" class="absolute inset-0 w-16 h-16 rounded-full object-cover shadow-lg border-2 border-white bg-white" onerror="this.style.display='none'"></div>`
+                ? `<div class="relative w-16 h-16 rounded-full">${photoFallback}<img src="${escapeHtml(photoSrc)}" alt="${escapeHtml(student.name)}" class="absolute inset-0 w-16 h-16 rounded-full object-cover shadow-lg border-2 border-white bg-white" data-fallback="${escapeHtml(localFallback)}" onerror="if(this.dataset.fallback && this.src !== this.dataset.fallback){ this.src = this.dataset.fallback; } else { this.style.display='none'; }"></div>`
                 : photoFallback;
 
             const card = document.createElement('article');
