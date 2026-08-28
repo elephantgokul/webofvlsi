@@ -290,7 +290,7 @@ textarea:focus-visible {
 .scroll-cue {
   width: 22px;
   height: 36px;
-  border: 2px solid rgba(255, 255, 255, 0.4);
+  border: 2px solid #94a3b8;
   border-radius: 999px;
   position: relative;
 }
@@ -301,7 +301,7 @@ textarea:focus-visible {
   left: 50%;
   width: 4px;
   height: 8px;
-  background: var(--signal-cyan);
+  background: var(--circuit-blue);
   border-radius: 999px;
   transform: translateX(-50%);
   animation: scroll-cue-bounce 1.6s ease-in-out infinite;

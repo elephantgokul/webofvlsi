@@ -184,3 +184,16 @@ window.escapeHtml = escapeHtml;
     document.getElementById('install-no').addEventListener('click', function() { banner.remove(); });
   });
 })();
+
+/* ---- AOS & Animation Safety Net ----------------------------------------- */
+window.addEventListener("load", function () {
+  if (typeof AOS === "undefined") {
+    document.querySelectorAll("[data-aos]").forEach(function (el) {
+      el.removeAttribute("data-aos");
+      el.style.opacity = "1";
+      el.style.transform = "none";
+    });
+  } else {
+    try { AOS.refresh(); } catch (e) {}
+  }
+});

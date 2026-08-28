@@ -3,19 +3,43 @@
    ========================================================================= */
 
 /* ---- AOS: scroll-reveal for content sections below the hero ------------- */
-(function initAOS() {
-  if (typeof AOS === "undefined") return;
-  AOS.init({
-    duration: 700,
-    easing: "ease-out-cubic",
-    once: true,
-    offset: 60,
-  });
-})();
+function setupAOS() {
+  if (typeof AOS !== "undefined") {
+    AOS.init({
+      duration: 700,
+      easing: "ease-out-cubic",
+      once: true,
+      offset: 60,
+    });
+    AOS.refresh();
+  }
+}
+
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", setupAOS);
+} else {
+  setupAOS();
+}
+
+window.addEventListener("load", function () {
+  if (typeof AOS === "undefined") {
+    // Safety net: If AOS library failed to load, remove data-aos attributes so content is never hidden
+    document.querySelectorAll("[data-aos]").forEach(function (el) {
+      el.removeAttribute("data-aos");
+      el.style.opacity = "1";
+      el.style.transform = "none";
+    });
+  } else {
+    AOS.refresh();
+  }
+});
 
 /* ---- GSAP: orchestrated hero load-in ------------------------------------- */
-(function heroIntro() {
+function heroIntro() {
   if (typeof gsap === "undefined") return;
+
+  const hero = document.getElementById("hero");
+  if (!hero) return;
 
   const tl = gsap.timeline({
     defaults: { ease: "power3.out", duration: 0.9 },
@@ -27,7 +51,13 @@
     .from(".hero-cta > *", { y: 16, opacity: 0, stagger: 0.1 }, "-=0.4")
     .from(".hero-badges", { y: 16, opacity: 0 }, "-=0.5")
     .from(".scroll-cue", { opacity: 0, duration: 0.6 }, "-=0.3");
-})();
+}
+
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", heroIntro);
+} else {
+  heroIntro();
+}
 
 /* ---- GSAP + ScrollTrigger: readout-style stat counters -------------------- */
 (function statCounters() {
