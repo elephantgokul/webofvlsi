@@ -214,7 +214,7 @@
     <div class="max-w-screen-xl mx-auto px-5 lg:px-8">
       <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 md:gap-5">
 
-        <div class="readout-card surface-card p-6 text-center" data-target="2024" data-suffix="" data-aos="fade-up" data-aos-delay="0">
+        <div class="readout-card surface-card p-6 text-center" data-target="2024" data-suffix="" data-format="plain" data-aos="fade-up" data-aos-delay="0">
           <p class="readout-value font-display font-bold text-4xl" style="color:#1652c4">2024</p>
           <p class="mt-2 text-xs font-mono uppercase tracking-widest" style="color:#5b6478">Established</p>
         </div>
@@ -222,7 +222,7 @@
           <p class="readout-value font-display font-bold text-4xl" style="color:#1652c4">0+</p>
           <p class="mt-2 text-xs font-mono uppercase tracking-widest" style="color:#5b6478">Students Enrolled</p>
         </div>
-        <div class="readout-card surface-card p-6 text-center" data-target="2028" data-suffix="" data-aos="fade-up" data-aos-delay="120">
+        <div class="readout-card surface-card p-6 text-center" data-target="2028" data-suffix="" data-format="plain" data-aos="fade-up" data-aos-delay="120">
           <p class="readout-value font-display font-bold text-4xl" style="color:#1652c4">2028</p>
           <p class="mt-2 text-xs font-mono uppercase tracking-widest" style="color:#5b6478">First Batch Graduation</p>
         </div>
@@ -496,18 +496,18 @@
         Ready to build the future<br class="hidden sm:block"/> of electronics?
       </h2>
       <p class="max-w-xl mx-auto mb-10 text-sm md:text-base leading-relaxed" style="color:rgba(255,255,255,.58)" data-aos="fade-up" data-aos-delay="120">
-        Join a department where every student gets the resources, mentorship, and industry connections to turn ideas into working systems.
+      <p class="max-w-xl mx-auto text-sm md:text-base leading-relaxed mb-8" style="color:#5b6478">
+        Discover world-class laboratories, specialized curriculum, and direct industry mentorship at SIET VLSI.
       </p>
-      <div class="flex flex-col sm:flex-row gap-4 justify-center" data-aos="fade-up" data-aos-delay="180">
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
         <a href="pages/contact.html"
-           style="background:#fff;color:#1652c4;font-weight:600;padding:.85rem 1.75rem;border-radius:1rem;font-size:.85rem;display:inline-flex;align-items:center;gap:.5rem;transition:all .3s"
-           onmouseover="this.style.background='#f4f7fb'" onmouseout="this.style.background='#fff'">
-          Contact the Department <i class="fa-solid fa-arrow-right text-xs"></i>
+           class="btn-primary inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-2xl text-sm font-semibold text-white">
+          Contact Admissions <i class="fa-solid fa-arrow-right text-xs"></i>
         </a>
-        <a href="pages/resources.html"
-           class="btn-ghost inline-flex items-center justify-center gap-2 rounded-2xl text-sm font-semibold"
-           style="padding:.85rem 1.75rem">
-          Download Resources <i class="fa-solid fa-download text-xs"></i>
+        <a href="pages/students.html"
+           class="btn-ghost inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-2xl text-sm font-semibold"
+           style="border:1.5px solid #1652c4;color:#1652c4">
+          View Student Profiles
         </a>
       </div>
     </div>
@@ -515,12 +515,10 @@
 
 </main>
 
-<!--  -  -  FOOTER  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -->
+<!-- ----------------------- FOOTER --------------------------- -->
 <footer id="site-footer" style="background:#0b1b33;color:rgba(255,255,255,.65)" role="contentinfo">
-  <div class="max-w-screen-xl mx-auto px-5 lg:px-8">
-
-    <!-- Top grid -->
-    <div class="py-14 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
+  <div class="max-w-screen-xl mx-auto px-5 lg:px-8 pt-16 pb-12">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 mb-14">
 
       <!-- Brand col -->
       <div class="sm:col-span-2 lg:col-span-1">
@@ -547,7 +545,7 @@
              onmouseout="this.style.background='rgba(255,255,255,.06)';this.style.color='rgba(255,255,255,.5)'">
             <i class="fa-brands fa-instagram" style="font-size:.8rem"></i>
           </a>
-          <a href="#" aria-label="LinkedIn" style="width:2.2rem;height:2.2rem;border-radius:.6rem;background:rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.5);transition:all .3s"
+          <a href="https://www.linkedin.com/in/siet-ee-vlsi-design-and-technology-6bb30541a?utm_source=share_via&utm_content=profile&utm_medium=member_android" target="_blank" aria-label="LinkedIn" style="width:2.2rem;height:2.2rem;border-radius:.6rem;background:rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.5);transition:all .3s"
              onmouseover="this.style.background='#1652c4';this.style.color='#fff'"
              onmouseout="this.style.background='rgba(255,255,255,.06)';this.style.color='rgba(255,255,255,.5)'">
             <i class="fa-brands fa-linkedin-in" style="font-size:.8rem"></i>
@@ -597,15 +595,15 @@
           </li>
           <li class="flex gap-3">
             <i class="fa-solid fa-phone mt-0.5 flex-shrink-0" style="color:#2fe6dd"></i>
-            <a href="tel:+919876543210" style="font-size:.83rem;transition:color .2s" onmouseover="this.style.color='#fff'" onmouseout="this.style.color=''">+91 98765 43210</a>
+            <a href="tel:+919629561731" style="font-size:.83rem;transition:color .2s" onmouseover="this.style.color='#fff'" onmouseout="this.style.color=''">+91 96295 61731</a>
           </li>
           <li class="flex gap-3">
             <i class="fa-solid fa-envelope mt-0.5 flex-shrink-0" style="color:#2fe6dd"></i>
-            <a href="mailto:VLSI@siet.ac.in" style="font-size:.83rem;transition:color .2s" onmouseover="this.style.color='#fff'" onmouseout="this.style.color=''">VLSI@siet.ac.in</a>
+            <a href="mailto:Hodvlsi@siet.ac.in" style="font-size:.83rem;transition:color .2s" onmouseover="this.style.color='#fff'" onmouseout="this.style.color=''">Hodvlsi@siet.ac.in</a>
           </li>
           <li class="flex gap-3">
             <i class="fa-solid fa-clock mt-0.5 flex-shrink-0" style="color:#2fe6dd"></i>
-            <span style="font-size:.83rem">Mon  -  Sat, 9:00 AM  -  5:00 PM</span>
+            <span style="font-size:.83rem">Mon–Sat, 9:00 AM – 4:30 PM</span>
           </li>
         </ul>
       </div>

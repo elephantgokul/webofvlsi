@@ -76,8 +76,15 @@ if (document.readyState === "loading") {
 
     const target = Number(card.dataset.target || 0);
     const suffix = card.dataset.suffix || "";
+    const format = card.dataset.format || "";
+    const isYear = (target >= 1900 && target <= 2100) || format === "plain";
     const valueEl = card.querySelector(".readout-value");
     if (!valueEl) return;
+
+    const formatVal = (val) => {
+      const rounded = Math.round(val);
+      return (isYear ? String(rounded) : rounded.toLocaleString()) + suffix;
+    };
 
     if (hasGSAP) {
       const counter = { value: 0 };
@@ -86,12 +93,12 @@ if (document.readyState === "loading") {
         duration: 1.8,
         ease: "power2.out",
         onUpdate: () => {
-          valueEl.textContent = Math.round(counter.value).toLocaleString() + suffix;
+          valueEl.textContent = formatVal(counter.value);
         },
       });
     } else {
       // graceful fallback if GSAP fails to load
-      valueEl.textContent = target.toLocaleString() + suffix;
+      valueEl.textContent = formatVal(target);
     }
   }
 

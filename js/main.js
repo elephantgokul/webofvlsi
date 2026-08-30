@@ -42,6 +42,9 @@ window.escapeHtml = escapeHtml;
   const header = document.getElementById("site-header");
   const menuToggle = document.getElementById("menu-toggle");
   const mobileMenu = document.getElementById("mobile-menu");
+  if (document.getElementById("hero")) {
+    document.body.classList.add("home-page");
+  }
   if (!header) return;
 
   const SCROLL_THRESHOLD = 60;

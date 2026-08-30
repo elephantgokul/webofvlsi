@@ -96,11 +96,11 @@ document.addEventListener('DOMContentLoaded', async () => {
                     <!-- Quick Stats -->
                     <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
                         <div class="surface-card rounded-xl p-5 text-center">
-                            <p class="font-display font-bold text-2xl" style="color:#1652c4">15+</p>
+                            <p class="font-display font-bold text-2xl" style="color:#1652c4">10+</p>
                             <p class="text-xs font-mono mt-1 uppercase tracking-wider" style="color:#5b6478">Years Experience</p>
                         </div>
                         <div class="surface-card rounded-xl p-5 text-center">
-                            <p class="font-display font-bold text-2xl" style="color:#1652c4">50+</p>
+                            <p class="font-display font-bold text-2xl" style="color:#1652c4">20+</p>
                             <p class="text-xs font-mono mt-1 uppercase tracking-wider" style="color:#5b6478">Publications</p>
                         </div>
                         <div class="surface-card rounded-xl p-5 text-center">
@@ -108,7 +108,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                             <p class="text-xs font-mono mt-1 uppercase tracking-wider" style="color:#5b6478">PhD Guided</p>
                         </div>
                         <div class="surface-card rounded-xl p-5 text-center">
-                            <p class="font-display font-bold text-2xl" style="color:#1652c4">5+</p>
+                            <p class="font-display font-bold text-2xl" style="color:#1652c4">2+</p>
                             <p class="text-xs font-mono mt-1 uppercase tracking-wider" style="color:#5b6478">Funded Projects</p>
                         </div>
                     </div>

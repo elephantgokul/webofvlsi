@@ -23,6 +23,21 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     function renderFaculty(facultyList) {
         grid.innerHTML = '';
+        const orderMap = {
+            "dr. p. dhilipkumar": 1,
+            "mrs. t. renita pearlin": 2,
+            "mrs. p. priscillasophia": 3,
+            "mrs. c. prema": 4,
+            "mrs. r. vasanthi": 5
+        };
+        facultyList.sort((a, b) => {
+            const nameA = (a.name || '').toLowerCase().trim();
+            const nameB = (b.name || '').toLowerCase().trim();
+            const orderA = orderMap[nameA] || 99;
+            const orderB = orderMap[nameB] || 99;
+            return orderA - orderB;
+        });
+
         facultyList.forEach((fac, index) => {
             // Determine filter category based on specialization
             let specCategory = 'all';
