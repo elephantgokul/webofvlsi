@@ -229,11 +229,11 @@ textarea:focus-visible {
 }
 
 .hero-line {
-  text-shadow: 0 2px 14px rgba(255, 255, 255, 0.8), 0 1px 4px rgba(11, 27, 51, 0.15);
+  text-shadow: 0 2px 16px rgba(0, 0, 0, 0.45);
 }
 
 .hero-subhead {
-  text-shadow: 0 1px 8px rgba(255, 255, 255, 0.9);
+  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.35);
 }
 
 /* Faint tiled circuit-grid texture */
@@ -297,7 +297,7 @@ textarea:focus-visible {
 .scroll-cue {
   width: 22px;
   height: 36px;
-  border: 2px solid #94a3b8;
+  border: 2px solid rgba(255, 255, 255, 0.45);
   border-radius: 999px;
   position: relative;
 }
@@ -308,7 +308,7 @@ textarea:focus-visible {
   left: 50%;
   width: 4px;
   height: 8px;
-  background: var(--circuit-blue);
+  background: var(--signal-cyan);
   border-radius: 999px;
   transform: translateX(-50%);
   animation: scroll-cue-bounce 1.6s ease-in-out infinite;
