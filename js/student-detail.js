@@ -103,6 +103,15 @@ document.addEventListener('DOMContentLoaded', async () => {
                 ${achievementHtml}
               </div>
 
+              ${student.projectsOverview ? `
+              <div class="pt-6" style="border-top:1px solid #e2e8f0">
+                <p class="text-xs font-mono uppercase tracking-widest font-semibold mb-2" style="color:#1652c4"><i class="fa-solid fa-microchip mr-1.5"></i>PROJECTS OVERVIEW</p>
+                <div class="text-sm leading-relaxed" style="color:#5b6478">
+                  ${formatContent(student.projectsOverview)}
+                </div>
+              </div>
+              ` : ''}
+
               ${student.description ? `
               <div class="pt-6" style="border-top:1px solid #e2e8f0">
                 <p class="text-xs font-mono uppercase tracking-widest font-semibold mb-2" style="color:#1652c4">DESCRIPTION & OBJECTIVES</p>
@@ -173,11 +182,15 @@ document.addEventListener('DOMContentLoaded', async () => {
     function normalizeStudent(student) {
         const registerNo = student.registerNo || student.rollno || '';
         const image = student.image || student.photoUrl || '';
+        const linkedin = student.linkedin || student.linkedin_url || student.linkedinUrl || '';
+        const projectsOverview = student.projectsOverview || student.projects_overview || student.projects || student.project || '';
         return Object.assign({}, student, {
             registerNo: registerNo,
             rollno: student.rollno || registerNo,
             image: image,
             photoUrl: student.photoUrl || image,
+            linkedin: linkedin,
+            projectsOverview: projectsOverview,
             batch: student.batch || getBatchFromRegisterNo(registerNo),
             yearToken: student.yearToken || getYearToken(student.year)
         });
@@ -210,7 +223,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         if (/^www\./i.test(raw)) return 'https://' + raw.replace(/\s/g, '%20');
         if (/^(github|linkedin)\.com\//i.test(raw)) return 'https://' + raw.replace(/\s/g, '%20');
         if (type === 'github' && !/\s/.test(raw)) return 'https://github.com/' + encodeURIComponent(raw);
-        if (type === 'linkedin') return 'https://www.linkedin.com/search/results/all/?keywords=' + encodeURIComponent(raw);
+        if (type === 'linkedin' && /^in\/[a-zA-Z0-9_-]+/i.test(raw)) return 'https://www.linkedin.com/' + raw;
         return '';
     }
 

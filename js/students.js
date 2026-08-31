@@ -1,51 +1,51 @@
-// js/students.js  -  Student data renderer with search, filter, view toggle, and Supabase Storage integration
 document.addEventListener('DOMContentLoaded', async () => {
     const grid = document.getElementById('students-grid');
     if (!grid) return;
 
     let allStudents = [];
+    let currentFilter = 'ALL';
+    let currentSearch = '';
     let currentView = 'card'; // 'card' or 'table'
-    let currentFilter = 'all';
-    let searchQuery = '';
 
-    // Show loading skeleton
+    // Initial Loading Skeleton
     grid.innerHTML = generateSkeletons(8);
 
     try {
         const data = await fetchDepartmentData();
         allStudents = (data.students || []).map(normalizeStudent);
-
-        if (allStudents.length === 0) {
-            grid.innerHTML = '<div class="col-span-full text-center py-10 text-gray-500">No student data available.</div>';
-            return;
-        }
-
-        renderStudents();
+        render();
         setupFilters();
         setupSearch();
         setupViewToggle();
     } catch (error) {
-        console.error("Error loading student data:", error);
-        grid.innerHTML = '<div class="col-span-full text-center py-10 text-red-500">Failed to load student data. Please try again later.</div>';
+        console.error("Failed to load students:", error);
+        grid.innerHTML = `<div class="col-span-full text-center py-12 text-red-500 font-medium">
+            <i class="fa-solid fa-triangle-exclamation text-3xl mb-3"></i>
+            <p>Failed to load student data. Please try again later.</p>
+        </div>`;
     }
 
-    function getFilteredStudents() {
-        return allStudents.filter(s => {
-            const matchesFilter = currentFilter === 'all' || s.yearToken === currentFilter || s.year === currentFilter;
-            const q = searchQuery.toLowerCase();
+    function render() {
+        const filtered = allStudents.filter(student => {
+            const matchesFilter = currentFilter === 'ALL' || student.yearToken === currentFilter;
+            const q = currentSearch.toLowerCase().trim();
             const matchesSearch = !q ||
-                (s.name || '').toLowerCase().includes(q) ||
-                (s.rollno || '').toLowerCase().includes(q) ||
-                (s.registerNo || '').toLowerCase().includes(q) ||
-                (s.universityNo || '').toLowerCase().includes(q) ||
-                (s.email || '').toLowerCase().includes(q) ||
-                (s.batch || '').toLowerCase().includes(q);
+                (student.name && student.name.toLowerCase().includes(q)) ||
+                (student.registerNo && student.registerNo.toLowerCase().includes(q)) ||
+                (student.rollno && student.rollno.toLowerCase().includes(q)) ||
+                (student.batch && student.batch.toLowerCase().includes(q)) ||
+                (student.email && student.email.toLowerCase().includes(q)) ||
+                (student.achievementTitle && student.achievementTitle.toLowerCase().includes(q)) ||
+                (student.projectsOverview && student.projectsOverview.toLowerCase().includes(q));
+
             return matchesFilter && matchesSearch;
         });
-    }
 
-    function renderStudents() {
-        const filtered = getFilteredStudents();
+        // Update count badge
+        const countBadge = document.getElementById('student-count');
+        if (countBadge) {
+            countBadge.textContent = `${filtered.length} Student${filtered.length === 1 ? '' : 's'}`;
+        }
 
         if (filtered.length === 0) {
             grid.innerHTML = `<div class="col-span-full text-center py-16">
@@ -97,6 +97,17 @@ document.addEventListener('DOMContentLoaded', async () => {
                 ? `<p class="text-xs line-clamp-2 mt-2 pt-2" style="color:#5b6478;border-top:1px dashed #e2e8f0"><i class="fa-solid fa-trophy mr-1 text-[10px]" style="color:#d97706"></i>${escapeHtml(cleanAch)}</p>`
                 : '';
 
+            const projText = student.projectsOverview || student.projects_overview || student.projects || student.project || '';
+            const cleanProj = String(projText).replace(/^[-*•\d.\s]+/, '').split('\n')[0];
+            const projectsPreview = cleanProj
+                ? `<p class="text-xs line-clamp-2 mt-1.5 pt-1.5" style="color:#5b6478;border-top:1px dashed #e2e8f0"><i class="fa-solid fa-microchip mr-1 text-[10px]" style="color:#1652c4"></i><span class="font-medium" style="color:#0b1b33">Projects: </span>${escapeHtml(cleanProj)}</p>`
+                : '';
+
+            const linkedinHref = getExternalHref(student.linkedin || student.linkedin_url || student.linkedinUrl, 'linkedin');
+            const linkedinBtn = linkedinHref
+                ? `<a href="${escapeHtml(linkedinHref)}" target="_blank" rel="noopener" aria-label="LinkedIn Profile" title="LinkedIn Profile" class="w-8 h-8 rounded-lg flex items-center justify-center text-xs transition-all" style="background:#f0f4ff;color:#1652c4" onmouseover="this.style.background='#1652c4';this.style.color='#fff'" onmouseout="this.style.background='#f0f4ff';this.style.color='#1652c4'"><i class="fa-brands fa-linkedin-in"></i></a>`
+                : '';
+
             const localFallback = typeof getLocalAssetFallback === 'function'
                 ? getLocalAssetFallback(rawPhoto, 'students')
                 : resolveAssetPath(rawPhoto);
@@ -125,8 +136,10 @@ document.addEventListener('DOMContentLoaded', async () => {
                   ${batchLine}
                 </div>
                 ${achievementPreview}
+                ${projectsPreview}
                 <div class="flex gap-2 pt-3 mt-3" style="border-top:1px solid #e2e8f0">
                   <a href="mailto:${escapeHtml(student.email)}" aria-label="Email" title="Email" class="w-8 h-8 rounded-lg flex items-center justify-center text-xs transition-all" style="background:#f0f4ff;color:#1652c4" onmouseover="this.style.background='#1652c4';this.style.color='#fff'" onmouseout="this.style.background='#f0f4ff';this.style.color='#1652c4'"><i class="fa-solid fa-envelope"></i></a>
+                  ${linkedinBtn}
                   <a href="${detailHref}" aria-label="View details" title="View Details" class="w-8 h-8 rounded-lg flex items-center justify-center text-xs transition-all" style="background:#f0f4ff;color:#1652c4" onmouseover="this.style.background='#1652c4';this.style.color='#fff'" onmouseout="this.style.background='#f0f4ff';this.style.color='#1652c4'"><i class="fa-solid fa-eye"></i></a>
                 </div>
               </div>
@@ -174,55 +187,64 @@ document.addEventListener('DOMContentLoaded', async () => {
         const btns = document.querySelectorAll('.filter-btn');
         btns.forEach(btn => {
             btn.addEventListener('click', () => {
-                btns.forEach(b => b.classList.remove('active'));
+                btns.forEach(b => {
+                    b.classList.remove('active');
+                    b.style.background = '';
+                    b.style.color = '';
+                });
                 btn.classList.add('active');
-                currentFilter = btn.dataset.filter;
-                renderStudents();
+                currentFilter = btn.dataset.filter || 'ALL';
+                render();
             });
         });
     }
 
     function setupSearch() {
-        const searchInput = document.getElementById('student-search');
-        if (!searchInput) return;
+        const input = document.getElementById('student-search');
+        if (!input) return;
+
         let debounceTimer;
-        searchInput.addEventListener('input', () => {
+        input.addEventListener('input', (e) => {
             clearTimeout(debounceTimer);
             debounceTimer = setTimeout(() => {
-                searchQuery = searchInput.value.trim();
-                renderStudents();
-            }, 250);
+                currentSearch = e.target.value;
+                render();
+            }, 200);
         });
     }
 
     function setupViewToggle() {
-        const cardBtn = document.getElementById('view-card');
-        const tableBtn = document.getElementById('view-table');
+        const cardBtn = document.getElementById('view-card-btn');
+        const tableBtn = document.getElementById('view-table-btn');
         if (!cardBtn || !tableBtn) return;
 
         cardBtn.addEventListener('click', () => {
             currentView = 'card';
             cardBtn.classList.add('active');
             tableBtn.classList.remove('active');
-            renderStudents();
+            render();
         });
 
         tableBtn.addEventListener('click', () => {
             currentView = 'table';
             tableBtn.classList.add('active');
             cardBtn.classList.remove('active');
-            renderStudents();
+            render();
         });
     }
 
     function normalizeStudent(student) {
         const registerNo = student.registerNo || student.rollno || '';
         const image = student.image || student.photoUrl || '';
+        const linkedin = student.linkedin || student.linkedin_url || student.linkedinUrl || '';
+        const projectsOverview = student.projectsOverview || student.projects_overview || student.projects || student.project || '';
         return Object.assign({}, student, {
             registerNo: registerNo,
             rollno: student.rollno || registerNo,
             image: image,
             photoUrl: student.photoUrl || image,
+            linkedin: linkedin,
+            projectsOverview: projectsOverview,
             batch: student.batch || getBatchFromRegisterNo(registerNo),
             yearToken: student.yearToken || getYearToken(student.year)
         });
@@ -246,6 +268,17 @@ document.addEventListener('DOMContentLoaded', async () => {
     function getBatchFromRegisterNo(registerNo) {
         const match = String(registerNo || '').match(/^(\d{2})/);
         return match ? "20" + match[1] + " - 20" + (parseInt(match[1], 10) + 4) : "2024 - 2028";
+    }
+
+    function getExternalHref(value, type) {
+        const raw = String(value || '').trim();
+        if (!raw) return '';
+        if (/^https?:\/\//i.test(raw)) return raw.replace(/\s/g, '%20');
+        if (/^www\./i.test(raw)) return 'https://' + raw.replace(/\s/g, '%20');
+        if (/^(github|linkedin)\.com\//i.test(raw)) return 'https://' + raw.replace(/\s/g, '%20');
+        if (type === 'github' && !/\s/.test(raw)) return 'https://github.com/' + encodeURIComponent(raw);
+        if (type === 'linkedin' && /^in\/[a-zA-Z0-9_-]+/i.test(raw)) return 'https://www.linkedin.com/' + raw;
+        return '';
     }
 
     function resolveAssetPath(src) {

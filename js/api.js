@@ -88,16 +88,23 @@ function withDefaultStudentFields(data) {
         students: studentsList.map(student => {
             const registerNo = student.registerNo || student.rollno || "";
             const image = student.image || student.photoUrl || "";
+            const linkedin = student.linkedin || student.linkedin_url || student.linkedinUrl || "";
+            const github = student.github || student.github_url || student.githubUrl || "";
+            const projectsOverview = student.projectsOverview || student.projects_overview || student.projects || student.project || "";
 
             return Object.assign({
                 achievementTitle: student.achievementTitle || "Achievement",
                 achievement: "",
                 description: "",
+                projectsOverview: projectsOverview,
                 universityNo: student.universityNo || "",
                 programme: student.programme || "",
-                linkedin: "",
-                github: ""
+                linkedin: linkedin,
+                github: github
             }, student, {
+                projectsOverview: projectsOverview,
+                linkedin: linkedin,
+                github: github,
                 registerNo: registerNo,
                 rollno: student.rollno || registerNo,
                 image: image,
@@ -172,6 +179,7 @@ function getFallbackData() {
                 email: "harini6898@gmail.com",
                 achievementTitle: "Industrial Training & Workshop Certification in VLSI",
                 achievement: "Designed and implemented a High-Speed AMBA AXI4 Interconnect for SoC applications as an individual academic project, covering RTL design in Verilog HDL and the complete ASIC physical design flow  -  synthesis, placement, clock tree synthesis, routing, and timing analysis  -  using Synopsys tools including VCS, Design Compiler, IC Compiler II, PrimeTime, and Verdi, with a focus on optimizing area, timing, and power.\n\nCompleted 4 technical internships/trainings covering:\n- VLSI Layout Design and Digital & Hardware Implementation with Altera (Intel) FPGA at Chip Craft\n- PCB design and fabrication practices at Enthutech\n- Verilog HDL/SystemVerilog hands-on training at SM AI Mojo Tech\n- Circuit design and simulation using Proteus at Manfree\n\nAlso participated in a seminar on:\n\"Trends Towards 6G and AI Integration\"\n\nThis reflects continuous engagement with emerging technologies alongside core VLSI design expertise.",
+                projectsOverview: "High-Speed AMBA AXI4 Interconnect for SoC; FPGA Implementation",
                 description: "",
                 image: "harini-d.jpg",
                 photoUrl: "harini-d.jpg",
@@ -190,6 +198,7 @@ function getFallbackData() {
                 email: "selant473@gmail.com",
                 achievementTitle: "Industrial Training, Internships & VLSI Projects",
                 achievement: "- Completed VLSI Layout Design Internship and gained practical semiconductor design experience.\n- Completed Verilog HDL & SystemVerilog Internship with RTL design exposure.\n- Completed PCB Design Internship using KiCad.\n- Completed Embedded Systems Internship with Arduino and microcontroller applications.\n- Developed technical projects including:\n  - 16-bit RISC Processor\n  - UART\n  - 6T SRAM Cell",
+                projectsOverview: "16-bit RISC Processor, UART Controller, 6T SRAM Cell",
                 description: "",
                 image: "tharun-m.jpg",
                 photoUrl: "tharun-m.jpg",
@@ -208,6 +217,7 @@ function getFallbackData() {
                 email: "nithikkannan7@gmail.com",
                 achievementTitle: "Industrial Training & Workshop Certifications in VLSI",
                 achievement: "- Participated in the VLSI Test Workshop at PSG College of Technology organized by IEEE Computer Society TTTC.\n- Completed Custom IC Design Mastery using Cadence EDA Tools training by Abhiyantha / Entuple Technologies.\n- Completed an Internship Program in VLSI Layout Design with Chip Crafts.",
+                projectsOverview: "Custom IC Design using Cadence EDA Tools; VLSI Layout",
                 description: "",
                 image: "nithikkannan-js.jpg",
                 photoUrl: "nithikkannan-js.jpg",
@@ -226,6 +236,7 @@ function getFallbackData() {
                 email: "suman.127418@gmail.com",
                 achievementTitle: "Technical Workshops & Hackathons",
                 achievement: "- Attended a 15-day Cadence Workshop conducted by Entuple.\n- Participated in a 24-hour Hackathon at RIT Chennai.\n- Participated in a Hackathon at KPR Institute of Engineering and Technology.",
+                projectsOverview: "Cadence ASIC Design, 24-hour Hackathon IoT Prototype",
                 description: "",
                 image: "suman.jpg",
                 photoUrl: "suman.jpg",
@@ -244,6 +255,7 @@ function getFallbackData() {
                 email: "ffgb64545@gmail.com",
                 achievementTitle: "VLSI Engineering, Technical Training & Industry Exposure",
                 achievement: "Developed a strong foundation in VLSI Design, Digital Electronics, CMOS fundamentals, and ASIC design flow.\n\nGained hands-on exposure to Verilog and SystemVerilog, including combinational and sequential RTL design and testbench development.\n\nStudied and practiced the RTL-to-Gate-Level Synthesis flow, including RTL translation, optimization, and technology mapping.\n\nGained knowledge of Static Timing Analysis (STA), including setup time, hold time, timing constraints, and timing violations.\n\nAcquired practical exposure to Cadence EDA tools and semiconductor design workflows.\n\nWorked with MATLAB for signal processing concepts including convolution, FFT, frequency response, and signal analysis.\n\nGained experience with Proteus simulation for digital and embedded-system-based circuit implementations.\n\nCompleted multiple technical internships/training programs with:\n- Enthu Tech\n- Manfree\n- Career Ladders\n- SM AI MOJO TECH\n- ChipCrafts\n\nContinuously developing skills in RTL Design, Verification, Synthesis, STA, SystemVerilog, and EDA tools with the goal of pursuing a career in the semiconductor/VLSI industry.",
+                projectsOverview: "RTL-to-GDSII ASIC Flow, SystemVerilog Verification, Static Timing Analysis",
                 description: "Motivated and enthusiastic VLSI Engineering student with a strong foundation in Digital Electronics, VLSI Design, RTL Design, Verilog/SystemVerilog, Synthesis, and Static Timing Analysis (STA).\n\nPossess hands-on exposure to EDA tools, MATLAB, Proteus, and semiconductor design concepts through academic projects, technical training, and internships.\n\nCompleted multiple industry-oriented training programs with Enthu Tech, Manfree, Career Ladders, SM AI MOJO TECH, and ChipCrafts.\n\nA quick learner with a strong interest in ASIC Design, RTL Development, Verification, and Semiconductor Technologies, seeking opportunities to apply technical knowledge and develop practical expertise in the VLSI industry.",
                 image: "anand-k.jpg",
                 photoUrl: "anand-k.jpg",
@@ -262,6 +274,7 @@ function getFallbackData() {
                 email: "u66991302@gmail.com",
                 achievementTitle: "Synopsys VLSI Training & RTL-to-GDSII Project",
                 achievement: "Completed industrial Synopsys training on the RTL-to-GDSII design flow and gained hands-on experience in RTL design, simulation, synthesis, and physical design concepts.\n\nWorked on VLSI projects including:\n- DDR Controller\n- Mini RISC-V Processor",
+                projectsOverview: "DDR Memory Controller, Mini RISC-V Processor Core",
                 description: "",
                 image: "udhaya-r.jpg",
                 photoUrl: "udhaya-r.jpg",
@@ -280,6 +293,7 @@ function getFallbackData() {
                 email: "tharunrm1756@gmail.com",
                 achievementTitle: "VLSI, Semiconductor Training, RTL-to-GDS & Technical Projects",
                 achievement: "Completed 6 technical internships, workshops and industrial training programs in VLSI, semiconductor technology, PCB design, embedded systems and RTL-to-GDS design.\n\nCompleted Code to Chip  -  RTL to GDS Flow Using Synopsys Tools industry-oriented workshop conducted by VLSIMINDS, Bangalore.\n\nCompleted VLSI Layout Design Internship at Chip Crafts, gaining practical exposure to VLSI layout methodologies.\n\nCompleted a 2-week PCB Design and Fabrication Internship through Enthu-EdTech.\n\nCompleted Semiconductor & Manufacturing Workshop conducted by Ethical Edufabrica in association with Mechanica, IIT Madras.\n\nCompleted Embedded Programming for Arduino GPIOs training at Embuzz Technologies.\n\nParticipated in a PCB Design and Fabrication Workshop at KPR Institute of Engineering and Technology.\n\nSuccessfully developed multiple RTL/VLSI projects using Verilog, SystemVerilog and Synopsys EDA tools, including:\n- NoC Router\n- AMBA APB Controller\n- Automotive ADAS Processing Unit\n\nWorked on real-time VLSI design and verification projects covering RTL simulation, synthesis, timing analysis and physical design concepts.\n\nDeveloped an AI Accelerator / Matrix Multiplication Processing Unit using a systolic-array architecture as an advanced VLSI project.\n\nGained hands-on exposure to:\n- Synopsys Design Compiler\n- ICC2\n- VCS\n- Verdi\n\nthrough academic and project-based work.",
+                projectsOverview: "NoC Router, AMBA APB Controller, Systolic AI Accelerator",
                 description: "- Offline workshop at college for Digital Hardware Implementation with Altera FPGAs  -  2 days\n- Coordinated Cadence workshop conducted in college and mentored participants  -  2 days\n- Completed System-on-Chip project: Hand Gesture Control using Jetson Nano\n- Attended 4 internships\n- Coordinator of DM Club in college",
                 image: "tharum-rm.jpg",
                 photoUrl: "tharum-rm.jpg",
@@ -298,6 +312,7 @@ function getFallbackData() {
                 email: "rajeshtharun2318@gmail.com",
                 achievementTitle: "VLSI Internships, Synopsys Workshops & Technical Projects",
                 achievement: "Attended 6 technical internships in areas such as VLSI Design, Embedded Systems, PCB Design, and software technologies, gaining practical industry exposure.\n\nParticipated in a 2-day offline workshop at IIT Madras, a 5-day hands-on training program on Synopsys EDA tools, and a 2-day workshop on Digital Hardware Implementation using Altera (Intel) FPGAs.\n\nServed as a Student Presenter at the PCB LAB Tech Park Inaugural Event, showcasing technical knowledge and project skills.\n\nCompleted 3 real-time VLSI projects using Synopsys tools and currently working on 4 additional projects to enhance design and verification expertise.\n\nAdditionally, completed 8 examinations under Madras Prachar Sabha for Hindi proficiency, demonstrating dedication towards language learning and continuous skill development.",
+                projectsOverview: "Real-time Synopsys VLSI Architectures, Digital FPGA Hardware",
                 description: "6 technical internships in areas such as VLSI Design, Embedded Systems, PCB Design, and software technologies. 3 real time projects using Synopsys EDA tools and working on advanced semiconductor architectures.",
                 image: "tharun-r.jpg",
                 photoUrl: "tharun-r.jpg",
@@ -316,6 +331,7 @@ function getFallbackData() {
                 email: "vkkamalesh1@gmail.com",
                 achievementTitle: "Technical Internships & Industry-Oriented Training",
                 achievement: "Successfully completed technical internships and training programs at:\n- Manfree Technologies  -  Technical Internship\n- Career Ladder  -  Technical Training Program\n- AI Mojo Tech  -  Artificial Intelligence Training\n- Chip Craft  -  VLSI & Semiconductor Design Training\n\nGained practical exposure to:\n- Embedded Systems\n- IoT\n- Artificial Intelligence\n- VLSI Design\n- RTL Coding\n- Semiconductor Technologies\n\nDeveloped hands-on experience through industry-oriented projects, technical workshops, hardware and software implementation, and real-time problem-solving activities.\n\nThese internships strengthened programming, digital design, analytical thinking, teamwork, and professional skills while providing valuable exposure to current industrial practices and emerging technologies.",
+                projectsOverview: "IoT & Embedded VLSI RTL Subsystems, AI Mojo Tech Hardware",
                 description: "",
                 image: "kamalesh-vk.jpg",
                 photoUrl: "kamalesh-vk.jpg",
@@ -334,10 +350,11 @@ function getFallbackData() {
                 email: "psivam574@gmail.com",
                 achievementTitle: "AI Attendance & Money Management Systems, 6 Internships",
                 achievement: "1. Attendance Monitoring System - Developed AI Attendance Monitoring System\n2. Money Management System - Built Money Management System\n3. Internships - Completed 6 Industry Internships\n4. Technical Skills - Developed Strong VLSI & Software Skills",
+                projectsOverview: "AI Attendance System, Money Management System, SIET VLSI Portal",
                 description: "Designed and deployed a web-based attendance management system with real-time tracking, advisor dashboard, and automated reports. Created a web application for expense tracking, budget planning, and monthly financial reports. Gained hands-on experience in VLSI, Digital Hardware Design, SystemVerilog, PCB Design, Embedded Systems, Python, and OOP. Built expertise in SystemVerilog, Digital Hardware Design, Python, Web Development, and GitHub through projects and internships.",
                 image: "gokul.jpg",
                 photoUrl: "gokul.jpg",
-                linkedin: "GOKUL P",
+                linkedin: "",
                 github: "https://github.com/elephantgokul"
             }
         ]

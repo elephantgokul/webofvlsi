@@ -6,7 +6,7 @@
 function setupAOS() {
   if (typeof AOS !== "undefined") {
     AOS.init({
-      duration: 700,
+      duration: 480,
       easing: "ease-out-cubic",
       once: true,
       offset: 60,
