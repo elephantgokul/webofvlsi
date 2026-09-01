@@ -4,23 +4,13 @@
    ========================================================= */
 
 var siteIndex = [
-  { title:"Home",                  url:"index.html",                  keywords:"home department VLSI siet" },
-  { title:"About — VLSI Dept",      url:"index.html#about",            keywords:"about department history vision mission" },
-  { title:"HOD Desk",              url:"pages/hod.html",              keywords:"hod head department message professor" },
-  { title:"Faculty",               url:"pages/faculty.html",          keywords:"faculty staff professor lecturer teaching" },
-  { title:"Laboratories",          url:"pages/labs.html",             keywords:"lab vlsi embedded signals rf iot circuits" },
-  { title:"Workshops & FDP",       url:"pages/workshops.html",        keywords:"workshop fdp bootcamp seminar training" },
-  { title:"Events",                url:"pages/events.html",           keywords:"events symposium elecnova competition" },
-  { title:"Student Achievements",  url:"pages/achievements.html",     keywords:"achievements hackathon coding paper prize" },
-  { title:"Department Milestones", url:"pages/achievements.html",     keywords:"nba naac patent research grant mou ranking" },
-  { title:"Placements",            url:"pages/placements.html",       keywords:"placement package company salary job" },
-  { title:"Alumni",                url:"pages/alumni.html",           keywords:"alumni graduates batch company" },
-  { title:"Gallery",               url:"pages/gallery.html",          keywords:"gallery photos events cultural sports" },
-  { title:"Notice Board",          url:"pages/notices.html",          keywords:"notice announcement circular exam timetable" },
-  { title:"News",                  url:"pages/news.html",             keywords:"news achievement research partnership" },
-  { title:"Resources & Downloads", url:"pages/resources.html",        keywords:"notes lab manual question papers syllabus timetable" },
-  { title:"Contact Us",            url:"pages/contact.html",          keywords:"contact email phone address map" },
-  { title:"Privacy Policy",        url:"pages/privacy.html",          keywords:"privacy policy data cookies" },
+  { title:"About",        url:"index.html#about",        keywords:"about department history vision mission" },
+  { title:"HOD",           url:"pages/hod.html",          keywords:"hod head department message professor" },
+  { title:"Faculty",       url:"pages/faculty.html",      keywords:"faculty staff professor lecturer teaching" },
+  { title:"Students",      url:"pages/students.html",     keywords:"students batch register roll list" },
+  { title:"Achievements",  url:"pages/achievements.html", keywords:"achievements hackathon coding paper prize nba naac patent research grant" },
+  { title:"Placements",    url:"pages/placements.html",   keywords:"placement package company salary job" },
+  { title:"Contact",       url:"pages/contact.html",      keywords:"contact email phone address map" }
 ];
 
 (function initSearch(){
