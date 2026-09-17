@@ -258,7 +258,7 @@ function renderDonutChart(metrics) {
 
   var segmentsHtml = '';
   var legendHtml = '';
-  var currentAngle = startAngle;
+  var cumulativePct = 0;
 
   var order = ['I', 'II', 'III', 'IV'];
   order.forEach(function(year, idx) {
@@ -266,9 +266,11 @@ function renderDonutChart(metrics) {
     if (count === 0) return;
     var pct = count / total;
     var dashArray = pct * circumference;
-    var dashOffset = circumference - (startAngle / 360) * circumference - dashArray;
+    var dashOffset = -(cumulativePct * circumference);
 
-    segmentsHtml += '<circle class="donut-segment" cx="140" cy="140" r="' + radius + '" stroke-width="' + strokeWidth + '" stroke="' + colors[year] + '" fill="none" stroke-dasharray="' + dashArray + ' ' + circumference + '" stroke-dashoffset="' + dashOffset + '" style="transition: stroke-dashoffset 1.2s cubic-bezier(.25,.8,.25,1);" data-aos="fade-in" data-aos-delay="' + (idx * 150) + '"></circle>';
+    segmentsHtml += '<circle class="donut-segment" cx="140" cy="140" r="' + radius + '" stroke-width="' + strokeWidth + '" stroke="' + colors[year] + '" fill="none" stroke-dasharray="' + dashArray + ' ' + circumference + '" stroke-dashoffset="' + dashOffset + '" transform="rotate(-90 140 140)" style="transition: stroke-dashoffset 1.2s cubic-bezier(.25,.8,.25,1);" data-aos="fade-in" data-aos-delay="' + (idx * 150) + '"></circle>';
+
+    cumulativePct += pct;
 
     legendHtml += '<div class="donut-legend-item"><span class="donut-legend-color" style="background:' + colors[year] + '"></span><span>' + yearLabels[year] + ': ' + count + ' (' + Math.round(pct * 100) + '%)</span></div>';
   });
@@ -276,10 +278,8 @@ function renderDonutChart(metrics) {
   svg.innerHTML = [
     '<svg width="280" height="280" viewBox="0 0 280 280" role="img" aria-label="Student distribution by year">',
     segmentsHtml,
-    '<div class="donut-center">',
-      '<div class="donut-center-value">' + total + '</div>',
-      '<div class="donut-center-label">Total Students</div>',
-    '</div>',
+    '<text x="140" y="132" dominant-baseline="middle" text-anchor="middle" style="fill:var(--clr-text-primary,#0b1b33);font-family:Space Grotesk,sans-serif;font-weight:700;font-size:2rem">' + total + '</text>',
+    '<text x="140" y="158" dominant-baseline="middle" text-anchor="middle" style="fill:var(--clr-text-muted,#5b6478);font-family:IBM Plex Mono,monospace;font-size:0.65rem;text-transform:uppercase;letter-spacing:0.08em">Total Students</text>',
     '</svg>'
   ].join('');
 

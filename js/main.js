@@ -147,7 +147,7 @@ window.escapeHtml = escapeHtml;
     toast.setAttribute('role', 'alert');
     toast.innerHTML = [
       '<i class="fa-solid ' + icons[type] + '"></i>',
-      '<span>' + String(message) + '</span>',
+      '<span>' + escapeHtml(message) + '</span>',
       '<button class="toast-close" aria-label="Dismiss">&times;</button>'
     ].join('');
     container.appendChild(toast);

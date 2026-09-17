@@ -179,7 +179,7 @@ function renderListView(currentDate) {
                 '<div class="flex items-center gap-2 mb-1">',
                   '<h3 class="font-display font-semibold" style="color:var(--clr-text-primary)">' + escapeHtml(e.title) + '</h3>',
                   '<span class="badge badge-primary text-xs">' + e.type.charAt(0).toUpperCase() + e.type.slice(1) + '</span>',
-                  (isPast ? '<span class="badge badge-cyan text-xs">Past</span>' : '')
+                  (isPast ? '<span class="badge badge-cyan text-xs">Past</span>' : ''),
                 '</div>',
                 '<p class="text-sm" style="color:var(--clr-text-secondary)">' + escapeHtml(e.desc) + '</p>',
                 '<div class="flex flex-wrap items-center gap-4 mt-2 text-sm" style="color:var(--clr-text-muted)">',

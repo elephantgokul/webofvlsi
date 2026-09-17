@@ -241,13 +241,15 @@ async function initLeaderboard() {
     });
 
     var searchDebounce;
-    searchInput.addEventListener('input', function() {
-      clearTimeout(searchDebounce);
-      searchDebounce = setTimeout(function() {
-        currentSearch = searchInput.value.trim();
-        applyFilters();
-      }, 150);
-    });
+    if (searchInput) {
+      searchInput.addEventListener('input', function() {
+        clearTimeout(searchDebounce);
+        searchDebounce = setTimeout(function() {
+          currentSearch = searchInput.value.trim();
+          applyFilters();
+        }, 150);
+      });
+    }
 
     applyFilters();
 
