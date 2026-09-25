@@ -72,7 +72,7 @@
     if (!bucket || !filePath) return '';
     var cleanFile = String(filePath).replace(/^\/+/, '');
     var baseUrl = (SUPABASE_URL || '').replace(/\/+$/, '');
-    return baseUrl + '/storage/v1/object/public/' + encodeURIComponent(bucket) + '/' + cleanFile;
+    return baseUrl + '/storage/v1/object/public/' + bucket + '/' + cleanFile;
   }
 
   /**
@@ -206,7 +206,7 @@
       window.location &&
       window.location.pathname.replace(/\\/g, '/').includes('/pages/');
     var prefix = isInsidePagesFolder ? '../assets/images/' : 'assets/images/';
-    var folder = (bucket === 'faculty') ? 'faculty/' : ((bucket === 'students') ? 'students/' : '');
+    var folder = (bucket === 'faculty') ? 'faculty/' : ((bucket === 'students' || bucket === 'photo') ? 'students/' : '');
     return prefix + folder + filename;
   }
 
