@@ -16,7 +16,7 @@
      ========================================================================= */
   var SUPABASE_BUCKETS = {
     faculty: "faculty",           // Faculty and HOD photos
-    students: "students",         // Student profile photos
+    students: "photo",            // Student profile photos in 'photo' bucket
     gallery: "gallery",           // Campus, lab, and event gallery images
     alumni: "alumni",             // Alumni portraits
     achievements: "achievements", // Achievement badge/trophy photos
@@ -172,6 +172,14 @@
     // If it is already a full remote URL or data URL
     if (/^(https?:|data:)/i.test(raw)) {
       return raw;
+    }
+
+    if (isConfigured()) {
+      var filePath = raw;
+      if (bucket === 'photo' && !filePath.startsWith('sttudents/')) {
+        filePath = 'sttudents/' + filePath;
+      }
+      return getSupabasePublicUrl(bucket, filePath);
     }
 
     // Instantly return local asset path for 0ms latency with zero network 404 delays
