@@ -1,111 +1,74 @@
-function computeScore(achievement, student) {
-  var text = (achievement || '').toLowerCase();
-  var score = 0;
-  var breakdown = {};
+// js/leaderboard.js — VLSI Student Leaderboard (Project-Based Scoring)
+// Uses scoring.js for point calculation
 
-  var patterns = [
-    { key: 'internship', regex: /internship/gi, points: 15 },
-    { key: 'hackathon', regex: /hackathon/gi, points: 20 },
-    { key: 'project', regex: /project/gi, points: 10 },
-    { key: 'publication', regex: /publication|paper|ieee/gi, points: 30 },
-    { key: 'patent', regex: /patent/gi, points: 50 },
-    { key: 'workshop', regex: /workshop|training/gi, points: 8 },
-    { key: 'firstPlace', regex: /first place|winner|rank 1/gi, points: 40 },
-    { key: 'vlsiTools', regex: /synopsys|cadence|vlsi/gi, points: 5 },
-    { key: 'github', regex: /github\.com/gi, points: 10 },
-    { key: 'linkedin', regex: /linkedin\.com/gi, points: 5 },
-    { key: 'universityNo', regex: null, points: 3 }
-  ];
+function escapeHtml(value) {
+  var div = document.createElement('div');
+  div.textContent = value == null ? '' : String(value);
+  return div.innerHTML;
+}
 
-  patterns.forEach(function(p) {
-    if (p.regex) {
-      var matches = text.match(p.regex);
-      if (matches) {
-        breakdown[p.key] = matches.length * p.points;
-        score += matches.length * p.points;
-      }
-    }
-  });
+function resolveStudentPhoto(student) {
+  var rawPhoto = student.photoUrl || student.image || '';
+  if (typeof resolveSupabaseImageUrl === 'function') {
+    return resolveSupabaseImageUrl(rawPhoto, (typeof SUPABASE_BUCKETS !== 'undefined' ? SUPABASE_BUCKETS.students : 'students'), rawPhoto);
+  }
+  if (typeof getLocalAssetFallback === 'function') {
+    return getLocalAssetFallback(rawPhoto, 'students');
+  }
+  return rawPhoto;
+}
 
-  if (student.universityNo) {
-    breakdown.universityNo = 3;
-    score += 3;
+function getPhotoHtml(student, size) {
+  var sz = size || 40;
+  var src = resolveStudentPhoto(student);
+  var initials = String(student.name || '?').split(' ').map(function(w) { return w[0]; }).join('').substring(0, 2).toUpperCase();
+  var fallbackDiv = '<div class="leaderboard-avatar-fallback" style="width:' + sz + 'px;height:' + sz + 'px;font-size:' + Math.round(sz * 0.38) + 'px">' + escapeHtml(initials) + '</div>';
+
+  if (!src) return fallbackDiv;
+
+  var localFallback = '';
+  if (typeof getLocalAssetFallback === 'function') {
+    localFallback = getLocalAssetFallback(student.photoUrl || student.image || '', 'students');
   }
 
-  return { score: score, breakdown: breakdown };
+  return '<div class="leaderboard-avatar" style="width:' + sz + 'px;height:' + sz + 'px">' +
+    fallbackDiv +
+    '<img src="' + escapeHtml(src) + '" alt="' + escapeHtml(student.name) + '" ' +
+    'class="leaderboard-avatar-img" style="width:' + sz + 'px;height:' + sz + 'px" ' +
+    'data-fallback="' + escapeHtml(localFallback) + '" ' +
+    'onerror="if(this.dataset.fallback && this.src !== this.dataset.fallback){ this.src = this.dataset.fallback; } else { this.style.display=\'none\'; }">' +
+    '</div>';
 }
 
-function extractSkills(achievement) {
-  var text = (achievement || '').toLowerCase();
-  var skills = [];
-  var skillPatterns = {
-    'Synopsys': /synopsys/gi,
-    'Cadence': /cadence/gi,
-    'VLSI': /vlsi/gi,
-    'Verilog': /verilog/gi,
-    'SystemVerilog': /systemverilog|system-verilog/gi,
-    'VHDL': /vhdl/gi,
-    'Python': /python/gi,
-    'C/C++': /c\+\+|c\/c\+\+/gi,
-    'MATLAB': /matlab/gi,
-    'Tanner': /tanner/gi,
-    'SPICE': /spice/gi,
-    'FPGA': /fpga/gi,
-    'ASIC': /asic/gi,
-    'RTL': /rtl/gi,
-    'DFT': /dft/gi,
-    'STA': /sta\b|static timing/gi,
-    'CDC': /cdc\b|clock domain/gi,
-    'Low Power': /low power|upf|cpf/gi,
-    'Physical Design': /physical design|place.*route|pnr/gi,
-    'Verification': /verification|uvm|ovm/gi,
-    'Analog': /analog/gi,
-    'Layout': /layout/gi
-  };
-
-  Object.entries(skillPatterns).forEach(function(_ref) {
-    var name = _ref[0], regex = _ref[1];
-    if (regex.test(text)) skills.push(name);
-  });
-
-  return skills;
-}
-
-function getYearToken(student) {
-  return student.yearToken || student.year || '';
-}
-
-function normalizeYear(token) {
-  if (!token) return '';
-  var t = String(token).toUpperCase();
-  if (t.includes('I') && !t.includes('II') && !t.includes('III') && !t.includes('IV')) return 'I';
-  if (t.includes('II') && !t.includes('III') && !t.includes('IV')) return 'II';
-  if (t.includes('III')) return 'III';
-  if (t.includes('IV')) return 'IV';
-  return t;
-}
-
-function renderPodium(top3, maxScore) {
+function renderPodium(top3) {
   var podium = document.getElementById('leaderboard-podium');
-  if (!podium) return;
+  if (!podium || !top3.length) return;
 
   var medals = ['🥇', '🥈', '🥉'];
-  var html = '';
+  var podiumColors = [
+    'linear-gradient(135deg, #fbbf24, #f59e0b)',
+    'linear-gradient(135deg, #94a3b8, #cbd5e1)',
+    'linear-gradient(135deg, #d97706, #b45309)'
+  ];
 
+  var html = '';
   top3.forEach(function(student, idx) {
-    var pct = maxScore > 0 ? Math.round((student.computedScore / maxScore) * 100) : 0;
-    var skills = student.skills.slice(0, 6);
+    var scoring = student.scoring || {};
+    var detailHref = 'student-detail.html?id=' + encodeURIComponent(student.id || student.registerNo || student.name);
+
     html += [
       '<div class="podium-place podium-' + (idx + 1) + '" data-aos="fade-up" data-aos-delay="' + (idx * 150) + '">',
-        '<div class="podium-card">',
-          '<div class="podium-rank">' + medals[idx] + '</div>',
+        '<a href="' + detailHref + '" class="podium-card" style="text-decoration:none;color:inherit">',
+          '<div class="podium-medal">' + medals[idx] + '</div>',
+          '<div class="podium-photo">' + getPhotoHtml(student, 64) + '</div>',
           '<div class="podium-name">' + escapeHtml(student.name) + '</div>',
-          '<div class="podium-score">' + student.computedScore + ' pts</div>',
-          '<div class="badge-chips mt-3" style="justify-content:center">' +
-            skills.map(function(s) { return '<span class="badge badge-primary">' + escapeHtml(s) + '</span>'; }).join('') +
+          '<div class="podium-roll font-mono">' + escapeHtml(student.registerNo || student.rollno || '') + '</div>',
+          '<div class="podium-score">' + student.totalPoints + ' pts</div>',
+          '<div class="podium-meta">',
+            '<span><i class="fa-solid fa-microchip"></i> ' + (scoring.projectCount || 0) + ' projects</span>',
           '</div>',
-        '</div>',
-        '<div class="podium-base"></div>',
+        '</a>',
+        '<div class="podium-base" style="background:' + podiumColors[idx] + '"></div>',
       '</div>'
     ].join('');
   });
@@ -113,7 +76,7 @@ function renderPodium(top3, maxScore) {
   podium.innerHTML = html;
 }
 
-function renderTable(students, maxScore) {
+function renderTable(students) {
   var tbody = document.getElementById('leaderboard-body');
   var empty = document.getElementById('leaderboard-empty');
   if (!tbody) return;
@@ -123,34 +86,41 @@ function renderTable(students, maxScore) {
     if (empty) empty.classList.remove('hidden');
     return;
   }
-
   if (empty) empty.classList.add('hidden');
 
   var html = '';
   students.forEach(function(student, idx) {
-    var rank = student.rank;
-    var pct = maxScore > 0 ? Math.round((student.computedScore / maxScore) * 100) : 0;
-    var skills = student.skills.slice(0, 8);
-    var breakdown = student.breakdown;
-    var breakdownHtml = Object.entries(breakdown).map(function(_ref) {
-      var k = _ref[0], v = _ref[1];
-      var label = k.replace(/([A-Z])/g, ' $1').replace(/^./, function(m){ return m.toUpperCase(); });
-      return '<span class="badge badge-cyan" title="' + escapeHtml(label) + ': ' + v + ' pts">' + v + '</span>';
-    }).join(' ');
+    var scoring = student.scoring || {};
+    var detailHref = 'student-detail.html?id=' + encodeURIComponent(student.id || student.registerNo || student.name);
+
+    // Build category badges
+    var categoryBadges = '';
+    (scoring.projects || []).forEach(function(p) {
+      categoryBadges += '<span class="badge" style="background:' + p.categoryColor + '15;color:' + p.categoryColor + ';border:1px solid ' + p.categoryColor + '30;font-size:0.65rem;padding:2px 6px;margin:1px">' + escapeHtml(p.categoryLabel) + '</span>';
+    });
 
     html += [
-      '<tr data-aos="fade-up" data-aos-delay="' + (idx * 20) + '">',
-        '<td class="rank-col">#' + rank + '</td>',
-        '<td class="font-medium">' + escapeHtml(student.name) + '</td>',
-        '<td class="hidden md:table-cell">' + escapeHtml(student.year || '') + '</td>',
-        '<td class="hidden lg:table-cell">',
-          '<div class="score-bar-wrap">',
-            '<div class="score-bar" style="width:' + pct + '%" role="progressbar" aria-valuenow="' + student.computedScore + '" aria-valuemin="0" aria-valuemax="' + maxScore + '"></div>',
-          '</div>',
-          '<span class="text-xs font-mono mt-1 block" style="color:var(--clr-text-muted)">' + student.computedScore + ' pts</span>',
+      '<tr data-aos="fade-up" data-aos-delay="' + Math.min(idx * 20, 200) + '">',
+        '<td class="rank-col"><span class="rank-badge">#' + student.rank + '</span></td>',
+        '<td>',
+          '<a href="' + detailHref + '" class="leaderboard-student-link">',
+            getPhotoHtml(student, 36),
+            '<div>',
+              '<div class="font-medium" style="color:var(--clr-text-primary)">' + escapeHtml(student.name) + '</div>',
+              '<div class="font-mono text-xs" style="color:var(--clr-accent)">' + escapeHtml(student.registerNo || student.rollno || '') + '</div>',
+            '</div>',
+          '</a>',
         '</td>',
-        '<td class="badge-chips">' + breakdownHtml + '</td>',
-        '<td class="badge-chips">' + skills.map(function(s) { return '<span class="badge badge-primary">' + escapeHtml(s) + '</span>'; }).join('') + '</td>',
+        '<td class="hidden md:table-cell text-center">',
+          '<span class="font-mono font-semibold" style="color:var(--clr-accent)">' + (scoring.projectCount || 0) + '</span>',
+        '</td>',
+        '<td class="hidden lg:table-cell">',
+          '<div class="flex flex-wrap gap-0.5">' + categoryBadges + '</div>',
+        '</td>',
+        '<td class="text-center">',
+          '<div class="font-mono font-bold text-sm" style="color:var(--clr-text-primary)">' + student.totalPoints + '</div>',
+          '<div class="text-xs" style="color:var(--clr-text-muted)">pts</div>',
+        '</td>',
       '</tr>'
     ].join('');
   });
@@ -185,45 +155,58 @@ async function initLeaderboard() {
 
   try {
     var data = await window.fetchDepartmentData();
-    var students = (data.students || []).map(function(s) {
-      var computed = computeScore(s.achievement, s);
-      var skills = extractSkills(s.achievement);
-      return {
-        ...s,
-        computedScore: computed.score,
-        breakdown: computed.breakdown,
-        skills: skills,
-        normalizedYear: normalizeYear(getYearToken(s))
-      };
-    }).sort(function(a, b) { return b.computedScore - a.computedScore; });
+    var rawStudents = data.students || [];
 
-    students.forEach(function(s, i) { s.rank = i + 1; });
-
-    var maxScore = students.length > 0 ? students[0].computedScore : 0;
-    var top3 = students.slice(0, 3);
-    var rest = students.slice(3);
+    // Generate leaderboard with scores
+    var allStudents = window.generateLeaderboard(rawStudents);
+    var maxScore = allStudents.length > 0 ? allStudents[0].totalPoints : 0;
 
     var currentYearFilter = 'all';
     var currentSearch = '';
 
+    function getYearToken(student) {
+      var text = String(student.year || student.yearToken || '').toUpperCase();
+      if (text.includes('IV')) return 'IV';
+      if (text.includes('III')) return 'III';
+      if (text.includes('II') && !text.includes('III')) return 'II';
+      if (/\bI\b/.test(text) || text === 'I') return 'I';
+      return 'III';
+    }
+
     function applyFilters() {
-      var filtered = students.filter(function(s) {
-        var yearMatch = currentYearFilter === 'all' || s.normalizedYear === currentYearFilter;
-        var searchMatch = !currentSearch || s.name.toLowerCase().includes(currentSearch.toLowerCase());
+      var filtered = allStudents.filter(function(s) {
+        var yearMatch = currentYearFilter === 'all' || getYearToken(s) === currentYearFilter;
+        var q = currentSearch.toLowerCase().trim();
+        var searchMatch = !q ||
+          (s.name && s.name.toLowerCase().includes(q)) ||
+          (s.registerNo && s.registerNo.toLowerCase().includes(q)) ||
+          (s.rollno && s.rollno.toLowerCase().includes(q));
         return yearMatch && searchMatch;
       });
 
-      filtered.forEach(function(s, i) { s.rank = i + 1; });
+      // Re-rank filtered list
+      var currentRank = 1;
+      filtered.forEach(function(s, i) {
+        if (i > 0 && s.totalPoints === filtered[i - 1].totalPoints &&
+            s.advancedProjectCount === filtered[i - 1].advancedProjectCount &&
+            s.projectCount === filtered[i - 1].projectCount) {
+          s.rank = filtered[i - 1].rank;
+        } else {
+          s.rank = currentRank;
+        }
+        currentRank = i + 2;
+      });
 
       var displayTop3 = filtered.slice(0, 3);
       var displayRest = filtered.slice(3);
-      var displayMax = filtered.length > 0 ? filtered[0].computedScore : maxScore;
 
-      renderPodium(displayTop3, displayMax);
-      renderTable(displayRest, displayMax);
+      renderPodium(displayTop3);
+      renderTable(displayRest);
 
       if (stats) {
-        stats.textContent = filtered.length + ' of ' + students.length + ' students' + (currentYearFilter !== 'all' ? ' · Year ' + currentYearFilter : '') + (currentSearch ? ' · Search: "' + currentSearch + '"' : '');
+        stats.textContent = filtered.length + ' of ' + allStudents.length + ' students' +
+          (currentYearFilter !== 'all' ? ' · Year ' + currentYearFilter : '') +
+          (currentSearch ? ' · "' + currentSearch + '"' : '');
       }
     }
 
@@ -255,15 +238,12 @@ async function initLeaderboard() {
 
     if (typeof AOS !== 'undefined') AOS.refreshHard();
 
-    if (top3.length > 0) {
+    if (allStudents.length > 0) {
       setTimeout(function() {
         if (typeof gsap !== 'undefined') {
           gsap.from('.podium-place', {
-            y: 200,
-            opacity: 0,
-            duration: 1,
-            stagger: 0.15,
-            ease: 'back.out(1.7)'
+            y: 200, opacity: 0, duration: 1,
+            stagger: 0.15, ease: 'back.out(1.7)'
           });
         }
         triggerConfetti();
@@ -273,7 +253,7 @@ async function initLeaderboard() {
   } catch (err) {
     console.error('[Leaderboard] Error:', err);
     if (tbody) {
-      tbody.innerHTML = '<tr><td colspan="6" class="py-8 text-center" style="color:var(--clr-text-secondary)">Failed to load leaderboard data.</td></tr>';
+      tbody.innerHTML = '<tr><td colspan="5" class="py-8 text-center" style="color:var(--clr-text-secondary)">Failed to load leaderboard data.</td></tr>';
     }
   }
 }

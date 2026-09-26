@@ -59,8 +59,8 @@
       <span class="text-primary font-medium" aria-current="page">Leaderboard</span>
     </nav>
     <header class="mb-10">
-      <h1 class="font-display text-4xl sm:text-5xl font-bold mb-3" style="color:var(--clr-text-primary)">Achievement Leaderboard</h1>
-      <p class="text-lg max-w-2xl" style="color:var(--clr-text-secondary)">Ranking students by computed achievement score from internships, publications, projects, hackathons & VLSI tool expertise</p>
+      <h1 class="font-display text-4xl sm:text-5xl font-bold mb-3" style="color:var(--clr-text-primary)">VLSI Student Leaderboard</h1>
+      <p class="text-lg max-w-2xl" style="color:var(--clr-text-secondary)">Ranking students by project-based scoring — each project earns points based on its VLSI category, quality, and complexity</p>
     </header>
   </section>
 
@@ -94,10 +94,9 @@
             <tr style="background:var(--clr-surface-2)">
               <th class="rank-col" scope="col">Rank</th>
               <th scope="col">Student</th>
-              <th scope="col" class="hidden md:table-cell">Year</th>
-              <th scope="col" class="hidden lg:table-cell">Score</th>
-              <th scope="col">Breakdown</th>
-              <th scope="col">Skills</th>
+              <th scope="col" class="hidden md:table-cell text-center">Projects</th>
+              <th scope="col" class="hidden lg:table-cell">Categories</th>
+              <th scope="col" class="text-center">Points</th>
             </tr>
           </thead>
           <tbody id="leaderboard-body"></tbody>
@@ -168,6 +167,7 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="../js/supabase-config.js"></script>
 <script src="../js/api.js"></script>
+<script src="../js/scoring.js"></script>
 <script src="../js/leaderboard.js"></script>
 <script>AOS.init({duration:480,once:true,offset:60});</script>
 </body>

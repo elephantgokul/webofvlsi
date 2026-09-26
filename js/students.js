@@ -116,6 +116,18 @@ document.addEventListener('DOMContentLoaded', async () => {
                 ? `<div class="relative w-16 h-16 rounded-full">${photoFallback}<img src="${escapeHtml(photoSrc)}" alt="${escapeHtml(student.name)}" class="absolute inset-0 w-16 h-16 rounded-full object-cover shadow-lg border-2 border-white bg-white" data-fallback="${escapeHtml(localFallback)}" onerror="if(this.dataset.fallback && this.src !== this.dataset.fallback){ this.src = this.dataset.fallback; } else { this.style.display='none'; }"></div>`
                 : photoFallback;
 
+            // Compute points if scoring.js is loaded
+            let pointsBadgeHtml = '';
+            if (typeof computeStudentScore === 'function') {
+                const scoring = computeStudentScore(student);
+                if (scoring.totalPoints > 0) {
+                    pointsBadgeHtml = `<div class="flex items-center gap-2 mt-2 pt-2" style="border-top:1px dashed #e2e8f0">
+                        <span class="student-points-badge"><i class="fa-solid fa-star"></i> ${scoring.totalPoints} pts</span>
+                        ${scoring.projectCount > 0 ? `<span class="student-points-badge"><i class="fa-solid fa-microchip"></i> ${scoring.projectCount} projects</span>` : ''}
+                    </div>`;
+                }
+            }
+
             const card = document.createElement('article');
             card.className = 'student-item student-card surface-card rounded-2xl overflow-hidden';
             card.dataset.year = student.yearToken;
@@ -137,6 +149,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 </div>
                 ${achievementPreview}
                 ${projectsPreview}
+                ${pointsBadgeHtml}
                 <div class="flex gap-2 pt-3 mt-3" style="border-top:1px solid #e2e8f0">
                   <a href="mailto:${escapeHtml(student.email)}" aria-label="Email" title="Email" class="w-8 h-8 rounded-lg flex items-center justify-center text-xs transition-all" style="background:#f0f4ff;color:#1652c4" onmouseover="this.style.background='#1652c4';this.style.color='#fff'" onmouseout="this.style.background='#f0f4ff';this.style.color='#1652c4'"><i class="fa-solid fa-envelope"></i></a>
                   ${linkedinBtn}

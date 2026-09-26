@@ -120,6 +120,8 @@ document.addEventListener('DOMContentLoaded', async () => {
                 </div>
               </div>
               ` : ''}
+
+              ${renderProjectScoring(student)}
             </article>
           </div>
         `;
@@ -231,5 +233,81 @@ document.addEventListener('DOMContentLoaded', async () => {
         const div = document.createElement('div');
         div.textContent = value == null ? '' : String(value);
         return div.innerHTML;
+    }
+
+    function renderProjectScoring(student) {
+        if (typeof computeStudentScore !== 'function') return '';
+        const scoring = computeStudentScore(student);
+        if (!scoring.projects || scoring.projects.length === 0) {
+            return '';
+        }
+
+        let projectCardsHtml = '';
+        scoring.projects.forEach(function(proj) {
+            const bonusHtml = proj.bonusDetails.map(function(b) {
+                return `<span class="project-bonus-tag">+${b.points} ${escapeHtml(b.label)}</span>`;
+            }).join('');
+
+            projectCardsHtml += `
+                <div class="project-detail-card">
+                    <div class="project-detail-header">
+                        <div>
+                            <div class="project-detail-title">${escapeHtml(proj.title)}</div>
+                            <span class="project-category-badge" style="background:${proj.categoryColor}15;color:${proj.categoryColor};border:1px solid ${proj.categoryColor}30;margin-top:4px">
+                                <i class="fa-solid fa-microchip" style="font-size:0.55rem"></i> ${escapeHtml(proj.categoryLabel)}
+                            </span>
+                        </div>
+                        <div class="project-detail-points">${proj.totalPoints} pts</div>
+                    </div>
+                    ${proj.description ? `<div class="project-detail-desc">${escapeHtml(proj.description)}</div>` : ''}
+                    ${bonusHtml ? `<div class="project-bonus-tags">${bonusHtml}</div>` : ''}
+                </div>
+            `;
+        });
+
+        // Build achievement points summary
+        let achievementSummary = '';
+        if (scoring.achievementPoints > 0) {
+            const counts = scoring.achievementCounts;
+            const items = [];
+            if (counts.internships) items.push(`Internships (${counts.internships}×5)`);
+            if (counts.workshops) items.push(`Workshops (${counts.workshops}×3)`);
+            if (counts.hackathons) items.push(`Hackathons (${counts.hackathons}×8)`);
+            if (counts.certifications) items.push(`Certifications (${counts.certifications}×4)`);
+            if (counts.papers) items.push(`Papers (${counts.papers}×10)`);
+            if (counts.rankHolder) items.push('Rank Holder (+10)');
+            if (counts.ncc) items.push('NCC (+5)');
+            achievementSummary = `
+                <div class="flex items-center justify-between text-xs" style="padding:0.5rem 0;color:var(--clr-text-secondary)">
+                    <span><i class="fa-solid fa-trophy mr-1" style="color:#d97706"></i> Achievement Points: ${items.join(', ')}</span>
+                    <span class="font-mono font-semibold" style="color:var(--clr-accent)">+${scoring.achievementPoints}</span>
+                </div>
+            `;
+        }
+
+        return `
+            <div class="pt-6" style="border-top:1px solid #e2e8f0">
+                <div class="flex items-center justify-between mb-4">
+                    <p class="text-xs font-mono uppercase tracking-widest font-semibold" style="color:#1652c4">
+                        <i class="fa-solid fa-star mr-1.5"></i>PROJECT SCORING
+                    </p>
+                    <span class="student-points-badge" style="font-size:0.75rem;padding:0.35rem 0.75rem">
+                        <i class="fa-solid fa-star"></i> Total: ${scoring.totalPoints} pts
+                    </span>
+                </div>
+                ${projectCardsHtml}
+                <div style="margin-top:0.75rem;padding:0.75rem 1rem;background:linear-gradient(135deg, rgba(22,82,196,0.04), rgba(47,230,221,0.04));border-radius:0.75rem;border:1px solid rgba(22,82,196,0.1)">
+                    <div class="flex items-center justify-between text-xs" style="color:var(--clr-text-secondary)">
+                        <span><i class="fa-solid fa-microchip mr-1" style="color:var(--clr-accent)"></i> Project Points (${scoring.projectCount} projects)</span>
+                        <span class="font-mono font-semibold" style="color:var(--clr-accent)">${scoring.totalProjectPoints}</span>
+                    </div>
+                    ${achievementSummary}
+                    <div class="flex items-center justify-between text-sm font-semibold" style="padding-top:0.5rem;margin-top:0.5rem;border-top:1px solid rgba(22,82,196,0.1);color:var(--clr-text-primary)">
+                        <span>Total Points</span>
+                        <span class="font-mono" style="color:var(--clr-accent)">${scoring.totalPoints}</span>
+                    </div>
+                </div>
+            </div>
+        `;
     }
 });
