@@ -57,7 +57,7 @@ function renderPodium(top3) {
     var detailHref = 'student-detail.html?id=' + encodeURIComponent(student.id || student.registerNo || student.name);
 
     html += [
-      '<div class="podium-place podium-' + (idx + 1) + '" data-aos="fade-up" data-aos-delay="' + (idx * 150) + '">',
+      '<div class="podium-place podium-' + (idx + 1) + '">',
         '<a href="' + detailHref + '" class="podium-card" style="text-decoration:none;color:inherit">',
           '<div class="podium-medal">' + medals[idx] + '</div>',
           '<div class="podium-photo">' + getPhotoHtml(student, 64) + '</div>',
