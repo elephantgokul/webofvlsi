@@ -236,8 +236,77 @@
   /* =========================================================================
      4. PROJECT SCORE CALCULATION
      ========================================================================= */
+  function isSubstantialProject(project) {
+    if (project.projectLevel === 'major') return true;
+    if (project.projectLevel === 'small') return false;
+
+    var title = (project.title || "").trim().toLowerCase();
+    var desc = (project.description || "").trim().toLowerCase();
+    var text = title + " " + desc;
+
+    // 1. Explicitly basic / mini projects
+    var basicTitles = [
+      'traffic light', 'traffic flow', 'calculator', 'digital clock',
+      'half adder', 'full adder', 'simple counter', 'basic led', 'led controller',
+      'arduino', 'basic sensor', 'multiplexer', 'mux', 'decoder',
+      'basic alu', '8-bit alu', 'low power 8-bit alu', 'practice', 'mini '
+    ];
+
+    for (var i = 0; i < basicTitles.length; i++) {
+      if (title.indexOf(basicTitles[i]) !== -1) {
+        // Exception: Full ASIC physical design tapeout might justify it
+        if (text.indexOf('rtl-to-gdsii') !== -1 || text.indexOf('tapeout') !== -1) return true;
+        return false;
+      }
+    }
+
+    // 2. Assess complexity via scoring
+    var complexity = 0;
+    
+    // Architectural scale
+    if (/(soc|processor|cpu|accelerator|interconnect|router|controller board|bms|adas|neuromorphic|gpu|axi4|systolic|risc-v|processing unit|pcb)/.test(text)) complexity += 3;
+    if (/(system|platform|management system|robot|drone|iot|web application|web app|portal|chatbot)/.test(text)) complexity += 2;
+    
+    // Implementation depth
+    if (/(rtl-to-gdsii|asic design flow|asic physical design|tapeout|synopsys|cadence|eda tools|custom ic|full-stack|deployed)/.test(text)) complexity += 3;
+    if (/(fpga|altera|xilinx|hardware implementation)/.test(text)) complexity += 2;
+
+    // Advanced tech / Research
+    if (/(ai|machine learning|deep learning|computer vision|sparse|dynamic precision|fault-tolerant|predictive)/.test(text)) complexity += 2;
+
+    // 3. Check for isolated / standard academic modules
+    var isolatedRegex = /^(uart( communication| controller)?|spi( protocol| controller)?|can( protocol)?|i2c|booth multiplier|multiplier|tcam|mac unit|axi4-lite interface|bist(\s*–\s*built-in self-test)?|sram cell|pipeline(d digital)? design)$/i;
+    
+    if (isolatedRegex.test(title)) {
+      // It's a standard isolated module. To be substantial, it must have deep implementation (like ASIC flow) or complex architecture context
+      if (complexity >= 3 || project.category === 'rtl-to-gdsii' || project.category === 'silicon') {
+        return true;
+      }
+      return false;
+    }
+
+    // Very short descriptions for non-complex projects usually imply minor work
+    var wordCount = desc.split(/\s+/).length;
+    if (complexity < 2 && wordCount < 8) return false;
+
+    // Default to true for anything else to avoid penalizing unique but undocumented major projects
+    return true;
+  }
+
   function calculateProjectScore(project) {
     var cat = PROJECT_CATEGORIES[project.category] || PROJECT_CATEGORIES['basic'];
+    
+    if (!isSubstantialProject(project)) {
+      return {
+        basePoints: 0,
+        bonusPoints: 0,
+        totalPoints: 0,
+        categoryLabel: cat.label + ' (Small Project)',
+        categoryColor: '#9ca3af', // Grayed out for small projects
+        bonusDetails: []
+      };
+    }
+
     var basePoints = cat.points;
     var bonusPoints = 0;
     var bonusDetails = [];
