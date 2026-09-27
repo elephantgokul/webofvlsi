@@ -127,7 +127,7 @@ img, svg {
 #hero {
   background: var(--clr-bg) !important;
 }
-.hero-bg-video, .hero-video-overlay, .trace-draw, .trace-pulse {
+.trace-draw, .trace-pulse {
   display: none !important;
 }
 #hero::before {
