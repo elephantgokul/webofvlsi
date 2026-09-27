@@ -6,13 +6,32 @@
   <title>Placements  -  VLSI | SIET</title>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css"/>
   <link rel="icon" type="image/png" href="../assets/images/department_logo.png"/>
   <link rel="stylesheet" href="../css/main.css"/>
-  <script>tailwind.config={theme:{extend:{colors:{'ink-navy':'#0b1b33','circuit-blue':'#1652c4','signal-cyan':'#2fe6dd','mist':'#f4f7fb'},fontFamily:{display:['Space Grotesk','sans-serif'],body:['IBM Plex Sans','sans-serif'],mono:['IBM Plex Mono','monospace']}}}}</script>
+  <script>    tailwind.config = {
+      theme: {                                                
+        extend: {
+          colors: {
+            'ink-navy':   '#0a0a0a',
+            'ink-light':  '#171717',
+            'circuit-blue':'#0f172a',
+            'circuit-dark':'#020617',
+            'signal-cyan': '#3b82f6',
+            mist:          '#f7f7f8',
+          },
+          fontFamily: {
+            display: ['Outfit','sans-serif'],
+            body:    ['Plus Jakarta Sans','sans-serif'],
+            mono:    ['JetBrains Mono','monospace'],
+          },
+          borderRadius: { '3xl':'1.5rem', '4xl':'2rem', '5xl':'2.5rem' },
+        }
+      }
+    }}}</script>
 </head>
 <body class="font-body antialiased" style="color:#0b1b33;background:#fff">
 <div id="loading-screen"><p class="loader-mark">VLSI<span style="color:#1652c4">-</span>SIET</p><div class="loader-trace"></div></div>
@@ -34,7 +53,7 @@
       <a href="placements.html"     class="nav-link px-3.5 py-2 text-sm font-medium rounded-lg transition-all" style="color:#1652c4">Placements</a>
       <a href="contact.html"        class="nav-link px-3.5 py-2 text-sm font-medium rounded-lg transition-all">Contact</a>
     </nav>
-    <a href="resources.html" class="hidden lg:inline-flex btn-primary text-sm font-semibold text-white rounded-xl" style="padding:.55rem 1.15rem">Resources</a>
+    <a href="resources.html" class="hidden lg:inline-flex btn-primary text-sm font-semibold text-white rounded-xl">Resources</a>
     <button id="menu-toggle" class="lg:hidden nav-link w-10 h-10 flex items-center justify-center rounded-xl" aria-expanded="false" aria-label="Toggle menu">
       <i class="fa-solid fa-bars text-lg"></i><i class="fa-solid fa-xmark text-lg hidden"></i>
     </button>
@@ -62,7 +81,7 @@
       <p class="mt-2 text-sm md:text-base" style="color:#5b6478">Placement updates for the first graduating batch will be shared here</p>
     </div>
   </section>
-  <section class="py-20 bg-mist" aria-label="Placement updates">
+  <section class="py-32 bg-mist" aria-label="Placement updates">
     <div class="max-w-screen-xl mx-auto px-5 lg:px-8">
       <div class="surface-card rounded-2xl text-center py-12 px-6" data-aos="fade-up">
         <h3 class="text-2xl font-bold" style="color:#0b1b33">Placement Drive Coming Soon</h3>

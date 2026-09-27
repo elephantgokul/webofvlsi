@@ -19,7 +19,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 
   <!-- Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
 
   <!-- FA 6 -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
@@ -37,25 +37,26 @@
   <link rel="stylesheet" href="css/main.css"/>
 
   <script>
-    tailwind.config = {
+        tailwind.config = {
       theme: {                                                
         extend: {
           colors: {
-            'ink-navy':   '#0b1b33',
-            'ink-light':  '#122a4d',
-            'circuit-blue':'#1652c4',
-            'circuit-dark':'#103e94',
-            'signal-cyan': '#2fe6dd',
-            mist:          '#f4f7fb',
+            'ink-navy':   '#0a0a0a',
+            'ink-light':  '#171717',
+            'circuit-blue':'#0f172a',
+            'circuit-dark':'#020617',
+            'signal-cyan': '#3b82f6',
+            mist:          '#f7f7f8',
           },
           fontFamily: {
-            display: ['Space Grotesk','sans-serif'],
-            body:    ['IBM Plex Sans','sans-serif'],
-            mono:    ['IBM Plex Mono','monospace'],
+            display: ['Outfit','sans-serif'],
+            body:    ['Plus Jakarta Sans','sans-serif'],
+            mono:    ['JetBrains Mono','monospace'],
           },
-          borderRadius: { '3xl':'1.5rem', '4xl':'2rem' },
+          borderRadius: { '3xl':'1.5rem', '4xl':'2rem', '5xl':'2.5rem' },
         }
       }
+    }
     }
   </script>
 </head>
@@ -97,8 +98,7 @@
 
     <div class="hidden lg:flex items-center gap-3">
       <a href="pages/resources.html"
-         class="btn-primary text-sm font-semibold text-white rounded-xl"
-         style="padding:.55rem 1.15rem;">Resources</a>
+         class="btn-primary text-sm font-semibold text-white rounded-xl">Resources</a>
     </div>
 
     <!-- Mobile toggle -->
@@ -171,13 +171,11 @@
       <!-- CTA row -->
       <div class="hero-cta mt-10 flex flex-col sm:flex-row gap-3.5 justify-center">
         <a href="#about"
-           class="btn-primary inline-flex items-center justify-center gap-2 px-7 rounded-2xl text-sm font-semibold text-white"
-           style="padding-top:.85rem;padding-bottom:.85rem">
+           class="btn-primary inline-flex items-center justify-center gap-2 px-7 rounded-2xl text-sm font-semibold text-white">
           Explore Department <i class="fa-solid fa-arrow-down text-xs"></i>
         </a>
         <a href="pages/faculty.html"
-           class="btn-ghost inline-flex items-center justify-center gap-2 px-7 rounded-2xl text-sm font-semibold"
-           style="padding-top:.85rem;padding-bottom:.85rem;border:1.5px solid #1652c4;color:#1652c4">
+           class="btn-ghost inline-flex items-center justify-center gap-2 px-7 rounded-2xl text-sm font-semibold">
           Meet the Faculty <i class="fa-solid fa-arrow-right text-xs"></i>
         </a>
       </div>
@@ -207,7 +205,7 @@
   </section>
 
   <!-- ----------------------- STATS BAND --------------------- -->
-  <section id="stats" class="py-10 md:py-16 bg-mist" aria-label="Department at a glance">
+  <section id="stats" class="py-24 md:py-24 bg-mist" aria-label="Department at a glance">
     <div class="max-w-screen-xl mx-auto px-5 lg:px-8">
       <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 md:gap-5">
 
@@ -229,7 +227,7 @@
   </section>
 
   <!-- ----------------------- ABOUT -------------------------- -->
-  <section id="about" class="py-10 md:py-24 bg-white" aria-label="About the department">
+  <section id="about" class="py-24 md:py-32 bg-white" aria-label="About the department">
     <div class="max-w-screen-xl mx-auto px-5 lg:px-8">
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
 
@@ -268,8 +266,7 @@
 
           <div class="mt-10 flex flex-wrap gap-3" data-aos="fade-right" data-aos-delay="240">
             <a href="pages/hod.html"
-               class="btn-primary inline-flex items-center gap-2 text-sm font-semibold text-white rounded-xl"
-               style="padding:.6rem 1.25rem">
+               class="btn-primary inline-flex items-center gap-2 text-sm font-semibold text-white rounded-xl">
               HOD's Message <i class="fa-solid fa-arrow-right text-xs"></i>
             </a>
             <a href="pages/faculty.html"
@@ -340,7 +337,7 @@
   </section>
 
   <!-- ----------------------- VISION & MISSION --------------- -->
-  <section id="vision-mission" class="py-20" style="background:linear-gradient(135deg, #f8fafc 0%, #edf2f7 100%);border-top:1px solid #e2e8f0;border-bottom:1px solid #e2e8f0"
+  <section id="vision-mission" class="py-32" style="background:linear-gradient(135deg, #f8fafc 0%, #edf2f7 100%);border-top:1px solid #e2e8f0;border-bottom:1px solid #e2e8f0"
            aria-label="Vision and mission">
     <div class="max-w-screen-xl mx-auto px-5 lg:px-8">
       <div class="text-center mb-14" data-aos="fade-up">
@@ -404,7 +401,7 @@
   </section>
 
   <!-- ----------------------- PLACEMENT HIGHLIGHTS ----------- -->
-  <section id="placements" class="py-20 bg-mist" aria-label="Placement updates">
+  <section id="placements" class="py-32 bg-mist" aria-label="Placement updates">
     <div class="max-w-screen-xl mx-auto px-5 lg:px-8">
       <div class="text-center py-8" data-aos="fade-up">
         <h3 class="text-2xl font-bold" style="color:#0b1b33">Placement Drive Coming Soon</h3>
@@ -428,7 +425,7 @@
 
   <!-- ----------------------- TESTIMONIALS ------------------- -->
     <!-- HIGHLIGHTS GRID -->
-  <section id="highlights" class="py-24 bg-white" aria-label="Department highlights">
+  <section id="highlights" class="py-32 bg-white" aria-label="Department highlights">
     <div class="max-w-screen-xl mx-auto px-5 lg:px-8">
       <div class="text-center mb-14" data-aos="fade-up">
         <p class="eyebrow-tag font-mono text-xs uppercase tracking-widest mb-3" style="color:#1652c4">What Sets Us Apart</p>
@@ -476,7 +473,7 @@
   </section>
 
   <!-- ----------------------- CTA ---------------------------- -->
-  <section id="cta" class="py-28 relative overflow-hidden"
+  <section id="cta" class="py-40 relative overflow-hidden"
            style="background:linear-gradient(135deg,#0b1b33 0%,#1652c4 100%)"
            aria-label="Call to action">
     <div aria-hidden="true" style="position:absolute;inset:0;opacity:.09;pointer-events:none">
@@ -501,8 +498,7 @@
           Contact Admissions <i class="fa-solid fa-arrow-right text-xs"></i>
         </a>
         <a href="pages/students.html"
-           class="btn-ghost inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-2xl text-sm font-semibold"
-           style="border:1.5px solid rgba(255,255,255,.5);color:#ffffff">
+           class="btn-ghost inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-2xl text-sm font-semibold">
           View Student Profiles
         </a>
       </div>

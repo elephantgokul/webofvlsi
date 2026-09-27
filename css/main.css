@@ -8,13 +8,13 @@
 
 :root {
   /* ---- Color tokens ---- */
-  --ink-navy: #0b1b33;
-  --ink-navy-light: #122a4d;
-  --circuit-blue: #1652c4;
-  --circuit-blue-dark: #103e94;
-  --signal-cyan: #2fe6dd;
+  --ink-navy: #0a0a0a;
+  --ink-navy-light: #171717;
+  --circuit-blue: #0f172a;
+  --circuit-blue-dark: #020617;
+  --signal-cyan: #3b82f6;
   --paper: #ffffff;
-  --mist: #f4f7fb;
+  --mist: #f7f7f8;
   --slate-900: #16213d;
   --slate-700: #334155;
   --slate-500: #5b6478;
@@ -33,9 +33,9 @@
   --clr-shadow: rgba(11, 27, 51, 0.08);
 
   /* ---- Type tokens ---- */
-  --font-display: "Space Grotesk", sans-serif;
-  --font-body: "IBM Plex Sans", sans-serif;
-  --font-mono: "IBM Plex Mono", monospace;
+  --font-display: "Outfit", sans-serif;
+  --font-body: "Plus Jakarta Sans", sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
 }
 
 /* =========================================================================
@@ -415,17 +415,44 @@ body.home-page #site-header:not(.is-scrolled) .nav-link:hover {
    CARDS & SURFACES
    ========================================================================= */
 
+
 .surface-card {
+  position: relative;
   background: var(--paper);
-  border: 1px solid var(--slate-200);
-  border-radius: 1rem;
-  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+  border-radius: calc(2rem - 0.375rem);
+  box-shadow: 0 10px 30px -10px rgba(0,0,0,0.05);
+  border: none;
+  z-index: 1;
+  transition: transform 0.6s cubic-bezier(0.32,0.72,0,1), box-shadow 0.6s cubic-bezier(0.32,0.72,0,1);
+}
+.surface-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  box-shadow: inset 0 1px 1px rgba(255,255,255,1);
+  pointer-events: none;
+  z-index: 2;
+}
+.surface-card::before {
+  content: "";
+  position: absolute;
+  inset: -0.375rem;
+  border-radius: 2rem;
+  background: rgba(0, 0, 0, 0.03);
+  box-shadow: inset 0 1px 2px rgba(0,0,0,0.02);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  z-index: -1;
+  transition: transform 0.6s cubic-bezier(0.32,0.72,0,1);
 }
 .surface-card:hover {
   transform: translateY(-4px);
-  box-shadow: 0 20px 40px -20px rgba(11, 27, 51, 0.22);
-  border-color: rgba(22, 82, 196, 0.25);
+  box-shadow: 0 20px 40px -20px rgba(0, 0, 0, 0.1);
 }
+.surface-card:hover::before {
+  transform: translateY(2px) scale(1.01);
+}
+
 
 .surface-card-2 {
   background: var(--clr-surface-2);
@@ -480,20 +507,49 @@ body.home-page #site-header:not(.is-scrolled) .nav-link:hover {
    BUTTONS
    ========================================================================= */
 
+
 .btn-primary {
-  background: var(--circuit-blue);
+  background: var(--ink-navy);
   color: var(--paper);
-  transition: background-color 0.25s ease, transform 0.2s ease, box-shadow 0.25s ease;
-  box-shadow: 0 10px 24px -12px rgba(22, 82, 196, 0.5);
+  border-radius: 9999px;
+  padding: 0.75rem 1.5rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  transition: all 0.6s cubic-bezier(0.32,0.72,0,1);
+  box-shadow: 0 8px 20px -8px rgba(10, 10, 10, 0.5);
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  gap: 0.75rem;
+  border: 1px solid rgba(255,255,255,0.1);
 }
 .btn-primary:hover {
-  background: var(--circuit-blue-dark);
+  background: var(--ink-light);
   transform: translateY(-2px);
-  box-shadow: 0 14px 28px -10px rgba(22, 82, 196, 0.6);
+  box-shadow: 0 12px 28px -10px rgba(10, 10, 10, 0.6);
 }
+.btn-primary:active {
+  transform: scale(0.98);
+}
+.btn-primary i {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  background: rgba(255,255,255,0.15);
+  border-radius: 9999px;
+  transition: transform 0.6s cubic-bezier(0.32,0.72,0,1);
+}
+.btn-primary:hover i {
+  transform: translateX(4px) scale(1.05);
+}
+
+
+.btn-ghost:active {
+  transform: scale(0.98);
+}
+
 
 .btn-secondary {
   background: var(--clr-surface-2);
@@ -511,18 +567,7 @@ body.home-page #site-header:not(.is-scrolled) .nav-link:hover {
   background: var(--clr-border);
 }
 
-.btn-ghost {
-  border: 1.5px solid rgba(255, 255, 255, 0.35);
-  color: var(--paper);
-  transition: border-color 0.25s ease, background-color 0.25s ease;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-}
-.btn-ghost:hover {
-  border-color: var(--signal-cyan);
-  background-color: rgba(47, 230, 221, 0.08);
-}
+
 
 /* =========================================================================
    SWIPER OVERRIDES — recruiters strip + testimonials
