@@ -227,8 +227,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     function setupViewToggle() {
-        const cardBtn = document.getElementById('view-card-btn');
-        const tableBtn = document.getElementById('view-table-btn');
+        const cardBtn = document.getElementById('view-card');
+        const tableBtn = document.getElementById('view-table');
         if (!cardBtn || !tableBtn) return;
 
         cardBtn.addEventListener('click', () => {
