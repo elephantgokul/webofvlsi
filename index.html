@@ -74,11 +74,68 @@
 </head>
 <body class="font-body antialiased text-ink-navy bg-white">
 
-<!--  -  -  LOADING SCREEN  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -->
-<div id="loading-screen" role="status" aria-live="polite" aria-label="Loading">
-  <p class="loader-mark">VLSI<span style="color:#2fe6dd">-</span>SIET</p>
-  <div class="loader-trace"></div>
+<!--  -  -  ENTRANCE VIDEO OVERLAY  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -->
+<style>
+  #entrance-video-overlay {
+    position: fixed; inset: 0; z-index: 99999; background: #000; transition: opacity 0.6s ease; display: none;
+  }
+  #entrance-video {
+    width: 100%; height: 100%; object-fit: cover;
+  }
+  @media (max-width: 600px) {
+    #entrance-video { object-fit: contain; }
+  }
+  #skip-video-btn {
+    position: absolute; bottom: 20px; right: 20px; background: rgba(255,255,255,0.2); color: #fff;
+    border: 1px solid rgba(255,255,255,0.4); padding: 8px 16px; border-radius: 4px; cursor: pointer;
+    font-family: sans-serif; z-index: 100000; backdrop-filter: blur(4px); transition: background 0.2s;
+  }
+  #skip-video-btn:hover { background: rgba(255,255,255,0.3); }
+</style>
+<div id="entrance-video-overlay">
+  <video id="entrance-video" src="WhatsApp%20Video%202026-09-28%20at%2010.51.02%20AM.mp4" autoplay muted playsinline preload="auto"></video>
+  <button id="skip-video-btn">Skip</button>
 </div>
+<script>
+  (function() {
+    var overlay = document.getElementById('entrance-video-overlay');
+    var video = document.getElementById('entrance-video');
+    var skipBtn = document.getElementById('skip-video-btn');
+
+    if (!sessionStorage.getItem('entranceVideoPlayed')) {
+      overlay.style.display = 'block';
+      document.body.style.overflow = 'hidden';
+      
+      var cleanedUp = false;
+      var cleanup = function() {
+        if (cleanedUp) return;
+        cleanedUp = true;
+        sessionStorage.setItem('entranceVideoPlayed', 'true');
+        overlay.style.opacity = '0';
+        document.body.style.overflow = '';
+        setTimeout(function() {
+          if (overlay.parentNode) overlay.parentNode.removeChild(overlay);
+        }, 600);
+      };
+
+      var timeout = setTimeout(cleanup, 4000); // fallback if it doesn't play quickly
+
+      video.addEventListener('playing', function() {
+        clearTimeout(timeout);
+      });
+      video.addEventListener('ended', cleanup);
+      video.addEventListener('error', cleanup);
+      skipBtn.addEventListener('click', cleanup);
+
+      var p = video.play();
+      if (p !== undefined) {
+        p.catch(function() { cleanup(); });
+      }
+    } else {
+      if (overlay.parentNode) overlay.parentNode.removeChild(overlay);
+    }
+  })();
+</script>
 
 <!-- Scroll progress -->
 <div id="scroll-progress" aria-hidden="true"></div>

@@ -12,30 +12,7 @@ function escapeHtml(v) {
 }
 window.escapeHtml = escapeHtml;
 
-/* ---- Loading screen ---------------------------------------------------- */
-(function loadingScreen() {
-  function hide() {
-    var screen = document.getElementById("loading-screen");
-    if (screen) {
-      screen.classList.add("is-hidden");
-      setTimeout(function() {
-        if (screen && screen.parentNode) {
-          screen.style.display = "none";
-        }
-      }, 300);
-    }
-  }
-
-  // Dismiss immediately when DOM is ready for zero latency
-  if (document.readyState === "complete" || document.readyState === "interactive") {
-    hide();
-  } else {
-    document.addEventListener("DOMContentLoaded", hide);
-  }
-
-  window.addEventListener("load", hide);
-  setTimeout(hide, 300); // Fail-safe: dismiss after 300ms max so it NEVER gets stuck
-})();
+/* ---- Loading screen removed ---- */
 
 /* ---- Header: sticky background + mobile menu --------------------------- */
 (function headerNav() {
