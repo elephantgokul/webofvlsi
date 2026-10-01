@@ -1946,19 +1946,19 @@ body.home-page #site-header:not(.is-scrolled) .nav-link:hover {
 
 
 /* =========================================================================
-   3D CLAYMORPHISM REDESIGN CSS OVERRIDES
+   3D CLAYMORPHISM REDESIGN CSS OVERRIDES — WHITE THEME
    ========================================================================= */
 
 :root {
-  --clr-bg: #E6EEF4;
-  --clr-surface: #E6EEF4;
+  --clr-bg: #ffffff;
+  --clr-surface: #ffffff;
   --clr-border: transparent;
-  --clr-text-primary: #2D3748;
+  --clr-text-primary: #1a202c;
   --clr-text-secondary: #4A5568;
   --clr-accent: #5A67D8;
-  --font-display: "Nunito", sans-serif;
-  --font-body: "Nunito", sans-serif;
-  --font-mono: "Nunito", sans-serif;
+  --font-display: "Inter", sans-serif;
+  --font-body: "Inter", sans-serif;
+  --font-mono: "Inter", sans-serif;
 }
 
 body {
@@ -1983,11 +1983,11 @@ img, svg {
 
 /* Header & Nav */
 #site-header {
-  background-color: rgba(230, 238, 244, 0.8) !important;
-  backdrop-filter: blur(12px) !important;
-  -webkit-backdrop-filter: blur(12px) !important;
+  background-color: rgba(255, 255, 255, 0.85) !important;
+  backdrop-filter: blur(16px) !important;
+  -webkit-backdrop-filter: blur(16px) !important;
   border: none !important;
-  box-shadow: 8px 8px 16px rgba(166, 180, 200, 0.4), -8px -8px 16px rgba(255, 255, 255, 0.9), inset 2px 2px 4px rgba(255,255,255,0.8) !important;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06), inset 0 1px 0 rgba(255,255,255,0.9) !important;
   border-radius: 9999px !important;
   margin: 20px auto !important;
   max-width: 95% !important;
@@ -1996,19 +1996,19 @@ img, svg {
   z-index: 1000;
 }
 #site-header.is-scrolled {
-  background-color: rgba(230, 238, 244, 0.95) !important;
+  background-color: rgba(255, 255, 255, 0.95) !important;
 }
 #site-header .nav-link {
   color: var(--clr-text-secondary) !important;
-  font-weight: 700 !important;
+  font-weight: 600 !important;
   transition: all 0.2s ease !important;
   border-radius: 9999px !important;
   padding: 8px 16px !important;
 }
 #site-header .nav-link:hover {
-  background-color: #D6E4F0 !important;
+  background-color: #f0f4f8 !important;
   color: var(--clr-accent) !important;
-  box-shadow: inset 3px 3px 6px rgba(166,180,200,0.5), inset -3px -3px 6px rgba(255,255,255,0.9) !important;
+  box-shadow: inset 0 1px 3px rgba(0,0,0,0.04) !important;
 }
 
 /* Hero Section */
@@ -2022,8 +2022,8 @@ img, svg {
   content: '';
   position: absolute;
   top: 0; left: 0; right: 0; bottom: 0;
-  background: radial-gradient(circle at top left, #FFFFFF 0%, transparent 60%),
-              radial-gradient(circle at bottom right, rgba(90, 103, 216, 0.1) 0%, transparent 60%);
+  background: radial-gradient(circle at top left, #f0f4ff 0%, transparent 60%),
+              radial-gradient(circle at bottom right, rgba(90, 103, 216, 0.06) 0%, transparent 60%);
   z-index: -1;
 }
 
@@ -2032,37 +2032,38 @@ img, svg {
   background-color: var(--clr-accent) !important;
   color: #FFFFFF !important;
   border: none !important;
-  font-weight: 800 !important;
+  font-weight: 700 !important;
   border-radius: 9999px !important;
   padding: 0.75rem 2rem !important;
-  box-shadow: 6px 6px 12px rgba(90, 103, 216, 0.4), -6px -6px 12px rgba(255, 255, 255, 0.8), inset 2px 2px 4px rgba(255,255,255,0.5), inset -2px -2px 4px rgba(0,0,0,0.1) !important;
+  box-shadow: 0 4px 14px rgba(90, 103, 216, 0.3), inset 0 1px 0 rgba(255,255,255,0.2) !important;
   transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
 }
 .btn-primary:hover, button:hover {
   transform: translateY(-2px) !important;
-  box-shadow: 8px 8px 16px rgba(90, 103, 216, 0.5), -8px -8px 16px rgba(255, 255, 255, 0.9), inset 2px 2px 4px rgba(255,255,255,0.6), inset -2px -2px 4px rgba(0,0,0,0.15) !important;
+  box-shadow: 0 8px 24px rgba(90, 103, 216, 0.4), inset 0 1px 0 rgba(255,255,255,0.3) !important;
 }
 .btn-primary:active, button:active {
-  transform: translateY(2px) !important;
-  box-shadow: inset 4px 4px 8px rgba(0,0,0,0.2), inset -4px -4px 8px rgba(255,255,255,0.2) !important;
+  transform: translateY(1px) !important;
+  box-shadow: 0 2px 8px rgba(90, 103, 216, 0.3) !important;
 }
 .btn-ghost {
   background-color: var(--clr-bg) !important;
   color: var(--clr-accent) !important;
   border-radius: 9999px !important;
-  box-shadow: 6px 6px 12px rgba(166,180,200,0.5), -6px -6px 12px rgba(255,255,255,0.9), inset 1px 1px 2px rgba(255,255,255,0.8), inset -1px -1px 2px rgba(166,180,200,0.2) !important;
-  font-weight: 800 !important;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.06), inset 0 1px 0 rgba(255,255,255,0.8) !important;
+  font-weight: 700 !important;
+  border: 1px solid rgba(0,0,0,0.06) !important;
 }
 .btn-ghost:active {
-  box-shadow: inset 4px 4px 8px rgba(166,180,200,0.6), inset -4px -4px 8px rgba(255,255,255,0.9) !important;
+  box-shadow: inset 0 2px 6px rgba(0,0,0,0.08) !important;
 }
 
-/* 3D Cards */
+/* 3D Cards — white theme with subtle shadows */
 .surface-card, .surface-card-2, .glass-card, .faculty-card, .student-card {
   background-color: var(--clr-bg) !important;
   border: none !important;
-  border-radius: 32px !important;
-  box-shadow: 12px 12px 24px rgba(166, 180, 200, 0.55), -12px -12px 24px rgba(255, 255, 255, 1), inset 2px 2px 4px rgba(255, 255, 255, 0.9), inset -2px -2px 4px rgba(166, 180, 200, 0.2) !important;
+  border-radius: 24px !important;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.05), 0 1px 4px rgba(0, 0, 0, 0.03), inset 0 1px 0 rgba(255,255,255,0.9) !important;
   transition: transform 0.3s ease, box-shadow 0.3s ease !important;
   overflow: hidden !important;
 }
@@ -2070,14 +2071,14 @@ img, svg {
   display: none !important;
 }
 .surface-card:hover, .faculty-card:hover, .student-card:hover {
-  transform: translateY(-5px) !important;
-  box-shadow: 16px 16px 32px rgba(166, 180, 200, 0.6), -16px -16px 32px rgba(255, 255, 255, 1), inset 3px 3px 6px rgba(255, 255, 255, 0.9), inset -3px -3px 6px rgba(166, 180, 200, 0.2) !important;
+  transform: translateY(-4px) !important;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.08), 0 2px 8px rgba(0, 0, 0, 0.04), inset 0 1px 0 rgba(255,255,255,0.9) !important;
 }
 
 /* Specific elements inside cards */
 .faculty-photo img, .student-photo img, .photo-wrapper img {
   border-radius: 50% !important;
-  box-shadow: 4px 4px 8px rgba(166,180,200,0.5), -4px -4px 8px rgba(255,255,255,0.9) !important;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08) !important;
   border: 4px solid var(--clr-bg) !important;
 }
 
@@ -2086,54 +2087,58 @@ img, svg {
   background-color: var(--clr-bg) !important;
   color: var(--clr-text-secondary) !important;
   border-radius: 9999px !important;
-  box-shadow: 4px 4px 10px rgba(166,180,200,0.5), -4px -4px 10px rgba(255,255,255,0.9) !important;
-  font-weight: 700 !important;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05), inset 0 1px 0 rgba(255,255,255,0.8) !important;
+  font-weight: 600 !important;
+  border: 1px solid rgba(0,0,0,0.06) !important;
 }
 .filter-btn.active {
-  color: var(--clr-accent) !important;
-  box-shadow: inset 4px 4px 8px rgba(166,180,200,0.5), inset -4px -4px 8px rgba(255,255,255,0.9) !important;
+  color: #fff !important;
+  background-color: var(--clr-accent) !important;
+  box-shadow: 0 4px 12px rgba(90, 103, 216, 0.3) !important;
 }
 .search-input {
   background: var(--clr-bg) !important;
-  border: none !important;
+  border: 1px solid rgba(0,0,0,0.08) !important;
   border-radius: 9999px !important;
-  box-shadow: inset 4px 4px 8px rgba(166,180,200,0.5), inset -4px -4px 8px rgba(255,255,255,0.9) !important;
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.03) !important;
   padding: 12px 24px !important;
   color: var(--clr-text-primary) !important;
 }
 .search-input:focus {
   outline: none !important;
-  box-shadow: inset 6px 6px 12px rgba(166,180,200,0.6), inset -6px -6px 12px rgba(255,255,255,1), 0 0 0 2px var(--clr-accent) !important;
+  border-color: var(--clr-accent) !important;
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.03), 0 0 0 3px rgba(90, 103, 216, 0.15) !important;
 }
 
 /* Badges */
 .badge {
-  background-color: var(--clr-bg) !important;
+  background-color: #f0f4ff !important;
   color: var(--clr-accent) !important;
   border-radius: 9999px !important;
-  box-shadow: 2px 2px 5px rgba(166,180,200,0.5), -2px -2px 5px rgba(255,255,255,0.9) !important;
-  font-weight: 800 !important;
+  box-shadow: none !important;
+  font-weight: 700 !important;
   padding: 4px 12px !important;
+  border: 1px solid rgba(90, 103, 216, 0.12) !important;
 }
 
 /* Data Tables */
 .data-table {
   background: var(--clr-bg) !important;
-  border-radius: 24px !important;
-  box-shadow: inset 4px 4px 10px rgba(166,180,200,0.4), inset -4px -4px 10px rgba(255,255,255,0.8) !important;
+  border-radius: 20px !important;
+  box-shadow: 0 2px 16px rgba(0,0,0,0.04) !important;
   overflow: hidden;
-  border: none !important;
+  border: 1px solid rgba(0,0,0,0.05) !important;
 }
 .data-table th {
-  background: transparent !important;
+  background: #f8fafc !important;
   color: var(--clr-text-primary) !important;
-  font-weight: 800 !important;
+  font-weight: 700 !important;
   text-transform: uppercase;
-  border-bottom: 2px solid rgba(166,180,200,0.2) !important;
+  border-bottom: 1px solid rgba(0,0,0,0.06) !important;
 }
 .data-table td {
   background: transparent !important;
-  border-bottom: 1px solid rgba(166,180,200,0.2) !important;
+  border-bottom: 1px solid rgba(0,0,0,0.04) !important;
 }
 
 /* General Layout */
@@ -2144,14 +2149,14 @@ section {
   background-color: var(--clr-bg) !important;
 }
 
-/* Leaderboard Podium 3D */
+/* Leaderboard Podium — white theme */
 .podium-place {
   border-radius: 24px 24px 0 0 !important;
-  box-shadow: 8px 8px 16px rgba(166, 180, 200, 0.4), -8px -8px 16px rgba(255, 255, 255, 0.9), inset 2px 2px 4px rgba(255,255,255,0.8) !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06), inset 0 1px 0 rgba(255,255,255,0.9) !important;
   background: var(--clr-bg) !important;
   border: none !important;
 }
 .podium-1 {
   z-index: 10;
-  box-shadow: 0px -10px 20px rgba(166, 180, 200, 0.4), 0px -2px 4px rgba(255, 255, 255, 0.9), inset 2px 2px 4px rgba(255,255,255,0.8) !important;
+  box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.06), inset 0 1px 0 rgba(255,255,255,0.9) !important;
 }

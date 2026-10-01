@@ -43,16 +43,16 @@
       theme: {                                                
         extend: {
           colors: {
-            'ink-navy':   '#2D3748',
-            'ink-light':  '#4A5568',
+            'ink-navy':   '#1a202c',
+            'ink-light':  '#2D3748',
             'circuit-blue':'#5A67D8',
             'circuit-dark':'#434190',
-            'signal-cyan': '#00B5D8',
-            mist:          '#EDF2F7',
+            'signal-cyan': '#3a7bd5',
+            mist:          '#f8fafc',
             accent:        '#5A67D8',
-            surface:       '#F7FAFC',
-            'surface-2':   '#E2E8F0',
-            default:       '#A0AEC0',
+            surface:       '#ffffff',
+            'surface-2':   '#f0f4f8',
+            default:       '#718096',
           },
           fontFamily: {
             display: ['"Inter"','sans-serif'],
@@ -79,7 +79,7 @@
 <!--  -  -  ENTRANCE VIDEO OVERLAY  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -->
 <style>
   #entrance-video-overlay {
-    position: fixed; inset: 0; z-index: 99999; background: #000; transition: opacity 0.6s ease; display: none;
+    position: fixed; inset: 0; z-index: 99999; background: #fff; transition: opacity 0.6s ease; display: none;
   }
   #entrance-video {
     width: 100%; height: 100%; object-fit: cover;
@@ -184,16 +184,15 @@
   <!-- Mobile menu -->
   <nav id="mobile-menu" aria-label="Mobile navigation">
     <div class="max-w-screen-xl mx-auto px-5 pt-3 pb-5 flex flex-col gap-1"
-         style="background:rgba(11,27,51,.96);backdrop-filter:blur(20px);border-top:1px solid rgba(255,255,255,.08)">
-      <a href="#about"                   class="px-4 py-3 text-sm font-medium text-white/75 hover:text-white rounded-xl hover:bg-white/10 transition-all">About</a>
-      <a href="pages/hod.html"           class="px-4 py-3 text-sm font-medium text-white/75 hover:text-white rounded-xl hover:bg-white/10 transition-all">HOD</a>
-      <a href="pages/faculty.html"       class="px-4 py-3 text-sm font-medium text-white/75 hover:text-white rounded-xl hover:bg-white/10 transition-all">Faculty</a>
-      <a href="pages/students.html"      class="px-4 py-3 text-sm font-medium text-white/75 hover:text-white rounded-xl hover:bg-white/10 transition-all">Students</a>
-      <a href="pages/leaderboard.html" class="px-4 py-3 text-sm font-medium text-white/75 hover:text-white rounded-xl hover:bg-white/10 transition-all">Leaderboard</a>
-      <a href="pages/leaderboard.html" class="nav-link px-3.5 py-2 text-sm font-medium rounded-lg transition-all duration-200">Leaderboard</a>
-      <a href="pages/achievements.html"  class="px-4 py-3 text-sm font-medium text-white/75 hover:text-white rounded-xl hover:bg-white/10 transition-all">Achievements</a>
-      <a href="#placements"              class="px-4 py-3 text-sm font-medium text-white/75 hover:text-white rounded-xl hover:bg-white/10 transition-all">Placements</a>
-      <a href="pages/contact.html"       class="px-4 py-3 text-sm font-medium text-white/75 hover:text-white rounded-xl hover:bg-white/10 transition-all">Contact</a>
+         style="background:rgba(255,255,255,.96);backdrop-filter:blur(20px);border-top:1px solid rgba(0,0,0,.06)">
+      <a href="#about"                   class="px-4 py-3 text-sm font-medium rounded-xl transition-all" style="color:#4A5568" onmouseover="this.style.background='#f0f4f8';this.style.color='#5A67D8'" onmouseout="this.style.background='';this.style.color='#4A5568'">About</a>
+      <a href="pages/hod.html"           class="px-4 py-3 text-sm font-medium rounded-xl transition-all" style="color:#4A5568" onmouseover="this.style.background='#f0f4f8';this.style.color='#5A67D8'" onmouseout="this.style.background='';this.style.color='#4A5568'">HOD</a>
+      <a href="pages/faculty.html"       class="px-4 py-3 text-sm font-medium rounded-xl transition-all" style="color:#4A5568" onmouseover="this.style.background='#f0f4f8';this.style.color='#5A67D8'" onmouseout="this.style.background='';this.style.color='#4A5568'">Faculty</a>
+      <a href="pages/students.html"      class="px-4 py-3 text-sm font-medium rounded-xl transition-all" style="color:#4A5568" onmouseover="this.style.background='#f0f4f8';this.style.color='#5A67D8'" onmouseout="this.style.background='';this.style.color='#4A5568'">Students</a>
+      <a href="pages/leaderboard.html" class="px-4 py-3 text-sm font-medium rounded-xl transition-all" style="color:#4A5568" onmouseover="this.style.background='#f0f4f8';this.style.color='#5A67D8'" onmouseout="this.style.background='';this.style.color='#4A5568'">Leaderboard</a>
+      <a href="pages/achievements.html"  class="px-4 py-3 text-sm font-medium rounded-xl transition-all" style="color:#4A5568" onmouseover="this.style.background='#f0f4f8';this.style.color='#5A67D8'" onmouseout="this.style.background='';this.style.color='#4A5568'">Achievements</a>
+      <a href="#placements"              class="px-4 py-3 text-sm font-medium rounded-xl transition-all" style="color:#4A5568" onmouseover="this.style.background='#f0f4f8';this.style.color='#5A67D8'" onmouseout="this.style.background='';this.style.color='#4A5568'">Placements</a>
+      <a href="pages/contact.html"       class="px-4 py-3 text-sm font-medium rounded-xl transition-all" style="color:#4A5568" onmouseover="this.style.background='#f0f4f8';this.style.color='#5A67D8'" onmouseout="this.style.background='';this.style.color='#4A5568'">Contact</a>
       <a href="pages/resources.html"
          class="mt-2 btn-primary text-sm font-semibold text-white px-4 py-3 rounded-xl text-center">Resources &amp; Downloads</a>
     </div>
@@ -548,22 +547,22 @@
 
   <!-- ----------------------- CTA ---------------------------- -->
   <section id="cta" class="py-40 relative overflow-hidden"
-           style="background:linear-gradient(135deg,#0b1b33 0%,#1652c4 100%)"
+           style="background:linear-gradient(135deg,#eef2ff 0%,#dbeafe 50%,#e0e7ff 100%)"
            aria-label="Call to action">
-    <div aria-hidden="true" style="position:absolute;inset:0;opacity:.09;pointer-events:none">
+    <div aria-hidden="true" style="position:absolute;inset:0;opacity:.12;pointer-events:none">
       <svg width="100%" height="100%">
         <defs><pattern id="gc" width="60" height="60" patternUnits="userSpaceOnUse">
-          <path d="M0 30H60M30 0V60" stroke="#2fe6dd" stroke-width=".8" fill="none"/>
+          <path d="M0 30H60M30 0V60" stroke="#5A67D8" stroke-width=".8" fill="none"/>
         </pattern></defs>
         <rect width="100%" height="100%" fill="url(#gc)"/>
       </svg>
     </div>
     <div class="max-w-screen-xl mx-auto px-5 text-center relative z-10">
-      <p class="eyebrow-tag font-mono text-xs uppercase tracking-widest mb-5" style="color:#2fe6dd" data-aos="fade-up">Start Your Journey</p>
-      <h2 class="font-display font-bold text-3xl md:text-5xl text-white leading-tight mb-5" data-aos="fade-up" data-aos-delay="60">
+      <p class="eyebrow-tag font-mono text-xs uppercase tracking-widest mb-5" style="color:#5A67D8" data-aos="fade-up">Start Your Journey</p>
+      <h2 class="font-display font-bold text-3xl md:text-5xl leading-tight mb-5" style="color:#1a202c" data-aos="fade-up" data-aos-delay="60">
         Ready to build the future<br class="hidden sm:block"/> of electronics?
       </h2>
-      <p class="max-w-xl mx-auto mb-10 text-sm md:text-base leading-relaxed" style="color:rgba(255,255,255,.58)" data-aos="fade-up" data-aos-delay="120">
+      <p class="max-w-xl mx-auto mb-10 text-sm md:text-base leading-relaxed" style="color:#4A5568" data-aos="fade-up" data-aos-delay="120">
         Discover world-class laboratories, specialized curriculum, and direct industry mentorship at SIET VLSI.
       </p>
       <div class="flex flex-col sm:flex-row gap-4 justify-center">
@@ -582,7 +581,7 @@
 </main>
 
 <!-- ----------------------- FOOTER --------------------------- -->
-<footer id="site-footer" style="background:#0b1b33;color:rgba(255,255,255,.65)" role="contentinfo">
+<footer id="site-footer" style="background:#f8fafc;color:#4A5568;border-top:1px solid #e2e8f0" role="contentinfo">
   <div class="max-w-screen-xl mx-auto px-5 lg:px-8 pt-16 pb-12">
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 mb-14">
 
@@ -592,33 +591,33 @@
           <img src="assets/images/college_logo.png" alt="SIET Logo" class="h-9 w-auto object-contain flex-shrink-0" onerror="this.src='https://via.placeholder.com/100x40?text=SIET'">
       <img src="assets/images/department_logo.png" alt="VLSI Logo" class="h-9 w-auto object-contain flex-shrink-0" onerror="this.src='https://via.placeholder.com/100x40?text=VLSI'">
           <div>
-            <p class="text-white text-sm font-semibold font-display">SIET</p>
-            <p style="color:rgba(255,255,255,.35);font-size:.72rem">VLSI Design and Technology</p>
+            <p style="color:#1a202c" class="text-sm font-semibold font-display">SIET</p>
+            <p style="color:#718096;font-size:.72rem">VLSI Design and Technology</p>
           </div>
         </div>
-        <p style="font-size:.84rem;line-height:1.75;margin-bottom:1.4rem">
+        <p style="font-size:.84rem;line-height:1.75;margin-bottom:1.4rem;color:#4A5568">
           Nurturing engineers through technical excellence, research, and industry collaboration since 1999.
         </p>
         <!-- Social -->
         <div class="flex gap-2.5">
-          <a href="#" aria-label="Facebook" style="width:2.2rem;height:2.2rem;border-radius:.6rem;background:rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.5);transition:all .3s"
-             onmouseover="this.style.background='#1652c4';this.style.color='#fff'"
-             onmouseout="this.style.background='rgba(255,255,255,.06)';this.style.color='rgba(255,255,255,.5)'">
+          <a href="#" aria-label="Facebook" style="width:2.2rem;height:2.2rem;border-radius:.6rem;background:#edf2f7;display:flex;align-items:center;justify-content:center;color:#718096;transition:all .3s"
+             onmouseover="this.style.background='#5A67D8';this.style.color='#fff'"
+             onmouseout="this.style.background='#edf2f7';this.style.color='#718096'">
             <i class="fa-brands fa-facebook-f" style="font-size:.8rem"></i>
           </a>
-          <a href="https://www.instagram.com/vlsicrew_28/" target="_blank" rel="noopener noreferrer" aria-label="Instagram" style="width:2.2rem;height:2.2rem;border-radius:.6rem;background:rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.5);transition:all .3s"
-             onmouseover="this.style.background='#1652c4';this.style.color='#fff'"
-             onmouseout="this.style.background='rgba(255,255,255,.06)';this.style.color='rgba(255,255,255,.5)'">
+          <a href="https://www.instagram.com/vlsicrew_28/" target="_blank" rel="noopener noreferrer" aria-label="Instagram" style="width:2.2rem;height:2.2rem;border-radius:.6rem;background:#edf2f7;display:flex;align-items:center;justify-content:center;color:#718096;transition:all .3s"
+             onmouseover="this.style.background='#5A67D8';this.style.color='#fff'"
+             onmouseout="this.style.background='#edf2f7';this.style.color='#718096'">
             <i class="fa-brands fa-instagram" style="font-size:.8rem"></i>
           </a>
-          <a href="https://www.linkedin.com/in/siet-ee-vlsi-design-and-technology-6bb30541a?utm_source=share_via&utm_content=profile&utm_medium=member_android" target="_blank" aria-label="LinkedIn" style="width:2.2rem;height:2.2rem;border-radius:.6rem;background:rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.5);transition:all .3s"
-             onmouseover="this.style.background='#1652c4';this.style.color='#fff'"
-             onmouseout="this.style.background='rgba(255,255,255,.06)';this.style.color='rgba(255,255,255,.5)'">
+          <a href="https://www.linkedin.com/in/siet-ee-vlsi-design-and-technology-6bb30541a?utm_source=share_via&utm_content=profile&utm_medium=member_android" target="_blank" aria-label="LinkedIn" style="width:2.2rem;height:2.2rem;border-radius:.6rem;background:#edf2f7;display:flex;align-items:center;justify-content:center;color:#718096;transition:all .3s"
+             onmouseover="this.style.background='#5A67D8';this.style.color='#fff'"
+             onmouseout="this.style.background='#edf2f7';this.style.color='#718096'">
             <i class="fa-brands fa-linkedin-in" style="font-size:.8rem"></i>
           </a>
-          <a href="#" aria-label="YouTube" style="width:2.2rem;height:2.2rem;border-radius:.6rem;background:rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.5);transition:all .3s"
-             onmouseover="this.style.background='#1652c4';this.style.color='#fff'"
-             onmouseout="this.style.background='rgba(255,255,255,.06)';this.style.color='rgba(255,255,255,.5)'">
+          <a href="#" aria-label="YouTube" style="width:2.2rem;height:2.2rem;border-radius:.6rem;background:#edf2f7;display:flex;align-items:center;justify-content:center;color:#718096;transition:all .3s"
+             onmouseover="this.style.background='#5A67D8';this.style.color='#fff'"
+             onmouseout="this.style.background='#edf2f7';this.style.color='#718096'">
             <i class="fa-brands fa-youtube" style="font-size:.8rem"></i>
           </a>
         </div>
@@ -626,50 +625,50 @@
 
       <!-- Quick links -->
       <div>
-        <h4 class="text-white font-display font-semibold text-sm mb-5">Quick Links</h4>
+        <h4 style="color:#1a202c" class="font-display font-semibold text-sm mb-5">Quick Links</h4>
         <ul style="display:flex;flex-direction:column;gap:.75rem">
-          <li><a href="#about"                   style="font-size:.84rem;transition:color .2s" onmouseover="this.style.color='#fff'" onmouseout="this.style.color=''">About the Department</a></li>
-          <li><a href="pages/hod.html"           style="font-size:.84rem;transition:color .2s" onmouseover="this.style.color='#fff'" onmouseout="this.style.color=''">HOD Desk</a></li>
-          <li><a href="pages/faculty.html"       style="font-size:.84rem;transition:color .2s" onmouseover="this.style.color='#fff'" onmouseout="this.style.color=''">Faculty</a></li>
-          <li><a href="pages/students.html"      style="font-size:.84rem;transition:color .2s" onmouseover="this.style.color='#fff'" onmouseout="this.style.color=''">Students</a>
+          <li><a href="#about"                   style="font-size:.84rem;color:#4A5568;transition:color .2s" onmouseover="this.style.color='#5A67D8'" onmouseout="this.style.color='#4A5568'">About the Department</a></li>
+          <li><a href="pages/hod.html"           style="font-size:.84rem;color:#4A5568;transition:color .2s" onmouseover="this.style.color='#5A67D8'" onmouseout="this.style.color='#4A5568'">HOD Desk</a></li>
+          <li><a href="pages/faculty.html"       style="font-size:.84rem;color:#4A5568;transition:color .2s" onmouseover="this.style.color='#5A67D8'" onmouseout="this.style.color='#4A5568'">Faculty</a></li>
+          <li><a href="pages/students.html"      style="font-size:.84rem;color:#4A5568;transition:color .2s" onmouseover="this.style.color='#5A67D8'" onmouseout="this.style.color='#4A5568'">Students</a>
       <a href="pages/leaderboard.html" class="nav-link px-3.5 py-2 text-sm font-medium rounded-lg transition-all duration-200">Leaderboard</a></li>
-          <li><a href="pages/labs.html"          style="font-size:.84rem;transition:color .2s" onmouseover="this.style.color='#fff'" onmouseout="this.style.color=''">Laboratories</a></li>
-          <li><a href="pages/events.html"        style="font-size:.84rem;transition:color .2s" onmouseover="this.style.color='#fff'" onmouseout="this.style.color=''">Events</a></li>
-          <li><a href="pages/gallery.html"       style="font-size:.84rem;transition:color .2s" onmouseover="this.style.color='#fff'" onmouseout="this.style.color=''">Gallery</a></li>
+          <li><a href="pages/labs.html"          style="font-size:.84rem;color:#4A5568;transition:color .2s" onmouseover="this.style.color='#5A67D8'" onmouseout="this.style.color='#4A5568'">Laboratories</a></li>
+          <li><a href="pages/events.html"        style="font-size:.84rem;color:#4A5568;transition:color .2s" onmouseover="this.style.color='#5A67D8'" onmouseout="this.style.color='#4A5568'">Events</a></li>
+          <li><a href="pages/gallery.html"       style="font-size:.84rem;color:#4A5568;transition:color .2s" onmouseover="this.style.color='#5A67D8'" onmouseout="this.style.color='#4A5568'">Gallery</a></li>
         </ul>
       </div>
 
       <!-- Academics -->
       <div>
-        <h4 class="text-white font-display font-semibold text-sm mb-5">Academics</h4>
+        <h4 style="color:#1a202c" class="font-display font-semibold text-sm mb-5">Academics</h4>
         <ul style="display:flex;flex-direction:column;gap:.75rem">
-          <li><a href="pages/resources.html"       style="font-size:.84rem;transition:color .2s" onmouseover="this.style.color='#fff'" onmouseout="this.style.color=''">Notes &amp; Lab Manuals</a></li>
-          <li><a href="pages/resources.html"       style="font-size:.84rem;transition:color .2s" onmouseover="this.style.color='#fff'" onmouseout="this.style.color=''">Previous Year Papers</a></li>
-          <li><a href="pages/resources.html"       style="font-size:.84rem;transition:color .2s" onmouseover="this.style.color='#fff'" onmouseout="this.style.color=''">Syllabus &amp; Time Table</a></li>
-          <li><a href="pages/workshops.html"       style="font-size:.84rem;transition:color .2s" onmouseover="this.style.color='#fff'" onmouseout="this.style.color=''">Workshops</a></li>
-          <li><a href="pages/achievements.html"    style="font-size:.84rem;transition:color .2s" onmouseover="this.style.color='#fff'" onmouseout="this.style.color=''">Achievements</a></li>
-          <li><a href="pages/placements.html"      style="font-size:.84rem;transition:color .2s" onmouseover="this.style.color='#fff'" onmouseout="this.style.color=''">Placements</a></li>
+          <li><a href="pages/resources.html"       style="font-size:.84rem;color:#4A5568;transition:color .2s" onmouseover="this.style.color='#5A67D8'" onmouseout="this.style.color='#4A5568'">Notes &amp; Lab Manuals</a></li>
+          <li><a href="pages/resources.html"       style="font-size:.84rem;color:#4A5568;transition:color .2s" onmouseover="this.style.color='#5A67D8'" onmouseout="this.style.color='#4A5568'">Previous Year Papers</a></li>
+          <li><a href="pages/resources.html"       style="font-size:.84rem;color:#4A5568;transition:color .2s" onmouseover="this.style.color='#5A67D8'" onmouseout="this.style.color='#4A5568'">Syllabus &amp; Time Table</a></li>
+          <li><a href="pages/workshops.html"       style="font-size:.84rem;color:#4A5568;transition:color .2s" onmouseover="this.style.color='#5A67D8'" onmouseout="this.style.color='#4A5568'">Workshops</a></li>
+          <li><a href="pages/achievements.html"    style="font-size:.84rem;color:#4A5568;transition:color .2s" onmouseover="this.style.color='#5A67D8'" onmouseout="this.style.color='#4A5568'">Achievements</a></li>
+          <li><a href="pages/placements.html"      style="font-size:.84rem;color:#4A5568;transition:color .2s" onmouseover="this.style.color='#5A67D8'" onmouseout="this.style.color='#4A5568'">Placements</a></li>
         </ul>
       </div>
 
       <!-- Contact -->
       <div>
-        <h4 class="text-white font-display font-semibold text-sm mb-5">Contact</h4>
-        <ul style="display:flex;flex-direction:column;gap:1rem">
+        <h4 style="color:#1a202c" class="font-display font-semibold text-sm mb-5">Contact</h4>
+        <ul style="display:flex;flex-direction:column;gap:1rem;color:#4A5568">
           <li class="flex gap-3">
-            <i class="fa-solid fa-location-dot mt-0.5 flex-shrink-0" style="color:#2fe6dd"></i>
+            <i class="fa-solid fa-location-dot mt-0.5 flex-shrink-0" style="color:#5A67D8"></i>
             <span style="font-size:.83rem">SIET Campus, Main Road,<br/>Tamil Nadu, India</span>
           </li>
           <li class="flex gap-3">
-            <i class="fa-solid fa-phone mt-0.5 flex-shrink-0" style="color:#2fe6dd"></i>
-            <a href="tel:+919629561731" style="font-size:.83rem;transition:color .2s" onmouseover="this.style.color='#fff'" onmouseout="this.style.color=''">+91 96295 61731</a>
+            <i class="fa-solid fa-phone mt-0.5 flex-shrink-0" style="color:#5A67D8"></i>
+            <a href="tel:+919629561731" style="font-size:.83rem;color:#4A5568;transition:color .2s" onmouseover="this.style.color='#5A67D8'" onmouseout="this.style.color='#4A5568'">+91 96295 61731</a>
           </li>
           <li class="flex gap-3">
-            <i class="fa-solid fa-envelope mt-0.5 flex-shrink-0" style="color:#2fe6dd"></i>
-            <a href="mailto:Hodvlsi@siet.ac.in" style="font-size:.83rem;transition:color .2s" onmouseover="this.style.color='#fff'" onmouseout="this.style.color=''">Hodvlsi@siet.ac.in</a>
+            <i class="fa-solid fa-envelope mt-0.5 flex-shrink-0" style="color:#5A67D8"></i>
+            <a href="mailto:Hodvlsi@siet.ac.in" style="font-size:.83rem;color:#4A5568;transition:color .2s" onmouseover="this.style.color='#5A67D8'" onmouseout="this.style.color='#4A5568'">Hodvlsi@siet.ac.in</a>
           </li>
           <li class="flex gap-3">
-            <i class="fa-solid fa-clock mt-0.5 flex-shrink-0" style="color:#2fe6dd"></i>
+            <i class="fa-solid fa-clock mt-0.5 flex-shrink-0" style="color:#5A67D8"></i>
             <span style="font-size:.83rem">Mon–Sat, 9:00 AM – 4:30 PM</span>
           </li>
         </ul>
@@ -679,11 +678,11 @@
 
     <!-- Bottom bar -->
     <div class="py-5 flex flex-col sm:flex-row items-center justify-between gap-3"
-         style="border-top:1px solid rgba(255,255,255,.08);font-size:.75rem;color:rgba(255,255,255,.3)">
+         style="border-top:1px solid #e2e8f0;font-size:.75rem;color:#a0aec0">
       <p>&copy; <span id="current-year">2026</span> Department of VLSI, SIET. All rights reserved.</p>
       <div class="flex items-center gap-4">
         <a href="pages/privacy.html"
-           style="transition:color .2s" onmouseover="this.style.color='#fff'" onmouseout="this.style.color=''">Privacy Policy</a>
+           style="color:#a0aec0;transition:color .2s" onmouseover="this.style.color='#5A67D8'" onmouseout="this.style.color='#a0aec0'">Privacy Policy</a>
         <span>·</span>
         <span>Designed with  for SIET VLSI</span>
       </div>
