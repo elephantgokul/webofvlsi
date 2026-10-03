@@ -2160,3 +2160,445 @@ section {
   z-index: 10;
   box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.06), inset 0 1px 0 rgba(255,255,255,0.9) !important;
 }
+
+/* =========================================================================
+   LIGHT-PAGE SCOPED OVERRIDES
+   Applied only to pages with body.light-page (students, hod, leaderboard,
+   achievements, contact). All other pages remain unchanged.
+   ========================================================================= */
+
+body.light-page {
+  --lp-bg: #FFFFFF;
+  --lp-bg-alt: #F5F7FA;
+  --lp-surface: #FFFFFF;
+  --lp-border: #E3E8EF;
+  --lp-text: #111827;
+  --lp-text-muted: #5B6575;
+  --lp-accent: #1652c4;
+  --lp-input-border: #D0D7E2;
+  --lp-shadow: 0 1px 3px rgba(0,0,0,0.04), 0 4px 12px rgba(0,0,0,0.03);
+
+  background-color: var(--lp-bg) !important;
+  color: var(--lp-text) !important;
+}
+
+/* --- Reset the global transparent border override for light pages --- */
+body.light-page * {
+  border-color: var(--lp-border) !important;
+}
+
+/* --- Typography --- */
+body.light-page h1,
+body.light-page h2,
+body.light-page h3,
+body.light-page h4,
+body.light-page h5,
+body.light-page h6,
+body.light-page .font-display {
+  color: var(--lp-text) !important;
+}
+
+/* --- Sections --- */
+body.light-page section {
+  background-color: var(--lp-bg) !important;
+}
+body.light-page section.bg-mist,
+body.light-page section.bg-surface-2,
+body.light-page section:nth-of-type(even) {
+  background-color: var(--lp-bg-alt) !important;
+}
+/* Keep hero sections with their light blue gradient */
+body.light-page section[style*="linear-gradient"] {
+  background-color: transparent !important;
+}
+
+/* --- Navbar --- */
+body.light-page #site-header {
+  background-color: rgba(255, 255, 255, 0.92) !important;
+  backdrop-filter: blur(16px) !important;
+  -webkit-backdrop-filter: blur(16px) !important;
+  box-shadow: 0 1px 0 var(--lp-border), 0 4px 16px rgba(0,0,0,0.04) !important;
+  border-bottom: 1px solid var(--lp-border) !important;
+}
+body.light-page #site-header > div {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+body.light-page #site-header .nav-link {
+  color: var(--lp-text-muted) !important;
+}
+body.light-page #site-header .nav-link:hover {
+  color: var(--lp-accent) !important;
+  background-color: rgba(22, 82, 196, 0.06) !important;
+}
+body.light-page #site-header .brand-text {
+  color: var(--lp-text) !important;
+}
+body.light-page #site-header.is-scrolled {
+  background-color: rgba(255, 255, 255, 0.97) !important;
+  box-shadow: 0 1px 0 var(--lp-border), 0 8px 24px rgba(0,0,0,0.06) !important;
+}
+
+/* Leaderboard uses a different header structure */
+body.light-page header.fixed {
+  background-color: rgba(255, 255, 255, 0.92) !important;
+  backdrop-filter: blur(16px) !important;
+  border-bottom: 1px solid var(--lp-border) !important;
+}
+
+/* --- Mobile Menu --- */
+body.light-page #mobile-menu,
+body.light-page #mobile-menu > div {
+  background: rgba(255, 255, 255, 0.98) !important;
+  border-color: var(--lp-border) !important;
+}
+
+/* --- Cards & Surfaces --- */
+body.light-page .surface-card,
+body.light-page .surface-card-2,
+body.light-page .glass-card,
+body.light-page .faculty-card,
+body.light-page .student-card {
+  background-color: var(--lp-surface) !important;
+  border: 1px solid var(--lp-border) !important;
+  box-shadow: var(--lp-shadow) !important;
+}
+body.light-page .surface-card:hover,
+body.light-page .faculty-card:hover,
+body.light-page .student-card:hover {
+  box-shadow: 0 4px 16px rgba(0,0,0,0.06), 0 8px 24px rgba(0,0,0,0.04) !important;
+  border-color: rgba(22, 82, 196, 0.2) !important;
+}
+/* Reset ::before/::after pseudo-elements on cards */
+body.light-page .surface-card::before,
+body.light-page .surface-card::after {
+  display: none !important;
+}
+
+/* --- Buttons --- */
+body.light-page .btn-primary {
+  background: var(--lp-accent) !important;
+  color: #fff !important;
+  border: none !important;
+  box-shadow: 0 4px 12px rgba(22, 82, 196, 0.25) !important;
+}
+body.light-page .btn-primary:hover {
+  background: #1241a0 !important;
+  box-shadow: 0 6px 20px rgba(22, 82, 196, 0.35) !important;
+}
+/* Don't style generic buttons as accent-colored (filter btns, toggle btns, etc.) */
+body.light-page button:not(.btn-primary):not(.filter-btn):not(.filter-btn.active):not(.view-toggle-btn):not(.tab-btn):not(#menu-toggle):not(#mobile-menu-btn):not(#search-trigger):not(#back-to-top):not(.lb-btn):not(.gallery-zoom-btn):not(.lightbox-close):not([type="submit"]) {
+  background: transparent !important;
+  color: inherit !important;
+  box-shadow: none !important;
+}
+
+/* --- Filter Buttons --- */
+body.light-page .filter-btn {
+  background-color: var(--lp-surface) !important;
+  color: var(--lp-text-muted) !important;
+  border: 1px solid var(--lp-border) !important;
+  box-shadow: none !important;
+}
+body.light-page .filter-btn.active {
+  background-color: var(--lp-accent) !important;
+  color: #fff !important;
+  border-color: var(--lp-accent) !important;
+  box-shadow: 0 2px 8px rgba(22, 82, 196, 0.2) !important;
+}
+body.light-page .filter-btn:hover:not(.active) {
+  border-color: var(--lp-accent) !important;
+  color: var(--lp-accent) !important;
+  background-color: rgba(22, 82, 196, 0.04) !important;
+}
+
+/* --- Search Input --- */
+body.light-page .search-input {
+  background: var(--lp-surface) !important;
+  border: 1px solid var(--lp-input-border) !important;
+  color: var(--lp-text) !important;
+  box-shadow: none !important;
+}
+body.light-page .search-input:focus {
+  border-color: var(--lp-accent) !important;
+  box-shadow: 0 0 0 3px rgba(22, 82, 196, 0.1) !important;
+}
+body.light-page .search-input::placeholder {
+  color: var(--lp-text-muted) !important;
+}
+body.light-page .search-wrapper .search-icon {
+  color: var(--lp-text-muted) !important;
+}
+
+/* --- View Toggle --- */
+body.light-page .view-toggle {
+  border-color: var(--lp-border) !important;
+}
+body.light-page .view-toggle-btn {
+  color: var(--lp-text-muted) !important;
+  background: transparent !important;
+}
+body.light-page .view-toggle-btn.active {
+  background: var(--lp-accent) !important;
+  color: #fff !important;
+}
+body.light-page .view-toggle-btn:hover:not(.active) {
+  background: var(--lp-bg-alt) !important;
+  color: var(--lp-accent) !important;
+}
+
+/* --- Tables --- */
+body.light-page .data-table,
+body.light-page .leaderboard-table {
+  background: var(--lp-surface) !important;
+  border: 1px solid var(--lp-border) !important;
+}
+body.light-page .data-table th,
+body.light-page .leaderboard-table th,
+body.light-page th {
+  background: var(--lp-bg-alt) !important;
+  color: var(--lp-text-muted) !important;
+  border-bottom: 1px solid var(--lp-border) !important;
+}
+body.light-page .data-table td,
+body.light-page .leaderboard-table td,
+body.light-page td {
+  color: var(--lp-text) !important;
+  border-bottom: 1px solid var(--lp-border) !important;
+}
+body.light-page .data-table tbody tr:hover,
+body.light-page .leaderboard-table tr:hover,
+body.light-page tr:hover td {
+  background: var(--lp-bg-alt) !important;
+}
+
+/* --- Leaderboard Podium --- */
+body.light-page .podium-card {
+  background: var(--lp-surface) !important;
+  border: 1px solid var(--lp-border) !important;
+  box-shadow: var(--lp-shadow) !important;
+}
+body.light-page .podium-name {
+  color: var(--lp-text) !important;
+}
+body.light-page .podium-score,
+body.light-page .podium-roll {
+  color: var(--lp-accent) !important;
+}
+body.light-page .podium-meta {
+  color: var(--lp-text-muted) !important;
+}
+body.light-page .podium-place {
+  background: transparent !important;
+}
+body.light-page .rank-badge {
+  color: var(--lp-accent) !important;
+}
+body.light-page .leaderboard-student-link {
+  color: var(--lp-text) !important;
+}
+
+/* --- Tab Components --- */
+body.light-page .tab-nav {
+  border-bottom-color: var(--lp-border) !important;
+}
+body.light-page .tab-btn {
+  color: var(--lp-text-muted) !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  padding: 0.85rem 1.5rem !important;
+}
+body.light-page .tab-btn.active {
+  color: var(--lp-accent) !important;
+}
+body.light-page .tab-btn::after {
+  background: var(--lp-accent) !important;
+}
+body.light-page .tab-btn:hover:not(.active) {
+  color: var(--lp-accent) !important;
+}
+
+/* --- Timeline --- */
+body.light-page .timeline::before {
+  background: linear-gradient(to bottom, var(--lp-accent), #2fe6dd) !important;
+}
+body.light-page .timeline-item::before {
+  background: var(--lp-accent) !important;
+  border-color: var(--lp-surface) !important;
+  box-shadow: 0 0 0 3px rgba(22, 82, 196, 0.15) !important;
+}
+
+/* --- Contact Form --- */
+body.light-page .form-label {
+  color: var(--lp-text) !important;
+}
+body.light-page .form-input,
+body.light-page .form-textarea {
+  background: var(--lp-surface) !important;
+  border: 1px solid var(--lp-input-border) !important;
+  color: var(--lp-text) !important;
+}
+body.light-page .form-input:focus,
+body.light-page .form-textarea:focus {
+  border-color: var(--lp-accent) !important;
+  box-shadow: 0 0 0 3px rgba(22, 82, 196, 0.1) !important;
+}
+body.light-page .form-input::placeholder,
+body.light-page .form-textarea::placeholder {
+  color: var(--lp-text-muted) !important;
+}
+body.light-page button[type="submit"] {
+  background: var(--lp-accent) !important;
+  color: #fff !important;
+  box-shadow: 0 4px 12px rgba(22, 82, 196, 0.25) !important;
+}
+
+/* --- Inputs (spatial.css overrides) --- */
+body.light-page input,
+body.light-page select,
+body.light-page textarea {
+  background: var(--lp-surface) !important;
+  border: 1px solid var(--lp-input-border) !important;
+  color: var(--lp-text) !important;
+}
+body.light-page input:focus,
+body.light-page select:focus,
+body.light-page textarea:focus {
+  border-color: var(--lp-accent) !important;
+  box-shadow: 0 0 0 3px rgba(22, 82, 196, 0.1) !important;
+}
+
+/* --- Badges --- */
+body.light-page .badge {
+  background-color: rgba(22, 82, 196, 0.08) !important;
+  color: var(--lp-accent) !important;
+  border: 1px solid rgba(22, 82, 196, 0.15) !important;
+}
+body.light-page .badge-gold {
+  background: linear-gradient(135deg, #fbbf24, #f59e0b) !important;
+  color: #78350f !important;
+  border: none !important;
+}
+body.light-page .badge-silver {
+  background: linear-gradient(135deg, #e5e7eb, #9ca3af) !important;
+  color: #374151 !important;
+  border: none !important;
+}
+body.light-page .badge-bronze {
+  background: linear-gradient(135deg, #d97706, #b45309) !important;
+  color: #fff !important;
+  border: none !important;
+}
+
+/* --- HOD Profile --- */
+body.light-page .hod-profile-card {
+  border: 1px solid var(--lp-border) !important;
+  box-shadow: var(--lp-shadow) !important;
+}
+body.light-page .hod-photo-section {
+  background: linear-gradient(135deg, #f0f7ff 0%, #e0f0fe 100%) !important;
+}
+body.light-page .hod-info-section {
+  background: var(--lp-surface) !important;
+}
+body.light-page .research-tag {
+  background: rgba(22, 82, 196, 0.06) !important;
+  color: var(--lp-accent) !important;
+  border: 1px solid rgba(22, 82, 196, 0.12) !important;
+}
+
+/* --- Footer --- */
+body.light-page footer {
+  background: var(--lp-bg-alt) !important;
+  border-top: 1px solid var(--lp-border) !important;
+  color: var(--lp-text-muted) !important;
+}
+body.light-page footer h4 {
+  color: var(--lp-text) !important;
+}
+body.light-page footer a {
+  color: var(--lp-text-muted) !important;
+}
+body.light-page footer a:hover {
+  color: var(--lp-accent) !important;
+}
+body.light-page footer a[style*="color:#1652c4"] {
+  color: var(--lp-accent) !important;
+}
+
+/* --- Back to Top --- */
+body.light-page #back-to-top {
+  background: var(--lp-accent) !important;
+  color: #fff !important;
+  box-shadow: 0 4px 12px rgba(22, 82, 196, 0.3) !important;
+}
+body.light-page #back-to-top:hover {
+  background: #1241a0 !important;
+}
+
+/* --- Scroll Progress --- */
+body.light-page #scroll-progress {
+  background: linear-gradient(90deg, var(--lp-accent), #2fe6dd) !important;
+}
+
+/* --- Scrollbar --- */
+body.light-page::-webkit-scrollbar-thumb {
+  background: var(--lp-accent) !important;
+  border: 2px solid var(--lp-bg-alt) !important;
+}
+body.light-page::-webkit-scrollbar-track {
+  background: var(--lp-bg-alt) !important;
+}
+
+/* --- Skeleton Loading --- */
+body.light-page .skeleton {
+  background: linear-gradient(90deg, var(--lp-bg-alt) 25%, #e8edf5 50%, var(--lp-bg-alt) 75%) !important;
+}
+body.light-page .skeleton-card {
+  background: var(--lp-surface) !important;
+  border: 1px solid var(--lp-border) !important;
+}
+
+/* --- Student Points Badge --- */
+body.light-page .student-points-badge {
+  background: linear-gradient(135deg, rgba(22, 82, 196, 0.06), rgba(22, 82, 196, 0.02)) !important;
+  color: var(--lp-accent) !important;
+  border: 1px solid rgba(22, 82, 196, 0.12) !important;
+}
+
+/* --- Misc contrast fixes --- */
+body.light-page .text-primary,
+body.light-page [style*="color:var(--clr-text-primary)"] {
+  color: var(--lp-text) !important;
+}
+body.light-page .text-secondary,
+body.light-page [style*="color:var(--clr-text-secondary)"] {
+  color: var(--lp-text-muted) !important;
+}
+body.light-page [style*="color:var(--clr-text-muted)"] {
+  color: #8B95A5 !important;
+}
+body.light-page .bg-surface,
+body.light-page .bg-white {
+  background-color: var(--lp-surface) !important;
+}
+body.light-page .bg-mist {
+  background-color: var(--lp-bg-alt) !important;
+}
+body.light-page .border-default {
+  border-color: var(--lp-border) !important;
+}
+
+/* Score bar */
+body.light-page .score-bar-wrap {
+  background: var(--lp-bg-alt) !important;
+}
+body.light-page .score-bar {
+  background: linear-gradient(90deg, var(--lp-accent), #2fe6dd) !important;
+}
+
+/* Readout / stat cards */
+body.light-page .readout-card::after {
+  background: linear-gradient(90deg, var(--lp-accent), #2fe6dd) !important;
+}
