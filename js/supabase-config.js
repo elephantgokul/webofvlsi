@@ -176,8 +176,8 @@
 
     if (isConfigured()) {
       var filePath = raw;
-      if (bucket === 'photo' && !filePath.startsWith('sttudents/')) {
-        filePath = 'sttudents/' + filePath;
+      if (bucket === 'photo' && !filePath.startsWith('students/')) {
+        filePath = 'students/' + filePath;
       }
       return getSupabasePublicUrl(bucket, filePath);
     }

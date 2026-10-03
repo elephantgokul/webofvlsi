@@ -31,6 +31,12 @@
   --clr-accent: #1652c4;
   --clr-cyan: #2fe6dd;
   --clr-shadow: rgba(11, 27, 51, 0.08);
+  /* ---- Glass tokens ---- */
+  --glass-bg: rgba(255,255,255,0.62);
+  --glass-tint: rgba(22,82,196,0.06);
+  --glass-border: rgba(255,255,255,0.7);
+  --glass-shadow: 0 8px 32px rgba(22,82,196,0.12), inset 0 1px 0 rgba(255,255,255,0.9);
+  --glass-blur: blur(18px) saturate(160%);
 
   /* ---- Type tokens ---- */
   --font-display: "Outfit", sans-serif;
@@ -2602,3 +2608,220 @@ body.light-page .score-bar {
 body.light-page .readout-card::after {
   background: linear-gradient(90deg, var(--lp-accent), #2fe6dd) !important;
 }
+
+/* =========================================================================
+   APPLE-STYLE LIQUID GLASS REDESIGN
+   ========================================================================= */
+
+/* --- 1. Page Background blobs --- */
+body, body.light-page {
+  background-color: #F5F7FA !important;
+}
+body::before, body.light-page::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  pointer-events: none;
+  background: 
+    radial-gradient(circle at 15% 30%, rgba(47, 230, 221, 0.18), transparent 45%),
+    radial-gradient(circle at 85% 20%, rgba(22, 82, 196, 0.15), transparent 45%),
+    radial-gradient(circle at 50% 80%, rgba(22, 82, 196, 0.12), transparent 50%);
+}
+
+/* --- 2. Reusable .glass class --- */
+.glass {
+  background: linear-gradient(135deg, var(--glass-bg), var(--glass-tint)) !important;
+  backdrop-filter: var(--glass-blur) !important;
+  -webkit-backdrop-filter: var(--glass-blur) !important;
+  border: 1px solid var(--glass-border) !important;
+  box-shadow: var(--glass-shadow) !important;
+  border-radius: 20px !important;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Soft specular highlight */
+.glass::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(135deg, rgba(255,255,255,0.35) 0%, transparent 35%, transparent 65%, rgba(255,255,255,0.1) 100%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Fallback for browsers that don't support backdrop-filter */
+@supports not (backdrop-filter: blur(18px)) {
+  .glass, #site-header, .surface-card, .surface-card-2, .faculty-card, .student-card, .podium-card, .hod-profile-card, .research-card, .stat-card, footer {
+    background: rgba(255,255,255,0.92) !important;
+  }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .glass, .surface-card, .surface-card-2, .faculty-card, .student-card, .podium-card, .hod-profile-card, .research-card, .stat-card, .btn-primary, .btn-ghost {
+    transition: none !important;
+    transform: none !important;
+  }
+}
+
+/* Mobile optimizations */
+@media (max-width: 768px) {
+  :root {
+    --glass-blur: blur(10px) saturate(160%);
+  }
+}
+
+/* --- 3. Navbar --- */
+#site-header, body.light-page #site-header, body.light-page header.fixed {
+  background: linear-gradient(135deg, var(--glass-bg), var(--glass-tint)) !important;
+  backdrop-filter: var(--glass-blur) !important;
+  -webkit-backdrop-filter: var(--glass-blur) !important;
+  border: 1px solid var(--glass-border) !important;
+  box-shadow: var(--glass-shadow) !important;
+  border-radius: 9999px !important; /* Pill shaped */
+  margin-top: 20px !important;
+  position: sticky !important;
+  top: 20px !important;
+  z-index: 1000;
+  width: 95% !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+#site-header::after, body.light-page #site-header::after, body.light-page header.fixed::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(135deg, rgba(255,255,255,0.35) 0%, transparent 35%, transparent 65%, rgba(255,255,255,0.1) 100%);
+  pointer-events: none;
+}
+#site-header.is-scrolled, body.light-page #site-header.is-scrolled {
+  background: linear-gradient(135deg, rgba(255,255,255,0.75), rgba(22,82,196,0.08)) !important;
+  box-shadow: 0 12px 32px rgba(22,82,196,0.12), inset 0 1px 0 rgba(255,255,255,0.9) !important;
+}
+
+/* Clearer variant over hero video */
+body:has(#hero) #site-header:not(.is-scrolled), body.home-page #site-header:not(.is-scrolled) {
+  background: rgba(255, 255, 255, 0.35) !important;
+  backdrop-filter: blur(24px) saturate(160%) !important;
+  -webkit-backdrop-filter: blur(24px) saturate(160%) !important;
+}
+
+/* --- 4. Cards --- */
+.surface-card, .surface-card-2, .faculty-card, .student-card, .podium-card, .hod-profile-card, .research-card, .stat-card, body.light-page .surface-card, body.light-page .surface-card-2, body.light-page .faculty-card, body.light-page .student-card, body.light-page .podium-card, body.light-page .hod-profile-card, body.light-page .research-card, body.light-page .stat-card {
+  background: linear-gradient(135deg, var(--glass-bg), var(--glass-tint)) !important;
+  backdrop-filter: var(--glass-blur) !important;
+  -webkit-backdrop-filter: var(--glass-blur) !important;
+  border: 1px solid var(--glass-border) !important;
+  box-shadow: var(--glass-shadow) !important;
+  border-radius: 20px !important;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease, box-shadow 0.3s ease !important;
+}
+.surface-card::after, .surface-card-2::after, .faculty-card::after, .student-card::after, .podium-card::after, .hod-profile-card::after, .research-card::after, .stat-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(135deg, rgba(255,255,255,0.4) 0%, transparent 35%, transparent 65%, rgba(255,255,255,0.15) 100%);
+  pointer-events: none;
+  z-index: 0;
+}
+.surface-card:hover, .surface-card-2:hover, .faculty-card:hover, .student-card:hover, .podium-card:hover, .hod-profile-card:hover, .research-card:hover, .stat-card:hover, body.light-page .surface-card:hover, body.light-page .faculty-card:hover, body.light-page .student-card:hover {
+  transform: translateY(-4px) !important;
+  border-color: rgba(255, 255, 255, 1) !important;
+  box-shadow: 0 16px 48px rgba(22, 82, 196, 0.16), inset 0 1px 0 rgba(255,255,255,1) !important;
+}
+.surface-card > *, .faculty-card > *, .student-card > *, .podium-card > *, .hod-profile-card > * {
+  position: relative;
+  z-index: 1; /* Keep content above pseudo highlight */
+}
+
+/* --- 5. Buttons --- */
+/* Glass pill with brand-blue tint */
+.btn-ghost, .filter-btn, .tab-btn, body.light-page .btn-ghost, body.light-page .filter-btn, body.light-page .tab-btn {
+  background: rgba(22,82,196,0.06) !important;
+  backdrop-filter: var(--glass-blur) !important;
+  -webkit-backdrop-filter: var(--glass-blur) !important;
+  border: 1px solid rgba(22,82,196,0.12) !important;
+  border-radius: 9999px !important;
+  color: #111827 !important;
+  transition: all 0.2s ease !important;
+}
+.btn-ghost:hover, .filter-btn:hover, .tab-btn:hover, body.light-page .btn-ghost:hover, body.light-page .filter-btn:hover, body.light-page .tab-btn:hover {
+  background: rgba(22,82,196,0.12) !important;
+  border-color: rgba(22,82,196,0.25) !important;
+}
+/* Primary button solid blue with inner highlight */
+.btn-primary, body.light-page .btn-primary {
+  background: linear-gradient(135deg, #2fe6dd 0%, #1652c4 100%) !important;
+  color: #fff !important;
+  border-radius: 9999px !important;
+  border: none !important;
+  box-shadow: 0 4px 14px rgba(22, 82, 196, 0.35), inset 0 1px 0 rgba(255,255,255,0.4) !important;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s ease !important;
+}
+.btn-primary::after, body.light-page .btn-primary::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(180deg, rgba(255,255,255,0.3) 0%, transparent 50%);
+  pointer-events: none;
+}
+.btn-primary:hover, body.light-page .btn-primary:hover {
+  box-shadow: 0 8px 24px rgba(22, 82, 196, 0.45), inset 0 1px 0 rgba(255,255,255,0.5) !important;
+  transform: translateY(-2px) !important;
+}
+
+/* --- 6. Footer and Badges (lighter variant) --- */
+footer, .badge, body.light-page footer, body.light-page .badge {
+  background: linear-gradient(135deg, rgba(255,255,255,0.7), rgba(255,255,255,0.4)) !important;
+  backdrop-filter: blur(12px) saturate(140%) !important;
+  -webkit-backdrop-filter: blur(12px) saturate(140%) !important;
+  border: 1px solid rgba(255,255,255,0.8) !important;
+}
+footer, body.light-page footer {
+  box-shadow: 0 -4px 24px rgba(22,82,196,0.06) !important;
+}
+.badge, body.light-page .badge {
+  color: #111827 !important;
+  border-radius: 9999px !important;
+}
+
+/* --- 7. Data Tables & Long Text blocks (no blur) --- */
+.data-table, .leaderboard-table, .project-detail-card, body.light-page .data-table, body.light-page .leaderboard-table {
+  background: #ffffff !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  border: 1px solid #E3E8EF !important;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04) !important;
+}
+
+/* Form overrides */
+.form-input, .form-textarea, .input-field, body.light-page .form-input, body.light-page .form-textarea {
+  background: rgba(255,255,255,0.8) !important;
+  backdrop-filter: blur(8px) !important;
+  -webkit-backdrop-filter: blur(8px) !important;
+  border: 1px solid rgba(255,255,255,0.9) !important;
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.02) !important;
+}
+.form-input:focus, .form-textarea:focus, .input-field:focus {
+  border-color: #1652c4 !important;
+  box-shadow: 0 0 0 3px rgba(22,82,196,0.15) !important;
+}
+
+/* General overrides to ensure text is dark on glass */
+body.light-page p, body.light-page span:not(.badge), body.light-page a:not(.btn-primary) {
+  color: #111827;
+}
+body.light-page .text-muted, body.light-page [style*="color:var(--clr-text-muted)"] {
+  color: #5B6575 !important;
+}
+

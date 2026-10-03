@@ -1,73 +1,8 @@
-// js/api.js  -  Centralized API utility for Google Apps Script & Supabase integration
+// js/api.js  -  Centralized API utility for Supabase integration
 // Department of VLSI Design and Technology, SIET
-
-const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxtiC0y8Gwzr0gj5Mcb1wJaSogr44lWI2PlYQQOVj-wbTOKw2EyJmXvhnibGlRr7Idc/exec";
 
 const API_CACHE_PREFIX = "vlsi_api_";
 const API_CACHE_TTL = 30 * 60 * 1000; // 30 minutes cache
-
-/**
- * Fetch data from the Apps Script API with zero latency.
- * Instantly returns cached/fallback data and refreshes in the background.
- * @param {string} [action] - Optional action parameter
- * @returns {Promise<Object>}
- */
-async function fetchWithAction(action) {
-    const cacheKey = API_CACHE_PREFIX + (action || "all");
-
-    // 1. Instantly check localStorage or sessionStorage for zero-latency load
-    let cachedData = null;
-    try {
-        const raw = localStorage.getItem(cacheKey) || sessionStorage.getItem(cacheKey);
-        if (raw) {
-            const parsed = JSON.parse(raw);
-            if (parsed && parsed.data) {
-                cachedData = parsed.data;
-                if (Date.now() - parsed.timestamp < API_CACHE_TTL) {
-                    return cachedData;
-                }
-            }
-        }
-    } catch (e) {}
-
-    // 2. If we have cached data, return it immediately and revalidate in background
-    if (cachedData) {
-        revalidateInBackground(action, cacheKey);
-        return cachedData;
-    }
-
-    // 3. Return fallback immediately (0ms latency) and revalidate in background
-    const fallback = getFallbackData();
-    revalidateInBackground(action, cacheKey);
-    return fallback;
-}
-
-function revalidateInBackground(action, cacheKey) {
-    let url = APPS_SCRIPT_URL;
-    if (action) {
-        url += (url.includes("?") ? "&" : "?") + "action=" + encodeURIComponent(action);
-    }
-
-    const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 3000);
-
-    fetch(url, { method: "GET", redirect: "follow", signal: controller.signal })
-        .then(res => res.ok ? res.text() : Promise.reject(new Error(res.statusText)))
-        .then(text => {
-            clearTimeout(timeoutId);
-            const data = JSON.parse(text);
-            if (data && (data.students || data.faculty || data.hod)) {
-                try {
-                    const payload = JSON.stringify({ data: data, timestamp: Date.now() });
-                    localStorage.setItem(cacheKey, payload);
-                    sessionStorage.setItem(cacheKey, payload);
-                } catch (e) {}
-            }
-        })
-        .catch(() => {
-            clearTimeout(timeoutId);
-        });
-}
 
 /**
  * Fetch all department data (HOD + Faculty + Students).
@@ -75,7 +10,71 @@ function revalidateInBackground(action, cacheKey) {
  * @returns {Promise<Object>}
  */
 async function fetchDepartmentData() {
-    return withDefaultStudentFields(await fetchWithAction(null));
+    const cacheKey = API_CACHE_PREFIX + "all";
+
+    // 1. Instantly check localStorage or sessionStorage for zero-latency load
+    try {
+        const raw = localStorage.getItem(cacheKey) || sessionStorage.getItem(cacheKey);
+        if (raw) {
+            const parsed = JSON.parse(raw);
+            if (parsed && parsed.data && Date.now() - parsed.timestamp < API_CACHE_TTL) {
+                revalidateSupabaseDataInBackground(cacheKey);
+                return withDefaultStudentFields(parsed.data);
+            }
+        }
+    } catch (e) {}
+
+    // 2. Fetch fresh data from Supabase if available, otherwise use fallback
+    let data = getFallbackData();
+    if (typeof window !== 'undefined' && window.supabaseClient) {
+        try {
+            const [studentsRes, facultyRes, hodRes] = await Promise.all([
+                window.supabaseClient.from('students').select('*'),
+                window.supabaseClient.from('faculty').select('*'),
+                window.supabaseClient.from('hod').select('*')
+            ]);
+            
+            if (!studentsRes.error && !facultyRes.error && !hodRes.error) {
+                data = {
+                    students: studentsRes.data || [],
+                    faculty: facultyRes.data || [],
+                    hod: (hodRes.data && hodRes.data.length > 0) ? hodRes.data[0] : getFallbackData().hod
+                };
+                
+                try {
+                    const payload = JSON.stringify({ data: data, timestamp: Date.now() });
+                    localStorage.setItem(cacheKey, payload);
+                    sessionStorage.setItem(cacheKey, payload);
+                } catch (e) {}
+            }
+        } catch(e) {
+            console.warn("Supabase fetch failed, using fallback:", e);
+        }
+    }
+
+    return withDefaultStudentFields(data);
+}
+
+async function revalidateSupabaseDataInBackground(cacheKey) {
+    if (typeof window === 'undefined' || !window.supabaseClient) return;
+    try {
+        const [studentsRes, facultyRes, hodRes] = await Promise.all([
+            window.supabaseClient.from('students').select('*'),
+            window.supabaseClient.from('faculty').select('*'),
+            window.supabaseClient.from('hod').select('*')
+        ]);
+        
+        if (!studentsRes.error && !facultyRes.error && !hodRes.error) {
+            const data = {
+                students: studentsRes.data || [],
+                faculty: facultyRes.data || [],
+                hod: (hodRes.data && hodRes.data.length > 0) ? hodRes.data[0] : getFallbackData().hod
+            };
+            const payload = JSON.stringify({ data: data, timestamp: Date.now() });
+            localStorage.setItem(cacheKey, payload);
+            sessionStorage.setItem(cacheKey, payload);
+        }
+    } catch(e) {}
 }
 
 function withDefaultStudentFields(data) {
@@ -122,7 +121,7 @@ function getStudentYearToken(year) {
     if (text.includes("III")) return "III";
     if (text.includes("II")) return "II";
     if (/\bI\b/.test(text) || text === "I" || text.includes("FIRST") || text.includes("I YEAR")) return "I";
-    return "III";
+    return "UNKNOWN";
 }
 
 function getBatchFromRegisterNo(registerNo) {
