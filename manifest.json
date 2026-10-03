@@ -2,7 +2,8 @@
   "name": "SIET VLSI Department",
   "short_name": "SIET VLSI",
   "description": "Department of VLSI Design and Technology — SIET",
-  "start_url": "/index.html",
+  "start_url": "./index.html",
+  "scope": "./",
   "display": "standalone",
   "background_color": "#0b1b33",
   "theme_color": "#1652c4",
@@ -14,9 +15,9 @@
   ],
   "categories": ["education"],
   "shortcuts": [
-    { "name": "Notice Board",  "url": "/pages/notices.html",    "description": "Latest notices" },
-    { "name": "Placements",    "url": "/pages/placements.html", "description": "Placement records" },
-    { "name": "Resources",     "url": "/pages/resources.html",  "description": "Notes & lab manuals" },
-    { "name": "Contact",       "url": "/pages/contact.html",    "description": "Contact the department" }
+    { "name": "Notice Board",  "url": "./pages/notices.html",    "description": "Latest notices" },
+    { "name": "Placements",    "url": "./pages/placements.html", "description": "Placement records" },
+    { "name": "Resources",     "url": "./pages/resources.html",  "description": "Notes & lab manuals" },
+    { "name": "Contact",       "url": "./pages/contact.html",    "description": "Contact the department" }
   ]
 }
