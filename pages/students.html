@@ -121,6 +121,7 @@
           <div class="view-toggle">
             <button id="view-card" class="view-toggle-btn active" title="Card View"><i class="fa-solid fa-grip"></i> Cards</button>
             <button id="view-table" class="view-toggle-btn" title="Table View"><i class="fa-solid fa-table-list"></i> Table</button>
+            <button id="view-circular" class="view-toggle-btn" title="Circular View"><i class="fa-solid fa-circle-notch"></i> Circular</button>
           </div>
         </div>
       </div>
@@ -128,10 +129,26 @@
   </section>
 
   <!-- STUDENTS GRID -->
-  <section class="py-24 bg-white">
+  <section class="py-24 bg-white" id="students-section">
     <div class="max-w-screen-xl mx-auto px-5 lg:px-8">
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6" id="students-grid">
         <!-- Student cards injected dynamically by students.js -->
+      </div>
+      <!-- 3D Circular Gallery (hidden by default) -->
+      <div id="circular-gallery-wrapper" class="circular-gallery-wrapper" style="display:none">
+        <div class="circular-gallery-hint" id="circular-hint">
+          <i class="fa-solid fa-computer-mouse"></i> Scroll or drag to rotate &bull; Click a card to view profile
+        </div>
+        <div class="circular-gallery-stage" id="circular-stage">
+          <div class="circular-gallery-ring" id="circular-ring">
+            <!-- Circular cards injected dynamically -->
+          </div>
+        </div>
+        <div class="circular-gallery-controls">
+          <button id="circular-prev" class="circular-nav-btn" title="Rotate Left" aria-label="Rotate Left"><i class="fa-solid fa-chevron-left"></i></button>
+          <button id="circular-reset" class="circular-nav-btn" title="Reset View" aria-label="Reset View"><i class="fa-solid fa-rotate-left"></i></button>
+          <button id="circular-next" class="circular-nav-btn" title="Rotate Right" aria-label="Rotate Right"><i class="fa-solid fa-chevron-right"></i></button>
+        </div>
       </div>
     </div>
   </section>
