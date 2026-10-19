@@ -73,6 +73,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             'I': { bg: 'linear-gradient(135deg,#d97706,#fbbf24)', badge: '#d97706', text: '#fff' }
         };
 
+        const fragment = document.createDocumentFragment();
         students.forEach((student, index) => {
             const colors = yearColors[student.yearToken] || yearColors['III'];
             const yearLabel = getYearLabel(student);
@@ -113,7 +114,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 : resolveAssetPath(rawPhoto);
 
             const photoHtml = photoSrc
-                ? `<div class="relative w-16 h-16 rounded-full">${photoFallback}<img src="${escapeHtml(photoSrc)}" alt="${escapeHtml(student.name)}" class="absolute inset-0 w-16 h-16 rounded-full object-cover shadow-lg border-2 border-white bg-white" data-fallback="${escapeHtml(localFallback)}" onerror="if(this.dataset.fallback && this.src !== this.dataset.fallback){ this.src = this.dataset.fallback; } else { this.style.display='none'; }"></div>`
+                ? `<div class="relative w-16 h-16 rounded-full">${photoFallback}<img src="${escapeHtml(photoSrc)}" alt="${escapeHtml(student.name)}" loading="lazy" decoding="async" class="absolute inset-0 w-16 h-16 rounded-full object-cover shadow-lg border-2 border-white bg-white" data-fallback="${escapeHtml(localFallback)}" onerror="if(this.dataset.fallback && this.src !== this.dataset.fallback){ this.src = this.dataset.fallback; } else { this.style.display='none'; }"></div>`
                 : photoFallback;
 
             // Compute points if scoring.js is loaded
@@ -157,8 +158,9 @@ document.addEventListener('DOMContentLoaded', async () => {
                 </div>
               </div>
             `;
-            grid.appendChild(card);
+            fragment.appendChild(card);
         });
+        grid.appendChild(fragment);
 
         if (typeof AOS !== 'undefined') AOS.refreshHard();
     }
@@ -268,9 +270,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     function getStudentDetailHref(student) {
-        const detailUrl = new URL('student-detail.html', window.location.href);
-        detailUrl.searchParams.set('id', getStudentIdentifier(student));
-        return detailUrl.href;
+        var id = encodeURIComponent(getStudentIdentifier(student));
+        return 'student-detail.html?id=' + id;
     }
 
     function getYearToken(year) {

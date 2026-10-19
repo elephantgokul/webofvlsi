@@ -26,10 +26,17 @@ window.escapeHtml = escapeHtml;
 
   const SCROLL_THRESHOLD = 60;
 
+  let headerTicking = false;
   function onScroll() {
-    header.classList.toggle("is-scrolled", window.scrollY > SCROLL_THRESHOLD);
+    if (!headerTicking) {
+      requestAnimationFrame(() => {
+        header.classList.toggle("is-scrolled", window.scrollY > SCROLL_THRESHOLD);
+        headerTicking = false;
+      });
+      headerTicking = true;
+    }
   }
-  onScroll();
+  header.classList.toggle("is-scrolled", window.scrollY > SCROLL_THRESHOLD);
   window.addEventListener("scroll", onScroll, { passive: true });
 
   if (menuToggle && mobileMenu) {
@@ -99,15 +106,23 @@ window.escapeHtml = escapeHtml;
   if (!bar) return;
   if (window.CSS && CSS.supports("animation-timeline: scroll()")) return;
 
+  let progTicking = false;
   function update() {
     const scrollTop = window.scrollY;
     const docHeight = document.documentElement.scrollHeight - window.innerHeight;
     const progress = docHeight > 0 ? scrollTop / docHeight : 0;
     bar.style.transform = `scaleX(${progress})`;
+    progTicking = false;
+  }
+  function onProgressScroll() {
+    if (!progTicking) {
+      requestAnimationFrame(update);
+      progTicking = true;
+    }
   }
   update();
-  window.addEventListener("scroll", update, { passive: true });
-  window.addEventListener("resize", update);
+  window.addEventListener("scroll", onProgressScroll, { passive: true });
+  window.addEventListener("resize", onProgressScroll, { passive: true });
 })();
 
 /* ---- Back to top button --------------------------------------------------- */
@@ -116,10 +131,17 @@ window.escapeHtml = escapeHtml;
   if (!btn) return;
   const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 
+  let bttTicking = false;
   function toggle() {
-    btn.classList.toggle("is-visible", window.scrollY > 500);
+    if (!bttTicking) {
+      requestAnimationFrame(() => {
+        btn.classList.toggle("is-visible", window.scrollY > 500);
+        bttTicking = false;
+      });
+      bttTicking = true;
+    }
   }
-  toggle();
+  btn.classList.toggle("is-visible", window.scrollY > 500);
   window.addEventListener("scroll", toggle, { passive: true });
 
   btn.addEventListener("click", () => {

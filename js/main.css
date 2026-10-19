@@ -2710,11 +2710,10 @@ body:has(#hero) #site-header:not(.is-scrolled), body.home-page #site-header:not(
   -webkit-backdrop-filter: blur(24px) saturate(160%) !important;
 }
 
-/* --- 4. Cards --- */
+/* --- 4. Cards (Performance-optimized crisp rendering) --- */
 .surface-card, .surface-card-2, .faculty-card, .student-card, .podium-card, .hod-profile-card, .research-card, .stat-card, body.light-page .surface-card, body.light-page .surface-card-2, body.light-page .faculty-card, body.light-page .student-card, body.light-page .podium-card, body.light-page .hod-profile-card, body.light-page .research-card, body.light-page .stat-card {
-  background: linear-gradient(135deg, var(--glass-bg), var(--glass-tint)) !important;
-  backdrop-filter: var(--glass-blur) !important;
-  -webkit-backdrop-filter: var(--glass-blur) !important;
+  background: rgba(255, 255, 255, 0.94) !important;
+  will-change: transform;
   border: 1px solid var(--glass-border) !important;
   box-shadow: var(--glass-shadow) !important;
   border-radius: 20px !important;
@@ -2742,11 +2741,9 @@ body:has(#hero) #site-header:not(.is-scrolled), body.home-page #site-header:not(
 }
 
 /* --- 5. Buttons --- */
-/* Glass pill with brand-blue tint */
+/* Crisp pill with brand-blue tint */
 .btn-ghost, .filter-btn, .tab-btn, body.light-page .btn-ghost, body.light-page .filter-btn, body.light-page .tab-btn {
   background: rgba(22,82,196,0.06) !important;
-  backdrop-filter: var(--glass-blur) !important;
-  -webkit-backdrop-filter: var(--glass-blur) !important;
   border: 1px solid rgba(22,82,196,0.12) !important;
   border-radius: 9999px !important;
   color: #111827 !important;

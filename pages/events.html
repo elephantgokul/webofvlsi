@@ -51,6 +51,9 @@
     .ev-card{transition:transform .3s,box-shadow .3s,border-color .3s;}
     .ev-card:hover{transform:translateY(-5px);box-shadow:0 20px 40px -18px rgba(11,27,51,.2);border-color:rgba(22,82,196,.3);}
     .cat-dot{width:8px;height:8px;border-radius:999px;display:inline-block;flex-shrink:0;}
+    .events-loading{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:4rem 1rem;color:#aab4c8;}
+    .events-empty{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:4rem 1rem;color:#aab4c8;}
+    .events-error{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:4rem 1rem;color:#dc2626;}
   </style>
 </head>
 <body class="font-body antialiased" style="color:#0b1b33;background:#fff">
@@ -68,6 +71,7 @@
       <a href="hod.html"            class="nav-link px-3.5 py-2 text-sm font-medium rounded-lg transition-all">HOD</a>
       <a href="faculty.html"        class="nav-link px-3.5 py-2 text-sm font-medium rounded-lg transition-all">Faculty</a>
       <a href="students.html"       class="nav-link px-3.5 py-2 text-sm font-medium rounded-lg transition-all">Students</a>
+      <a href="events.html"        class="nav-link px-3.5 py-2 text-sm font-medium rounded-lg transition-all" style="color:#1652c4">Events</a>
       <a href="leaderboard.html" class="nav-link px-3.5 py-2 text-sm font-medium rounded-lg transition-all duration-200">Leaderboard</a>
       <a href="achievements.html"   class="nav-link px-3.5 py-2 text-sm font-medium rounded-lg transition-all">Achievements</a>
       <a href="placements.html"     class="nav-link px-3.5 py-2 text-sm font-medium rounded-lg transition-all">Placements</a>
@@ -84,7 +88,8 @@
       <a href="hod.html"            class="px-4 py-3 text-sm font-medium text-slate-700 hover:text-blue-600 rounded-xl hover:bg-blue-50 transition-all">HOD</a>
       <a href="faculty.html"        class="px-4 py-3 text-sm font-medium text-slate-700 hover:text-blue-600 rounded-xl hover:bg-blue-50 transition-all">Faculty</a>
       <a href="students.html"       class="px-4 py-3 text-sm font-medium text-slate-700 hover:text-blue-600 rounded-xl hover:bg-blue-50 transition-all">Students</a>
-      <a href="leaderboard.html" class="px-4 py-3 text-sm font-medium text-white/75 hover:text-white rounded-xl hover:bg-white/10 transition-all">Leaderboard</a>
+      <a href="events.html"        class="px-4 py-3 text-sm font-medium text-slate-700 hover:text-blue-600 rounded-xl hover:bg-blue-50 transition-all">Events</a>
+      <a href="leaderboard.html" class="px-4 py-3 text-sm font-medium text-slate-700 hover:text-blue-600 rounded-xl hover:bg-blue-50 transition-all">Leaderboard</a>
       <a href="achievements.html"   class="px-4 py-3 text-sm font-medium text-slate-700 hover:text-blue-600 rounded-xl hover:bg-blue-50 transition-all">Achievements</a>
       <a href="placements.html"     class="px-4 py-3 text-sm font-medium text-slate-700 hover:text-blue-600 rounded-xl hover:bg-blue-50 transition-all">Placements</a>
       <a href="contact.html"        class="px-4 py-3 text-sm font-medium text-slate-700 hover:text-blue-600 rounded-xl hover:bg-blue-50 transition-all">Contact</a>
@@ -126,20 +131,34 @@
         <span class="flex items-center gap-2 text-xs font-mono" style="color:#5b6478"><span class="cat-dot" style="background:#8c4516"></span>Competition</span>
         <span class="flex items-center gap-2 text-xs font-mono" style="color:#5b6478"><span class="cat-dot" style="background:#c41652"></span>Cultural</span>
       </div>
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="upcoming-grid"></div>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="upcoming-grid">
+        <!-- Loading state -->
+        <div class="col-span-full events-loading">
+          <i class="fa-solid fa-spinner fa-spin text-3xl mb-3"></i>
+          <p class="text-sm">Loading upcoming events...</p>
+        </div>
+      </div>
     </div>
   </section>
 
   <!-- Past events -->
   <section id="panel-past" class="py-24 bg-white" style="display:none">
     <div class="max-w-screen-xl mx-auto px-5 lg:px-8">
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="past-grid"></div>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="past-grid">
+        <div class="col-span-full events-loading">
+          <i class="fa-solid fa-spinner fa-spin text-3xl mb-3"></i>
+          <p class="text-sm">Loading past events...</p>
+        </div>
+      </div>
     </div>
   </section>
 </main>
 
 <footer style="background:#f8fafc;border-top:1px solid #e2e8f0;color:#5b6478">
-  <p>&copy; <span id="current-year">2026</span> VLSI Department, SIET &nbsp;·&nbsp; <a href="../index.html" style="color:rgba(255,255,255,.4)" onmouseover="this.style.color='#fff'" onmouseout="this.style.color=''">Back to Home</a></p>
+  <div class="max-w-screen-xl mx-auto px-5 lg:px-8 py-8 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs">
+    <p>&copy; <span id="current-year">2026</span> VLSI Department, SIET</p>
+    <a href="../index.html" class="hover:underline" style="color:#1652c4">← Back to Home</a>
+  </div>
 </footer>
 <button id="back-to-top" aria-label="Back to top"><i class="fa-solid fa-arrow-up text-sm"></i></button>
 
@@ -147,67 +166,44 @@
 <script src="../js/main.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="../js/supabase-config.js"></script>
+<script src="../js/events-manager.js"></script>
 <script>
 AOS.init({duration:480,once:true,offset:60});
 
-var catColors = {symposium:'#1652c4',talk:'#0b6e8c',workshop:'#166444',competition:'#8c4516',cultural:'#c41652',alumni:'#6416c4'};
+// Load events from Supabase (with fallback)
+async function loadEventsPage() {
+  try {
+    var upcoming = await EventsManager.fetchEvents({ upcoming: true });
+    var past = await EventsManager.fetchEvents({ upcoming: false });
 
-var upcomingEvents = [
-  { cat:"symposium",   day:"14", month:"JUL", year:"2026", title:"ELECNOVA 2026 — National Technical Symposium", venue:"Main Auditorium", time:"9:00 AM", desc:"Annual national-level technical symposium featuring paper presentations, project expo, workshops, and guest lectures from industry leaders.", reg:true },
-  { cat:"talk",        day:"21", month:"JUL", year:"2026", title:"Expert Talk: 5G Networks & Open RAN Architecture", venue:"Seminar Hall 2", time:"2:00 PM", desc:"Industry expert from Ericsson India speaks on 5G NR, Open RAN, and what it means for VLSI engineers entering the workforce.", reg:true },
-  { cat:"workshop",    day:"02", month:"AUG", year:"2026", title:"Hands-on: PCB Design & Rapid Prototyping", venue:"Electronics Lab 3", time:"10:00 AM", desc:"Full-day workshop — design a PCB in KiCad, generate Gerbers, fabricate using lab's CNC milling machine, and solder live.", reg:true },
-  { cat:"competition", day:"10", month:"AUG", year:"2026", title:"Circuit Debugging Challenge 2026", venue:"Electronics Lab 1", time:"10:00 AM", desc:"Inter-batch circuit debugging competition. Teams of 2 race to identify and fix faults in pre-built PCBs within a time limit.", reg:true },
-  { cat:"alumni",      day:"16", month:"AUG", year:"2026", title:"Alumni Meet & Mentorship Day 2026", venue:"Dept Block Lawn", time:"4:00 PM", desc:"Annual alumni gathering — networking, mentorship panels, career guidance sessions, and department project showcase.", reg:false },
-  { cat:"cultural",    day:"28", month:"AUG", year:"2026", title:"Freshers' Day 2026 — Welcome Celebration", venue:"College Auditorium", time:"5:30 PM", desc:"Welcome event for the new batch — cultural performances, faculty introductions, and department orientation.", reg:false },
-];
+    // Render upcoming
+    var upGrid = document.getElementById('upcoming-grid');
+    if (upcoming.length === 0) {
+      upGrid.innerHTML = '<div class="col-span-full events-empty"><i class="fa-solid fa-calendar-xmark text-4xl mb-3"></i><p class="text-sm font-medium">No upcoming events</p><p class="text-xs mt-1">Check back later for new events!</p></div>';
+    } else {
+      upGrid.innerHTML = upcoming.map(function(ev, i) {
+        return EventsManager.renderEventCard(ev, i);
+      }).join('');
+    }
+    document.getElementById('badge-upcoming').textContent = upcoming.length;
 
-var pastEvents = [
-  { cat:"symposium",   day:"14", month:"MAR", year:"2026", title:"ELECNOVA 2025 — National Technical Symposium", venue:"Main Auditorium", time:"9:00 AM", desc:"800+ participants from 40 colleges. Best paper and best project awards presented. Keynote by IEEE Fellow from IIT Madras.", reg:false },
-  { cat:"workshop",    day:"14", month:"MAR", year:"2026", title:"PCB Design & Fabrication Workshop", venue:"Electronics Lab 3", time:"10:00 AM", desc:"85 students. End-to-end PCB design and fabrication. Students took home a self-designed board.", reg:false },
-  { cat:"talk",        day:"18", month:"DEC", year:"2025", title:"Industry Talk — 5G Architecture & Beyond", venue:"Main Auditorium", time:"2:00 PM", desc:"220 attendees. Expert from Ericsson India. Live 5G signal measurement demo.", reg:false },
-  { cat:"workshop",    day:"22", month:"NOV", year:"2025", title:"Embedded Systems Workshop — RTOS", venue:"Embedded Lab", time:"10:00 AM", desc:"75 students. FreeRTOS on STM32. Motor control application built from scratch.", reg:false },
-  { cat:"competition", day:"10", month:"OCT", year:"2025", title:"HackVLSI — Department Hackathon 2025", venue:"All Labs", time:"9:00 AM", desc:"24-hour hackathon. 30 teams. Problem statements from IoT, VLSI, and signal processing domains.", reg:false },
-  { cat:"alumni",      day:"20", month:"SEP", year:"2025", title:"Alumni Guest Lecture Series — Batch 2020", venue:"Seminar Hall 1", time:"3:00 PM", desc:"4 alumni from TCS, Infosys, and Intel shared career journeys, placement tips, and industry insights.", reg:false },
-];
+    // Render past
+    var pastGrid = document.getElementById('past-grid');
+    if (past.length === 0) {
+      pastGrid.innerHTML = '<div class="col-span-full events-empty"><i class="fa-solid fa-calendar-xmark text-4xl mb-3"></i><p class="text-sm font-medium">No past events</p></div>';
+    } else {
+      pastGrid.innerHTML = past.map(function(ev, i) {
+        return EventsManager.renderEventCard(ev, i);
+      }).join('');
+    }
 
-function buildEventGrid(events, containerId){
-  var g = document.getElementById(containerId);
-  g.innerHTML = events.map(function(ev, i){
-    var c = catColors[ev.cat]||'#1652c4';
-    return [
-      '<article class="ev-card surface-card rounded-2xl overflow-hidden" data-aos="fade-up" data-aos-delay="'+(i%3*70)+'">',
-        '<div class="flex items-stretch">',
-          /* Date badge */
-          '<div class="flex flex-col items-center justify-center px-5 py-6 flex-shrink-0" style="background:'+c+';min-width:5rem">',
-            '<span class="font-display font-bold text-white text-3xl leading-none">'+ev.day+'</span>',
-            '<span class="font-mono text-white text-xs mt-1 opacity-75">'+ev.month+'</span>',
-            '<span class="font-mono text-white text-xs opacity-50">'+ev.year+'</span>',
-          '</div>',
-          /* Content */
-          '<div class="p-5 flex-1 min-w-0">',
-            '<div class="flex items-center gap-2 mb-2">',
-              '<span class="cat-dot" style="background:'+c+'"></span>',
-              '<span class="text-[10px] font-mono uppercase tracking-wide" style="color:'+c+'">'+ev.cat+'</span>',
-            '</div>',
-            '<h3 class="font-display font-semibold text-sm leading-snug mb-2" style="color:#0b1b33">'+ev.title+'</h3>',
-            '<p class="text-xs leading-relaxed mb-3" style="color:#5b6478">'+ev.desc.substring(0,90)+'…</p>',
-            '<div class="flex flex-wrap gap-3 mb-3" style="font-size:.72rem;color:#aab4c8">',
-              '<span><i class="fa-solid fa-location-dot mr-1" style="color:#1652c4"></i>'+ev.venue+'</span>',
-              '<span><i class="fa-solid fa-clock mr-1" style="color:#1652c4"></i>'+ev.time+'</span>',
-            '</div>',
-            ev.reg
-              ? '<a href="#" class="inline-flex items-center gap-1.5 text-xs font-semibold text-white rounded-lg px-3 py-1.5 transition-all" style="background:'+c+'" onmouseover="this.style.opacity=\'.85\'" onmouseout="this.style.opacity=\'1\'"><i class="fa-solid fa-registered text-[10px]"></i>Register Now</a>'
-              : '<span class="inline-flex items-center gap-1.5 text-xs font-mono rounded-lg px-3 py-1.5" style="background:#f4f7fb;color:#aab4c8">Event Completed</span>',
-          '</div>',
-        '</div>',
-      '</article>'
-    ].join('');
-  }).join('');
+    if (typeof AOS !== 'undefined') AOS.refreshHard();
+  } catch (err) {
+    console.error('[Events Page] Error loading events:', err);
+    var grid = document.getElementById('upcoming-grid');
+    grid.innerHTML = '<div class="col-span-full events-error"><i class="fa-solid fa-triangle-exclamation text-3xl mb-3"></i><p class="text-sm font-medium">Failed to load events</p><p class="text-xs mt-1" style="color:#aab4c8">Please try again later</p></div>';
+  }
 }
-
-buildEventGrid(upcomingEvents, 'upcoming-grid');
-buildEventGrid(pastEvents, 'past-grid');
-document.getElementById('badge-upcoming').textContent = upcomingEvents.length;
 
 function switchEvTab(which){
   ['upcoming','past'].forEach(function(t){
@@ -217,6 +213,8 @@ function switchEvTab(which){
     else          { btn.classList.remove('active'); btn.style.color='#5b6478'; }
   });
 }
+
+loadEventsPage();
 </script>
 </body>
 </html>

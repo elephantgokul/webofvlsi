@@ -71,7 +71,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             const specialization = fac.specialization || '';
 
             const photoHtml = photoSrc
-                ? `<div class="relative w-20 h-20 rounded-full">${photoFallback}<img src="${escapeHtml(photoSrc)}" alt="${escapeHtml(fac.name)}" class="absolute inset-0 w-20 h-20 rounded-full object-cover shadow-lg border-2 border-white bg-white" data-fallback="${escapeHtml(localFallback)}" onerror="if(this.dataset.fallback && this.src !== this.dataset.fallback){ this.src = this.dataset.fallback; } else { this.style.display='none'; }"></div>`
+                ? `<div class="relative w-20 h-20 rounded-full">${photoFallback}<img src="${escapeHtml(photoSrc)}" alt="${escapeHtml(fac.name)}" loading="lazy" decoding="async" class="absolute inset-0 w-20 h-20 rounded-full object-cover shadow-lg border-2 border-white bg-white" data-fallback="${escapeHtml(localFallback)}" onerror="if(this.dataset.fallback && this.src !== this.dataset.fallback){ this.src = this.dataset.fallback; } else { this.style.display='none'; }"></div>`
                 : photoFallback;
 
             const card = document.createElement('article');

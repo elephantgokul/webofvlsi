@@ -1,17 +1,7 @@
-const EVENTS = [
-  { id: 1, title: 'VLSI Design Workshop', date: '2025-02-15', endDate: '2025-02-17', type: 'workshop', desc: '3-day hands-on workshop on Analog Layout Design using Cadence Virtuoso', location: 'VLSI Lab 1', link: '#' },
-  { id: 2, title: 'Elecnova 2025 Symposium', date: '2025-03-10', endDate: '2025-03-11', type: 'event', desc: 'Annual technical symposium with paper presentations, project expo & industry talks', location: 'Main Auditorium', link: '#' },
-  { id: 3, title: 'Synopsys Tool Training', date: '2025-01-20', endDate: '2025-01-22', type: 'workshop', desc: 'IC Compiler II & PrimeTime training by Synopsys engineers', location: 'Computer Center', link: '#' },
-  { id: 4, title: 'IEEE VLSI Conference', date: '2025-04-05', endDate: '2025-04-07', type: 'event', desc: 'International conference on VLSI Design & Test', location: 'Hyderabad', link: '#' },
-  { id: 5, title: 'Mid-Semester Exams', date: '2025-02-24', endDate: '2025-03-01', type: 'academic', desc: 'Theory examinations for all VLSI courses', location: 'Exam Halls', link: '#' },
-  { id: 6, title: 'FPGA Hackathon', date: '2025-03-22', endDate: '2025-03-23', type: 'hackathon', desc: '24-hour FPGA design challenge with Xilinx/AMD support', location: 'VLSI Lab 2', link: '#' },
-  { id: 7, title: 'Industry Expert Lecture', date: '2025-02-08', type: 'lecture', desc: 'Talk on "Advanced Node Challenges" by TSMC engineer', location: 'Seminar Hall', link: '#' },
-  { id: 8, title: 'Cultural Fest - Tarang', date: '2025-03-28', endDate: '2025-03-30', type: 'cultural', desc: 'Annual cultural festival with competitions, performances & food', location: 'Campus Grounds', link: '#' },
-  { id: 9, title: 'End-Semester Exams', date: '2025-05-12', endDate: '2025-05-20', type: 'academic', desc: 'Final theory & practical examinations', location: 'Exam Halls', link: '#' },
-  { id: 10, title: 'Summer Internship Drive', date: '2025-04-15', endDate: '2025-04-30', type: 'career', desc: 'Campus placements & internship interviews for VLSI companies', location: 'Placement Cell', link: '#' },
-  { id: 11, title: 'Research Paper Writing Workshop', date: '2025-01-25', type: 'workshop', desc: 'How to write & publish IEEE transactions papers', location: 'Library Seminar Room', link: '#' },
-  { id: 12, title: 'Alumni Meet 2025', date: '2025-12-20', type: 'cultural', desc: 'Annual alumni gathering & networking event', location: 'Alumni Center', link: '#' }
-];
+// js/calendar.js — Supabase-backed Calendar with fallback
+// Replaces hardcoded EVENTS array with database-driven data
+
+var EVENTS = []; // Will be populated from Supabase or fallback
 
 const TYPE_COLORS = {
   workshop: 'var(--clr-accent)',
@@ -20,7 +10,11 @@ const TYPE_COLORS = {
   hackathon: '#ea580c',
   lecture: '#059669',
   cultural: '#ec4899',
-  career: '#d97706'
+  career: '#d97706',
+  symposium: '#1652c4',
+  talk: '#0b6e8c',
+  competition: '#8c4516',
+  alumni: '#6416c4'
 };
 
 const TYPE_ICONS = {
@@ -30,7 +24,11 @@ const TYPE_ICONS = {
   hackathon: 'fa-code',
   lecture: 'fa-chalkboard-user',
   cultural: 'fa-music',
-  career: 'fa-briefcase'
+  career: 'fa-briefcase',
+  symposium: 'fa-calendar-days',
+  talk: 'fa-chalkboard-user',
+  competition: 'fa-code',
+  alumni: 'fa-user-group'
 };
 
 function getCurrentMonth() {
@@ -119,7 +117,8 @@ function renderMonthView(currentDate) {
     if (hasEvents) {
       html.push('<div class="mt-1 space-y-1 max-h-[70px] overflow-y-auto">');
       events.slice(0, 3).forEach(function(e) {
-        html.push('<div class="text-xs px-1.5 py-0.5 rounded truncate cursor-pointer hover:opacity-80" style="background:' + TYPE_COLORS[e.type] + ';color:white;font-size:0.65rem" title="' + escapeHtml(e.title) + '">' + escapeHtml(e.title) + '</div>');
+        var color = TYPE_COLORS[e.type] || 'var(--clr-accent)';
+        html.push('<div class="text-xs px-1.5 py-0.5 rounded truncate cursor-pointer hover:opacity-80" style="background:' + color + ';color:white;font-size:0.65rem" title="' + escapeHtml(e.title) + '">' + escapeHtml(e.title) + '</div>');
       });
       if (events.length > 3) {
         html.push('<div class="text-xs text-center" style="color:var(--clr-text-muted)">+' + (events.length - 3) + ' more</div>');
@@ -168,12 +167,14 @@ function renderListView(currentDate) {
       var end = e.endDate ? new Date(e.endDate + 'T23:59:59') : start;
       var isMultiDay = start.getTime() !== end.getTime();
       var isPast = end < today;
+      var typeColor = TYPE_COLORS[e.type] || 'var(--clr-accent)';
+      var typeIcon = TYPE_ICONS[e.type] || 'fa-calendar-days';
       return [
-        '<article class="surface-card p-4 hover:shadow-lg transition-shadow" style="border:1px solid var(--clr-border);' + (isPast ? 'opacity-60' : '') + '" data-aos="fade-up" data-aos-delay="' + (idx * 50) + '">',
+        '<article class="surface-card p-4 hover:shadow-lg transition-shadow" style="border:1px solid var(--clr-border);' + (isPast ? 'opacity:0.6' : '') + '" data-aos="fade-up" data-aos-delay="' + (idx * 50) + '">',
           '<div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">',
             '<div class="flex items-start gap-4">',
-              '<div class="flex-shrink-0 w-14 h-14 rounded-xl flex items-center justify-center text-xl" style="background:' + TYPE_COLORS[e.type] + ';color:white">',
-                '<i class="fa-solid ' + TYPE_ICONS[e.type] + '"></i>',
+              '<div class="flex-shrink-0 w-14 h-14 rounded-xl flex items-center justify-center text-xl" style="background:' + typeColor + ';color:white">',
+                '<i class="fa-solid ' + typeIcon + '"></i>',
               '</div>',
               '<div>',
                 '<div class="flex items-center gap-2 mb-1">',
@@ -188,13 +189,57 @@ function renderListView(currentDate) {
                 '</div>',
               '</div>',
             '</div>',
-            '<a href="' + escapeHtml(e.link) + '" class="btn-secondary flex-shrink-0" style="white-space:nowrap">Details</a>',
+            (e.link && e.link !== '#' ? '<a href="' + escapeHtml(e.link) + '" target="_blank" rel="noopener" class="btn-secondary flex-shrink-0" style="white-space:nowrap">Details</a>' : '<span class="btn-secondary flex-shrink-0" style="white-space:nowrap;opacity:.5">Details</span>'),
           '</div>',
         '</article>'
       ].join('');
     }).join('');
   }
   container.innerHTML = html;
+}
+
+/**
+ * Load events from Supabase via EventsManager, falling back to hardcoded data
+ */
+async function loadCalendarEvents() {
+  try {
+    if (typeof EventsManager !== 'undefined' && typeof EventsManager.fetchEvents === 'function') {
+      var dbEvents = await EventsManager.fetchEvents({ status: 'published' });
+      if (dbEvents && dbEvents.length > 0) {
+        EVENTS = dbEvents.map(function(e) {
+          return {
+            id: e.id,
+            title: e.title,
+            date: e.event_date,
+            endDate: e.end_date || null,
+            type: e.category || e.cat || 'event',
+            desc: e.description || e.desc || '',
+            location: e.venue || '',
+            link: e.registration_url || '#'
+          };
+        });
+        return;
+      }
+    }
+  } catch (err) {
+    console.warn('[Calendar] Supabase fetch failed, using fallback:', err);
+  }
+
+  // Fallback to hardcoded events
+  EVENTS = [
+    { id: 1, title: 'VLSI Design Workshop', date: '2025-02-15', endDate: '2025-02-17', type: 'workshop', desc: '3-day hands-on workshop on Analog Layout Design using Cadence Virtuoso', location: 'VLSI Lab 1', link: '#' },
+    { id: 2, title: 'Elecnova 2025 Symposium', date: '2025-03-10', endDate: '2025-03-11', type: 'symposium', desc: 'Annual technical symposium with paper presentations, project expo & industry talks', location: 'Main Auditorium', link: '#' },
+    { id: 3, title: 'Synopsys Tool Training', date: '2025-01-20', endDate: '2025-01-22', type: 'workshop', desc: 'IC Compiler II & PrimeTime training by Synopsys engineers', location: 'Computer Center', link: '#' },
+    { id: 4, title: 'IEEE VLSI Conference', date: '2025-04-05', endDate: '2025-04-07', type: 'symposium', desc: 'International conference on VLSI Design & Test', location: 'Hyderabad', link: '#' },
+    { id: 5, title: 'Mid-Semester Exams', date: '2025-02-24', endDate: '2025-03-01', type: 'academic', desc: 'Theory examinations for all VLSI courses', location: 'Exam Halls', link: '#' },
+    { id: 6, title: 'FPGA Hackathon', date: '2025-03-22', endDate: '2025-03-23', type: 'hackathon', desc: '24-hour FPGA design challenge with Xilinx/AMD support', location: 'VLSI Lab 2', link: '#' },
+    { id: 7, title: 'Industry Expert Lecture', date: '2025-02-08', type: 'lecture', desc: 'Talk on "Advanced Node Challenges" by TSMC engineer', location: 'Seminar Hall', link: '#' },
+    { id: 8, title: 'Cultural Fest - Tarang', date: '2025-03-28', endDate: '2025-03-30', type: 'cultural', desc: 'Annual cultural festival with competitions, performances & food', location: 'Campus Grounds', link: '#' },
+    { id: 9, title: 'End-Semester Exams', date: '2025-05-12', endDate: '2025-05-20', type: 'academic', desc: 'Final theory & practical examinations', location: 'Exam Halls', link: '#' },
+    { id: 10, title: 'Summer Internship Drive', date: '2025-04-15', endDate: '2025-04-30', type: 'career', desc: 'Campus placements & internship interviews for VLSI companies', location: 'Placement Cell', link: '#' },
+    { id: 11, title: 'Research Paper Writing Workshop', date: '2025-01-25', type: 'workshop', desc: 'How to write & publish IEEE transactions papers', location: 'Library Seminar Room', link: '#' },
+    { id: 12, title: 'Alumni Meet 2025', date: '2025-12-20', type: 'alumni', desc: 'Annual alumni gathering & networking event', location: 'Alumni Center', link: '#' }
+  ];
 }
 
 async function initCalendar() {
@@ -206,6 +251,12 @@ async function initCalendar() {
   var todayBtn = document.getElementById('cal-today');
 
   if (!monthView || !listView) return;
+
+  // Show loading state
+  listView.innerHTML = '<div class="surface-card p-12 text-center" style="border:1px solid var(--clr-border)"><i class="fa-solid fa-spinner fa-spin text-3xl mb-3" style="color:var(--clr-text-muted)"></i><p style="color:var(--clr-text-secondary)">Loading events...</p></div>';
+
+  // Load events from database
+  await loadCalendarEvents();
 
   var currentDate = getCurrentMonth();
 

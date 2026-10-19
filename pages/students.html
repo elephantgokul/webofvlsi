@@ -64,6 +64,7 @@
       <a href="hod.html"            class="nav-link px-3.5 py-2 text-sm font-medium rounded-lg transition-all">HOD</a>
       <a href="faculty.html"        class="nav-link px-3.5 py-2 text-sm font-medium rounded-lg transition-all">Faculty</a>
       <a href="students.html"       class="nav-link px-3.5 py-2 text-sm font-medium rounded-lg transition-all" style="color:#1652c4">Students</a>
+      <a href="events.html"        class="nav-link px-3.5 py-2 text-sm font-medium rounded-lg transition-all">Events</a>
       <a href="leaderboard.html" class="nav-link px-3.5 py-2 text-sm font-medium rounded-lg transition-all duration-200">Leaderboard</a>
       <a href="achievements.html"   class="nav-link px-3.5 py-2 text-sm font-medium rounded-lg transition-all">Achievements</a>
       <a href="placements.html"     class="nav-link px-3.5 py-2 text-sm font-medium rounded-lg transition-all">Placements</a>
@@ -80,6 +81,7 @@
       <a href="hod.html"            class="px-4 py-3 text-sm font-medium text-slate-700 hover:text-blue-600 rounded-xl hover:bg-blue-50 transition-all">HOD</a>
       <a href="faculty.html"        class="px-4 py-3 text-sm font-medium text-slate-700 hover:text-blue-600 rounded-xl hover:bg-blue-50 transition-all">Faculty</a>
       <a href="students.html"       class="px-4 py-3 text-sm font-medium text-slate-700 hover:text-blue-600 rounded-xl hover:bg-blue-50 transition-all">Students</a>
+      <a href="events.html"        class="px-4 py-3 text-sm font-medium text-slate-700 hover:text-blue-600 rounded-xl hover:bg-blue-50 transition-all">Events</a>
       <a href="leaderboard.html" class="px-4 py-3 text-sm font-medium text-slate-700 hover:text-blue-600 rounded-xl hover:bg-blue-50 transition-all">Leaderboard</a>
       <a href="achievements.html"   class="px-4 py-3 text-sm font-medium text-slate-700 hover:text-blue-600 rounded-xl hover:bg-blue-50 transition-all">Achievements</a>
       <a href="placements.html"     class="px-4 py-3 text-sm font-medium text-slate-700 hover:text-blue-600 rounded-xl hover:bg-blue-50 transition-all">Placements</a>
@@ -90,7 +92,7 @@
 
 <main>
   <!-- PAGE HERO -->
-  <section class="relative flex items-end overflow-hidden" style="min-height:38vh;background:linear-gradient(135deg,#f0f7ff 0%,#e0f0fe 100%);border-bottom:1px solid #bfdbfe;padding:8rem 1.25rem 3.5rem">
+  <section class="relative flex items-end overflow-hidden" style="min-height:38vh;background:linear-gradient(135deg,#f0f7ff 0%,#e0f0fe 100%);border-bottom:1px solid #bfdbfe;padding:10rem 1.25rem 3.5rem">
     <div aria-hidden="true" style="position:absolute;inset:0;opacity:.11"><svg width="100%" height="100%"><defs><pattern id="ph" width="80" height="80" patternUnits="userSpaceOnUse"><path d="M0 40H80M40 0V80" stroke="#93c5fd" stroke-width="1" fill="none"/><circle cx="40" cy="40" r="2" fill="#93c5fd"/></pattern></defs><rect width="100%" height="100%" fill="url(#ph)"/></svg></div>
     <div class="max-w-screen-xl mx-auto w-full relative z-10">
       <nav aria-label="Breadcrumb" class="mb-4"><ol class="flex items-center gap-2 text-xs font-mono" style="color:#5B6575"><li><a href="../index.html" style="transition:color .2s" onmouseover="this.style.color='#2fe6dd'" onmouseout="this.style.color=''">Home</a></li><li><i class="fa-solid fa-chevron-right text-[10px]"></i></li><li style="color:#1652c4">Students</li></ol></nav>
@@ -116,12 +118,12 @@
         <div class="flex items-center gap-3 w-full lg:w-auto">
           <div class="search-wrapper flex-1 lg:w-64">
             <i class="fa-solid fa-search search-icon"></i>
-            <input type="text" id="student-search" placeholder="Search by name or roll no..." class="search-input">
+            <input type="text" id="student-search" placeholder="Search by name or roll no..." class="search-input" autocomplete="off">
           </div>
+          <span id="student-count" class="text-xs font-mono px-3 py-1.5 rounded-lg hidden sm:inline-flex" style="background:#f0f4ff;color:#1652c4;white-space:nowrap"></span>
           <div class="view-toggle">
             <button id="view-card" class="view-toggle-btn active" title="Card View"><i class="fa-solid fa-grip"></i> Cards</button>
             <button id="view-table" class="view-toggle-btn" title="Table View"><i class="fa-solid fa-table-list"></i> Table</button>
-            <button id="view-circular" class="view-toggle-btn" title="Circular View"><i class="fa-solid fa-circle-notch"></i> Circular</button>
           </div>
         </div>
       </div>
@@ -134,23 +136,6 @@
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6" id="students-grid">
         <!-- Student cards injected dynamically by students.js -->
       </div>
-      <!-- 3D Circular Gallery (hidden by default) -->
-      <div id="circular-gallery-wrapper" class="circular-gallery-wrapper" style="display:none">
-        <div class="circular-gallery-hint" id="circular-hint">
-          <i class="fa-solid fa-computer-mouse"></i> Scroll or drag to rotate &bull; Click a card to view profile
-        </div>
-        <div class="circular-gallery-stage" id="circular-stage">
-          <div class="circular-gallery-ring" id="circular-ring">
-            <!-- Circular cards injected dynamically -->
-          </div>
-        </div>
-        <div class="circular-gallery-controls">
-          <button id="circular-prev" class="circular-nav-btn" title="Rotate Left" aria-label="Rotate Left"><i class="fa-solid fa-chevron-left"></i></button>
-          <button id="circular-reset" class="circular-nav-btn" title="Reset View" aria-label="Reset View"><i class="fa-solid fa-rotate-left"></i></button>
-          <button id="circular-next" class="circular-nav-btn" title="Rotate Right" aria-label="Rotate Right"><i class="fa-solid fa-chevron-right"></i></button>
-        </div>
-      </div>
-    </div>
   </section>
 </main>
 
