@@ -8,6 +8,12 @@
   /* ─── tiny helpers ─────────────────────────────────────── */
   var $ = function(sel){ return document.querySelector(sel); };
 
+  function escapeHtml(value) {
+    return (value == null ? '' : String(value)).replace(/[&<>"']/g, function (character) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[character];
+    });
+  }
+
   function fmtDate(iso){
     try { return new Date(iso).toLocaleDateString("en-IN",{day:"numeric",month:"short",year:"numeric"}); }
     catch(e){ return iso; }
@@ -20,14 +26,14 @@
       return [
         '<div style="display:flex;gap:.9rem;align-items:flex-start;background:#fff;border:1px solid #e2e8f0;border-radius:14px;padding:1rem;margin-bottom:.9rem">',
           '<div style="flex-shrink:0;width:3rem;height:3rem;border-radius:10px;background:#1652c4;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#fff">',
-            '<span style="font-size:1.15rem;font-family:\'Space Grotesk\',sans-serif;font-weight:700;line-height:1">',e.day,'</span>',
-            '<span style="font-size:.65rem;font-family:\'IBM Plex Mono\',monospace;margin-top:.1rem">',e.month,'</span>',
+            '<span style="font-size:1.15rem;font-family:\'Space Grotesk\',sans-serif;font-weight:700;line-height:1">',escapeHtml(e.day),'</span>',
+            '<span style="font-size:.65rem;font-family:\'IBM Plex Mono\',monospace;margin-top:.1rem">',escapeHtml(e.month),'</span>',
           '</div>',
           '<div>',
-            '<p style="font-family:\'Space Grotesk\',sans-serif;font-weight:600;font-size:.83rem;color:#0b1b33;line-height:1.35">',e.title,'</p>',
+            '<p style="font-family:\'Space Grotesk\',sans-serif;font-weight:600;font-size:.83rem;color:#0b1b33;line-height:1.35">',escapeHtml(e.title),'</p>',
             '<p style="font-size:.72rem;color:#5b6478;margin-top:.35rem">',
-              '<i class="fa-solid fa-location-dot" style="color:#2fe6dd;margin-right:.3rem"></i>',e.venue,
-              '&nbsp;&nbsp;<i class="fa-solid fa-clock" style="color:#2fe6dd;margin-right:.3rem"></i>',e.time,
+              '<i class="fa-solid fa-location-dot" style="color:#2fe6dd;margin-right:.3rem"></i>',escapeHtml(e.venue),
+              '&nbsp;&nbsp;<i class="fa-solid fa-clock" style="color:#2fe6dd;margin-right:.3rem"></i>',escapeHtml(e.time),
             '</p>',
           '</div>',
         '</div>'
@@ -47,10 +53,10 @@
             : '<span style="flex-shrink:0;margin-top:.45rem;width:7px;height:7px;display:block"></span>',
           '<div>',
             '<p style="font-size:.7rem;font-family:\'IBM Plex Mono\',monospace;color:#5b6478;margin-bottom:.2rem">',
-              n.date,
+              escapeHtml(n.date),
               n.isNew ? '<span style="margin-left:.4rem;color:#2fe6dd;font-weight:700">NEW</span>' : '',
             '</p>',
-            '<p style="font-size:.83rem;color:#0b1b33;font-weight:500;line-height:1.4">',n.title,'</p>',
+            '<p style="font-size:.83rem;color:#0b1b33;font-weight:500;line-height:1.4">',escapeHtml(n.title),'</p>',
           '</div>',
         '</div>'
       ].join("");
@@ -62,7 +68,7 @@
   if (recEl && typeof recruitersData !== "undefined") {
     var doubled = recruitersData.concat(recruitersData); // seamless loop
     recEl.innerHTML = doubled.map(function(name){
-      return '<div class="swiper-slide recruiter-slide"><span>'+name+'</span></div>';
+      return '<div class="swiper-slide recruiter-slide"><span>'+escapeHtml(name)+'</span></div>';
     }).join("");
   }
 
@@ -76,14 +82,14 @@
             '<svg width="28" height="20" viewBox="0 0 28 20" fill="none" aria-hidden="true" style="margin-bottom:1.2rem">',
               '<path d="M0 20V12.5C0 5.596 4.167 1.25 12.5 0l1.25 2.5C9.583 3.333 7.5 5.833 7.5 10H12.5V20H0ZM15.5 20V12.5C15.5 5.596 19.667 1.25 28 0l1.25 2.5C25.083 3.333 23 5.833 23 10H28V20H15.5Z" fill="#1652c4" opacity="0.15"/>',
             '</svg>',
-            '<p style="color:#5b6478;line-height:1.75;font-size:.9rem;font-style:italic;flex:1">"',t.quote,'"</p>',
+            '<p style="color:#5b6478;line-height:1.75;font-size:.9rem;font-style:italic;flex:1">"',escapeHtml(t.quote),'"</p>',
             '<div style="margin-top:1.4rem;padding-top:1.1rem;border-top:1px solid #e2e8f0;display:flex;align-items:center;gap:.75rem">',
               '<div style="width:2.4rem;height:2.4rem;border-radius:999px;background:linear-gradient(135deg,#1652c4,#2fe6dd);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:.85rem;flex-shrink:0">',
-                t.name.charAt(0),
+                escapeHtml(String(t.name || '?').charAt(0)),
               '</div>',
               '<div>',
-                '<p style="font-family:\'Space Grotesk\',sans-serif;font-weight:600;font-size:.85rem;color:#0b1b33">',t.name,'</p>',
-                '<p style="font-size:.72rem;color:#5b6478;margin-top:.15rem">',t.role,' &middot; ',t.batch,'</p>',
+                '<p style="font-family:\'Space Grotesk\',sans-serif;font-weight:600;font-size:.85rem;color:#0b1b33">',escapeHtml(t.name),'</p>',
+                '<p style="font-size:.72rem;color:#5b6478;margin-top:.15rem">',escapeHtml(t.role),' &middot; ',escapeHtml(t.batch),'</p>',
               '</div>',
             '</div>',
           '</div>',

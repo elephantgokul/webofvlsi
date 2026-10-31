@@ -207,16 +207,18 @@
     var descText = (ev.desc || ev.description || '').substring(0, 90);
 
     var regButton = '';
-    if (ev.reg && ev.registration_url && ev.registration_url !== '#') {
-      regButton = '<a href="' + escapeHtml(ev.registration_url) + '" target="_blank" rel="noopener" class="inline-flex items-center gap-1.5 text-xs font-semibold text-white rounded-lg px-3 py-1.5 transition-all" style="background:' + c + '" onmouseover="this.style.opacity=\'.85\'" onmouseout="this.style.opacity=\'1\'"><i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>Register Now</a>';
+    var registrationHref = safeHttpUrl(ev.registration_url);
+    if (ev.reg && registrationHref) {
+      regButton = '<a href="' + escapeHtml(registrationHref) + '" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 text-xs font-semibold text-white rounded-lg px-3 py-1.5 transition-all" style="background:' + c + '" onmouseover="this.style.opacity=\'.85\'" onmouseout="this.style.opacity=\'1\'"><i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>Register Now</a>';
     } else if (ev.reg) {
-      regButton = '<a href="#" class="inline-flex items-center gap-1.5 text-xs font-semibold text-white rounded-lg px-3 py-1.5 transition-all" style="background:' + c + '" onmouseover="this.style.opacity=\'.85\'" onmouseout="this.style.opacity=\'1\'"><i class="fa-solid fa-registered text-[10px]"></i>Register Now</a>';
+      regButton = '<span class="inline-flex items-center gap-1.5 text-xs font-semibold text-white rounded-lg px-3 py-1.5" style="background:' + c + '"><i class="fa-solid fa-registered text-[10px]"></i>Registration link unavailable</span>';
     } else {
       regButton = '<span class="inline-flex items-center gap-1.5 text-xs font-mono rounded-lg px-3 py-1.5" style="background:#f4f7fb;color:#aab4c8">' + (isPast ? 'Event Completed' : 'Free Entry') + '</span>';
     }
 
     var posterHtml = '';
-    if (ev.poster_url) {
+    var posterSrc = safeHttpUrl(ev.poster_url, true);
+    if (posterSrc) {
       posterHtml = '<div class="mb-3 rounded-xl overflow-hidden" style="max-height:180px">' +
         '<img src="' + escapeHtml(ev.poster_url) + '" alt="' + escapeHtml(ev.title) + ' poster" class="w-full object-cover" style="max-height:180px" onerror="this.parentNode.style.display=\'none\'">' +
         '</div>';
@@ -254,10 +256,23 @@
      4. UTILITY
      ========================================================================= */
 
-  function escapeHtml(v) {
-    var d = document.createElement('div');
-    d.textContent = v == null ? '' : String(v);
-    return d.innerHTML;
+  function escapeHtml(value) {
+    return (value == null ? '' : String(value)).replace(/[&<>"']/g, function (character) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[character];
+    });
+  }
+
+  function safeHttpUrl(value, allowRelative) {
+    var raw = String(value || '').trim();
+    if (!raw || /[\u0000-\u001f\u007f]/.test(raw)) return '';
+    if (!allowRelative && !/^https?:\/\//i.test(raw)) return '';
+    try {
+      var parsed = new URL(raw, window.location.href);
+      if (parsed.protocol !== 'http:' && parsed.protocol !== 'https:') return '';
+      return parsed.href;
+    } catch (error) {
+      return '';
+    }
   }
 
   /* =========================================================================

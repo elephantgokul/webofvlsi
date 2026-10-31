@@ -2,7 +2,7 @@
    SERVICE WORKER (sw.js) — Lightweight offline support & cache
    ========================================================================= */
 
-var CACHE_NAME = 'vlsi-v17';
+var CACHE_NAME = 'vlsi-v18';
 
 self.addEventListener('install', function(e) {
   self.skipWaiting();
@@ -27,6 +27,8 @@ self.addEventListener('fetch', function(e) {
 
   // Let external CDN and API requests pass through directly
   var url = e.request.url;
+  var pathname = new URL(url).pathname;
+  if (/\/pages\/admin(?:-gallery|-login)?\.html$/i.test(pathname)) return;
   if (url.includes('supabase.co') || url.includes('googleapis.com') || url.includes('cdn.') || url.includes('cdnjs.')) {
     return;
   }

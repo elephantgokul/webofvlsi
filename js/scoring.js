@@ -41,87 +41,87 @@
   };
 
   /* =========================================================================
-     2. STRUCTURED PROJECT DATA PER STUDENT (by rollNo)
+     2. STRUCTURED PROJECT DATA PER STUDENT (by public name)
      ========================================================================= */
   var STUDENT_PROJECTS = {
     // ---- Original 10 students ----
-    '24VL009': [ // Harini D
+    'harini d': [
       { title: 'High-Speed AMBA AXI4 Interconnect for SoC', category: 'rtl-to-gdsii', bonuses: ['simulation'], description: 'Designed and implemented a High-Speed AMBA AXI4 Interconnect for SoC applications covering RTL design and complete ASIC physical design flow using Synopsys tools.' },
       { title: 'FPGA Implementation', category: 'fpga', bonuses: [], description: 'Digital Hardware Implementation with Altera (Intel) FPGA.' }
     ],
-    '24VL047': [ // Tharun M
+    'tharun m': [
       { title: '16-bit RISC Processor', category: 'rtl', bonuses: ['simulation'], description: 'Designed a 16-bit RISC Processor using Verilog HDL.' },
       { title: 'UART Controller', category: 'rtl', bonuses: ['simulation'], description: 'Implemented UART serial communication controller.' },
       { title: '6T SRAM Cell', category: 'asic', bonuses: [], description: 'Designed a 6-Transistor Static RAM memory cell.' }
     ],
-    '24VL024': [ // Nithikkannan J S
+    'nithikkannan j s': [
       { title: 'Custom IC Design using Cadence EDA Tools', category: 'asic', bonuses: ['simulation'], description: 'Custom IC Design Mastery using Cadence EDA Tools.' },
       { title: 'VLSI Layout Design', category: 'asic', bonuses: [], description: 'VLSI Layout Design with Chip Crafts.' }
     ],
-    '24VL045': [ // Suman
+    'suman': [
       { title: 'Cadence ASIC Design', category: 'asic', bonuses: [], description: 'ASIC Design project during 15-day Cadence Workshop.' }
     ],
-    '24VL003': [ // Anand K
+    'anand k': [
       { title: 'RTL-to-Gate-Level Synthesis Flow', category: 'rtl', bonuses: ['simulation'], description: 'RTL translation, optimization, and technology mapping flow.' },
       { title: 'Static Timing Analysis', category: 'verification', bonuses: ['documentation'], description: 'Setup time, hold time, timing constraints, and timing violation analysis.' }
     ],
-    '24VL051': [ // Udhaya R
+    'udhaya r': [
       { title: 'DDR Controller', category: 'rtl-to-gdsii', bonuses: ['simulation'], description: 'DDR Memory Controller implemented through RTL-to-GDSII flow using Synopsys.' },
       { title: 'Mini RISC-V Processor', category: 'rtl', bonuses: ['simulation'], description: 'Mini RISC-V Processor Core design.' }
     ],
-    '24VL049': [ // Tharum R.M
+    'tharum r.m': [
       { title: 'NoC Router', category: 'rtl', bonuses: ['simulation'], description: 'Network-on-Chip Router design.' },
       { title: 'AMBA APB Controller', category: 'rtl', bonuses: ['simulation'], description: 'AMBA APB Bus Protocol Controller.' },
       { title: 'Systolic AI Accelerator', category: 'asic', bonuses: ['simulation'], description: 'AI Accelerator / Matrix Multiplication Processing Unit using systolic-array architecture.' },
       { title: 'Automotive ADAS Processing Unit', category: 'asic', bonuses: [], description: 'Automotive Advanced Driver Assistance System Processing Unit.' }
     ],
-    '24VL048': [ // Tharun R
+    'tharun r': [
       { title: 'Real-time Synopsys VLSI Architectures', category: 'rtl-to-gdsii', bonuses: ['simulation', 'presentation'], description: '3 real-time VLSI projects using Synopsys EDA tools.' },
       { title: 'Digital FPGA Hardware', category: 'fpga', bonuses: ['working-demo'], description: 'Digital Hardware Implementation using Altera (Intel) FPGAs.' }
     ],
-    '24VL014': [ // Kamalesh VK
+    'kamalesh vk': [
       { title: 'IoT & Embedded VLSI RTL Subsystems', category: 'hardware', bonuses: [], description: 'IoT and Embedded VLSI RTL Subsystems development.' }
     ],
-    '24VL008': [ // Gokul P
+    'gokul p': [
       { title: 'AI Attendance Monitoring System', category: 'software', bonuses: ['working-demo', 'github'], description: 'Designed and deployed a web-based attendance management system with real-time tracking.' },
       { title: 'Money Management System', category: 'software', bonuses: ['working-demo', 'github'], description: 'Web application for expense tracking, budget planning, and monthly financial reports.' },
       { title: 'SIET VLSI Department Portal', category: 'software', bonuses: ['working-demo', 'github'], description: 'Built the VLSI Department website with student profiles, leaderboard, and gallery.' }
     ],
 
     // ---- New 18 students ----
-    '24VL036': [ // SANKAMES VS
+    'sankames vs': [
       { title: 'Digital Clock Simulation', category: 'basic', bonuses: ['simulation'], description: 'Designed and developed a digital clock system displaying hours, minutes, and seconds accurately.' }
     ],
-    '24VL029': [ // V T RAGHUL VASUN
+    'v t raghul vasun': [
       { title: '8-bit ALU', category: 'rtl', bonuses: ['simulation'], description: 'Design an 8-bit Arithmetic Logic Unit capable of performing arithmetic and logical operations using synthesizable RTL.' },
       { title: 'Booth Multiplier', category: 'rtl', bonuses: ['simulation'], description: 'Design a signed Booth Multiplier for efficient binary multiplication.' },
       { title: 'TCAM', category: 'rtl', bonuses: ['simulation'], description: 'Ternary Content-Addressable Memory for parallel pattern matching.' }
     ],
-    '24VL016': [ // Kavya M — no projects listed
+    'kavya m': [
     ],
-    '24VL043': [ // Subhashini N
+    'subhashini n': [
       { title: 'Low-Power Edge-AI Safety Monitoring SoC', category: 'rtl-to-gdsii', bonuses: ['simulation'], description: 'RTL-to-GDSII Implementation of a Low-Power Edge-AI Safety Monitoring SoC for Real-Time Emergency Detection Using Synopsys ASIC Flow.' },
       { title: 'Edge-AI SoC for ADAS', category: 'asic', bonuses: [], description: 'Design and FPGA/ASIC Implementation of an Edge-AI SoC for Advanced Driver Assistance Systems (Group Project).' }
     ],
-    '24VL052': [ // Varsha V R
+    'varsha v r': [
       { title: 'Adaptive Dynamic-Precision Sparse Neural Network Accelerator', category: 'rtl-to-gdsii', bonuses: ['simulation'], description: 'Designed a neural network accelerator utilizing dynamic precision scaling and sparsity techniques. Developed using Verilog HDL and the Synopsys RTL-to-GDSII ASIC design flow.' },
       { title: 'AMBA AXI4-Lite Master and Slave Interface', category: 'rtl-to-gdsii', bonuses: ['simulation'], description: 'Designed AMBA AXI4-Lite compliant Master and Slave interface. Synthesized through the Synopsys RTL-to-GDSII ASIC flow.' },
       { title: 'SPI Protocol Controller', category: 'silicon', bonuses: ['simulation', 'working-demo'], description: 'SPI controller using Verilog HDL. Completed ASIC implementation using the Tiny Tapeout flow, generating final GDSII chip layout and 3D visualization.' }
     ],
-    '24VL053': [ // Winston Churchil
+    'winston churchil': [
       { title: '3D Portfolio Website', category: 'software', bonuses: ['working-demo'], description: '3D interactive portfolio website.' },
       { title: 'AI Career Roadmap Generator', category: 'software', bonuses: ['working-demo'], description: 'AI-powered career roadmap generator web application.' }
     ],
-    '24VL025': [ // K.R.Nitin
+    'k.r.nitin': [
       { title: '16-bit Multiply-Accumulate Unit', category: 'rtl-to-gdsii', bonuses: ['simulation', 'documentation'], description: 'RTL-to-GDSII Design and Physical Implementation of a 16-bit MAC unit using Synopsys ASIC Design Flow with Moore FSM control.' }
     ],
-    '24VL033': [ // Sakthishree D
+    'sakthishree d': [
       { title: '32-bit RISC-V Adaptive Precision Accelerator', category: 'asic', bonuses: ['simulation'], description: '32-bit RISC V BASED ADAPTIVE PRECISION ACCELERATOR using AMBA APB protocol.' },
       { title: 'Multi-GPU Architecture', category: 'asic', bonuses: ['simulation'], description: 'Multi-GPU Architecture with Predictive Task Migration and Fault-Tolerant Resource Management.' },
       { title: 'BIST Controller for ALU', category: 'verification', bonuses: ['simulation'], description: 'Build In Self Test Controller For ALU Verification.' },
       { title: 'Communication Protocols', category: 'rtl', bonuses: ['simulation'], description: 'UART, SPI, MAC, BOOTH MULTIPLIER communication protocols implementation.' }
     ],
-    '24VL017': [ // Kiruthika S
+    'kiruthika s': [
       { title: 'Fault Controller for Medical Devices', category: 'rtl', bonuses: ['simulation'], description: 'Safety-oriented controller to monitor critical system signals, detect faults, and automatically switch to safe state.' },
       { title: 'Booth Multiplier', category: 'rtl', bonuses: ['simulation'], description: 'RTL-based Booth multiplier for efficient signed binary multiplication.' },
       { title: 'SPI Protocol', category: 'rtl', bonuses: ['simulation'], description: 'RTL-based SPI communication interface for serial data transfer.' },
@@ -134,28 +134,28 @@
       { title: 'Timetable Management System (Tcl)', category: 'software', bonuses: ['working-demo'], description: 'Automated timetable management system using Tcl/Tk.' },
       { title: 'Attendance Management System (Perl)', category: 'software', bonuses: ['working-demo'], description: 'Automated attendance management system using Perl.' }
     ],
-    '24VL032': [ // Roobashri S
+    'roobashri s': [
       { title: 'Reconfigurable Neuromorphic Processor', category: 'rtl-to-gdsii', bonuses: ['simulation'], description: 'Reconfigurable neuromorphic processor with dynamic synaptic adaptation for energy-efficient edge AI using Synopsys.' },
       { title: 'STM32F446RE PCB Controller Board', category: 'hardware', bonuses: ['working-demo', 'documentation'], description: 'Custom multilayer STM32F446RE controller PCB for 6-Axis Robotic Arm with CAN communication.' },
       { title: 'Smart 3S BMS with AI-Based SOC/SOH Estimation', category: 'hardware', bonuses: ['simulation'], description: 'Dual-MCU PCB for 3S Li-ion battery management with AI-based state estimation (Ongoing).' }
     ],
-    '24VL040': [ // Soorya Velaa P
+    'soorya velaa p': [
       { title: 'Booth Multiplier', category: 'rtl', bonuses: ['simulation'], description: 'Signed binary multiplication using Booth\'s algorithm.' },
       { title: 'Pipeline Design', category: 'rtl', bonuses: ['simulation'], description: 'Pipelined digital architecture design.' },
       { title: 'SPI Protocol', category: 'rtl', bonuses: ['simulation'], description: 'SPI serial communication interface.' },
       { title: 'MFCC Accelerator', category: 'asic', bonuses: ['simulation'], description: 'Mel-Frequency Cepstral Coefficients hardware accelerator.' }
     ],
-    '24VL041': [ // SRI VATSAN P
+    'sri vatsan p': [
       { title: 'AXI4-Stream Sparse Matrix Acceleration Engine', category: 'asic', bonuses: ['simulation'], description: 'Configurable Dynamic Memory-Aware AXI4-Stream Sparse Matrix Acceleration Engine with dual-bank ping-pong memory and adaptive clock gating.' },
       { title: 'DDR SDRAM Controller', category: 'rtl-to-gdsii', bonuses: ['simulation'], description: 'DDR SDRAM controller using Verilog HDL and Synopsys ASIC design tools.' },
       { title: 'AXI Bus Protocol Controller', category: 'rtl', bonuses: ['simulation'], description: 'AXI-based bus protocol controller using SystemVerilog.' },
       { title: 'QoS-Aware AXI4 Interconnect', category: 'rtl', bonuses: ['simulation'], description: 'QoS-aware AXI4 interconnect with adaptive arbitration using SystemVerilog.' },
       { title: 'ECC-Based Self-Scrubbing SRAM Memory IP', category: 'asic', bonuses: ['simulation'], description: 'SRAM memory IP with ECC and self-scrubbing functionality.' }
     ],
-    '24VL026': [ // Pratheep D
+    'pratheep d': [
       { title: 'Sparse Multi-Head Attention Accelerator for LLM Inference', category: 'rtl-to-gdsii', bonuses: ['simulation', 'documentation'], description: 'RTL-to-GDSII Implementation of a Sparse Multi-Head Attention Accelerator for Transformer-Based Large Language Model Inference Using Cadence Flow.' }
     ],
-    '24VL028': [ // PUGAZHENDHI S
+    'pugazhendhi s': [
       { title: 'RISC-V Processor with INT8 Systolic Array Accelerator', category: 'asic', bonuses: ['simulation'], description: 'RISC-V Processor with External Memory and INT8 Systolic Array Accelerator for Edge AI.' },
       { title: 'PPA Optimization of Hardware Accelerator', category: 'asic', bonuses: ['simulation', 'documentation'], description: 'PPA Optimization of a Hardware Accelerator for Real-Time Agricultural Drone Image Analysis.' },
       { title: 'Low Power 8-bit ALU', category: 'rtl-to-gdsii', bonuses: ['simulation'], description: 'Low Power 8-bit ALU – RTL-to-GDSII, 90nm process.' },
@@ -163,23 +163,23 @@
       { title: 'Traffic Flow Controller', category: 'rtl', bonuses: ['simulation'], description: 'Traffic Flow Controller using FSM / Digital Design.' },
       { title: '8:1 Multiplexer Layout', category: 'asic', bonuses: [], description: '8:1 Multiplexer - Schematic to Layout in CMOS / VLSI Layout.' }
     ],
-    '24VL021': [ // Mohammed Ayman M
+    'mohammed ayman m': [
       { title: 'SEMIRESTORE-AI', category: 'software', bonuses: ['simulation', 'documentation'], description: 'AI-Based Restoration of Degraded Images for Semiconductor Inspection using Computer Vision and Deep Learning.' }
     ],
-    '24VL050': [ // S. Thirumurugan
+    's. thirumurugan': [
       { title: 'RISC-V CPU', category: 'rtl', bonuses: ['simulation'], description: 'Custom RISC-V processor RTL design with instruction execution and control logic.' },
       { title: 'Secure VPU', category: 'asic', bonuses: ['simulation'], description: 'Secure Vector Processing Unit with hardware security mechanisms.' },
       { title: '8-bit ALU', category: 'rtl', bonuses: ['simulation'], description: '8-bit Arithmetic Logic Unit with arithmetic and bitwise logic operations.' },
       { title: 'Booth Multiplier', category: 'rtl', bonuses: ['simulation'], description: 'Signed Booth Multiplier for efficient binary multiplication.' },
       { title: 'TCAM', category: 'rtl', bonuses: ['simulation'], description: 'Ternary Content-Addressable Memory for parallel pattern matching.' }
     ],
-    '24VL034': [ // SANJEEV GH
+    'sanjeev gh': [
       { title: 'BatterySense X – ASIC', category: 'rtl-to-gdsii', bonuses: ['simulation', 'documentation', 'presentation'], description: 'Intelligent Battery Sensing & Health Monitoring ASIC. 91.94% core utilization, zero DRC violations, 0.0000 WNS after CTS optimization.' },
       { title: 'ECG Signal Power-Line Noise Removal', category: 'basic', bonuses: ['simulation'], description: 'MATLAB-based DSP project using notch filter.' },
       { title: 'SpaceEdgeX', category: 'basic', bonuses: ['documentation'], description: 'AI, edge computing, hardware acceleration, and space-based computing concept.' },
       { title: 'Embedded Systems Projects', category: 'hardware', bonuses: ['working-demo'], description: 'Multiple projects using Arduino, sensors, relays, and motors.' }
     ],
-    '24VL037': [ // Santhosh Kumar S
+    'santhosh kumar s': [
       { title: 'EventLens AI – Selfie-Based Event Photo Finder', category: 'software', bonuses: ['working-demo', 'documentation'], description: 'AI-powered platform using FaceNet and facial recognition. Built with Next.js, FastAPI, PyTorch and OpenCV.' },
       { title: 'SGPA / CGPA Calculator Web App', category: 'software', bonuses: ['working-demo'], description: 'Student-focused web app for SGPA/CGPA calculation with login and saved history.' },
       { title: 'Health Buddy – AI-Driven Chatbot', category: 'software', bonuses: ['working-demo', 'publication'], description: 'AI chatbot for public health and disease awareness. Presented as paper at ICIES 2025.' }
@@ -333,8 +333,8 @@
      5. FULL STUDENT SCORING
      ========================================================================= */
   function computeStudentScore(student) {
-    var rollNo = student.registerNo || student.rollno || '';
-    var projects = STUDENT_PROJECTS[rollNo] || [];
+    var studentKey = String(student.name || '').trim().toLowerCase();
+    var projects = STUDENT_PROJECTS[studentKey] || [];
     var projectScores = [];
     var totalProjectPoints = 0;
     var advancedProjectCount = 0;

@@ -169,6 +169,7 @@ function renderListView(currentDate) {
       var isPast = end < today;
       var typeColor = TYPE_COLORS[e.type] || 'var(--clr-accent)';
       var typeIcon = TYPE_ICONS[e.type] || 'fa-calendar-days';
+      var eventHref = safeExternalUrl(e.link);
       return [
         '<article class="surface-card p-4 hover:shadow-lg transition-shadow" style="border:1px solid var(--clr-border);' + (isPast ? 'opacity:0.6' : '') + '" data-aos="fade-up" data-aos-delay="' + (idx * 50) + '">',
           '<div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">',
@@ -179,7 +180,7 @@ function renderListView(currentDate) {
               '<div>',
                 '<div class="flex items-center gap-2 mb-1">',
                   '<h3 class="font-display font-semibold" style="color:var(--clr-text-primary)">' + escapeHtml(e.title) + '</h3>',
-                  '<span class="badge badge-primary text-xs">' + e.type.charAt(0).toUpperCase() + e.type.slice(1) + '</span>',
+                  '<span class="badge badge-primary text-xs">' + escapeHtml(e.type) + '</span>',
                   (isPast ? '<span class="badge badge-cyan text-xs">Past</span>' : ''),
                 '</div>',
                 '<p class="text-sm" style="color:var(--clr-text-secondary)">' + escapeHtml(e.desc) + '</p>',
@@ -189,7 +190,7 @@ function renderListView(currentDate) {
                 '</div>',
               '</div>',
             '</div>',
-            (e.link && e.link !== '#' ? '<a href="' + escapeHtml(e.link) + '" target="_blank" rel="noopener" class="btn-secondary flex-shrink-0" style="white-space:nowrap">Details</a>' : '<span class="btn-secondary flex-shrink-0" style="white-space:nowrap;opacity:.5">Details</span>'),
+            (eventHref ? '<a href="' + escapeHtml(eventHref) + '" target="_blank" rel="noopener noreferrer" class="btn-secondary flex-shrink-0" style="white-space:nowrap">Details</a>' : '<span class="btn-secondary flex-shrink-0" style="white-space:nowrap;opacity:.5">Details</span>'),
           '</div>',
         '</article>'
       ].join('');
@@ -289,8 +290,19 @@ async function initCalendar() {
 
 document.addEventListener('DOMContentLoaded', initCalendar);
 
-function escapeHtml(v) {
-  var d = document.createElement('div');
-  d.textContent = v == null ? '' : String(v);
-  return d.innerHTML;
+function safeExternalUrl(value) {
+  var raw = String(value || '').trim();
+  if (!/^https?:\/\//i.test(raw) || /[\u0000-\u001f\u007f]/.test(raw)) return '';
+  try {
+    var parsed = new URL(raw);
+    return parsed.protocol === 'http:' || parsed.protocol === 'https:' ? parsed.href : '';
+  } catch (error) {
+    return '';
+  }
 }
+
+function escapeHtml(value) {
+    return (value == null ? '' : String(value)).replace(/[&<>"']/g, function (character) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[character];
+    });
+  }

@@ -3,51 +3,51 @@
 
 const API_CACHE_PREFIX = "vlsi_api_";
 const API_CACHE_TTL = 30 * 60 * 1000; // 30 minutes cache
+const PUBLIC_STUDENT_FIELDS = 'id,name,programme,year,batch,achievementTitle,achievement,description,projectsOverview,image,photoUrl,linkedin,github';
 
-/**
- * Fetch all department data (HOD + Faculty + Students).
- * This is the main entry point used by page scripts.
- * @returns {Promise<Object>}
- */
+function storeDepartmentCache(cacheKey, data) {
+    try {
+        const payload = JSON.stringify({ data: withDefaultStudentFields(data), timestamp: Date.now() });
+        localStorage.setItem(cacheKey, payload);
+        sessionStorage.setItem(cacheKey, payload);
+    } catch (e) {}
+}
+
 async function fetchDepartmentData() {
     const cacheKey = API_CACHE_PREFIX + "all";
 
-    // 1. Instantly check localStorage or sessionStorage for zero-latency load
     try {
         const raw = localStorage.getItem(cacheKey) || sessionStorage.getItem(cacheKey);
         if (raw) {
             const parsed = JSON.parse(raw);
             if (parsed && parsed.data && Date.now() - parsed.timestamp < API_CACHE_TTL) {
+                const safeData = withDefaultStudentFields(parsed.data);
+                // Replace legacy cached student records that may contain direct identifiers.
+                storeDepartmentCache(cacheKey, safeData);
                 revalidateSupabaseDataInBackground(cacheKey);
-                return withDefaultStudentFields(parsed.data);
+                return safeData;
             }
         }
     } catch (e) {}
 
-    // 2. Fetch fresh data from Supabase if available, otherwise use fallback
     let data = getFallbackData();
     if (typeof window !== 'undefined' && window.supabaseClient) {
         try {
             const [studentsRes, facultyRes, hodRes] = await Promise.all([
-                window.supabaseClient.from('students').select('*'),
+                window.supabaseClient.from('public_students').select(PUBLIC_STUDENT_FIELDS),
                 window.supabaseClient.from('faculty').select('*'),
                 window.supabaseClient.from('hod').select('*')
             ]);
-            
+
             if (!studentsRes.error && !facultyRes.error && !hodRes.error) {
                 data = {
                     students: studentsRes.data || [],
                     faculty: facultyRes.data || [],
                     hod: (hodRes.data && hodRes.data.length > 0) ? hodRes.data[0] : getFallbackData().hod
                 };
-                
-                try {
-                    const payload = JSON.stringify({ data: data, timestamp: Date.now() });
-                    localStorage.setItem(cacheKey, payload);
-                    sessionStorage.setItem(cacheKey, payload);
-                } catch (e) {}
+                storeDepartmentCache(cacheKey, data);
             }
-        } catch(e) {
+        } catch (e) {
             console.warn("Supabase fetch failed, using fallback:", e);
         }
     }
@@ -59,58 +59,51 @@ async function revalidateSupabaseDataInBackground(cacheKey) {
     if (typeof window === 'undefined' || !window.supabaseClient) return;
     try {
         const [studentsRes, facultyRes, hodRes] = await Promise.all([
-            window.supabaseClient.from('students').select('*'),
+            window.supabaseClient.from('public_students').select(PUBLIC_STUDENT_FIELDS),
             window.supabaseClient.from('faculty').select('*'),
             window.supabaseClient.from('hod').select('*')
         ]);
-        
+
         if (!studentsRes.error && !facultyRes.error && !hodRes.error) {
-            const data = {
+            storeDepartmentCache(cacheKey, {
                 students: studentsRes.data || [],
                 faculty: facultyRes.data || [],
                 hod: (hodRes.data && hodRes.data.length > 0) ? hodRes.data[0] : getFallbackData().hod
-            };
-            const payload = JSON.stringify({ data: data, timestamp: Date.now() });
-            localStorage.setItem(cacheKey, payload);
-            sessionStorage.setItem(cacheKey, payload);
+            });
         }
-    } catch(e) {}
+    } catch (e) {}
 }
 
 function withDefaultStudentFields(data) {
     const source = data || getFallbackData();
-    const studentsList = (Array.isArray(source.students) && source.students.length > 0)
+    const studentsList = Array.isArray(source.students) && source.students.length > 0
         ? source.students
         : getFallbackData().students;
 
     return Object.assign({}, source, {
         students: studentsList.map(student => {
-            const registerNo = student.registerNo || student.rollno || "";
-            const image = student.image || student.photoUrl || "";
-            const linkedin = student.linkedin || student.linkedin_url || student.linkedinUrl || "";
-            const github = student.github || student.github_url || student.githubUrl || "";
-            const projectsOverview = student.projectsOverview || student.projects_overview || student.projects || student.project || "";
-
-            return Object.assign({
-                achievementTitle: student.achievementTitle || "Achievement",
-                achievement: "",
-                description: "",
-                projectsOverview: projectsOverview,
-                universityNo: student.universityNo || "",
-                programme: student.programme || "",
-                linkedin: linkedin,
-                github: github
-            }, student, {
-                projectsOverview: projectsOverview,
-                linkedin: linkedin,
-                github: github,
-                registerNo: registerNo,
-                rollno: student.rollno || registerNo,
-                image: image,
-                photoUrl: student.photoUrl || image,
-                batch: student.batch || getBatchFromRegisterNo(registerNo),
-                yearToken: getStudentYearToken(student.year)
-            });
+            const row = student || {};
+            const name = String(row.name || '').trim();
+            const image = row.image || row.photoUrl || row.photo_url || '';
+            const projectsOverview = row.projectsOverview || row.projects_overview || row.projects || row.project || '';
+            const linkedin = row.linkedin || row.linkedin_url || row.linkedinUrl || '';
+            const github = row.github || row.github_url || row.githubUrl || '';
+            return {
+                id: name,
+                name,
+                programme: row.programme || '',
+                year: row.year || '',
+                batch: row.batch || '',
+                achievementTitle: row.achievementTitle || row.achievement_title || 'Achievement',
+                achievement: row.achievement || '',
+                description: row.description || '',
+                projectsOverview,
+                image,
+                photoUrl: row.photoUrl || row.photo_url || image,
+                linkedin,
+                github,
+                yearToken: getStudentYearToken(row.year)
+            };
         })
     });
 }
@@ -124,10 +117,6 @@ function getStudentYearToken(year) {
     return "UNKNOWN";
 }
 
-function getBatchFromRegisterNo(registerNo) {
-    const match = String(registerNo || "").match(/^(\d{2})/);
-    return match ? "20" + match[1] + " - 20" + (parseInt(match[1], 10) + 4) : "2024 - 2028";
-}
 
 /**
  * Helper to resolve asset paths for images (supporting both Supabase & local assets)
@@ -136,9 +125,17 @@ function resolveAssetPath(src, bucket) {
     if (typeof window.resolveSupabaseImageUrl === 'function') {
         return window.resolveSupabaseImageUrl(src, bucket || (typeof SUPABASE_BUCKETS !== 'undefined' ? SUPABASE_BUCKETS.faculty : 'faculty'), src);
     }
-    const value = String(src || '');
-    if (!value || /^(https?:|data:|\/|\.\.?\/)/i.test(value)) return value;
+    const value = String(src || '').trim();
+    if (!value || /[\u0000-\u001f\u007f]/.test(value)) return '';
+    if (/^https?:\/\//i.test(value)) {
+        try {
+            const url = new URL(value);
+            return url.protocol === 'http:' || url.protocol === 'https:' ? url.href : '';
+        } catch (e) { return ''; }
+    }
+    if (/^(?:[a-z][a-z0-9+.-]*:|\/\/)/i.test(value)) return '';
     const isInsidePages = typeof window !== 'undefined' && window.location && window.location.pathname.replace(/\\/g, '/').includes('/pages/');
+    if (value.indexOf('/') === 0) return value;
     return value.indexOf('assets/') === 0 ? (isInsidePages ? '../' : '') + value : value;
 }
 
@@ -169,13 +166,9 @@ function getFallbackData() {
             {
                 id: 1,
                 name: "Harini D",
-                registerNo: "24VL009",
-                rollno: "24VL009",
-                universityNo: "714024169009",
                 programme: "B.E. EE (VDT)",
                 year: "III Year",
                 batch: "2024 - 2028",
-                email: "harini6898@gmail.com",
                 achievementTitle: "Industrial Training & Workshop Certification in VLSI",
                 achievement: "Designed and implemented a High-Speed AMBA AXI4 Interconnect for SoC applications as an individual academic project, covering RTL design in Verilog HDL and the complete ASIC physical design flow  -  synthesis, placement, clock tree synthesis, routing, and timing analysis  -  using Synopsys tools including VCS, Design Compiler, IC Compiler II, PrimeTime, and Verdi, with a focus on optimizing area, timing, and power.\n\nCompleted 4 technical internships/trainings covering:\n- VLSI Layout Design and Digital & Hardware Implementation with Altera (Intel) FPGA at Chip Craft\n- PCB design and fabrication practices at Enthutech\n- Verilog HDL/SystemVerilog hands-on training at SM AI Mojo Tech\n- Circuit design and simulation using Proteus at Manfree\n\nAlso participated in a seminar on:\n\"Trends Towards 6G and AI Integration\"\n\nThis reflects continuous engagement with emerging technologies alongside core VLSI design expertise.",
                 projectsOverview: "High-Speed AMBA AXI4 Interconnect for SoC; FPGA Implementation",
@@ -188,13 +181,9 @@ function getFallbackData() {
             {
                 id: 2,
                 name: "Tharun M",
-                registerNo: "24VL047",
-                rollno: "24VL047",
-                universityNo: "",
                 programme: "B.E. VLSI Design and Technology",
                 year: "III Year",
                 batch: "2024 - 2028",
-                email: "selant473@gmail.com",
                 achievementTitle: "Industrial Training, Internships & VLSI Projects",
                 achievement: "- Completed VLSI Layout Design Internship and gained practical semiconductor design experience.\n- Completed Verilog HDL & SystemVerilog Internship with RTL design exposure.\n- Completed PCB Design Internship using KiCad.\n- Completed Embedded Systems Internship with Arduino and microcontroller applications.\n- Developed technical projects including:\n  - 16-bit RISC Processor\n  - UART\n  - 6T SRAM Cell",
                 projectsOverview: "16-bit RISC Processor, UART Controller, 6T SRAM Cell",
@@ -207,13 +196,9 @@ function getFallbackData() {
             {
                 id: 3,
                 name: "Nithikkannan J S",
-                registerNo: "24VL024",
-                rollno: "24VL024",
-                universityNo: "714024169024",
                 programme: "B.E. VLSI Design and Technology",
                 year: "III Year",
                 batch: "2024 - 2028",
-                email: "nithikkannan7@gmail.com",
                 achievementTitle: "Industrial Training & Workshop Certifications in VLSI",
                 achievement: "- Participated in the VLSI Test Workshop at PSG College of Technology organized by IEEE Computer Society TTTC.\n- Completed Custom IC Design Mastery using Cadence EDA Tools training by Abhiyantha / Entuple Technologies.\n- Completed an Internship Program in VLSI Layout Design with Chip Crafts.",
                 projectsOverview: "Custom IC Design using Cadence EDA Tools; VLSI Layout",
@@ -226,13 +211,9 @@ function getFallbackData() {
             {
                 id: 4,
                 name: "Suman",
-                registerNo: "24VL045",
-                rollno: "24VL045",
-                universityNo: "",
                 programme: "B.E. VLSI Design and Technology",
                 year: "III Year",
                 batch: "2024 - 2028",
-                email: "suman.127418@gmail.com",
                 achievementTitle: "Technical Workshops & Hackathons",
                 achievement: "- Attended a 15-day Cadence Workshop conducted by Entuple.\n- Participated in a 24-hour Hackathon at RIT Chennai.\n- Participated in a Hackathon at KPR Institute of Engineering and Technology.",
                 projectsOverview: "Cadence ASIC Design, 24-hour Hackathon IoT Prototype",
@@ -245,13 +226,9 @@ function getFallbackData() {
             {
                 id: 5,
                 name: "Anand K",
-                registerNo: "24VL003",
-                rollno: "24VL003",
-                universityNo: "",
                 programme: "B.E. VLSI Design and Technology",
                 year: "III Year",
                 batch: "2024 - 2028",
-                email: "ffgb64545@gmail.com",
                 achievementTitle: "VLSI Engineering, Technical Training & Industry Exposure",
                 achievement: "Developed a strong foundation in VLSI Design, Digital Electronics, CMOS fundamentals, and ASIC design flow.\n\nGained hands-on exposure to Verilog and SystemVerilog, including combinational and sequential RTL design and testbench development.\n\nStudied and practiced the RTL-to-Gate-Level Synthesis flow, including RTL translation, optimization, and technology mapping.\n\nGained knowledge of Static Timing Analysis (STA), including setup time, hold time, timing constraints, and timing violations.\n\nAcquired practical exposure to Cadence EDA tools and semiconductor design workflows.\n\nWorked with MATLAB for signal processing concepts including convolution, FFT, frequency response, and signal analysis.\n\nGained experience with Proteus simulation for digital and embedded-system-based circuit implementations.\n\nCompleted multiple technical internships/training programs with:\n- Enthu Tech\n- Manfree\n- Career Ladders\n- SM AI MOJO TECH\n- ChipCrafts\n\nContinuously developing skills in RTL Design, Verification, Synthesis, STA, SystemVerilog, and EDA tools with the goal of pursuing a career in the semiconductor/VLSI industry.",
                 projectsOverview: "RTL-to-GDSII ASIC Flow, SystemVerilog Verification, Static Timing Analysis",
@@ -264,13 +241,9 @@ function getFallbackData() {
             {
                 id: 6,
                 name: "Udhaya R",
-                registerNo: "24VL051",
-                rollno: "24VL051",
-                universityNo: "714024169051",
                 programme: "B.E. VLSI Design and Technology",
                 year: "III Year",
                 batch: "2024 - 2028",
-                email: "u66991302@gmail.com",
                 achievementTitle: "Synopsys VLSI Training & RTL-to-GDSII Project",
                 achievement: "Completed industrial Synopsys training on the RTL-to-GDSII design flow and gained hands-on experience in RTL design, simulation, synthesis, and physical design concepts.\n\nWorked on VLSI projects including:\n- DDR Controller\n- Mini RISC-V Processor",
                 projectsOverview: "DDR Memory Controller, Mini RISC-V Processor Core",
@@ -283,13 +256,9 @@ function getFallbackData() {
             {
                 id: 7,
                 name: "Tharum R.M",
-                registerNo: "24VL049",
-                rollno: "24VL049",
-                universityNo: "",
                 programme: "B.E. VLSI Design and Technology",
                 year: "III Year",
                 batch: "2024 - 2028",
-                email: "tharunrm1756@gmail.com",
                 achievementTitle: "VLSI, Semiconductor Training, RTL-to-GDS & Technical Projects",
                 achievement: "Completed 6 technical internships, workshops and industrial training programs in VLSI, semiconductor technology, PCB design, embedded systems and RTL-to-GDS design.\n\nCompleted Code to Chip  -  RTL to GDS Flow Using Synopsys Tools industry-oriented workshop conducted by VLSIMINDS, Bangalore.\n\nCompleted VLSI Layout Design Internship at Chip Crafts, gaining practical exposure to VLSI layout methodologies.\n\nCompleted a 2-week PCB Design and Fabrication Internship through Enthu-EdTech.\n\nCompleted Semiconductor & Manufacturing Workshop conducted by Ethical Edufabrica in association with Mechanica, IIT Madras.\n\nCompleted Embedded Programming for Arduino GPIOs training at Embuzz Technologies.\n\nParticipated in a PCB Design and Fabrication Workshop at KPR Institute of Engineering and Technology.\n\nSuccessfully developed multiple RTL/VLSI projects using Verilog, SystemVerilog and Synopsys EDA tools, including:\n- NoC Router\n- AMBA APB Controller\n- Automotive ADAS Processing Unit\n\nWorked on real-time VLSI design and verification projects covering RTL simulation, synthesis, timing analysis and physical design concepts.\n\nDeveloped an AI Accelerator / Matrix Multiplication Processing Unit using a systolic-array architecture as an advanced VLSI project.\n\nGained hands-on exposure to:\n- Synopsys Design Compiler\n- ICC2\n- VCS\n- Verdi\n\nthrough academic and project-based work.",
                 projectsOverview: "NoC Router, AMBA APB Controller, Systolic AI Accelerator",
@@ -302,13 +271,9 @@ function getFallbackData() {
             {
                 id: 8,
                 name: "Tharun R",
-                registerNo: "24VL048",
-                rollno: "24VL048",
-                universityNo: "",
                 programme: "B.E. VLSI Design and Technology",
                 year: "III Year",
                 batch: "2024 - 2028",
-                email: "rajeshtharun2318@gmail.com",
                 achievementTitle: "VLSI Internships, Synopsys Workshops & Technical Projects",
                 achievement: "Attended 6 technical internships in areas such as VLSI Design, Embedded Systems, PCB Design, and software technologies, gaining practical industry exposure.\n\nParticipated in a 2-day offline workshop at IIT Madras, a 5-day hands-on training program on Synopsys EDA tools, and a 2-day workshop on Digital Hardware Implementation using Altera (Intel) FPGAs.\n\nServed as a Student Presenter at the PCB LAB Tech Park Inaugural Event, showcasing technical knowledge and project skills.\n\nCompleted 3 real-time VLSI projects using Synopsys tools and currently working on 4 additional projects to enhance design and verification expertise.\n\nAdditionally, completed 8 examinations under Madras Prachar Sabha for Hindi proficiency, demonstrating dedication towards language learning and continuous skill development.",
                 projectsOverview: "Real-time Synopsys VLSI Architectures, Digital FPGA Hardware",
@@ -321,13 +286,9 @@ function getFallbackData() {
             {
                 id: 9,
                 name: "Kamalesh VK",
-                registerNo: "24VL014",
-                rollno: "24VL014",
-                universityNo: "",
                 programme: "B.E. VLSI Design and Technology",
                 year: "III Year",
                 batch: "2024 - 2028",
-                email: "vkkamalesh1@gmail.com",
                 achievementTitle: "Technical Internships & Industry-Oriented Training",
                 achievement: "Successfully completed technical internships and training programs at:\n- Manfree Technologies  -  Technical Internship\n- Career Ladder  -  Technical Training Program\n- AI Mojo Tech  -  Artificial Intelligence Training\n- Chip Craft  -  VLSI & Semiconductor Design Training\n\nGained practical exposure to:\n- Embedded Systems\n- IoT\n- Artificial Intelligence\n- VLSI Design\n- RTL Coding\n- Semiconductor Technologies\n\nDeveloped hands-on experience through industry-oriented projects, technical workshops, hardware and software implementation, and real-time problem-solving activities.\n\nThese internships strengthened programming, digital design, analytical thinking, teamwork, and professional skills while providing valuable exposure to current industrial practices and emerging technologies.",
                 projectsOverview: "IoT & Embedded VLSI RTL Subsystems, AI Mojo Tech Hardware",
@@ -340,13 +301,9 @@ function getFallbackData() {
             {
                 id: 10,
                 name: "Gokul P",
-                registerNo: "24VL008",
-                rollno: "24VL008",
-                universityNo: "",
                 programme: "B.E. VLSI Design and Technology",
                 year: "III Year",
                 batch: "2024 - 2028",
-                email: "psivam574@gmail.com",
                 achievementTitle: "AI Attendance & Money Management Systems, 6 Internships",
                 achievement: "1. Attendance Monitoring System - Developed AI Attendance Monitoring System\n2. Money Management System - Built Money Management System\n3. Internships - Completed 6 Industry Internships\n4. Technical Skills - Developed Strong VLSI & Software Skills",
                 projectsOverview: "AI Attendance System, Money Management System, SIET VLSI Portal",
@@ -359,13 +316,9 @@ function getFallbackData() {
             {
                 "id": 11,
                 "name": "SANKAMES VS",
-                "registerNo": "24VL036",
-                "rollno": "24VL036",
-                "universityNo": "",
                 "programme": "B.E. VLSI Design and Technology",
                 "year": "III Year",
                 "batch": "2024 - 2028",
-                "email": "nsankames@gmail.com",
                 "achievementTitle": "Project: Digital Clock Simulation",
                 "achievement": "Designed and developed a Digital Clock Simulation project that displays the current time in digital format using hours, minutes, and seconds. The clock continuously updates the time and demonstrates the working of digital time-display systems.\n\nObjectives:\n- To design and develop a simple digital clock system\n- To display hours, minutes, and seconds accurately\n- To understand the working of digital time-display systems\n- To learn how timing and counting operations are used in digital systems\n- To provide a simple and user-friendly digital clock simulation",
                 "projectsOverview": "Digital Clock Simulation",
@@ -378,13 +331,9 @@ function getFallbackData() {
             {
                 "id": 12,
                 "name": "V T RAGHUL VASUN",
-                "registerNo": "24VL029",
-                "rollno": "24VL029",
-                "universityNo": "714024169029",
                 "programme": "B.E. VLSI Design and Technology",
                 "year": "III Year",
                 "batch": "2024 - 2028",
-                "email": "vtraghulvasun@gmail.com",
                 "achievementTitle": "Internships, Training & Technical Programs",
                 "achievement": "Completed multiple technical internships and training programs:\n- Chip Crafts \u2013 VLSI Layout Internship\n- Career Ladder \u2013 Java Programming\n- ENTHU \u2013 Internship / Technical Training\n- Manfree \u2013 Internship / Technical Training\n- SM MOJO TECH \u2013 Internship / Technical Training\n\nWorkshops:\n- FPGA Altera Workshop \u2013 Chip Crafts\n- Synopsys EDA Tools Workshop\n- Cadence EDA Tools Workshop",
                 "projectsOverview": "8-bit ALU, Booth Multiplier, TCAM",
@@ -397,13 +346,9 @@ function getFallbackData() {
             {
                 "id": 13,
                 "name": "Kavya M",
-                "registerNo": "24VL016",
-                "rollno": "24VL016",
-                "universityNo": "714024169016",
                 "programme": "B.E. VLSI Design and Technology",
                 "year": "III Year",
                 "batch": "2024 - 2028",
-                "email": "kavyamanoharan2006@gmail.com",
                 "achievementTitle": "Hackathons, Workshops & Technical Events",
                 "achievement": "1. ROBOCHIPX \u2013 A 24-Hours Hackathon (AI / CHIP / ROBOTICS) at Rajalakshmi Institute of Technology, Chennai \u2013 July 9 & 10, 2026 (2 days)\n2. RISC-V Hands-on Training Workshop at IIT Madras \u2013 March 21 & 22, 2026 (2 days)\n3. ECE Paper Presentation at FIESTAA'26, KPR Institute of Engineering and Technology \u2013 February 20 & 21, 2026\n4. ECE Workshops at FIESTAA'26, KPR Institute of Engineering and Technology \u2013 February 20 & 21, 2026\n5. Custom IC Design Mastery using Cadence EDA Tools at Sri Shakthi Institute (Abhiyantha / Entuple Technologies) \u2013 December 11\u201323, 2025 (13 days)\n6. VLSI Test Workshop at PSG College of Technology (IEEE TTTC) \u2013 October 10\u201312, 2025 (3 days)\n7. VLSI DAY 2025 at PSG College of Technology (VLSI Society of India) \u2013 September 20, 2025\n8. VDAT 30th Conference Fellowship at Jaypee Institute of Information Technology \u2013 August 20\u201322, 2025 (3 days)\n9. On-Campus Training: Chip Design using Cadence Tool Chain (RTL to GDSII) \u2013 July 16\u201322, 2026 (7 days)\n10. Workshop Fiasta at KPR Institute of Engineering and Technology \u2013 February 20 & 21",
                 "projectsOverview": "",
@@ -416,13 +361,9 @@ function getFallbackData() {
             {
                 "id": 14,
                 "name": "Subhashini N",
-                "registerNo": "24VL043",
-                "rollno": "24VL043",
-                "universityNo": "",
                 "programme": "B.E. VLSI Design and Technology",
                 "year": "III Year",
                 "batch": "2024 - 2028",
-                "email": "subhashininallasamy@gmail.com",
                 "achievementTitle": "Workshops & Internships",
                 "achievement": "Workshops:\n- PCB Design and Fabrication at KPR Institute of Engineering and Technology \u2013 March 14, 2025 (1 day)\n- VLSI TEST Workshop at PSG College of Technology \u2013 October 10\u201312, 2025 (3 days)\n- VLSI Design Flow from RTL to GDS at Chipxpert Technologies \u2013 November 1\u20132, 2025 (2 days)\n- Code to Chip: RTL to GDS flow using Synopsys tools at VLSI Minds \u2013 February 16\u201320, 2026 (5 days)\n- Digital Hardware Design and Implementation with Altera (Intel) FPGAs at Chipcrafts \u2013 November 18\u201319, 2025 (2 days)\n\nInternships:\n- Chip Crafts \u2013 VLSI Layout Design (September 3\u201310, 2025)\n- Career Ladder \u2013 Programming Paradigm using Java (September 11\u201316, 2025)\n- EnthuTech \u2013 PCB Designing",
                 "projectsOverview": "RTL-to-GDSII Implementation of a Low-Power Edge-AI Safety Monitoring SoC, Edge-AI SoC for ADAS",
@@ -435,13 +376,9 @@ function getFallbackData() {
             {
                 "id": 15,
                 "name": "Varsha V R",
-                "registerNo": "24VL052",
-                "rollno": "24VL052",
-                "universityNo": "",
                 "programme": "B.E. VLSI Design and Technology",
                 "year": "III Year",
                 "batch": "2024 - 2028",
-                "email": "varshavr24vl@srishakthi.ac.in",
                 "achievementTitle": "Internships, Workshops & Hackathons",
                 "achievement": "Internships:\n- SystemVerilog Internship at SM AI MOJO TECH\n- STM32 Microcontroller Design Intern at Manfree Technology\n- PCB Design & Fabrication Intern at Enthu EdTech\n- Embedded Systems Intern at Manfree Technology\n- Basic Java Programming Intern at Career Ladder\n- VLSI Layout Design Intern at Chip Crafts\n\nWorkshops:\n- Code to Chip \u2013 RTL to GDS Flow Using Synopsys Tools\n- Workshop on Digital Hardware Design with Altera (Intel) FPGAs\n- VLSI Test Workshop at PSG College of Technology\n\nHackathons:\n- RoboChipX at Rajalakshmi Institute of Technology, Chennai",
                 "projectsOverview": "Adaptive Dynamic-Precision Sparse Neural Network Accelerator, AMBA AXI4-Lite Master/Slave, SPI Protocol Controller",
@@ -454,13 +391,9 @@ function getFallbackData() {
             {
                 "id": 16,
                 "name": "Winston Churchil",
-                "registerNo": "24VL053",
-                "rollno": "24VL053",
-                "universityNo": "",
                 "programme": "B.E. VLSI Design and Technology",
                 "year": "III Year",
                 "batch": "2024 - 2028",
-                "email": "churchilerd@gmail.com",
                 "achievementTitle": "Projects & Development",
                 "achievement": "Developing innovative web-based projects combining 3D visualization and AI technologies for career guidance and portfolio presentation.",
                 "projectsOverview": "3d Portfolio websites and AI career roadmap generator web application",
@@ -473,13 +406,9 @@ function getFallbackData() {
             {
                 "id": 17,
                 "name": "K.R.Nitin",
-                "registerNo": "24VL025",
-                "rollno": "24VL025",
-                "universityNo": "",
                 "programme": "B.E. VLSI Design and Technology",
                 "year": "III Year",
                 "batch": "2024 - 2028",
-                "email": "nithunithu2720@gmail.com",
                 "achievementTitle": "Internships & Workshops",
                 "achievement": "Completed various internships and workshops related to VLSI design and semiconductor technology.",
                 "projectsOverview": "RTL-to-GDSII Design and Physical Implementation of a 16-bit Multiply-Accumulate Unit Using Synopsys",
@@ -492,13 +421,9 @@ function getFallbackData() {
             {
                 "id": 18,
                 "name": "Sakthishree D",
-                "registerNo": "24VL033",
-                "rollno": "24VL033",
-                "universityNo": "",
                 "programme": "B.E. VLSI Design and Technology",
                 "year": "III Year",
                 "batch": "2024 - 2028",
-                "email": "sakthishree610@gmail.com",
                 "achievementTitle": "Rank Holder & Certifications",
                 "achievement": "Academic Excellence: 1st Semester \u2013 3rd Rank Holder; 2nd, 3rd & 4th Semester \u2013 1st Rank Holder.\n\nInternships:\n- Chip Crafts \u2013 VLSI Design Layout\n- Manfree \u2013 Embedded Systems\n- Career Ladder \u2013 OOPS in Java\n- Enthu Technologies \u2013 PCB Designing\n- SM AI MOJO Tech \u2013 System Verilog and Basics of Digital Electronics\n\nWorkshops:\n- Industrial IOT Using LORAWAN Technology\n- STM32 & Renesas-based Embedded System\n- Emboss in IOT (Arduino)\n- Digital Hardware Design and Implementation with Altera FPGA\n\nCertifications:\n- VLSI on Chip Design by Maven Silicon\n- RISC-V Processor RV321 Base ISA by Maven Silicon\n- Verilog HDL \u2013 Udemy\n- Static Timing Analysis \u2013 Udemy",
                 "projectsOverview": "32 bit RISC V BASED ADAPTIVE PRECISION ACCELERATOR, Multi-GPU Architecture, BIST Controller",
@@ -511,13 +436,9 @@ function getFallbackData() {
             {
                 "id": 19,
                 "name": "Kiruthika S",
-                "registerNo": "24VL017",
-                "rollno": "24VL017",
-                "universityNo": "",
                 "programme": "B.E. VLSI Design and Technology",
                 "year": "III Year",
                 "batch": "2024 - 2028",
-                "email": "kiruthika.shanmugam006@gmail.com",
                 "achievementTitle": "Workshops & Internships",
                 "achievement": "10-Day Cadence VLSI Design Workshop \u2013 Entuple Technologies\n2-Day IoT Workshop \u2013 KALAM 2025\n2-Day FPGA Workshop \u2013 Chip Crafts\n1-Month Top-Out Training\n\nInternship/Training Certificates from Career Ladder, Enthu Tech, Embuzz Technologies, Chip Crafts, Manfree Technologies, SM AI MOJO TECH, and Maven Silicon\n\nCGPA: 8.77",
                 "projectsOverview": "Fault Controller for Medical Devices, Booth Multiplier, SPI, BIST, UART, AXI4-Lite, MAC Unit, CAN Protocol",
@@ -530,13 +451,9 @@ function getFallbackData() {
             {
                 "id": 20,
                 "name": "Roobashri S",
-                "registerNo": "24VL032",
-                "rollno": "24VL032",
-                "universityNo": "",
                 "programme": "B.E. VLSI Design and Technology",
                 "year": "III Year",
                 "batch": "2024 - 2028",
-                "email": "roobashrisenthilmurugan@gmail.com",
                 "achievementTitle": "Workshops, Internships & Hackathons",
                 "achievement": "Workshops:\n- PCB Design and Fabrication at KPR Institute of Engineering and Technology \u2013 March 14, 2025\n- VLSI TEST Workshop at PSG College of Technology \u2013 October 10\u201312, 2025\n- VLSI Design Flow from RTL to GDS at Chipxpert Technologies \u2013 November 1\u20132, 2025\n- Code to Chip: RTL to GDS flow using Synopsys tools at VLSI Minds \u2013 February 16\u201320, 2026\n- Digital Hardware Design with Altera (Intel) FPGAs at Chipcrafts \u2013 November 18\u201319, 2025\n\nInternships:\n- Chip Crafts \u2013 VLSI Layout Design (September 3\u201310, 2025)\n- Career Ladder \u2013 Programming Paradigm using Java (September 11\u201316, 2025)\n- EnthuTech \u2013 PCB Designing\n\nHackathon:\n- Bharat AI-Soc Student Challenge (January\u2013March 2026)",
                 "projectsOverview": "Reconfigurable Neuromorphic Processor, STM32F446RE PCB Controller Board, Smart 3S BMS",
@@ -549,13 +466,9 @@ function getFallbackData() {
             {
                 "id": 21,
                 "name": "Soorya Velaa P",
-                "registerNo": "24VL040",
-                "rollno": "24VL040",
-                "universityNo": "",
                 "programme": "B.E. VLSI Design and Technology",
                 "year": "III Year",
                 "batch": "2024 - 2028",
-                "email": "suryavela9120@gmail.com",
                 "achievementTitle": "Workshops, Training & NCC",
                 "achievement": "Workshops:\n- 10-day Cadence Workshop\n- 2-day IOT Workshop (KALAM 2025)\n- 2-day Workshop on FPGA by Chip Crafts\n\nTraining Certificate:\n- 10-day Cadence Workshop by Entuple Technologies\n\nInternship Certificates:\n- Career Ladder\n- Enthu Tech\n- Embuzz Technologies\n- Chip Crafts\n- Manfree Technologies\n- SM AI MOJO TECH\n\nAchievements:\n- NCC CADET \u2013 B Certificate holder with A grade",
                 "projectsOverview": "Booth multiplier, PIPELINE, SPI, MFCC Accelerator",
@@ -568,13 +481,9 @@ function getFallbackData() {
             {
                 "id": 22,
                 "name": "SRI VATSAN P",
-                "registerNo": "24VL041",
-                "rollno": "24VL041",
-                "universityNo": "714024169041",
                 "programme": "B.E. VLSI Design and Technology",
                 "year": "III Year",
                 "batch": "2024 - 2028",
-                "email": "srivatsan132006@gmail.com",
                 "achievementTitle": "Internships, Workshops & Certifications",
                 "achievement": "Internships / Industrial Training:\n- Embuzz Technologies Pvt. Ltd. \u2013 Embedded Programming using Arduino\n- Chip Craft \u2013 VLSI Layout Design & FPGA Implementation\n- Manfree Technologies \u2013 Embedded Programming & 8086 Microprocessor\n- Enthu Technology \u2013 PCB Design using KiCad\n- Career Ladder \u2013 C Programming\n- SM MOJO TECH \u2013 Internship Training\n\nWorkshops & Training:\n- Hardware Design and Implementation with Altera (Intel) FPGAs\n- Synopsys ASIC Design Flow Training\n- Cadence VLSI Design and Verification Training\n\nHackathons:\n- 24-Hour Hackathon \u2013 RIT College\n\nCertifications:\n- Synopsys ASIC Design Flow Certification\n- Government SoC Project Certification\n- Digital Hardware & FPGA Implementation Certification\n- VLSI Layout Design Certification\n- Embedded Systems & Arduino Certification\n- SystemVerilog Training Certificate\n- Arduino Programming Certificate",
                 "projectsOverview": "Configurable Dynamic Memory-Aware AXI4-Stream Sparse Matrix Acceleration Engine, DDR SDRAM Controller",
@@ -587,13 +496,9 @@ function getFallbackData() {
             {
                 "id": 23,
                 "name": "Pratheep D",
-                "registerNo": "24VL026",
-                "rollno": "24VL026",
-                "universityNo": "714024169026",
                 "programme": "B.E. VLSI Design and Technology",
                 "year": "III Year",
                 "batch": "2024 - 2028",
-                "email": "pratheepdcbe@gmail.com",
                 "achievementTitle": "Certifications & Training",
                 "achievement": "- Completed MATLAB Onramp Certification\n- Participated in an Inter-College Cadence Workshop covering Verilog HDL, testbench development, logic gates, Half Adder design, Xcelium simulation, and code coverage\n- Completed training in RISC Processor Architecture\n- Completed Java training through Career Ladder\n- Participated in VLSI-related academic and technical activities\n- Developed and worked on VLSI/embedded projects involving Verilog, Arduino, MATLAB, Proteus, Quartus, Microwind, and Cadence tools",
                 "projectsOverview": "RTL-to-GDSII Implementation of a Sparse Multi-Head Attention Accelerator for Transformer-Based Large Language Model Inference",
@@ -606,13 +511,9 @@ function getFallbackData() {
             {
                 "id": 24,
                 "name": "PUGAZHENDHI S",
-                "registerNo": "24VL028",
-                "rollno": "24VL028",
-                "universityNo": "",
                 "programme": "B.E. VLSI Design and Technology",
                 "year": "III Year",
                 "batch": "2024 - 2028",
-                "email": "spugazhendhi2007@gmail.com",
                 "achievementTitle": "Training & Internships",
                 "achievement": "- Chip Design Using Cadence Tool Chain (RTL to GDSII) \u2013 Sri Shakthi Institute, on-campus training, July 2026\n- Back-End Design of Digital Logic Circuits Using Cadence \u2013 Chip to Start-Up, June 2026\n- VLSI Layout Design Internship \u2013 Chip Crafts, September 2025\n- Embedded Systems Internship \u2013 Manfree Technologies, October 2025\n- Digital Hardware Design & FPGA Workshop \u2013 Chip Crafts, November 2025\n- Programming Paradigms Using Java \u2013 Career Ladder, September 2025",
                 "projectsOverview": "RISC-V Processor with External Memory, PPA Optimization of Hardware Accelerator, Low Power 8-bit ALU",
@@ -625,13 +526,9 @@ function getFallbackData() {
             {
                 "id": 25,
                 "name": "Mohammed Ayman M",
-                "registerNo": "24VL021",
-                "rollno": "24VL021",
-                "universityNo": "",
                 "programme": "B.E. VLSI Design and Technology",
                 "year": "III Year",
                 "batch": "2024 - 2028",
-                "email": "mohammedayman4381@gmail.com",
                 "achievementTitle": "Projects, Internships & Hackathons",
                 "achievement": "- VLSI & Semiconductor Domain Projects \u2013 Developed and explored practical projects focused on VLSI, digital design, embedded systems, and semiconductor-oriented applications\n- VLSI Internship \u2013 SM AI Mojo Tech \u2013 Gained practical exposure to VLSI concepts, semiconductor design methodologies, digital logic, and industry-oriented workflows\n- SEMICON / Semiconductor Hackathon Participation \u2013 Worked on SEMIRESTORE-AI, an AI-assisted semiconductor inspection concept\n- AI + VLSI Project Development \u2013 Explored the integration of AI and Computer Vision with semiconductor inspection and manufacturing\n- Technical Workshops & Hands-on Learning \u2013 Participated in technical learning activities covering VLSI design, FPGA, digital systems, embedded systems, AI/ML",
                 "projectsOverview": "SEMIRESTORE-AI: AI-Based Restoration of Degraded Images for Semiconductor Inspection",
@@ -644,13 +541,9 @@ function getFallbackData() {
             {
                 "id": 26,
                 "name": "S. Thirumurugan",
-                "registerNo": "24VL050",
-                "rollno": "24VL050",
-                "universityNo": "714024169050",
                 "programme": "B.E. VLSI Design and Technology",
                 "year": "III Year",
                 "batch": "2024 - 2028",
-                "email": "thirumurugans2945@gmail.com",
                 "achievementTitle": "Internships, Training & Workshops",
                 "achievement": "Internships, Training & Technical Programs:\n- Chip Crafts \u2013 VLSI Layout Internship\n- Embuzz Technologies \u2013 Arduino GPIO Programming\n- Career Ladder \u2013 Java Programming\n- ENTHU \u2013 Internship / Technical Training\n- Manfree \u2013 Internship / Technical Training\n- SM MOJO TECH \u2013 Internship / Technical Training\n\nWorkshops:\n- FPGA Altera Workshop \u2013 Chip Crafts\n- Synopsys EDA Tools Workshop\n- Cadence EDA Tools Workshop",
                 "projectsOverview": "RISC-V CPU, Secure VPU, 8-bit ALU, Booth Multiplier, TCAM",
@@ -663,13 +556,9 @@ function getFallbackData() {
             {
                 "id": 27,
                 "name": "SANJEEV GH",
-                "registerNo": "24VL034",
-                "rollno": "24VL034",
-                "universityNo": "",
                 "programme": "B.E. VLSI Design and Technology",
                 "year": "III Year",
                 "batch": "2024 - 2028",
-                "email": "sanjeevgh27@gmail.com",
                 "achievementTitle": "Internships & Technical Achievements",
                 "achievement": "Internships:\n- ChipCrafts \u2013 VLSI Internship (Microwind, digital circuit design, layout implementation)\n- Manfree Technologies \u2013 Embedded Systems Internship\n- Enthu Technology \u2013 PCB Design & Assembly Internship\n- Career Ladder \u2013 Java Internship\n- SM AI MOJO TECH \u2013 SystemVerilog Internship\n\nTechnical Achievements:\n- Completed 53+ VLSI projects using industry-standard tools including Synopsys and Cadence\n- Completed 3 industry-level VLSI projects with complete ASIC design flow\n- Developed BatterySense X \u2013 achieved 91.94% core utilization, zero DRC violations, and 0.0000 WNS after CTS optimization\n- Presented BatterySense X at department-level HR Conclave\n- Developed multiple Embedded Systems projects using Arduino, sensors, relays, motors\n- Developed ECG Signal Power-Line Noise Removal system using MATLAB\n- Worked on SpaceEdgeX exploring AI, edge computing, hardware acceleration, and space-based computing",
                 "projectsOverview": "BatterySense X \u2013 Intelligent Battery Sensing & Health Monitoring ASIC, ECG Signal Power-Line Noise Removal",
@@ -682,13 +571,9 @@ function getFallbackData() {
             {
                 "id": 28,
                 "name": "Santhosh Kumar S",
-                "registerNo": "24VL037",
-                "rollno": "24VL037",
-                "universityNo": "714024169037",
                 "programme": "B.E. VLSI Design and Technology",
                 "year": "III Year",
                 "batch": "2024 - 2028",
-                "email": "santosh2005th@gmail.com",
                 "achievementTitle": "Hackathons, Internships & Certifications",
                 "achievement": "- 2nd Place \u2013 Cognicode Hackathon, NEXUS 2K26, GCT, Coimbatore\n- Participant \u2013 NeuraNexus 2K25, KPR Institute of Engineering and Technology\n- Participant \u2013 Hack Nexus 2025, Sri Ramakrishna College of Arts & Science\n- Embedded Systems Internship \u2013 Manfree Technologies\n- VLSI Layout Design Internship \u2013 Chip Crafts\n- Industrial Training in Java \u2013 Career Ladder\n- Custom IC Design using Cadence EDA Tools \u2013 Entuple Technologies\n- Digital Hardware Design with Altera (Intel) FPGAs \u2013 Chip Crafts\n- Java (Basic) Certification \u2013 HackerRank",
                 "projectsOverview": "EventLens AI, SGPA / CGPA Calculator Web App, Health Buddy \u2013 AI-Driven Public Health Chatbot",

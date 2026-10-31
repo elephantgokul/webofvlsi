@@ -120,8 +120,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     function escapeHtml(value) {
-        const div = document.createElement('div');
-        div.textContent = value == null ? '' : String(value);
-        return div.innerHTML;
-    }
+    return (value == null ? '' : String(value)).replace(/[&<>"']/g, function (character) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[character];
+    });
+  }
 });

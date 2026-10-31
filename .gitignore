@@ -1,0 +1,10 @@
+# Local credentials and environment files
+.env
+.env.*
+!.env.example
+supabase/functions/.env
+supabase/functions/.env.*
+!supabase/functions/.env.example
+
+# Supabase CLI project link and local stack metadata
+supabase/.temp/

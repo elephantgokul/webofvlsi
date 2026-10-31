@@ -2,13 +2,13 @@
 // Uses scoring.js for point calculation
 
 function escapeHtml(value) {
-  var div = document.createElement('div');
-  div.textContent = value == null ? '' : String(value);
-  return div.innerHTML;
+    return (value == null ? '' : String(value)).replace(/[&<>"']/g, function (character) {
+        return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[character];
+    });
 }
 
 function getStudentDetailHref(student) {
-  var identifier = student.id || student.registerNo || student.rollno || student.universityNo || student.name || '';
+  var identifier = student.id || student.name || '';
   var url = new URL('student-detail.html', window.location.href);
   url.searchParams.set('id', identifier);
   return url.href;
@@ -69,7 +69,6 @@ function renderPodium(top3) {
           '<div class="podium-medal">' + medals[idx] + '</div>',
           '<div class="podium-photo">' + getPhotoHtml(student, 64) + '</div>',
           '<div class="podium-name">' + escapeHtml(student.name) + '</div>',
-          '<div class="podium-roll font-mono">' + escapeHtml(student.registerNo || student.rollno || '') + '</div>',
           '<div class="podium-score">' + student.totalPoints + ' pts</div>',
           '<div class="podium-meta">',
             '<span><i class="fa-solid fa-microchip"></i> ' + (scoring.projectCount || 0) + ' projects</span>',
@@ -114,7 +113,6 @@ function renderTable(students) {
             getPhotoHtml(student, 36),
             '<div>',
               '<div class="font-medium" style="color:var(--clr-text-primary)">' + escapeHtml(student.name) + '</div>',
-              '<div class="font-mono text-xs" style="color:var(--clr-accent)">' + escapeHtml(student.registerNo || student.rollno || '') + '</div>',
             '</div>',
           '</a>',
         '</td>',
@@ -186,8 +184,7 @@ async function initLeaderboard() {
         var q = currentSearch.toLowerCase().trim();
         var searchMatch = !q ||
           (s.name && s.name.toLowerCase().includes(q)) ||
-          (s.registerNo && s.registerNo.toLowerCase().includes(q)) ||
-          (s.rollno && s.rollno.toLowerCase().includes(q));
+          false;
         return yearMatch && searchMatch;
       });
 

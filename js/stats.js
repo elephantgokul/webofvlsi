@@ -143,7 +143,6 @@ function computeLeaderboardScore(text, student) {
     var m = text.match(p.regex);
     if (m) score += m.length * p.points;
   });
-  if (student.universityNo) score += 3;
   return { score: score };
 }
 

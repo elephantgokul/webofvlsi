@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="en" class="scroll-smooth" data-admin-protected>
 <head>
   <meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
   <meta name="robots" content="noindex,nofollow"/>
@@ -63,45 +63,6 @@
 </head>
 <body class="font-body antialiased" style="color:#0b1b33;background:#f8fafc">
 
-<!-- LOGIN VIEW -->
-<div id="login-view" class="login-container">
-  <div class="login-card">
-    <div class="text-center mb-8">
-      <div class="w-14 h-14 rounded-2xl flex items-center justify-center mx-auto mb-4" style="background:linear-gradient(135deg,#1652c4,#2fe6dd)">
-        <i class="fa-solid fa-shield-halved text-white text-xl"></i>
-      </div>
-      <h1 class="font-display font-bold text-2xl" style="color:#0b1b33">Admin Login</h1>
-      <p class="text-sm mt-1" style="color:#5b6478">SIET VLSI Department — Event Management</p>
-    </div>
-
-    <form id="login-form">
-      <div class="mb-4">
-        <label class="form-label">Email</label>
-        <input type="email" id="login-email" class="form-input" placeholder="Hodvlsi@siet.ac.in" value="Hodvlsi@siet.ac.in" required autocomplete="email">
-      </div>
-      <div class="mb-6">
-        <label class="form-label">Password</label>
-        <div class="relative">
-          <input type="password" id="login-password" class="form-input" placeholder="••••••••" required autocomplete="current-password">
-          <button type="button" id="toggle-password" class="absolute right-3 top-1/2 -translate-y-1/2" style="color:#aab4c8;background:none;border:none;cursor:pointer">
-            <i class="fa-solid fa-eye"></i>
-          </button>
-        </div>
-      </div>
-      <div id="login-error" class="mb-4 text-sm text-red-600 hidden"></div>
-      <button type="submit" class="btn-admin btn-admin-primary w-full justify-center py-3">
-        <i class="fa-solid fa-right-to-bracket"></i> Sign In
-      </button>
-    </form>
-
-    <div class="mt-6 pt-4" style="border-top:1px solid #e2e8f0">
-      <p class="text-xs text-center" style="color:#aab4c8">
-        <a href="../index.html" class="hover:underline" style="color:#1652c4">← Back to Website</a>
-      </p>
-    </div>
-  </div>
-</div>
-
 <!-- ADMIN DASHBOARD VIEW -->
 <div id="admin-view" style="display:none">
   <div class="admin-layout flex" style="min-height:100vh">
@@ -119,6 +80,7 @@
       </div>
       <nav class="flex-1">
         <a href="#" class="active" id="nav-events"><i class="fa-solid fa-calendar-days w-5 text-center"></i> Events</a>
+        <a href="admin-gallery.html"><i class="fa-solid fa-photo-film w-5 text-center"></i> Gallery</a>
         <a href="../index.html" target="_blank"><i class="fa-solid fa-globe w-5 text-center"></i> View Website</a>
         <a href="events.html" target="_blank"><i class="fa-solid fa-arrow-up-right-from-square w-5 text-center"></i> Public Events</a>
       </nav>
@@ -150,6 +112,7 @@
         <button id="mobile-logout-btn" class="text-xs px-3 py-1.5 rounded-lg" style="background:rgba(255,255,255,0.1);color:rgba(255,255,255,0.6);border:none;cursor:pointer">
           <i class="fa-solid fa-right-from-bracket"></i> Logout
         </button>
+        <a href="admin-gallery.html" class="text-xs px-3 py-1.5 rounded-lg" style="background:rgba(255,255,255,0.1);color:#fff">Gallery</a>
       </div>
 
       <!-- Header -->
@@ -370,6 +333,8 @@
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="../js/supabase-config.js"></script>
+<script src="../js/admin-auth.js"></script>
+<script src="../js/admin-media.js"></script>
 <script src="../js/events-manager.js"></script>
 <script>
 (function() {
@@ -383,10 +348,7 @@
   var deletingEventId = null;
 
   // ========== DOM REFS ==========
-  var loginView = document.getElementById('login-view');
   var adminView = document.getElementById('admin-view');
-  var loginForm = document.getElementById('login-form');
-  var loginError = document.getElementById('login-error');
   var logoutBtn = document.getElementById('logout-btn');
   var mobileLogoutBtn = document.getElementById('mobile-logout-btn');
   var addEventBtn = document.getElementById('add-event-btn');
@@ -403,86 +365,46 @@
   var adminSearch = document.getElementById('admin-search');
   var statusFilter = document.getElementById('admin-status-filter');
   var timeFilter = document.getElementById('admin-time-filter');
-  var togglePwdBtn = document.getElementById('toggle-password');
 
   // ========== INIT ==========
   function init() {
-    if (typeof window.supabase !== 'undefined' && typeof window.supabase.createClient === 'function') {
-      supabase = window.supabase.createClient(window.SUPABASE_URL, window.SUPABASE_ANON_KEY);
-    }
-
-    if (!supabase) {
-      showLoginError('Supabase is not configured. Admin dashboard requires a valid Supabase setup.');
+    if (!window.SiteAdminAuth || !window.SiteAdminAuth.client) {
+      window.location.replace('admin-login.html');
       return;
     }
-
-    // Check current session
-    supabase.auth.getSession().then(function(result) {
-      if (result.data && result.data.session) {
-        currentUser = result.data.session.user;
-        showAdminView();
-      } else {
-        showLoginView();
-      }
-    }).catch(function() {
-      showLoginView();
-    });
-
-    // Listen for auth state changes
-    supabase.auth.onAuthStateChange(function(event, session) {
+    supabase = window.SiteAdminAuth.client;
+    bindEvents();
+    supabase.auth.onAuthStateChange(function(event) {
       if (event === 'SIGNED_OUT') {
         currentUser = null;
-        showLoginView();
+        window.location.replace('admin-login.html');
+      } else if (event === 'SIGNED_IN' || event === 'TOKEN_REFRESHED') {
+        window.setTimeout(function () {
+          window.SiteAdminAuth.requireAdmin().then(function (user) {
+            if (user) {
+              currentUser = user;
+              showAdminView();
+            }
+          });
+        }, 0);
       }
     });
-
-    bindEvents();
+    window.SiteAdminAuth.requireAdmin().then(function (user) {
+      if (!user) return;
+      currentUser = user;
+      showAdminView();
+    });
   }
 
   // ========== AUTH ==========
   function showLoginView() {
-    loginView.style.display = '';
-    adminView.style.display = 'none';
+    window.location.replace('admin-login.html');
   }
 
   function showAdminView() {
-    loginView.style.display = 'none';
     adminView.style.display = '';
     document.getElementById('admin-email-display').textContent = currentUser ? currentUser.email : 'Admin';
     loadEvents();
-  }
-
-  function showLoginError(msg) {
-    loginError.textContent = msg;
-    loginError.classList.remove('hidden');
-  }
-
-  function hideLoginError() {
-    loginError.classList.add('hidden');
-  }
-
-  async function handleLogin(e) {
-    e.preventDefault();
-    hideLoginError();
-    var email = document.getElementById('login-email').value.trim();
-    var password = document.getElementById('login-password').value;
-
-    if (!email || !password) {
-      showLoginError('Please enter both email and password.');
-      return;
-    }
-
-    try {
-      var result = await supabase.auth.signInWithPassword({ email: email, password: password });
-      if (result.error) {
-        showLoginError(result.error.message || 'Login failed. Check your credentials.');
-        return;
-      }
-      currentUser = result.data.user;
-      showAdminView();
-    } catch (err) {
-      showLoginError('Login failed: ' + (err.message || 'Unknown error'));
-    }
   }
 
   async function handleLogout() {
@@ -490,7 +412,7 @@
       await supabase.auth.signOut();
     }
     currentUser = null;
-    showLoginView();
+    window.location.replace('admin-login.html');
   }
 
   // ========== EVENTS CRUD ==========
@@ -555,6 +477,7 @@
       var dateStr = d.getDate() + ' ' + months[d.getMonth()] + ' ' + d.getFullYear();
       var isPast = d < now;
       var catColor = (window.EventsManager ? window.EventsManager.getCategoryColor(ev.category) : '#1652c4');
+      var eventId = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(String(ev.id || '')) ? String(ev.id) : '';
 
       return '<div class="event-row">' +
         '<div class="flex items-center gap-3 min-w-0">' +
@@ -573,13 +496,13 @@
           '</span>' +
         '</div>' +
         '<div class="flex items-center gap-2 flex-shrink-0">' +
-          '<button class="btn-admin btn-admin-ghost" style="padding:.35rem .6rem;font-size:.75rem" onclick="adminEditEvent(\'' + ev.id + '\')" title="Edit">' +
+          '<button class="btn-admin btn-admin-ghost" style="padding:.35rem .6rem;font-size:.75rem" data-admin-action="edit" data-event-id="' + escapeHtml(eventId) + '" title="Edit"' + (!eventId ? ' disabled' : '') + '>' +
             '<i class="fa-solid fa-pen-to-square"></i>' +
           '</button>' +
-          '<button class="btn-admin" style="padding:.35rem .6rem;font-size:.75rem;background:' + (ev.status === 'published' ? 'rgba(217,119,6,0.1)' : 'rgba(5,150,105,0.1)') + ';color:' + (ev.status === 'published' ? '#d97706' : '#059669') + ';border:none;cursor:pointer" onclick="adminTogglePublish(\'' + ev.id + '\')" title="' + (ev.status === 'published' ? 'Unpublish' : 'Publish') + '">' +
+          '<button class="btn-admin" style="padding:.35rem .6rem;font-size:.75rem;background:' + (ev.status === 'published' ? 'rgba(217,119,6,0.1)' : 'rgba(5,150,105,0.1)') + ';color:' + (ev.status === 'published' ? '#d97706' : '#059669') + ';border:none;cursor:pointer" data-admin-action="toggle" data-event-id="' + escapeHtml(eventId) + '" title="' + (ev.status === 'published' ? 'Unpublish' : 'Publish') + '"' + (!eventId ? ' disabled' : '') + '>' +
             '<i class="fa-solid ' + (ev.status === 'published' ? 'fa-eye-slash' : 'fa-eye') + '"></i>' +
           '</button>' +
-          '<button class="btn-admin" style="padding:.35rem .6rem;font-size:.75rem;background:rgba(220,38,38,0.08);color:#dc2626;border:none;cursor:pointer" onclick="adminDeleteEvent(\'' + ev.id + '\')" title="Delete">' +
+          '<button class="btn-admin" style="padding:.35rem .6rem;font-size:.75rem;background:rgba(220,38,38,0.08);color:#dc2626;border:none;cursor:pointer" data-admin-action="delete" data-event-id="' + escapeHtml(eventId) + '" title="Delete"' + (!eventId ? ' disabled' : '') + '>' +
             '<i class="fa-solid fa-trash-can"></i>' +
           '</button>' +
         '</div>' +
@@ -706,26 +629,8 @@
   }
 
   async function uploadPoster(file) {
-    if (!file) return '';
-    if (file.size > 5 * 1024 * 1024) throw new Error('File too large. Max 5MB.');
-
-    var ext = file.name.split('.').pop().toLowerCase();
-    var allowed = ['jpg', 'jpeg', 'png', 'webp', 'gif'];
-    if (allowed.indexOf(ext) === -1) throw new Error('Invalid file type. Use JPG, PNG, or WEBP.');
-
-    var fileName = 'poster_' + Date.now() + '.' + ext;
-    var filePath = 'posters/' + fileName;
-
-    var result = await supabase.storage.from('events').upload(filePath, file, {
-      cacheControl: '3600',
-      upsert: false
-    });
-
-    if (result.error) throw result.error;
-
-    // Get public URL
-    var urlResult = supabase.storage.from('events').getPublicUrl(filePath);
-    return urlResult.data.publicUrl;
+    if (!file || !window.AdminMedia) return '';
+    return window.AdminMedia.uploadPoster(file);
   }
 
   // ========== PUBLISH/UNPUBLISH ==========
@@ -771,7 +676,6 @@
 
   // ========== BIND EVENTS ==========
   function bindEvents() {
-    loginForm.addEventListener('submit', handleLogin);
     logoutBtn.addEventListener('click', handleLogout);
     mobileLogoutBtn.addEventListener('click', handleLogout);
     addEventBtn.addEventListener('click', function() { openEventModal(null); });
@@ -781,21 +685,19 @@
     eventForm.addEventListener('submit', function(e) { handleEventSubmit(e, false); });
     deleteCancelBtn.addEventListener('click', function() { deleteModal.style.display = 'none'; deletingEventId = null; });
     deleteConfirmBtn.addEventListener('click', confirmDelete);
+    var eventsList = document.getElementById('admin-events-list');
+    eventsList.addEventListener('click', function(event) {
+      var button = event.target.closest('[data-admin-action]');
+      if (!button || !eventsList.contains(button)) return;
+      var eventId = button.dataset.eventId || '';
+      if (!/^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(eventId)) return;
+      if (button.dataset.adminAction === 'edit') window.adminEditEvent(eventId);
+      else if (button.dataset.adminAction === 'toggle') window.adminTogglePublish(eventId);
+      else if (button.dataset.adminAction === 'delete') window.adminDeleteEvent(eventId);
+    });
     adminSearch.addEventListener('input', debounce(renderEventsList, 200));
     statusFilter.addEventListener('change', renderEventsList);
     timeFilter.addEventListener('change', renderEventsList);
-
-    togglePwdBtn.addEventListener('click', function() {
-      var pwdInput = document.getElementById('login-password');
-      var icon = togglePwdBtn.querySelector('i');
-      if (pwdInput.type === 'password') {
-        pwdInput.type = 'text';
-        icon.className = 'fa-solid fa-eye-slash';
-      } else {
-        pwdInput.type = 'password';
-        icon.className = 'fa-solid fa-eye';
-      }
-    });
 
     // Close modals on overlay click
     eventModal.addEventListener('click', function(e) { if (e.target === eventModal) closeEventModal(); });
@@ -816,10 +718,10 @@
   }
 
   // ========== UTILITIES ==========
-  function escapeHtml(v) {
-    var d = document.createElement('div');
-    d.textContent = v == null ? '' : String(v);
-    return d.innerHTML;
+  function escapeHtml(value) {
+    return (value == null ? '' : String(value)).replace(/[&<>"']/g, function (character) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[character];
+    });
   }
 
   function debounce(fn, delay) {

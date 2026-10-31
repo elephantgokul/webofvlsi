@@ -31,10 +31,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             const q = currentSearch.toLowerCase().trim();
             const matchesSearch = !q ||
                 (student.name && student.name.toLowerCase().includes(q)) ||
-                (student.registerNo && student.registerNo.toLowerCase().includes(q)) ||
-                (student.rollno && student.rollno.toLowerCase().includes(q)) ||
                 (student.batch && student.batch.toLowerCase().includes(q)) ||
-                (student.email && student.email.toLowerCase().includes(q)) ||
                 (student.achievementTitle && student.achievementTitle.toLowerCase().includes(q)) ||
                 (student.projectsOverview && student.projectsOverview.toLowerCase().includes(q));
 
@@ -77,7 +74,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         students.forEach((student, index) => {
             const colors = yearColors[student.yearToken] || yearColors['III'];
             const yearLabel = getYearLabel(student);
-            const registerNo = student.registerNo || student.rollno || '';
             const detailHref = escapeHtml(getStudentDetailHref(student));
             const rawPhoto = student.photoUrl || student.image;
             const photoSrc = typeof resolveSupabaseImageUrl === 'function'
@@ -143,16 +139,13 @@ document.addEventListener('DOMContentLoaded', async () => {
               </div>
               <div class="p-5">
                 <h3 class="font-display font-semibold text-sm" style="color:#0b1b33">${escapeHtml(student.name)}</h3>
-                <p class="text-xs mt-0.5 mb-3 font-mono" style="color:#1652c4">${escapeHtml(registerNo)}</p>
                 <div class="space-y-1.5 text-[0.75rem]" style="color:#5b6478">
-                  <p><i class="fa-solid fa-envelope w-4" style="color:#2fe6dd"></i> ${escapeHtml(student.email)}</p>
                   ${batchLine}
                 </div>
                 ${achievementPreview}
                 ${projectsPreview}
                 ${pointsBadgeHtml}
                 <div class="flex gap-2 pt-3 mt-3" style="border-top:1px solid #e2e8f0">
-                  <a href="mailto:${escapeHtml(student.email)}" aria-label="Email" title="Email" class="w-8 h-8 rounded-lg flex items-center justify-center text-xs transition-all" style="background:#f0f4ff;color:#1652c4" onmouseover="this.style.background='#1652c4';this.style.color='#fff'" onmouseout="this.style.background='#f0f4ff';this.style.color='#1652c4'"><i class="fa-solid fa-envelope"></i></a>
                   ${linkedinBtn}
                   <a href="${detailHref}" aria-label="View details" title="View Details" class="w-8 h-8 rounded-lg flex items-center justify-center text-xs transition-all" style="background:#f0f4ff;color:#1652c4" onmouseover="this.style.background='#1652c4';this.style.color='#fff'" onmouseout="this.style.background='#f0f4ff';this.style.color='#1652c4'"><i class="fa-solid fa-eye"></i></a>
                 </div>
@@ -174,10 +167,8 @@ document.addEventListener('DOMContentLoaded', async () => {
                     <tr>
                         <th>#</th>
                         <th>Name</th>
-                        <th>Roll No</th>
                         <th>Year</th>
                         <th>Batch</th>
-                        <th>Email</th>
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -186,10 +177,8 @@ document.addEventListener('DOMContentLoaded', async () => {
                         <tr>
                             <td class="font-mono text-xs">${i + 1}</td>
                             <td class="font-semibold" style="color:#0b1b33">${escapeHtml(s.name)}</td>
-                            <td class="font-mono text-xs" style="color:#1652c4">${escapeHtml(s.registerNo || s.rollno)}</td>
                             <td><span class="px-2 py-0.5 rounded-md text-xs font-mono" style="background:#f0f4ff;color:#1652c4">${escapeHtml(getYearLabel(s))}</span></td>
                             <td class="font-mono text-xs">${escapeHtml(s.batch)}</td>
-                            <td><a href="mailto:${escapeHtml(s.email)}" class="text-xs hover:underline" style="color:#1652c4">${escapeHtml(s.email)}</a></td>
                             <td><a href="${escapeHtml(getStudentDetailHref(s))}" class="text-xs hover:underline" style="color:#1652c4">View</a></td>
                         </tr>
                     `).join('')}
@@ -249,24 +238,26 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     function normalizeStudent(student) {
-        const registerNo = student.registerNo || student.rollno || '';
-        const image = student.image || student.photoUrl || '';
-        const linkedin = student.linkedin || student.linkedin_url || student.linkedinUrl || '';
-        const projectsOverview = student.projectsOverview || student.projects_overview || student.projects || student.project || '';
-        return Object.assign({}, student, {
-            registerNo: registerNo,
-            rollno: student.rollno || registerNo,
-            image: image,
-            photoUrl: student.photoUrl || image,
-            linkedin: linkedin,
-            projectsOverview: projectsOverview,
-            batch: student.batch || getBatchFromRegisterNo(registerNo),
+        return {
+            id: String(student.id || student.student_id || student.name || ''),
+            name: String(student.name || ''),
+            programme: student.programme || '',
+            year: student.year || '',
+            batch: student.batch || '',
+            achievementTitle: student.achievementTitle || student.achievement_title || 'Achievement',
+            achievement: student.achievement || '',
+            description: student.description || '',
+            projectsOverview: student.projectsOverview || student.projects_overview || student.projects || student.project || '',
+            image: student.image || student.photoUrl || student.photo_url || '',
+            photoUrl: student.photoUrl || student.photo_url || student.image || '',
+            linkedin: student.linkedin || student.linkedin_url || student.linkedinUrl || '',
+            github: student.github || student.github_url || student.githubUrl || '',
             yearToken: student.yearToken || getYearToken(student.year)
-        });
+        };
     }
 
     function getStudentIdentifier(student) {
-        return student.id || student.registerNo || student.rollno || student.universityNo || student.name || '';
+        return student.id || student.name || '';
     }
 
     function getStudentDetailHref(student) {
@@ -289,10 +280,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         return year.toLowerCase().includes('year') ? year : `${year} Year`;
     }
 
-    function getBatchFromRegisterNo(registerNo) {
-        const match = String(registerNo || '').match(/^(\d{2})/);
-        return match ? "20" + match[1] + " - 20" + (parseInt(match[1], 10) + 4) : "2024 - 2028";
-    }
 
     function getExternalHref(value, type) {
         const raw = String(value || '').trim();
@@ -306,22 +293,22 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     function resolveAssetPath(src) {
-        const value = String(src || '');
-        if (!value || /^(https?:|data:|\/|\.\.?\/)/i.test(value)) return value;
+        const value = String(src || '').trim();
+        if (!value || /[\u0000-\u001f\u007f]/.test(value)) return '';
+        if (/^https?:\/\//i.test(value)) {
+            try {
+                const url = new URL(value);
+                return url.protocol === 'http:' || url.protocol === 'https:' ? url.href : '';
+            } catch (error) { return ''; }
+        }
+        if (/^(?:[a-z][a-z0-9+.-]*:|\/\/)/i.test(value)) return '';
+        if (value.charAt(0) === '/') return value;
         return value.indexOf('assets/') === 0 ? '../' + value : value;
     }
 
     function escapeHtml(value) {
-        const div = document.createElement('div');
-        div.textContent = value == null ? '' : String(value);
-        return div.innerHTML;
-    }
-
-    function generateSkeletons(count) {
-        let html = '';
-        for (let i = 0; i < count; i++) {
-            html += `<div class="skeleton-card"><div class="skeleton skeleton-img"></div><div class="skeleton skeleton-text"></div><div class="skeleton skeleton-text-short"></div></div>`;
-        }
-        return html;
+    return (value == null ? '' : String(value)).replace(/[&<>"']/g, function (character) {
+        return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[character];
+    });
     }
 });

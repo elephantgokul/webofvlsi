@@ -7,7 +7,7 @@ var siteIndex = [
   { title:"About",        url:"index.html#about",        keywords:"about department history vision mission" },
   { title:"HOD",           url:"pages/hod.html",          keywords:"hod head department message professor" },
   { title:"Faculty",       url:"pages/faculty.html",      keywords:"faculty staff professor lecturer teaching" },
-  { title:"Students",      url:"pages/students.html",     keywords:"students batch register roll list" },
+  { title:"Students",      url:"pages/students.html",     keywords:"students batch list achievements projects year" },
   { title:"Achievements",  url:"pages/achievements.html", keywords:"achievements hackathon coding paper prize nba naac patent research grant" },
   { title:"Placements",    url:"pages/placements.html",   keywords:"placement package company salary job" },
   { title:"Contact",       url:"pages/contact.html",      keywords:"contact email phone address map" }
@@ -88,20 +88,42 @@ var siteIndex = [
       ? siteIndex.slice(0,8)
       : siteIndex.filter(function(item){ return (item.title+" "+item.keywords).toLowerCase().includes(q.toLowerCase()); });
 
-    if(!matches.length){ res.innerHTML='<p class="sr-empty">No results for "'+q+'"</p>'; return; }
+    if(!matches.length){
+      var empty = document.createElement("p");
+      empty.className = "sr-empty";
+      empty.textContent = 'No results for "' + q + '"';
+      res.replaceChildren(empty);
+      focusIdx=-1;
+      return;
+    }
 
     var base = location.pathname.includes("/pages/") ? "../" : "";
-    res.innerHTML = matches.map(function(item,i){
-      return [
-        '<a class="sr-item" href="'+base+item.url+'" tabindex="-1" data-idx="'+i+'">',
-          '<div class="sr-item-icon"><i class="fa-solid fa-file-lines" style="color:#1652c4;font-size:.8rem"></i></div>',
-          '<div>',
-            '<p class="sr-item-title">'+item.title+'</p>',
-            '<p class="sr-item-url">'+item.url+'</p>',
-          '</div>',
-        '</a>'
-      ].join("");
-    }).join("");
+    var fragment = document.createDocumentFragment();
+    matches.forEach(function(item,i){
+      var link = document.createElement("a");
+      link.className = "sr-item";
+      link.href = base + item.url;
+      link.tabIndex = -1;
+      link.dataset.idx = String(i);
+      var iconBox = document.createElement("div");
+      iconBox.className = "sr-item-icon";
+      var icon = document.createElement("i");
+      icon.className = "fa-solid fa-file-lines";
+      icon.style.color = "#1652c4";
+      icon.style.fontSize = ".8rem";
+      iconBox.appendChild(icon);
+      var textBox = document.createElement("div");
+      var title = document.createElement("p");
+      title.className = "sr-item-title";
+      title.textContent = item.title;
+      var url = document.createElement("p");
+      url.className = "sr-item-url";
+      url.textContent = item.url;
+      textBox.append(title, url);
+      link.append(iconBox, textBox);
+      fragment.appendChild(link);
+    });
+    res.replaceChildren(fragment);
     focusIdx=-1;
   }
 

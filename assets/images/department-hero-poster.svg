@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" role="img" aria-label="VLSI circuit background">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#f0f7ff"/>
+      <stop offset=".52" stop-color="#e6f0fa"/>
+      <stop offset="1" stop-color="#f4f7fb"/>
+    </linearGradient>
+    <linearGradient id="trace" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#1652c4" stop-opacity=".24"/>
+      <stop offset="1" stop-color="#2fe6dd" stop-opacity=".2"/>
+    </linearGradient>
+    <radialGradient id="glow">
+      <stop stop-color="#2fe6dd" stop-opacity=".16"/>
+      <stop offset="1" stop-color="#2fe6dd" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="1600" height="900" fill="url(#bg)"/>
+  <circle cx="1210" cy="170" r="440" fill="url(#glow)"/>
+  <circle cx="260" cy="750" r="440" fill="url(#glow)"/>
+  <g fill="none" stroke="url(#trace)" stroke-width="3">
+    <path d="M0 235h210l70 70h190l80-80h155M0 295h130l100 100h280l95-95h155M0 355h70l125 125h335l75-75h155"/>
+    <path d="M1600 180h-190l-90 90h-200l-75-75h-155M1600 245h-120l-115 115h-275l-75-75h-125M1600 310h-65l-130 130h-335l-75-75h-130"/>
+    <path d="M175 900V700l95-95V460M245 900V735l100-100V500M315 900V770l100-100V535M1420 900V705l-105-105V455M1350 900V735l-100-100V500M1280 900V770l-100-100V535"/>
+    <rect x="610" y="285" width="380" height="330" rx="34"/>
+    <rect x="645" y="320" width="310" height="260" rx="22"/>
+    <path d="M690 390h220M690 445h220M690 500h145"/>
+  </g>
+  <g fill="#1652c4" fill-opacity=".25">
+    <circle cx="210" cy="235" r="8"/><circle cx="705" cy="225" r="8"/><circle cx="1410" cy="180" r="8"/>
+    <circle cx="130" cy="295" r="8"/><circle cx="720" cy="300" r="8"/><circle cx="1480" cy="245" r="8"/>
+    <circle cx="70" cy="355" r="8"/><circle cx="685" cy="405" r="8"/><circle cx="1535" cy="310" r="8"/>
+  </g>
+</svg>

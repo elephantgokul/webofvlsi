@@ -1,0 +1,5 @@
+[functions.gallery-media]
+verify_jwt = false
+
+[functions.contact-message]
+verify_jwt = false

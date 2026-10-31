@@ -93,7 +93,7 @@
   #skip-video-btn:hover { background: rgba(255,255,255,0.3); }
 </style>
 <div id="entrance-video-overlay">
-  <video id="entrance-video" src="assets/video/department-video.mp4" autoplay muted playsinline preload="metadata"></video>
+  <video id="entrance-video" data-src="assets/video/department-video.mp4" muted playsinline preload="none"></video>
   <button id="skip-video-btn">Skip</button>
 </div>
 <script>
@@ -102,7 +102,12 @@
     var video = document.getElementById('entrance-video');
     var skipBtn = document.getElementById('skip-video-btn');
 
-    if (!sessionStorage.getItem('entranceVideoPlayed')) {
+    var reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var smallScreen = window.matchMedia('(max-width: 600px)').matches;
+    var saveData = !!(navigator.connection && navigator.connection.saveData);
+
+    if (!sessionStorage.getItem('entranceVideoPlayed') && !reducedMotion && !smallScreen && !saveData) {
+      window.__entranceVideoActive = true;
       overlay.style.display = 'block';
       document.body.style.overflow = 'hidden';
       
@@ -110,11 +115,16 @@
       var cleanup = function() {
         if (cleanedUp) return;
         cleanedUp = true;
+        window.__entranceVideoActive = false;
+        video.pause();
+        video.removeAttribute('src');
+        video.load();
         sessionStorage.setItem('entranceVideoPlayed', 'true');
         overlay.style.opacity = '0';
         document.body.style.overflow = '';
         setTimeout(function() {
           if (overlay.parentNode) overlay.parentNode.removeChild(overlay);
+          window.dispatchEvent(new CustomEvent('siet:entrance-video-done'));
         }, 600);
       };
 
@@ -127,12 +137,16 @@
       video.addEventListener('error', cleanup);
       skipBtn.addEventListener('click', cleanup);
 
+      video.src = video.dataset.src;
+      video.load();
       var p = video.play();
       if (p !== undefined) {
         p.catch(function() { cleanup(); });
       }
     } else {
+      window.__entranceVideoActive = false;
       if (overlay.parentNode) overlay.parentNode.removeChild(overlay);
+      window.dispatchEvent(new CustomEvent('siet:entrance-video-done'));
     }
   })();
 </script>
@@ -207,8 +221,8 @@
            style="min-height:100svh;padding:7rem 1.25rem 5rem">
 
     <!-- Background Video -->
-    <video class="hero-bg-video" autoplay muted loop playsinline webkit-playsinline preload="auto" aria-hidden="true" tabindex="-1">
-      <source src="assets/video/department-video.mp4" type="video/mp4">
+    <video class="hero-bg-video" muted loop playsinline webkit-playsinline preload="none" poster="assets/images/department-hero-poster.svg" aria-hidden="true" tabindex="-1">
+      <source data-src="assets/video/department-video.mp4" type="video/mp4">
       Your browser does not support the video tag.
     </video>
 
@@ -793,7 +807,7 @@
           </li>
           <li class="flex gap-3">
             <i class="fa-solid fa-envelope mt-0.5 flex-shrink-0" style="color:#5A67D8"></i>
-            <a href="mailto:Hodvlsi@siet.ac.in" style="font-size:.83rem;color:#4A5568;transition:color .2s" onmouseover="this.style.color='#5A67D8'" onmouseout="this.style.color='#4A5568'">Hodvlsi@siet.ac.in</a>
+            <a href="mailto:hodvlsi@siet.ac.in" style="font-size:.83rem;color:#4A5568;transition:color .2s" onmouseover="this.style.color='#5A67D8'" onmouseout="this.style.color='#4A5568'">hodvlsi@siet.ac.in</a>
           </li>
           <li class="flex gap-3">
             <i class="fa-solid fa-clock mt-0.5 flex-shrink-0" style="color:#5A67D8"></i>

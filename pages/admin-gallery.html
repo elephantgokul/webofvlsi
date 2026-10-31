@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en" data-admin-protected>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex,nofollow">
+  <meta name="description" content="Manage published department gallery media.">
+  <title>Gallery Management | SIET VLSI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="icon" type="image/png" href="../assets/images/department_logo.png">
+  <link rel="stylesheet" href="../css/main.css">
+  <style>
+    body { margin: 0; min-height: 100vh; background: #f8fafc; color: #0b1b33; font-family: Inter, sans-serif; }
+    .admin-top { display:flex; align-items:center; justify-content:space-between; gap:1rem; padding:1rem max(1.25rem,calc((100vw - 1180px)/2)); background:#fff; border-bottom:1px solid #e2e8f0; }
+    .admin-main { max-width:1180px; margin:0 auto; padding:2rem 1.25rem 4rem; }
+    .admin-card { padding:1.5rem; background:#fff; border:1px solid #e2e8f0; border-radius:1rem; box-shadow:0 6px 22px rgba(22,82,196,.04); }
+    .admin-field { display:block; width:100%; padding:.7rem .85rem; border:1px solid #cbd5e1; border-radius:.7rem; background:#fff; color:#0b1b33; font:inherit; font-size:.9rem; }
+    .admin-label { display:block; margin-bottom:.4rem; color:#5b6478; font-size:.78rem; font-weight:600; }
+    .media-row { display:grid; grid-template-columns:100px minmax(0,1fr) auto; gap:1rem; align-items:center; padding:1rem 0; border-bottom:1px solid #eef2f7; }
+    .media-thumb { display:grid; width:100px; height:72px; place-items:center; overflow:hidden; border-radius:.7rem; background:linear-gradient(135deg,#f0f7ff,#dff5fb); color:#1652c4; }
+    .media-thumb img { width:100%; height:100%; object-fit:cover; }
+    .button { display:inline-flex; align-items:center; justify-content:center; gap:.45rem; padding:.65rem 1rem; border:0; border-radius:.7rem; background:#1652c4; color:#fff; font:inherit; font-size:.85rem; font-weight:600; cursor:pointer; }
+    .button:disabled { opacity:.55; cursor:wait; }
+    .button-muted { background:#edf4ff; color:#1652c4; }
+    .status { min-height:1.4rem; color:#5b6478; font-size:.85rem; }
+    @media (max-width:640px) { .media-row { grid-template-columns:76px minmax(0,1fr); } .media-thumb { width:76px; height:60px; } .media-actions { grid-column:2; display:flex; flex-wrap:wrap; } }
+  </style>
+</head>
+<body>
+  <header class="admin-top">
+    <a href="admin.html" style="color:#1652c4;text-decoration:none;font-weight:700"><i class="fa-solid fa-arrow-left" aria-hidden="true"></i> Events admin</a>
+    <div style="display:flex;gap:.6rem;align-items:center">
+      <a href="gallery.html" class="button button-muted">View gallery</a>
+      <button id="admin-gallery-logout" class="button button-muted" type="button">Sign out</button>
+    </div>
+  </header>
+  <main class="admin-main">
+    <h1 style="margin:0 0 .35rem;font-size:1.8rem">Gallery management</h1>
+    <p style="margin:0 0 1.5rem;color:#5b6478">Add event photos and videos. New media stays unpublished until you publish it.</p>
+    <section class="admin-card" aria-labelledby="upload-heading">
+      <h2 id="upload-heading" style="margin:0 0 1rem;font-size:1.1rem">Upload gallery media</h2>
+      <form id="gallery-upload-form">
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem">
+          <div><label class="admin-label" for="gallery-category">Category *</label><select id="gallery-category" class="admin-field" required><option value="">Loading categories…</option></select></div>
+          <div><label class="admin-label" for="gallery-event">Related event (optional)</label><select id="gallery-event" class="admin-field"><option value="">No linked event</option></select></div>
+          <div style="grid-column:1/-1"><label class="admin-label" for="gallery-caption">Caption</label><input id="gallery-caption" class="admin-field" type="text" maxlength="500" placeholder="Add a short description"></div>
+          <div style="grid-column:1/-1"><label class="admin-label" for="gallery-file">Photo or video * (JPEG, PNG, WebP, GIF, MP4, or WebM; maximum 20 MB)</label><input id="gallery-file" class="admin-field" type="file" accept="image/jpeg,image/png,image/webp,image/gif,video/mp4,video/webm" required></div>
+        </div>
+        <div style="display:flex;align-items:center;gap:1rem;margin-top:1rem;flex-wrap:wrap">
+          <button id="gallery-upload-submit" class="button" type="submit"><i class="fa-solid fa-cloud-arrow-up" aria-hidden="true"></i> Upload as draft</button>
+          <p id="gallery-upload-status" class="status" role="status" aria-live="polite"></p>
+        </div>
+      </form>
+    </section>
+    <section class="admin-card" style="margin-top:1.5rem" aria-labelledby="media-heading">
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:1rem">
+        <h2 id="media-heading" style="margin:0;font-size:1.1rem">Gallery media</h2>
+        <button id="gallery-refresh" class="button button-muted" type="button"><i class="fa-solid fa-rotate" aria-hidden="true"></i> Refresh</button>
+      </div>
+      <p id="gallery-list-status" class="status" role="status" aria-live="polite"></p>
+      <div id="gallery-admin-list"></div>
+    </section>
+  </main>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../js/supabase-config.js"></script>
+  <script src="../js/admin-auth.js"></script>
+  <script src="../js/admin-media.js"></script>
+  <script src="../js/admin-gallery.js"></script>
+</body>
+</html>

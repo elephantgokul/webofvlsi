@@ -70,9 +70,15 @@
    */
   function getSupabasePublicUrl(bucket, filePath) {
     if (!bucket || !filePath) return '';
-    var cleanFile = String(filePath).replace(/^\/+/, '');
+    var allowedBucket = Object.keys(SUPABASE_BUCKETS).some(function (key) { return SUPABASE_BUCKETS[key] === bucket; });
+    if (!allowedBucket) return '';
+    var cleanFile = String(filePath).replace(/\\/g, '/').split('/')
+      .filter(function (part) { return part && part !== '.' && part !== '..'; })
+      .map(function (part) { return encodeURIComponent(part); })
+      .join('/');
+    if (!cleanFile) return '';
     var baseUrl = (SUPABASE_URL || '').replace(/\/+$/, '');
-    return baseUrl + '/storage/v1/object/public/' + bucket + '/' + cleanFile;
+    return baseUrl + '/storage/v1/object/public/' + encodeURIComponent(bucket) + '/' + cleanFile;
   }
 
   /**
@@ -169,10 +175,16 @@
     var raw = String(pathOrFilename || fallbackLocalPath || '').trim();
     if (!raw) return '';
 
-    // If it is already a full remote URL or data URL
-    if (/^(https?:|data:)/i.test(raw)) {
-      return raw;
+    // Accept only web URLs; data:, javascript:, and protocol-relative URLs are not image sources.
+    if (/^https?:\/\//i.test(raw)) {
+      try {
+        var parsedUrl = new URL(raw);
+        return parsedUrl.protocol === 'http:' || parsedUrl.protocol === 'https:' ? parsedUrl.href : '';
+      } catch (error) {
+        return '';
+      }
     }
+    if (/^(?:[a-z][a-z0-9+.-]*:|\/\/)/i.test(raw)) return '';
 
     if (isConfigured()) {
       var filePath = raw;
@@ -200,7 +212,7 @@
   function getLocalAssetFallback(pathOrFilename, bucket) {
     var raw = String(pathOrFilename || '').trim();
     if (!raw) return '';
-    if (/^(https?:|data:)/i.test(raw)) return '';
+    if (/^(?:https?:\/\/|[a-z][a-z0-9+.-]*:|\/\/)/i.test(raw)) return '';
     var filename = raw.split('/').pop();
     var isInsidePagesFolder = typeof window !== 'undefined' &&
       window.location &&
