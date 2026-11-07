@@ -146,20 +146,9 @@ CREATE TABLE IF NOT EXISTS public.contact_messages (
 ALTER TABLE public.contact_messages ENABLE ROW LEVEL SECURITY;
 DROP POLICY IF EXISTS "Visitors can submit valid contact messages" ON public.contact_messages;
 DROP POLICY IF EXISTS "Site admin can read contact messages" ON public.contact_messages;
-CREATE POLICY "Visitors can submit valid contact messages" ON public.contact_messages
-  FOR INSERT TO anon, authenticated
-  WITH CHECK (
-    char_length(trim(name)) BETWEEN 2 AND 120
-    AND char_length(trim(email)) BETWEEN 6 AND 254
-    AND position('@' IN email) > 1
-    AND email !~ '\s'
-    AND char_length(trim(subject)) BETWEEN 4 AND 200
-    AND char_length(trim(message)) BETWEEN 20 AND 10000
-    AND (page_url IS NULL OR char_length(page_url) <= 1000)
-  );
 CREATE POLICY "Site admin can read contact messages" ON public.contact_messages
   FOR SELECT TO authenticated USING (public.is_site_admin());
-GRANT INSERT ON public.contact_messages TO anon, authenticated;
+REVOKE INSERT ON public.contact_messages FROM anon, authenticated;
 GRANT SELECT ON public.contact_messages TO authenticated;
 
 -- `gallery` is deliberately private. A server-side Edge Function signs links

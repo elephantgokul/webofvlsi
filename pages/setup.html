@@ -25,7 +25,7 @@
     <p>This site is hosted as static files. Supabase Auth protects the dashboard interface; database and media writes are enforced by Supabase RLS and the Edge Function.</p>
     <div class="notice"><strong>Credentials are never created on this page.</strong> Create or invite the administrator in the Supabase Dashboard, choose a new password there, and do not place it in this repository.</div>
     <ol>
-      <li>Run <code>supabase/migrations/20261031_security_gallery.sql</code> in the Supabase SQL Editor.</li>
+      <li>Run every SQL migration in <code>supabase/migrations/</code> in timestamp order, through <code>20261031120000_security_hardening.sql</code>.</li>
       <li>In Authentication, create or invite <code>hodvlsi@siet.ac.in</code>, confirm the email, and disable public sign-ups.</li>
       <li>In the SQL Editor, assign the trusted server-side admin claim after the account exists:<br><code>UPDATE auth.users SET raw_app_meta_data = COALESCE(raw_app_meta_data, '{}'::jsonb) || '{"site_admin":true}'::jsonb WHERE lower(email) = 'hodvlsi@siet.ac.in';</code></li>
       <li>Set a strong password and recovery redirect URL in Supabase Auth settings. Consider enabling MFA and CAPTCHA or rate protection.</li>
