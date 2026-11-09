@@ -45,6 +45,7 @@
   --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
 }
 
+:root[data-theme="dark"],
 [data-theme="dark"] {
   --clr-bg: #141415;
   --clr-surface: #19191b;
@@ -62,6 +63,30 @@
   --slate-700: #cbd5e1;
   --slate-500: #a1a1a6;
   --slate-200: rgba(255, 255, 255, 0.08);
+}
+
+/* Theme-driven hairline borders and dividers (replaces Tailwind dark: utilities) */
+.spec-block {
+  border: 1px solid var(--clr-border) !important;
+}
+.spec-block > div + div {
+  border-top: 1px solid var(--clr-border) !important;
+}
+@media (min-width: 640px) {
+  .spec-block > div + div {
+    border-top: none !important;
+    border-left: 1px solid var(--clr-border) !important;
+  }
+}
+
+.hairline-border {
+  border-color: var(--clr-border) !important;
+}
+.hairline-border-b {
+  border-bottom: 1px solid var(--clr-border) !important;
+}
+.hairline-border-t {
+  border-top: 1px solid var(--clr-border) !important;
 }
 
 /* =========================================================================
@@ -1999,13 +2024,13 @@ body.home-page #site-header:not(.is-scrolled) .nav-link:hover {
 :root {
   --clr-bg: #ffffff;
   --clr-surface: #ffffff;
-  --clr-border: transparent;
-  --clr-text-primary: #1a202c;
-  --clr-text-secondary: #4A5568;
-  --clr-accent: #5A67D8;
-  --font-display: "Inter", sans-serif;
-  --font-body: "Inter", sans-serif;
-  --font-mono: "Inter", sans-serif;
+  --clr-border: #e2e8f0;
+  --clr-text-primary: #0f172a;
+  --clr-text-secondary: #5b6478;
+  --clr-accent: #1652c4;
+  --font-display: var(--font-ui);
+  --font-body: var(--font-ui);
+  --font-mono: var(--font-mono);
 }
 
 body {
