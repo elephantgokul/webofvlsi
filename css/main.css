@@ -44,6 +44,25 @@
   --font-mono: "JetBrains Mono", monospace;
 }
 
+[data-theme="dark"] {
+  --clr-bg: #141415;
+  --clr-surface: #19191b;
+  --clr-surface-2: #232325;
+  --clr-border: rgba(255, 255, 255, 0.08);
+  --clr-text-primary: #ededed;
+  --clr-text-secondary: #a1a1a6;
+  --clr-text-muted: #85858b;
+  --clr-accent: #60a5fa;
+  --circuit-blue: #60a5fa;
+  --signal-cyan: #60a5fa;
+  --paper: #19191b;
+  --mist: #141415;
+  --slate-900: #ededed;
+  --slate-700: #cbd5e1;
+  --slate-500: #a1a1a6;
+  --slate-200: rgba(255, 255, 255, 0.08);
+}
+
 /* =========================================================================
    BASE
    ========================================================================= */

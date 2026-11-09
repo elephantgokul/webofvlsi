@@ -21,10 +21,38 @@
   --text-secondary: #a1a1a6;
   --text-muted: #85858b;
   
+  /* Lighter blue tint for dark mode text, links, icons and borders (7.24:1 contrast against #141415, 6.90:1 against #19191b) */
+  --accent-color: #60a5fa;
+  --accent-gradient: #60a5fa;
+  
   --glass-bg: rgba(25, 25, 27, 0.96);
   --glass-tint: rgba(25, 25, 27, 0.96);
   --glass-border: rgba(255, 255, 255, 0.08);
   --glass-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.4);
+}
+
+/* Dark Mode Accent Overrides for text, links, icons and borders */
+[data-theme="dark"] .text-accent,
+[data-theme="dark"] .readout-value,
+[data-theme="dark"] .eyebrow-tag,
+[data-theme="dark"] [style*="color:#1652c4"],
+[data-theme="dark"] [style*="color: #1652c4"] {
+  color: var(--accent-color) !important;
+}
+
+[data-theme="dark"] [style*="border-color:#1652c4"],
+[data-theme="dark"] [style*="border-color: #1652c4"] {
+  border-color: var(--accent-color) !important;
+}
+
+/* Fills with white text retain #1652c4 in dark mode (contrast 7.05:1 with white text) */
+[data-theme="dark"] .btn-primary {
+  background: #1652c4 !important;
+  color: #ffffff !important;
+}
+[data-theme="dark"] [style*="background:#1652c4"],
+[data-theme="dark"] [style*="background: #1652c4"] {
+  background: #1652c4 !important;
 }
 
 /* Global Overrides */
