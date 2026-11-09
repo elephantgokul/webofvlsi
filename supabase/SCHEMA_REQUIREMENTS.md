@@ -6,7 +6,8 @@ The CLI migration directory is the canonical source for fresh projects:
 
 1. `20261031090000_initial_schema.sql` creates only the four core tables whose complete column definitions are present in this repository. It enables RLS and revokes client grants so the database remains closed until the next migration applies its explicit policies.
 2. `20261031100000_security_gallery.sql` checks that the core tables and required columns exist, then adds the core policies, grants, bucket settings, and legacy Gallery metadata import.
-3. `20261031120000_security_hardening.sql` requires `students`, `faculty`, and `hod` first. It fails before changing anything if those tables are missing, and requires RLS to already be enabled on `faculty` and `hod`.
+3. `20261031110000_people_schema.sql` creates schema-backed `students`, `faculty`, and `hod` tables with Row-Level Security enabled, fulfilling the preflight prerequisites for hardening.
+4. `20261031120000_security_hardening.sql` requires `students`, `faculty`, and `hod` first. It adds restrictive policy ceilings, creates the `public_students` security-invoker view, and restricts access to public fields.
 
 The final migration sequence is deliberately incomplete for a fresh project. This repository does not contain enough authoritative schema information to create or safely expose `students`, `faculty`, or `hod`. Add a schema-specific migration before hardening only after obtaining the actual DDL and approved public fields. Do not add guessed columns or sample student records.
 
