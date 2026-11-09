@@ -20,8 +20,6 @@ CREATE TABLE IF NOT EXISTS public.students (
   created_at TIMESTAMPTZ NOT NULL DEFAULT now()
 );
 
-CREATE INDEX IF NOT EXISTS idx_students_name ON public.students(name);
-
 ALTER TABLE public.students ENABLE ROW LEVEL SECURITY;
 
 DROP POLICY IF EXISTS "Public can read students" ON public.students;
