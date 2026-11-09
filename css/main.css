@@ -89,6 +89,15 @@
   border-top: 1px solid var(--clr-border) !important;
 }
 
+.section-num {
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  font-weight: 400;
+  color: var(--clr-text-muted) !important;
+  margin-right: 0.75rem;
+  user-select: none;
+}
+
 /* =========================================================================
    BASE
    ========================================================================= */
