@@ -276,7 +276,7 @@ body.home-page #site-header:not(.is-scrolled) .nav-link:hover {
   position: absolute;
   inset: 0;
   z-index: 1;
-  background: transparent;
+  background: rgba(15, 23, 42, 0.75);
   pointer-events: none;
 }
 
