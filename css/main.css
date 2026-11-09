@@ -127,7 +127,7 @@ textarea:focus-visible {
   right: 0;
   z-index: 80;
   transition: background-color 0.3s ease, box-shadow 0.3s ease;
-  padding-block: 0.85rem;
+  padding-block: 0.75rem;
   background-color: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
@@ -465,6 +465,7 @@ body.home-page #site-header:not(.is-scrolled) .nav-link:hover {
   color: var(--paper);
   border-radius: 9999px;
   padding: 0.75rem 1.5rem;
+  min-height: 2.75rem;
   font-weight: 600;
   letter-spacing: 0.02em;
   transition: all 0.6s cubic-bezier(0.32,0.72,0,1);
@@ -509,6 +510,7 @@ body.home-page #site-header:not(.is-scrolled) .nav-link:hover {
   border: 1px solid var(--clr-border);
   border-radius: 0.75rem;
   padding: 0.625rem 1.25rem;
+  min-height: 2.5rem;
   font-weight: 500;
   transition: background-color 0.2s, border-color 0.2s;
   display: inline-flex;
