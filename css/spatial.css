@@ -2,12 +2,29 @@
 :root {
   --font-sans: 'Inter', system-ui, sans-serif;
   --bg-color: #ffffff;
-  --text-primary: #1d1d1f;
-  --text-secondary: #6e6e73;
+  --text-primary: #0f172a;
+  --text-secondary: #5b6478;
+  --text-muted: #85858b;
   
-  /* Glass tokens are owned by main.css so every page shares one palette. */
-  --accent-gradient: linear-gradient(135deg, #3a7bd5 0%, #5A67D8 100%);
-  --accent-color: #3a7bd5;
+  --accent-color: #1652c4;
+  --accent-gradient: #1652c4;
+  
+  --glass-bg: rgba(255, 255, 255, 0.96);
+  --glass-tint: rgba(255, 255, 255, 0.96);
+  --glass-border: #e2e8f0;
+  --glass-shadow: 0 4px 16px -2px rgba(15, 23, 42, 0.05);
+}
+
+[data-theme="dark"] {
+  --bg-color: #141415;
+  --text-primary: #ededed;
+  --text-secondary: #a1a1a6;
+  --text-muted: #85858b;
+  
+  --glass-bg: rgba(25, 25, 27, 0.96);
+  --glass-tint: rgba(25, 25, 27, 0.96);
+  --glass-border: rgba(255, 255, 255, 0.08);
+  --glass-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.4);
 }
 
 /* Global Overrides */
@@ -33,37 +50,29 @@ h1, h2, h3, h4, h5, h6, .font-display, .font-body, p, span, div {
   background-color: transparent !important;
 }
 
-/* Ambient Background — Hardware-accelerated smooth radial gradient (ZERO blur overhead) */
+/* Ambient Background — Disabled radial color washes */
 .ambient-bg {
-  position: fixed;
-  inset: 0;
-  z-index: -1;
-  pointer-events: none;
-  overflow: hidden;
-  background: 
-    radial-gradient(circle at 12% 15%, rgba(199, 210, 254, 0.22) 0%, transparent 45%),
-    radial-gradient(circle at 88% 85%, rgba(165, 243, 252, 0.2) 0%, transparent 50%),
-    radial-gradient(circle at 75% 35%, rgba(191, 219, 254, 0.16) 0%, transparent 40%);
+  display: none !important;
 }
 .orb {
   display: none !important;
 }
 
-/* Glass UI Elements — overlays use smooth blur, cards use crisp solid translucency */
+/* Glass UI Elements — quiet surfaces with hairlines */
 .glass, #mobile-menu, .glass-panel, .modal-content, .sidebar {
-  background: linear-gradient(135deg, var(--glass-bg), var(--glass-tint)) !important;
-  backdrop-filter: blur(12px) !important;
-  -webkit-backdrop-filter: blur(12px) !important;
+  background: var(--glass-bg) !important;
+  backdrop-filter: blur(8px) !important;
+  -webkit-backdrop-filter: blur(8px) !important;
   border: 1px solid var(--glass-border) !important;
   box-shadow: var(--glass-shadow) !important;
   border-radius: 20px !important;
 }
 
-/* In-flow surface cards — crisp, lightweight, 60fps scrolling without GPU blur cost */
+/* In-flow surface cards */
 .surface-card {
-  background: rgba(255, 255, 255, 0.92) !important;
-  border: 1px solid rgba(226, 232, 240, 0.85) !important;
-  box-shadow: 0 4px 20px -2px rgba(11, 27, 51, 0.05), 0 2px 6px -1px rgba(11, 27, 51, 0.03) !important;
+  background: var(--glass-bg) !important;
+  border: 1px solid var(--glass-border) !important;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04) !important;
   border-radius: 20px !important;
   position: relative;
   overflow: hidden;
@@ -71,7 +80,7 @@ h1, h2, h3, h4, h5, h6, .font-display, .font-body, p, span, div {
   will-change: transform;
 }
 [data-theme="dark"] .surface-card {
-  background: rgba(26, 32, 44, 0.88) !important;
+  background: #19191b !important;
   border: 1px solid rgba(255, 255, 255, 0.08) !important;
   box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.35) !important;
 }
@@ -86,10 +95,15 @@ h1, h2, h3, h4, h5, h6, .font-display, .font-body, p, span, div {
   background: rgba(0, 0, 0, 0.02) !important;
   border: 1px solid var(--glass-border) !important;
 }
+[data-theme="dark"] .glass-input, [data-theme="dark"] input, [data-theme="dark"] select, [data-theme="dark"] textarea {
+  background: #232325 !important;
+  color: #ededed !important;
+  border-color: rgba(255, 255, 255, 0.1) !important;
+}
 .glass-input:focus, input:focus, select:focus, textarea:focus {
   outline: none !important;
   border-color: var(--accent-color) !important;
-  box-shadow: 0 0 0 2px rgba(58, 123, 213, 0.2), inset 0 1px 0 rgba(255,255,255,0.9) !important;
+  box-shadow: 0 0 0 2px rgba(22, 82, 196, 0.15) !important;
 }
 
 /* Navbar / Top Bar Re-style */
@@ -107,9 +121,9 @@ h1, h2, h3, h4, h5, h6, .font-display, .font-body, p, span, div {
   pointer-events: none;
 }
 #site-header > div {
-  background: linear-gradient(135deg, var(--glass-bg), var(--glass-tint)) !important;
-  backdrop-filter: blur(12px) !important;
-  -webkit-backdrop-filter: blur(12px) !important;
+  background: var(--glass-bg) !important;
+  backdrop-filter: blur(8px) !important;
+  -webkit-backdrop-filter: blur(8px) !important;
   border: 1px solid var(--glass-border) !important;
   box-shadow: var(--glass-shadow) !important;
   border-radius: 9999px !important;
@@ -128,12 +142,16 @@ h1, h2, h3, h4, h5, h6, .font-display, .font-body, p, span, div {
 
 /* Buttons */
 .btn-primary, button[type="submit"] {
-  background: var(--accent-gradient) !important;
-  color: #fff !important;
+  background: #1652c4 !important;
+  color: #ffffff !important;
   border: none !important;
-  box-shadow: 0 4px 15px rgba(58, 123, 213, 0.25) !important;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.12) !important;
   border-radius: 9999px !important;
   transition: transform 0.2s ease, box-shadow 0.2s ease !important;
+}
+[data-theme="dark"] .btn-primary, [data-theme="dark"] button[type="submit"] {
+  background: #ffffff !important;
+  color: #0f172a !important;
 }
 .btn-primary:active, .glass-pill:active, button:active, a:active {
   transform: scale(0.97) !important;
@@ -143,22 +161,12 @@ h1, h2, h3, h4, h5, h6, .font-display, .font-body, p, span, div {
 @media (min-width: 1024px) {
   .surface-card:hover {
     transform: translateY(-4px) !important;
-    border-color: rgba(58, 123, 213, 0.25) !important;
-    box-shadow: 0 12px 32px rgba(11, 27, 51, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.9) !important;
+    border-color: rgba(22, 82, 196, 0.3) !important;
+    box-shadow: 0 10px 24px -10px rgba(15, 23, 42, 0.08) !important;
   }
 }
 .surface-card::before {
-  content: "";
-  position: absolute;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background: radial-gradient(600px circle at var(--mx, 50%) var(--my, 50%), rgba(58, 123, 213, 0.05), transparent 40%);
-  pointer-events: none;
-  z-index: 1;
-  opacity: 0;
-  transition: opacity 0.25s ease;
-}
-.surface-card:hover::before {
-  opacity: 1;
+  display: none !important;
 }
 
 /* Tables */
@@ -176,10 +184,12 @@ th {
   padding: 1rem;
 }
 [data-theme="dark"] th {
-  background: #1e293b !important;
+  background: #19191b !important;
+  color: var(--text-secondary) !important;
 }
 td { padding: 1rem; border-bottom: 1px solid var(--glass-border) !important; color: var(--text-primary) !important; }
 tr:hover td { background: rgba(0, 0, 0, 0.02) !important; }
+[data-theme="dark"] tr:hover td { background: rgba(255, 255, 255, 0.02) !important; }
 
 /* Reduced Motion & Fallbacks */
 @media (prefers-reduced-motion: reduce) {

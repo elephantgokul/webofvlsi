@@ -40,20 +40,20 @@
   <script src="js/spatial.js" defer></script>
 
   <script>
-            tailwind.config = {
+    tailwind.config = {
       theme: {                                                
         extend: {
           colors: {
-            'ink-navy':   '#1a202c',
-            'ink-light':  '#2D3748',
-            'circuit-blue':'#5A67D8',
-            'circuit-dark':'#434190',
-            'signal-cyan': '#3a7bd5',
+            'ink-navy':   '#0f172a',
+            'ink-light':  '#1e293b',
+            'circuit-blue':'#1652c4',
+            'circuit-dark':'#0f3d99',
+            'signal-cyan': '#1652c4',
             mist:          '#f8fafc',
-            accent:        '#5A67D8',
+            accent:        '#1652c4',
             surface:       '#ffffff',
-            'surface-2':   '#f0f4f8',
-            default:       '#718096',
+            'surface-2':   '#f8fafc',
+            default:       '#5b6478',
           },
           fontFamily: {
             display: ['"Inter"','sans-serif'],
@@ -62,11 +62,11 @@
           },
           borderRadius: { 'lg':'16px', 'xl':'24px', '2xl':'32px', '3xl':'40px', '4xl':'48px', '5xl':'56px', 'full':'9999px' },
           boxShadow: {
-            'sm': '4px 4px 10px rgba(166,180,200,0.5), -4px -4px 10px rgba(255,255,255,0.9), inset 1px 1px 2px rgba(255,255,255,0.8), inset -1px -1px 2px rgba(166,180,200,0.2)',
-            DEFAULT: '8px 8px 16px rgba(166,180,200,0.5), -8px -8px 16px rgba(255,255,255,0.9), inset 2px 2px 4px rgba(255,255,255,0.8), inset -2px -2px 4px rgba(166,180,200,0.2)',
-            'md': '10px 10px 20px rgba(166,180,200,0.5), -10px -10px 20px rgba(255,255,255,0.9), inset 2px 2px 4px rgba(255,255,255,0.8), inset -2px -2px 4px rgba(166,180,200,0.2)',
-            'lg': '12px 12px 24px rgba(166,180,200,0.5), -12px -12px 24px rgba(255,255,255,0.9), inset 3px 3px 6px rgba(255,255,255,0.8), inset -3px -3px 6px rgba(166,180,200,0.2)',
-            'xl': '20px 20px 40px rgba(166,180,200,0.6), -20px -20px 40px rgba(255,255,255,1), inset 4px 4px 8px rgba(255,255,255,0.9), inset -4px -4px 8px rgba(166,180,200,0.3)',
+            'sm': '0 1px 2px rgba(15, 23, 42, 0.05)',
+            DEFAULT: '0 1px 3px rgba(15, 23, 42, 0.08)',
+            'md': '0 4px 12px -2px rgba(15, 23, 42, 0.08)',
+            'lg': '0 10px 24px -6px rgba(15, 23, 42, 0.08)',
+            'xl': '0 20px 32px -8px rgba(15, 23, 42, 0.08)',
           }
         }
       }
@@ -199,15 +199,15 @@
   <nav id="mobile-menu" aria-label="Mobile navigation">
     <div class="max-w-screen-xl mx-auto px-5 pt-3 pb-5 flex flex-col gap-1"
          style="background:rgba(255,255,255,.96);backdrop-filter:blur(20px);border-top:1px solid rgba(0,0,0,.06)">
-      <a href="#about"                   class="px-4 py-3 text-sm font-medium rounded-xl transition-all" style="color:#4A5568" onmouseover="this.style.background='#f0f4f8';this.style.color='#5A67D8'" onmouseout="this.style.background='';this.style.color='#4A5568'">About</a>
-      <a href="pages/hod.html"           class="px-4 py-3 text-sm font-medium rounded-xl transition-all" style="color:#4A5568" onmouseover="this.style.background='#f0f4f8';this.style.color='#5A67D8'" onmouseout="this.style.background='';this.style.color='#4A5568'">HOD</a>
-      <a href="pages/faculty.html"       class="px-4 py-3 text-sm font-medium rounded-xl transition-all" style="color:#4A5568" onmouseover="this.style.background='#f0f4f8';this.style.color='#5A67D8'" onmouseout="this.style.background='';this.style.color='#4A5568'">Faculty</a>
-      <a href="pages/students.html"      class="px-4 py-3 text-sm font-medium rounded-xl transition-all" style="color:#4A5568" onmouseover="this.style.background='#f0f4f8';this.style.color='#5A67D8'" onmouseout="this.style.background='';this.style.color='#4A5568'">Students</a>
-      <a href="pages/events.html"        class="px-4 py-3 text-sm font-medium rounded-xl transition-all" style="color:#4A5568" onmouseover="this.style.background='#f0f4f8';this.style.color='#5A67D8'" onmouseout="this.style.background='';this.style.color='#4A5568'">Events</a>
-      <a href="pages/leaderboard.html" class="px-4 py-3 text-sm font-medium rounded-xl transition-all" style="color:#4A5568" onmouseover="this.style.background='#f0f4f8';this.style.color='#5A67D8'" onmouseout="this.style.background='';this.style.color='#4A5568'">Leaderboard</a>
-      <a href="pages/achievements.html"  class="px-4 py-3 text-sm font-medium rounded-xl transition-all" style="color:#4A5568" onmouseover="this.style.background='#f0f4f8';this.style.color='#5A67D8'" onmouseout="this.style.background='';this.style.color='#4A5568'">Achievements</a>
-      <a href="#placements"              class="px-4 py-3 text-sm font-medium rounded-xl transition-all" style="color:#4A5568" onmouseover="this.style.background='#f0f4f8';this.style.color='#5A67D8'" onmouseout="this.style.background='';this.style.color='#4A5568'">Placements</a>
-      <a href="pages/contact.html"       class="px-4 py-3 text-sm font-medium rounded-xl transition-all" style="color:#4A5568" onmouseover="this.style.background='#f0f4f8';this.style.color='#5A67D8'" onmouseout="this.style.background='';this.style.color='#4A5568'">Contact</a>
+      <a href="#about"                   class="px-4 py-3 text-sm font-medium rounded-xl transition-all" style="color:#334155" onmouseover="this.style.background='#f8fafc';this.style.color='#1652c4'" onmouseout="this.style.background='';this.style.color='#334155'">About</a>
+      <a href="pages/hod.html"           class="px-4 py-3 text-sm font-medium rounded-xl transition-all" style="color:#334155" onmouseover="this.style.background='#f8fafc';this.style.color='#1652c4'" onmouseout="this.style.background='';this.style.color='#334155'">HOD</a>
+      <a href="pages/faculty.html"       class="px-4 py-3 text-sm font-medium rounded-xl transition-all" style="color:#334155" onmouseover="this.style.background='#f8fafc';this.style.color='#1652c4'" onmouseout="this.style.background='';this.style.color='#334155'">Faculty</a>
+      <a href="pages/students.html"      class="px-4 py-3 text-sm font-medium rounded-xl transition-all" style="color:#334155" onmouseover="this.style.background='#f8fafc';this.style.color='#1652c4'" onmouseout="this.style.background='';this.style.color='#334155'">Students</a>
+      <a href="pages/events.html"        class="px-4 py-3 text-sm font-medium rounded-xl transition-all" style="color:#334155" onmouseover="this.style.background='#f8fafc';this.style.color='#1652c4'" onmouseout="this.style.background='';this.style.color='#334155'">Events</a>
+      <a href="pages/leaderboard.html" class="px-4 py-3 text-sm font-medium rounded-xl transition-all" style="color:#334155" onmouseover="this.style.background='#f8fafc';this.style.color='#1652c4'" onmouseout="this.style.background='';this.style.color='#334155'">Leaderboard</a>
+      <a href="pages/achievements.html"  class="px-4 py-3 text-sm font-medium rounded-xl transition-all" style="color:#334155" onmouseover="this.style.background='#f8fafc';this.style.color='#1652c4'" onmouseout="this.style.background='';this.style.color='#334155'">Achievements</a>
+      <a href="#placements"              class="px-4 py-3 text-sm font-medium rounded-xl transition-all" style="color:#334155" onmouseover="this.style.background='#f8fafc';this.style.color='#1652c4'" onmouseout="this.style.background='';this.style.color='#334155'">Placements</a>
+      <a href="pages/contact.html"       class="px-4 py-3 text-sm font-medium rounded-xl transition-all" style="color:#334155" onmouseover="this.style.background='#f8fafc';this.style.color='#1652c4'" onmouseout="this.style.background='';this.style.color='#334155'">Contact</a>
       <a href="pages/resources.html"
          class="mt-2 btn-primary text-sm font-semibold text-white px-4 py-3 rounded-xl text-center">Resources &amp; Downloads</a>
     </div>
@@ -235,8 +235,8 @@
 
       <!-- Eyebrow badge -->
       <div class="hero-eyebrow eyebrow-tag inline-flex items-center gap-2 px-4 py-1.5 rounded-full mb-8"
-           style="background:rgba(47,230,221,.12);border:1px solid rgba(47,230,221,.3);color:#2fe6dd">
-        <span class="w-1.5 h-1.5 rounded-full" style="background:#2fe6dd;animation:pulse 2s infinite"></span>
+           style="background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.18);color:#ffffff">
+        <span class="w-1.5 h-1.5 rounded-full" style="background:rgba(255,255,255,0.8);animation:pulse 2s infinite"></span>
         SIET &nbsp;&mdash;&nbsp; ESTABLISHED 1999 &nbsp;&mdash;&nbsp; NBA ACCREDITED
       </div>
 
@@ -244,10 +244,7 @@
       <h1 class="font-display font-bold text-white" style="color:#ffffff;line-height:1.07">
         <span class="hero-line block text-4xl md:text-6xl lg:text-[4.25rem]">Engineering the Future</span>
         <span class="hero-line block text-4xl md:text-6xl lg:text-[4.25rem]">
-          of
-          <span style="background:linear-gradient(95deg, var(--signal-cyan), var(--circuit-blue));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">
-            VLSI Design
-          </span>
+          of <span class="text-white">VLSI Design</span>
         </span>
       </h1>
 
@@ -271,16 +268,16 @@
       <!-- Stat badges -->
       <div class="hero-badges mt-10 flex flex-wrap justify-center gap-6 md:gap-8">
         <div class="flex items-center gap-2 text-xs font-mono" style="color:rgba(255,255,255,0.65)">
-          <i class="fa-solid fa-certificate" style="color:var(--signal-cyan)"></i> NBA Accredited
+          <i class="fa-solid fa-certificate" style="color:rgba(255,255,255,0.7)"></i> NBA Accredited
         </div>
         <div class="flex items-center gap-2 text-xs font-mono" style="color:rgba(255,255,255,0.65)">
-          <i class="fa-solid fa-award" style="color:var(--signal-cyan)"></i> NAAC A Grade
+          <i class="fa-solid fa-award" style="color:rgba(255,255,255,0.7)"></i> NAAC A Grade
         </div>
         <div class="flex items-center gap-2 text-xs font-mono" style="color:rgba(255,255,255,0.65)">
-          <i class="fa-solid fa-users" style="color:var(--signal-cyan)"></i> 180+ Students
+          <i class="fa-solid fa-users" style="color:rgba(255,255,255,0.7)"></i> 180+ Students
         </div>
         <div class="flex items-center gap-2 text-xs font-mono" style="color:rgba(255,255,255,0.65)">
-          <i class="fa-solid fa-microchip" style="color:var(--signal-cyan)"></i> VLSI Dept Established 2024
+          <i class="fa-solid fa-microchip" style="color:rgba(255,255,255,0.7)"></i> VLSI Dept Established 2024
         </div>
       </div>
     </div>
@@ -371,12 +368,12 @@
 
           <!-- Wide card -->
           <div class="col-span-2 rounded-2xl relative overflow-hidden flex items-center justify-center border"
-               style="height:200px;background:linear-gradient(135deg,#f0f7ff 0%,#e0f0fe 100%);border-color:#bfdbfe">
+               style="height:200px;background:#f8fafc;border-color:#e2e8f0">
             <div aria-hidden="true" style="position:absolute;inset:0;opacity:.18">
               <svg width="100%" height="100%">
                 <defs><pattern id="ag" width="40" height="40" patternUnits="userSpaceOnUse">
-                  <path d="M0 20H40M20 0V40" stroke="#93c5fd" stroke-width=".9" fill="none"/>
-                  <circle cx="20" cy="20" r="1.5" fill="#93c5fd"/>
+                  <path d="M0 20H40M20 0V40" stroke="#cbd5e1" stroke-width=".9" fill="none"/>
+                  <circle cx="20" cy="20" r="1.5" fill="#94a3b8"/>
                 </pattern></defs>
                 <rect width="100%" height="100%" fill="url(#ag)"/>
               </svg>
@@ -425,7 +422,7 @@
   </section>
 
   <!-- ----------------------- VISION & MISSION --------------- -->
-  <section id="vision-mission" class="py-20 md:py-24" style="background:linear-gradient(135deg, #f8fafc 0%, #edf2f7 100%);border-top:1px solid #e2e8f0;border-bottom:1px solid #e2e8f0"
+  <section id="vision-mission" class="py-20 md:py-24" style="background:#f8fafc;border-top:1px solid #e2e8f0;border-bottom:1px solid #e2e8f0"
            aria-label="Vision and mission">
     <div class="max-w-screen-xl mx-auto px-5 lg:px-8">
       <div class="text-center mb-12" data-aos="fade-up">
@@ -511,7 +508,7 @@
   </section>
 
   <!-- ----------------------- FEATURED STUDENT PROJECTS ------- -->
-  <section id="student-projects" class="py-20 md:py-24" style="background:linear-gradient(135deg, #f8fafc 0%, #edf2f7 100%);border-top:1px solid #e2e8f0;border-bottom:1px solid #e2e8f0" aria-label="Featured student projects">
+  <section id="student-projects" class="py-20 md:py-24" style="background:#f8fafc;border-top:1px solid #e2e8f0;border-bottom:1px solid #e2e8f0" aria-label="Featured student projects">
     <div class="max-w-screen-xl mx-auto px-5 lg:px-8">
       <div class="text-center mb-12" data-aos="fade-up">
         <p class="eyebrow-tag font-mono text-xs uppercase tracking-widest mb-3" style="color:#1652c4">Built by Our Students</p>
@@ -521,7 +518,7 @@
 
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         <div class="surface-card rounded-2xl overflow-hidden" style="transition:transform .3s,box-shadow .3s" onmouseover="this.style.transform='translateY(-5px)';this.style.boxShadow='0 20px 40px -18px rgba(11,27,51,.18)'" onmouseout="this.style.transform='';this.style.boxShadow=''" data-aos="fade-up">
-          <div class="h-40 flex items-center justify-center" style="background:linear-gradient(135deg,#1652c4,#2fe6dd)">
+          <div class="h-40 flex items-center justify-center" style="background:#0f172a">
             <i class="fa-solid fa-microchip text-4xl text-white opacity-80"></i>
           </div>
           <div class="p-6">
@@ -531,45 +528,45 @@
             <h3 class="font-display font-semibold text-base mb-2" style="color:#0b1b33">Low-Power CMOS Adder Design</h3>
             <p style="font-size:.82rem;color:#5b6478;line-height:1.7">Design and simulation of a 16-bit carry-lookahead adder using Cadence Virtuoso with power optimization techniques.</p>
             <div class="flex items-center gap-2 mt-4 pt-3" style="border-top:1px solid #e2e8f0">
-              <span class="text-xs font-mono" style="color:#aab4c8"><i class="fa-solid fa-users mr-1" style="color:#1652c4"></i>Team Project</span>
-              <span class="text-xs font-mono" style="color:#aab4c8">·</span>
-              <span class="text-xs font-mono" style="color:#aab4c8">II Year</span>
+              <span class="text-xs font-mono" style="color:#5b6478"><i class="fa-solid fa-users mr-1" style="color:#1652c4"></i>Team Project</span>
+              <span class="text-xs font-mono" style="color:#cbd5e1">·</span>
+              <span class="text-xs font-mono" style="color:#5b6478">II Year</span>
             </div>
           </div>
         </div>
 
         <div class="surface-card rounded-2xl overflow-hidden" style="transition:transform .3s,box-shadow .3s" onmouseover="this.style.transform='translateY(-5px)';this.style.boxShadow='0 20px 40px -18px rgba(11,27,51,.18)'" onmouseout="this.style.transform='';this.style.boxShadow=''" data-aos="fade-up" data-aos-delay="80">
-          <div class="h-40 flex items-center justify-center" style="background:linear-gradient(135deg,#7c3aed,#a78bfa)">
+          <div class="h-40 flex items-center justify-center" style="background:#0f172a">
             <i class="fa-solid fa-wifi text-4xl text-white opacity-80"></i>
           </div>
           <div class="p-6">
             <div class="flex items-center gap-2 mb-2">
-              <span class="px-2 py-0.5 rounded-md text-[10px] font-mono" style="background:#f5f3ff;color:#7c3aed">IoT / Embedded</span>
+              <span class="px-2 py-0.5 rounded-md text-[10px] font-mono" style="background:#f1f5f9;color:#334155">IoT / Embedded</span>
             </div>
             <h3 class="font-display font-semibold text-base mb-2" style="color:#0b1b33">Smart Classroom IoT Monitor</h3>
             <p style="font-size:.82rem;color:#5b6478;line-height:1.7">ESP32-based environmental monitoring system tracking temperature, humidity, and air quality with real-time dashboard.</p>
             <div class="flex items-center gap-2 mt-4 pt-3" style="border-top:1px solid #e2e8f0">
-              <span class="text-xs font-mono" style="color:#aab4c8"><i class="fa-solid fa-users mr-1" style="color:#7c3aed"></i>Team Project</span>
-              <span class="text-xs font-mono" style="color:#aab4c8">·</span>
-              <span class="text-xs font-mono" style="color:#aab4c8">I Year</span>
+              <span class="text-xs font-mono" style="color:#5b6478"><i class="fa-solid fa-users mr-1" style="color:#1652c4"></i>Team Project</span>
+              <span class="text-xs font-mono" style="color:#cbd5e1">·</span>
+              <span class="text-xs font-mono" style="color:#5b6478">I Year</span>
             </div>
           </div>
         </div>
 
         <div class="surface-card rounded-2xl overflow-hidden" style="transition:transform .3s,box-shadow .3s" onmouseover="this.style.transform='translateY(-5px)';this.style.boxShadow='0 20px 40px -18px rgba(11,27,51,.18)'" onmouseout="this.style.transform='';this.style.boxShadow=''" data-aos="fade-up" data-aos-delay="160">
-          <div class="h-40 flex items-center justify-center" style="background:linear-gradient(135deg,#059669,#34d399)">
+          <div class="h-40 flex items-center justify-center" style="background:#0f172a">
             <i class="fa-solid fa-signal text-4xl text-white opacity-80"></i>
           </div>
           <div class="p-6">
             <div class="flex items-center gap-2 mb-2">
-              <span class="px-2 py-0.5 rounded-md text-[10px] font-mono" style="background:#ecfdf5;color:#059669">Signal Processing</span>
+              <span class="px-2 py-0.5 rounded-md text-[10px] font-mono" style="background:#f1f5f9;color:#334155">Signal Processing</span>
             </div>
             <h3 class="font-display font-semibold text-base mb-2" style="color:#0b1b33">MATLAB Noise Reduction Filter</h3>
             <p style="font-size:.82rem;color:#5b6478;line-height:1.7">Adaptive noise cancellation system implemented in MATLAB/Simulink for biomedical signal processing applications.</p>
             <div class="flex items-center gap-2 mt-4 pt-3" style="border-top:1px solid #e2e8f0">
-              <span class="text-xs font-mono" style="color:#aab4c8"><i class="fa-solid fa-user mr-1" style="color:#059669"></i>Individual Project</span>
-              <span class="text-xs font-mono" style="color:#aab4c8">·</span>
-              <span class="text-xs font-mono" style="color:#aab4c8">II Year</span>
+              <span class="text-xs font-mono" style="color:#5b6478"><i class="fa-solid fa-user mr-1" style="color:#1652c4"></i>Individual Project</span>
+              <span class="text-xs font-mono" style="color:#cbd5e1">·</span>
+              <span class="text-xs font-mono" style="color:#5b6478">II Year</span>
             </div>
           </div>
         </div>
@@ -690,22 +687,22 @@
 
   <!-- ----------------------- CTA ---------------------------- -->
   <section id="cta" class="py-20 md:py-24 relative overflow-hidden"
-           style="background:linear-gradient(135deg,#eef2ff 0%,#dbeafe 50%,#e0e7ff 100%)"
+           style="background:#f8fafc;border-top:1px solid #e2e8f0;border-bottom:1px solid #e2e8f0"
            aria-label="Call to action">
     <div aria-hidden="true" style="position:absolute;inset:0;opacity:.12;pointer-events:none">
       <svg width="100%" height="100%">
         <defs><pattern id="gc" width="60" height="60" patternUnits="userSpaceOnUse">
-          <path d="M0 30H60M30 0V60" stroke="#5A67D8" stroke-width=".8" fill="none"/>
+          <path d="M0 30H60M30 0V60" stroke="#cbd5e1" stroke-width=".8" fill="none"/>
         </pattern></defs>
         <rect width="100%" height="100%" fill="url(#gc)"/>
       </svg>
     </div>
     <div class="max-w-screen-xl mx-auto px-5 text-center relative z-10">
-      <p class="eyebrow-tag font-mono text-xs uppercase tracking-widest mb-5" style="color:#5A67D8" data-aos="fade-up">Start Your Journey</p>
-      <h2 class="font-display font-bold text-3xl md:text-5xl leading-tight mb-5" style="color:#1a202c" data-aos="fade-up" data-aos-delay="60">
+      <p class="eyebrow-tag font-mono text-xs uppercase tracking-widest mb-5" style="color:#1652c4" data-aos="fade-up">Start Your Journey</p>
+      <h2 class="font-display font-bold text-3xl md:text-5xl leading-tight mb-5" style="color:#0f172a" data-aos="fade-up" data-aos-delay="60">
         Ready to build the future<br class="hidden sm:block"/> of electronics?
       </h2>
-      <p class="max-w-xl mx-auto mb-8 text-sm md:text-base leading-relaxed" style="color:#4A5568" data-aos="fade-up" data-aos-delay="120">
+      <p class="max-w-xl mx-auto mb-8 text-sm md:text-base leading-relaxed" style="color:#5b6478" data-aos="fade-up" data-aos-delay="120">
         Discover world-class laboratories, specialized curriculum, and direct industry mentorship at SIET VLSI.
       </p>
       <div class="flex flex-col sm:flex-row gap-4 justify-center">
@@ -724,7 +721,7 @@
 </main>
 
 <!-- ----------------------- FOOTER --------------------------- -->
-<footer id="site-footer" style="background:#f8fafc;color:#4A5568;border-top:1px solid #e2e8f0" role="contentinfo">
+<footer id="site-footer" style="background:#f8fafc;color:#475569;border-top:1px solid #e2e8f0" role="contentinfo">
   <div class="max-w-screen-xl mx-auto px-5 lg:px-8 pt-16 pb-12">
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 mb-14">
 
@@ -734,33 +731,33 @@
           <img src="assets/images/college_logo.png" alt="SIET Logo" class="h-9 w-auto object-contain flex-shrink-0" onerror="this.src='https://via.placeholder.com/100x40?text=SIET'">
       <img src="assets/images/department_logo.png" alt="VLSI Logo" class="h-9 w-auto object-contain flex-shrink-0" onerror="this.src='https://via.placeholder.com/100x40?text=VLSI'">
           <div>
-            <p style="color:#1a202c" class="text-sm font-semibold font-display">SIET</p>
-            <p style="color:#718096;font-size:.72rem">VLSI Design and Technology</p>
+            <p style="color:#0f172a" class="text-sm font-semibold font-display">SIET</p>
+            <p style="color:#64748b;font-size:.72rem">VLSI Design and Technology</p>
           </div>
         </div>
-        <p style="font-size:.84rem;line-height:1.75;margin-bottom:1.4rem;color:#4A5568">
+        <p style="font-size:.84rem;line-height:1.75;margin-bottom:1.4rem;color:#475569">
           Nurturing engineers through technical excellence, research, and industry collaboration since 1999.
         </p>
         <!-- Social -->
         <div class="flex gap-2.5">
-          <a href="#" aria-label="Facebook" style="width:2.2rem;height:2.2rem;border-radius:.6rem;background:#edf2f7;display:flex;align-items:center;justify-content:center;color:#718096;transition:all .3s"
-             onmouseover="this.style.background='#5A67D8';this.style.color='#fff'"
-             onmouseout="this.style.background='#edf2f7';this.style.color='#718096'">
+          <a href="#" aria-label="Facebook" style="width:2.2rem;height:2.2rem;border-radius:.6rem;background:#f1f5f9;display:flex;align-items:center;justify-content:center;color:#64748b;transition:all .2s"
+             onmouseover="this.style.background='#1652c4';this.style.color='#fff'"
+             onmouseout="this.style.background='#f1f5f9';this.style.color='#64748b'">
             <i class="fa-brands fa-facebook-f" style="font-size:.8rem"></i>
           </a>
-          <a href="https://www.instagram.com/vlsicrew_28/" target="_blank" rel="noopener noreferrer" aria-label="Instagram" style="width:2.2rem;height:2.2rem;border-radius:.6rem;background:#edf2f7;display:flex;align-items:center;justify-content:center;color:#718096;transition:all .3s"
-             onmouseover="this.style.background='#5A67D8';this.style.color='#fff'"
-             onmouseout="this.style.background='#edf2f7';this.style.color='#718096'">
+          <a href="https://www.instagram.com/vlsicrew_28/" target="_blank" rel="noopener noreferrer" aria-label="Instagram" style="width:2.2rem;height:2.2rem;border-radius:.6rem;background:#f1f5f9;display:flex;align-items:center;justify-content:center;color:#64748b;transition:all .2s"
+             onmouseover="this.style.background='#1652c4';this.style.color='#fff'"
+             onmouseout="this.style.background='#f1f5f9';this.style.color='#64748b'">
             <i class="fa-brands fa-instagram" style="font-size:.8rem"></i>
           </a>
-          <a href="https://www.linkedin.com/in/siet-ee-vlsi-design-and-technology-6bb30541a?utm_source=share_via&utm_content=profile&utm_medium=member_android" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" style="width:2.2rem;height:2.2rem;border-radius:.6rem;background:#edf2f7;display:flex;align-items:center;justify-content:center;color:#718096;transition:all .3s"
-             onmouseover="this.style.background='#5A67D8';this.style.color='#fff'"
-             onmouseout="this.style.background='#edf2f7';this.style.color='#718096'">
+          <a href="https://www.linkedin.com/in/siet-ee-vlsi-design-and-technology-6bb30541a?utm_source=share_via&utm_content=profile&utm_medium=member_android" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" style="width:2.2rem;height:2.2rem;border-radius:.6rem;background:#f1f5f9;display:flex;align-items:center;justify-content:center;color:#64748b;transition:all .2s"
+             onmouseover="this.style.background='#1652c4';this.style.color='#fff'"
+             onmouseout="this.style.background='#f1f5f9';this.style.color='#64748b'">
             <i class="fa-brands fa-linkedin-in" style="font-size:.8rem"></i>
           </a>
-          <a href="#" aria-label="YouTube" style="width:2.2rem;height:2.2rem;border-radius:.6rem;background:#edf2f7;display:flex;align-items:center;justify-content:center;color:#718096;transition:all .3s"
-             onmouseover="this.style.background='#5A67D8';this.style.color='#fff'"
-             onmouseout="this.style.background='#edf2f7';this.style.color='#718096'">
+          <a href="#" aria-label="YouTube" style="width:2.2rem;height:2.2rem;border-radius:.6rem;background:#f1f5f9;display:flex;align-items:center;justify-content:center;color:#64748b;transition:all .2s"
+             onmouseover="this.style.background='#1652c4';this.style.color='#fff'"
+             onmouseout="this.style.background='#f1f5f9';this.style.color='#64748b'">
             <i class="fa-brands fa-youtube" style="font-size:.8rem"></i>
           </a>
         </div>
@@ -768,50 +765,50 @@
 
       <!-- Quick links -->
       <div>
-        <h4 style="color:#1a202c" class="font-display font-semibold text-sm mb-5">Quick Links</h4>
+        <h4 style="color:#0f172a" class="font-display font-semibold text-sm mb-5">Quick Links</h4>
         <ul style="display:flex;flex-direction:column;gap:.75rem">
-          <li><a href="#about"                   style="font-size:.84rem;color:#4A5568;transition:color .2s" onmouseover="this.style.color='#5A67D8'" onmouseout="this.style.color='#4A5568'">About the Department</a></li>
-          <li><a href="pages/hod.html"           style="font-size:.84rem;color:#4A5568;transition:color .2s" onmouseover="this.style.color='#5A67D8'" onmouseout="this.style.color='#4A5568'">HOD Desk</a></li>
-          <li><a href="pages/faculty.html"       style="font-size:.84rem;color:#4A5568;transition:color .2s" onmouseover="this.style.color='#5A67D8'" onmouseout="this.style.color='#4A5568'">Faculty</a></li>
-          <li><a href="pages/students.html"      style="font-size:.84rem;color:#4A5568;transition:color .2s" onmouseover="this.style.color='#5A67D8'" onmouseout="this.style.color='#4A5568'">Students</a></li>
-          <li><a href="pages/leaderboard.html"   style="font-size:.84rem;color:#4A5568;transition:color .2s" onmouseover="this.style.color='#5A67D8'" onmouseout="this.style.color='#4A5568'">Leaderboard</a></li>
-          <li><a href="pages/labs.html"          style="font-size:.84rem;color:#4A5568;transition:color .2s" onmouseover="this.style.color='#5A67D8'" onmouseout="this.style.color='#4A5568'">Laboratories</a></li>
-          <li><a href="pages/events.html"        style="font-size:.84rem;color:#4A5568;transition:color .2s" onmouseover="this.style.color='#5A67D8'" onmouseout="this.style.color='#4A5568'">Events</a></li>
-          <li><a href="pages/gallery.html"       style="font-size:.84rem;color:#4A5568;transition:color .2s" onmouseover="this.style.color='#5A67D8'" onmouseout="this.style.color='#4A5568'">Gallery</a></li>
+          <li><a href="#about"                   style="font-size:.84rem;color:#475569;transition:color .2s" onmouseover="this.style.color='#1652c4'" onmouseout="this.style.color='#475569'">About the Department</a></li>
+          <li><a href="pages/hod.html"           style="font-size:.84rem;color:#475569;transition:color .2s" onmouseover="this.style.color='#1652c4'" onmouseout="this.style.color='#475569'">HOD Desk</a></li>
+          <li><a href="pages/faculty.html"       style="font-size:.84rem;color:#475569;transition:color .2s" onmouseover="this.style.color='#1652c4'" onmouseout="this.style.color='#475569'">Faculty</a></li>
+          <li><a href="pages/students.html"      style="font-size:.84rem;color:#475569;transition:color .2s" onmouseover="this.style.color='#1652c4'" onmouseout="this.style.color='#475569'">Students</a></li>
+          <li><a href="pages/leaderboard.html"   style="font-size:.84rem;color:#475569;transition:color .2s" onmouseover="this.style.color='#1652c4'" onmouseout="this.style.color='#475569'">Leaderboard</a></li>
+          <li><a href="pages/labs.html"          style="font-size:.84rem;color:#475569;transition:color .2s" onmouseover="this.style.color='#1652c4'" onmouseout="this.style.color='#475569'">Laboratories</a></li>
+          <li><a href="pages/events.html"        style="font-size:.84rem;color:#475569;transition:color .2s" onmouseover="this.style.color='#1652c4'" onmouseout="this.style.color='#475569'">Events</a></li>
+          <li><a href="pages/gallery.html"       style="font-size:.84rem;color:#475569;transition:color .2s" onmouseover="this.style.color='#1652c4'" onmouseout="this.style.color='#475569'">Gallery</a></li>
         </ul>
       </div>
 
       <!-- Academics -->
       <div>
-        <h4 style="color:#1a202c" class="font-display font-semibold text-sm mb-5">Academics</h4>
+        <h4 style="color:#0f172a" class="font-display font-semibold text-sm mb-5">Academics</h4>
         <ul style="display:flex;flex-direction:column;gap:.75rem">
-          <li><a href="pages/resources.html"       style="font-size:.84rem;color:#4A5568;transition:color .2s" onmouseover="this.style.color='#5A67D8'" onmouseout="this.style.color='#4A5568'">Notes &amp; Lab Manuals</a></li>
-          <li><a href="pages/resources.html"       style="font-size:.84rem;color:#4A5568;transition:color .2s" onmouseover="this.style.color='#5A67D8'" onmouseout="this.style.color='#4A5568'">Previous Year Papers</a></li>
-          <li><a href="pages/resources.html"       style="font-size:.84rem;color:#4A5568;transition:color .2s" onmouseover="this.style.color='#5A67D8'" onmouseout="this.style.color='#4A5568'">Syllabus &amp; Time Table</a></li>
-          <li><a href="pages/workshops.html"       style="font-size:.84rem;color:#4A5568;transition:color .2s" onmouseover="this.style.color='#5A67D8'" onmouseout="this.style.color='#4A5568'">Workshops</a></li>
-          <li><a href="pages/achievements.html"    style="font-size:.84rem;color:#4A5568;transition:color .2s" onmouseover="this.style.color='#5A67D8'" onmouseout="this.style.color='#4A5568'">Achievements</a></li>
-          <li><a href="pages/placements.html"      style="font-size:.84rem;color:#4A5568;transition:color .2s" onmouseover="this.style.color='#5A67D8'" onmouseout="this.style.color='#4A5568'">Placements</a></li>
+          <li><a href="pages/resources.html"       style="font-size:.84rem;color:#475569;transition:color .2s" onmouseover="this.style.color='#1652c4'" onmouseout="this.style.color='#475569'">Notes &amp; Lab Manuals</a></li>
+          <li><a href="pages/resources.html"       style="font-size:.84rem;color:#475569;transition:color .2s" onmouseover="this.style.color='#1652c4'" onmouseout="this.style.color='#475569'">Previous Year Papers</a></li>
+          <li><a href="pages/resources.html"       style="font-size:.84rem;color:#475569;transition:color .2s" onmouseover="this.style.color='#1652c4'" onmouseout="this.style.color='#475569'">Syllabus &amp; Time Table</a></li>
+          <li><a href="pages/workshops.html"       style="font-size:.84rem;color:#475569;transition:color .2s" onmouseover="this.style.color='#1652c4'" onmouseout="this.style.color='#475569'">Workshops</a></li>
+          <li><a href="pages/achievements.html"    style="font-size:.84rem;color:#475569;transition:color .2s" onmouseover="this.style.color='#1652c4'" onmouseout="this.style.color='#475569'">Achievements</a></li>
+          <li><a href="pages/placements.html"      style="font-size:.84rem;color:#475569;transition:color .2s" onmouseover="this.style.color='#1652c4'" onmouseout="this.style.color='#475569'">Placements</a></li>
         </ul>
       </div>
 
       <!-- Contact -->
       <div>
-        <h4 style="color:#1a202c" class="font-display font-semibold text-sm mb-5">Contact</h4>
-        <ul style="display:flex;flex-direction:column;gap:1rem;color:#4A5568">
+        <h4 style="color:#0f172a" class="font-display font-semibold text-sm mb-5">Contact</h4>
+        <ul style="display:flex;flex-direction:column;gap:1rem;color:#475569">
           <li class="flex gap-3">
-            <i class="fa-solid fa-location-dot mt-0.5 flex-shrink-0" style="color:#5A67D8"></i>
+            <i class="fa-solid fa-location-dot mt-0.5 flex-shrink-0" style="color:#1652c4"></i>
             <span style="font-size:.83rem">SIET Campus, Main Road,<br/>Tamil Nadu, India</span>
           </li>
           <li class="flex gap-3">
-            <i class="fa-solid fa-phone mt-0.5 flex-shrink-0" style="color:#5A67D8"></i>
-            <a href="tel:+919629561731" style="font-size:.83rem;color:#4A5568;transition:color .2s" onmouseover="this.style.color='#5A67D8'" onmouseout="this.style.color='#4A5568'">+91 96295 61731</a>
+            <i class="fa-solid fa-phone mt-0.5 flex-shrink-0" style="color:#1652c4"></i>
+            <a href="tel:+919629561731" style="font-size:.83rem;color:#475569;transition:color .2s" onmouseover="this.style.color='#1652c4'" onmouseout="this.style.color='#475569'">+91 96295 61731</a>
           </li>
           <li class="flex gap-3">
-            <i class="fa-solid fa-envelope mt-0.5 flex-shrink-0" style="color:#5A67D8"></i>
-            <a href="mailto:hodvlsi@siet.ac.in" style="font-size:.83rem;color:#4A5568;transition:color .2s" onmouseover="this.style.color='#5A67D8'" onmouseout="this.style.color='#4A5568'">hodvlsi@siet.ac.in</a>
+            <i class="fa-solid fa-envelope mt-0.5 flex-shrink-0" style="color:#1652c4"></i>
+            <a href="mailto:hodvlsi@siet.ac.in" style="font-size:.83rem;color:#475569;transition:color .2s" onmouseover="this.style.color='#1652c4'" onmouseout="this.style.color='#475569'">hodvlsi@siet.ac.in</a>
           </li>
           <li class="flex gap-3">
-            <i class="fa-solid fa-clock mt-0.5 flex-shrink-0" style="color:#5A67D8"></i>
+            <i class="fa-solid fa-clock mt-0.5 flex-shrink-0" style="color:#1652c4"></i>
             <span style="font-size:.83rem">Mon–Sat, 9:00 AM – 4:30 PM</span>
           </li>
         </ul>
@@ -821,11 +818,11 @@
 
     <!-- Bottom bar -->
     <div class="py-5 flex flex-col sm:flex-row items-center justify-between gap-3"
-         style="border-top:1px solid #e2e8f0;font-size:.75rem;color:#a0aec0">
+         style="border-top:1px solid #e2e8f0;font-size:.75rem;color:#64748b">
       <p>&copy; <span id="current-year">2026</span> Department of VLSI, SIET. All rights reserved.</p>
       <div class="flex items-center gap-4">
         <a href="pages/privacy.html"
-           style="color:#a0aec0;transition:color .2s" onmouseover="this.style.color='#5A67D8'" onmouseout="this.style.color='#a0aec0'">Privacy Policy</a>
+           style="color:#64748b;transition:color .2s" onmouseover="this.style.color='#1652c4'" onmouseout="this.style.color='#64748b'">Privacy Policy</a>
         <span>·</span>
         <span>Designed with  for SIET VLSI</span>
       </div>

@@ -7,15 +7,15 @@
    ========================================================================= */
 
 :root {
-  /* ---- Color tokens ---- */
-  --ink-navy: #0a0a0a;
-  --ink-navy-light: #171717;
-  --circuit-blue: #0f172a;
-  --circuit-blue-dark: #020617;
-  --signal-cyan: #3b82f6;
+  /* ---- Color tokens (Graphite ramp + Brand Blue #1652c4) ---- */
+  --ink-navy: #0f172a;
+  --ink-navy-light: #1e293b;
+  --circuit-blue: #1652c4;
+  --circuit-blue-dark: #0f3d99;
+  --signal-cyan: #1652c4;
   --paper: #ffffff;
-  --mist: #f7f7f8;
-  --slate-900: #16213d;
+  --mist: #f8fafc;
+  --slate-900: #0f172a;
   --slate-700: #334155;
   --slate-500: #5b6478;
   --slate-200: #e2e8f0;
@@ -23,20 +23,20 @@
   /* ---- Semantic aliases ---- */
   --clr-bg: #ffffff;
   --clr-surface: #ffffff;
-  --clr-surface-2: #f4f7fb;
+  --clr-surface-2: #f8fafc;
   --clr-border: #e2e8f0;
-  --clr-text-primary: #0b1b33;
+  --clr-text-primary: #0f172a;
   --clr-text-secondary: #5b6478;
-  --clr-text-muted: #aab4c8;
+  --clr-text-muted: #85858b;
   --clr-accent: #1652c4;
-  --clr-cyan: #2fe6dd;
-  --clr-shadow: rgba(11, 27, 51, 0.08);
+  --clr-cyan: #1652c4;
+  --clr-shadow: rgba(15, 23, 42, 0.05);
   /* ---- Glass tokens ---- */
-  --glass-bg: rgba(255,255,255,0.62);
-  --glass-tint: rgba(22,82,196,0.06);
-  --glass-border: rgba(255,255,255,0.7);
-  --glass-shadow: 0 8px 32px rgba(22,82,196,0.12), inset 0 1px 0 rgba(255,255,255,0.9);
-  --glass-blur: blur(18px) saturate(160%);
+  --glass-bg: rgba(255,255,255,0.96);
+  --glass-tint: rgba(255,255,255,0.96);
+  --glass-border: #e2e8f0;
+  --glass-shadow: 0 4px 16px -2px rgba(15, 23, 42, 0.05);
+  --glass-blur: blur(8px);
 
   /* ---- Type tokens ---- */
   --font-display: "Outfit", sans-serif;
@@ -107,7 +107,7 @@ textarea:focus-visible {
   left: 0;
   height: 3px;
   width: 100%;
-  background: linear-gradient(90deg, var(--circuit-blue), var(--signal-cyan));
+  background: var(--circuit-blue);
   transform: scaleX(0);
   transform-origin: left;
   z-index: 90;
@@ -254,7 +254,7 @@ body.home-page #site-header:not(.is-scrolled) .nav-link:hover {
   stroke: var(--signal-cyan);
   stroke-width: 1.5;
   stroke-linecap: round;
-  filter: drop-shadow(0 0 6px rgba(47, 230, 221, 0.55));
+  filter: none;
 }
 
 .trace-draw {
@@ -333,8 +333,8 @@ body.home-page #site-header:not(.is-scrolled) .nav-link:hover {
   width: 8px;
   height: 8px;
   border-radius: 999px;
-  background: var(--signal-cyan);
-  box-shadow: 0 0 0 4px rgba(47, 230, 221, 0.18);
+  background: var(--circuit-blue);
+  box-shadow: none;
 }
 
 /* =========================================================================
@@ -356,7 +356,7 @@ body.home-page #site-header:not(.is-scrolled) .nav-link:hover {
   bottom: 0;
   height: 2px;
   width: 0;
-  background: linear-gradient(90deg, var(--circuit-blue), var(--signal-cyan));
+  background: var(--circuit-blue);
   transition: width 1.6s cubic-bezier(0.65, 0, 0.35, 1);
 }
 .readout-card.is-visible::after {
