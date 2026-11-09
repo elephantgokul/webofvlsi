@@ -70,7 +70,6 @@
 
 html {
   scroll-behavior: smooth;
-  overflow-x: hidden;
 }
 
 body {
@@ -633,6 +632,14 @@ body.home-page #site-header:not(.is-scrolled) .nav-link:hover {
 }
 #back-to-top:hover {
   background: var(--circuit-blue-dark);
+}
+
+/* Responsive animations: convert off-screen horizontal translations to vertical on mobile */
+@media (max-width: 768px) {
+  [data-aos="fade-left"],
+  [data-aos="fade-right"] {
+    transform: translate3d(0, 20px, 0) !important;
+  }
 }
 
 /* =========================================================================
