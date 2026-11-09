@@ -125,114 +125,202 @@ small, .text-xs, .text-sm {
   display: none !important;
 }
 
-/* Glass UI Elements — quiet surfaces with hairlines */
-.glass, #mobile-menu, .glass-panel, .modal-content, .sidebar {
-  background: var(--glass-bg) !important;
-  backdrop-filter: blur(8px) !important;
-  -webkit-backdrop-filter: blur(8px) !important;
-  border: 1px solid var(--glass-border) !important;
-  box-shadow: var(--glass-shadow) !important;
-  border-radius: 20px !important;
+/* ---- Pass 7: Disciplined Details ---- */
+
+/* 1. Surfaces: Solid surfaces without frosted glass or inner highlights */
+.glass, .glass-panel, .modal-content, .sidebar {
+  background: var(--clr-surface) !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  border: 1px solid var(--clr-border) !important;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04) !important;
+  border-radius: 12px !important;
 }
 
-/* In-flow surface cards */
-.surface-card {
-  background: var(--glass-bg) !important;
-  border: 1px solid var(--glass-border) !important;
+#mobile-menu {
+  background: var(--clr-surface) !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  border: 1px solid var(--clr-border) !important;
+  box-shadow: 0 10px 24px -10px rgba(15, 23, 42, 0.08) !important;
+  border-radius: 8px !important;
+}
+
+.surface-card, .surface-card-2, article.card, .card {
+  background: var(--clr-surface) !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  border: 1px solid var(--clr-border) !important;
   box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04) !important;
-  border-radius: 20px !important;
+  border-radius: 12px !important;
   position: relative;
   overflow: hidden;
-  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease, border-color 0.3s ease !important;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease !important;
   will-change: transform;
 }
-[data-theme="dark"] .surface-card {
+[data-theme="dark"] .surface-card,
+[data-theme="dark"] .surface-card-2,
+[data-theme="dark"] .glass,
+[data-theme="dark"] .glass-panel,
+[data-theme="dark"] .modal-content,
+[data-theme="dark"] .sidebar,
+[data-theme="dark"] #mobile-menu,
+[data-theme="dark"] article.card,
+[data-theme="dark"] .card {
   background: #19191b !important;
   border: 1px solid rgba(255, 255, 255, 0.08) !important;
-  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.35) !important;
+  box-shadow: none !important;
 }
 
-.glass-pill, .badge, .status-badge {
-  border-radius: 9999px !important;
+/* 2. Radius Scale */
+/* 6px: Badges, tags, pills, buttons */
+.badge, .status-badge, .glass-pill, .eyebrow-tag,
+.btn-primary, .btn-ghost, .btn-secondary, button,
+[type="submit"], [type="button"], .tab-btn, .filter-btn {
+  border-radius: 6px !important;
+}
+
+/* 8px: Inputs, selects, textareas, small cards, dropdowns */
+.glass-input, input, select, textarea,
+.readout-card, .dropdown-menu, .popover {
+  border-radius: 8px !important;
+}
+
+/* 12px: Large containers and cards (already set on .surface-card above) */
+
+/* Nested radius = outer radius (12px) minus padding (e.g. 16px) -> 6px for icon boxes */
+.surface-card > img,
+.surface-card .w-12,
+.surface-card [class*="rounded"] {
+  border-radius: 6px !important;
 }
 
 .glass-input, input, select, textarea {
-  border-radius: 12px !important;
   color: var(--text-primary) !important;
-  background: rgba(0, 0, 0, 0.02) !important;
-  border: 1px solid var(--glass-border) !important;
+  background: #ffffff !important;
+  border: 1px solid var(--clr-border) !important;
 }
-[data-theme="dark"] .glass-input, [data-theme="dark"] input, [data-theme="dark"] select, [data-theme="dark"] textarea {
+[data-theme="dark"] .glass-input,
+[data-theme="dark"] input,
+[data-theme="dark"] select,
+[data-theme="dark"] textarea {
   background: #232325 !important;
   color: #ededed !important;
-  border-color: rgba(255, 255, 255, 0.1) !important;
-}
-.glass-input:focus, input:focus, select:focus, textarea:focus {
-  outline: none !important;
-  border-color: var(--accent-color) !important;
-  box-shadow: 0 0 0 2px rgba(22, 82, 196, 0.15) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
 }
 
-/* Navbar / Top Bar Re-style */
+/* 3. Focus Rings: 2px solid, 2px offset, brand blue #1652c4 in light, #60a5fa in dark */
+*:focus-visible,
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid #1652c4 !important;
+  outline-offset: 2px !important;
+}
+[data-theme="dark"] *:focus-visible,
+[data-theme="dark"] a:focus-visible,
+[data-theme="dark"] button:focus-visible,
+[data-theme="dark"] input:focus-visible,
+[data-theme="dark"] select:focus-visible,
+[data-theme="dark"] textarea:focus-visible {
+  outline: 2px solid #60a5fa !important;
+  outline-offset: 2px !important;
+}
+
+/* 4. Header: Rectangular bar with 1px hairline bottom border */
 #site-header {
-  background: transparent !important;
+  position: sticky !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  background: #ffffff !important;
   border: none !important;
-  box-shadow: none !important;
-  position: fixed;
-  top: 0;
-  width: 100%;
-  z-index: 50;
-  transition: all 0.3s ease;
-  display: flex;
-  justify-content: center;
-  pointer-events: none;
+  border-bottom: 1px solid var(--clr-border) !important;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04) !important;
+  border-radius: 0 !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  z-index: 1000 !important;
+  display: block !important;
+  pointer-events: auto !important;
 }
 #site-header > div {
-  background: var(--glass-bg) !important;
-  backdrop-filter: blur(8px) !important;
-  -webkit-backdrop-filter: blur(8px) !important;
-  border: 1px solid var(--glass-border) !important;
-  box-shadow: var(--glass-shadow) !important;
-  border-radius: 9999px !important;
-  margin-top: 1rem;
-  padding: 0.5rem 1.5rem;
-  transition: all 0.3s ease;
-  pointer-events: auto;
-  width: auto;
-  max-width: 90vw;
+  background: transparent !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  border: none !important;
+  box-shadow: none !important;
+  border-radius: 0 !important;
+  margin: 0 auto !important;
+  padding: 0.75rem 1.25rem !important;
+  max-width: 1280px !important;
+  width: 100% !important;
 }
-@media (max-width: 1024px) {
-  #site-header { top: auto; bottom: 0; margin-bottom: 1rem; }
-  #site-header > div { margin-top: 0; margin-bottom: 0; }
-  #mobile-menu { bottom: 80px; top: auto !important; border-radius: 24px; margin: 0 1rem; }
+#site-header .nav-link {
+  border-radius: 6px !important;
+  padding: 0.375rem 0.75rem !important;
+}
+[data-theme="dark"] #site-header {
+  background: #141415 !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+  box-shadow: none !important;
 }
 
-/* Buttons */
+@media (max-width: 1024px) {
+  #site-header {
+    top: 0 !important;
+    bottom: auto !important;
+    margin-bottom: 0 !important;
+  }
+  #site-header > div {
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+  }
+}
+
+/* 5. Buttons: Brand blue #1652c4 with white text in light and dark; subtle neutral shadow */
 .btn-primary, button[type="submit"] {
   background: #1652c4 !important;
   color: #ffffff !important;
-  border: none !important;
-  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.12) !important;
-  border-radius: 9999px !important;
-  transition: transform 0.2s ease, box-shadow 0.2s ease !important;
+  border: 1px solid transparent !important;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.08) !important;
+  border-radius: 6px !important;
+  transition: transform 0.15s ease, box-shadow 0.15s ease !important;
 }
-[data-theme="dark"] .btn-primary, [data-theme="dark"] button[type="submit"] {
-  background: #ffffff !important;
-  color: #0f172a !important;
+.btn-primary:hover, button[type="submit"]:hover {
+  transform: translateY(-1px) !important;
+  box-shadow: 0 4px 12px -2px rgba(15, 23, 42, 0.12) !important;
+}
+[data-theme="dark"] .btn-primary,
+[data-theme="dark"] button[type="submit"] {
+  background: #1652c4 !important;
+  color: #ffffff !important;
+  box-shadow: none !important;
 }
 .btn-primary:active, .glass-pill:active, button:active, a:active {
-  transform: scale(0.97) !important;
+  transform: scale(0.98) !important;
 }
 
-/* Pointer Light & Hover Effects */
+/* 6. Card Hover: Subtle neutral shadow, no blue-tinted wash */
 @media (min-width: 1024px) {
   .surface-card:hover {
-    transform: translateY(-4px) !important;
-    border-color: rgba(22, 82, 196, 0.3) !important;
-    box-shadow: 0 10px 24px -10px rgba(15, 23, 42, 0.08) !important;
+    transform: translateY(-2px) !important;
+    border-color: rgba(22, 82, 196, 0.35) !important;
+    box-shadow: 0 4px 12px -2px rgba(15, 23, 42, 0.06) !important;
+  }
+  [data-theme="dark"] .surface-card:hover {
+    transform: translateY(-2px) !important;
+    border-color: rgba(96, 165, 250, 0.35) !important;
+    box-shadow: none !important;
   }
 }
-.surface-card::before {
+.surface-card::before, .surface-card::after {
   display: none !important;
 }
 
