@@ -38,10 +38,11 @@
   --glass-shadow: 0 4px 16px -2px rgba(15, 23, 42, 0.05);
   --glass-blur: blur(8px);
 
-  /* ---- Type tokens ---- */
-  --font-display: "Outfit", sans-serif;
-  --font-body: "Plus Jakarta Sans", sans-serif;
-  --font-mono: "JetBrains Mono", monospace;
+  /* ---- Type tokens (Single UI family + Mono family) ---- */
+  --font-ui: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-display: var(--font-ui);
+  --font-body: var(--font-ui);
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
 }
 
 [data-theme="dark"] {
@@ -69,6 +70,7 @@
 
 html {
   scroll-behavior: smooth;
+  overflow-x: hidden;
 }
 
 body {
@@ -78,14 +80,20 @@ body {
   overflow-x: hidden;
   margin: 0;
   padding: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-h1, h2, h3, h4, .font-display {
+h1, h2, h3, h4, h5, h6, .font-display {
   font-family: var(--font-display);
+  font-weight: 600;
+  text-transform: none;
 }
 
 .font-mono {
   font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1, "zero" 1;
 }
 
 ::selection {
@@ -301,7 +309,7 @@ body.home-page #site-header:not(.is-scrolled) .nav-link:hover {
 
 .eyebrow-tag {
   font-family: var(--font-mono);
-  letter-spacing: 0.18em;
+  letter-spacing: 0.06em;
   font-size: 0.75rem;
 }
 
@@ -953,7 +961,7 @@ body.home-page #site-header:not(.is-scrolled) .nav-link:hover {
   left: 50%;
   transform: translateX(-50%);
   color: rgba(255, 255, 255, 0.6);
-  font-family: 'IBM Plex Mono', monospace;
+  font-family: var(--font-mono);
   font-size: 0.8rem;
 }
 
@@ -1149,7 +1157,7 @@ body.home-page #site-header:not(.is-scrolled) .nav-link:hover {
   border-radius: 0.75rem;
   background: var(--clr-surface);
   color: var(--clr-text-primary);
-  font-family: 'IBM Plex Sans', sans-serif;
+  font-family: var(--font-ui);
   font-size: 0.9rem;
   transition: border-color 0.2s, box-shadow 0.2s;
 }
@@ -1209,9 +1217,11 @@ body.home-page #site-header:not(.is-scrolled) .nav-link:hover {
   gap: 1rem;
 }
 .stat-value {
-  font-family: 'Space Grotesk', sans-serif;
+  font-family: var(--font-mono);
   font-size: 2.5rem;
-  font-weight: 700;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1, "zero" 1;
   color: var(--clr-accent);
   line-height: 1.2;
 }
@@ -1367,7 +1377,7 @@ body.home-page #site-header:not(.is-scrolled) .nav-link:hover {
 }
 .timeline-year {
   display: inline-block;
-  font-family: 'IBM Plex Mono', monospace;
+  font-family: var(--font-mono);
   font-size: 0.75rem;
   font-weight: 600;
   color: var(--clr-accent);
@@ -1375,6 +1385,7 @@ body.home-page #site-header:not(.is-scrolled) .nav-link:hover {
   padding: 0.125rem 0.5rem;
   border-radius: 999px;
   margin-bottom: 0.5rem;
+  font-variant-numeric: tabular-nums;
 }
 
 /* =========================================================================
@@ -1388,7 +1399,7 @@ body.home-page #site-header:not(.is-scrolled) .nav-link:hover {
   border-radius: 999px;
   font-size: 0.7rem;
   font-weight: 600;
-  font-family: 'IBM Plex Mono', monospace;
+  font-family: var(--font-mono);
 }
 .badge-primary { background: rgba(22, 82, 196, 0.12); color: var(--clr-accent); }
 .badge-cyan { background: rgba(47, 230, 221, 0.15); color: #0d9488; }
@@ -1427,9 +1438,10 @@ body.home-page #site-header:not(.is-scrolled) .nav-link:hover {
 .podium-2 .podium-card { background: linear-gradient(135deg, #e5e7eb 0%, #9ca3af 100%); color: #374151; }
 .podium-3 .podium-card { background: linear-gradient(135deg, #d97706 0%, #b45309 100%); color: #fff; }
 .podium-rank {
-  font-family: 'Space Grotesk', sans-serif;
+  font-family: var(--font-mono);
   font-size: 3rem;
-  font-weight: 700;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
   line-height: 1;
   margin-bottom: 0.5rem;
 }
@@ -1439,9 +1451,10 @@ body.home-page #site-header:not(.is-scrolled) .nav-link:hover {
   margin-bottom: 0.25rem;
 }
 .podium-score {
-  font-family: 'IBM Plex Mono', monospace;
+  font-family: var(--font-mono);
   font-size: 1.5rem;
-  font-weight: 700;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
 }
 .podium-base {
   width: 100%;
@@ -1469,17 +1482,17 @@ body.home-page #site-header:not(.is-scrolled) .nav-link:hover {
 .leaderboard-table tr:last-child td { border-bottom: none; }
 .leaderboard-table tr:nth-child(even) { background: var(--clr-surface-2); }
 .leaderboard-table tr:hover { background: rgba(22, 82, 196, 0.04); }
-.rank-col { font-family: 'IBM Plex Mono', monospace; font-weight: 600; width: 60px; }
+.rank-col { font-family: var(--font-mono); font-weight: 600; width: 60px; font-variant-numeric: tabular-nums; }
 .score-bar-wrap { width: 100%; max-width: 200px; height: 8px; background: var(--clr-surface-2); border-radius: 4px; overflow: hidden; }
 .score-bar { height: 100%; background: linear-gradient(90deg, var(--clr-accent), var(--clr-cyan)); border-radius: 4px; transition: width 1s cubic-bezier(0.25, 0.8, 0.25, 1); width: 0%; }
 .badge-chips { display: flex; flex-wrap: wrap; gap: 0.35rem; }
 
 .bar-chart { margin-top: 1.5rem; }
 .bar-row { display: flex; align-items: center; gap: 1rem; margin-bottom: 0.75rem; }
-.bar-label { width: 160px; font-size: 0.85rem; color: var(--clr-text-secondary); font-family: 'IBM Plex Sans', sans-serif; }
+.bar-label { width: 160px; font-size: 0.85rem; color: var(--clr-text-secondary); font-family: var(--font-ui); }
 .bar-track { flex: 1; height: 1.25rem; background: var(--clr-surface-2); border-radius: 999px; overflow: hidden; position: relative; }
 .bar-fill { height: 100%; background: linear-gradient(90deg, var(--clr-accent), var(--clr-cyan)); border-radius: 999px; transition: width 1.2s cubic-bezier(0.25, 0.8, 0.25, 1); width: 0%; }
-.bar-value { width: 60px; text-align: right; font-family: 'IBM Plex Mono', monospace; font-size: 0.8rem; color: var(--clr-text-muted); }
+.bar-value { width: 60px; text-align: right; font-family: var(--font-mono); font-size: 0.8rem; color: var(--clr-text-muted); font-variant-numeric: tabular-nums; }
 
 .donut-chart {
   width: 280px;
@@ -1494,14 +1507,14 @@ body.home-page #site-header:not(.is-scrolled) .nav-link:hover {
   transform: translate(-50%, -50%);
   text-align: center;
 }
-.donut-center-value { font-family: 'Space Grotesk', sans-serif; font-size: 2rem; font-weight: 700; color: var(--clr-text-primary); }
-.donut-center-label { font-size: 0.8rem; color: var(--clr-text-muted); font-family: 'IBM Plex Mono', monospace; }
+.donut-center-value { font-family: var(--font-mono); font-size: 2rem; font-weight: 600; font-variant-numeric: tabular-nums; color: var(--clr-text-primary); }
+.donut-center-label { font-size: 0.8rem; color: var(--clr-text-muted); font-family: var(--font-mono); }
 .donut-legend { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.75rem; margin-top: 1.5rem; }
 .donut-legend-item { display: flex; align-items: center; gap: 0.5rem; font-size: 0.8rem; color: var(--clr-text-secondary); }
 .donut-legend-color { width: 1rem; height: 1rem; border-radius: 0.25rem; }
 
 .word-cloud { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.5rem; margin-top: 1rem; }
-.word-cloud-item { padding: 0.35rem 0.75rem; border-radius: 999px; background: var(--clr-surface-2); border: 1px solid var(--clr-border); color: var(--clr-text-secondary); font-family: 'IBM Plex Sans', sans-serif; transition: background-color 0.2s, color 0.2s, border-color 0.2s; cursor: default; }
+.word-cloud-item { padding: 0.35rem 0.75rem; border-radius: 999px; background: var(--clr-surface-2); border: 1px solid var(--clr-border); color: var(--clr-text-secondary); font-family: var(--font-ui); transition: background-color 0.2s, color 0.2s, border-color 0.2s; cursor: default; }
 .word-cloud-item:hover { background: var(--clr-accent); color: white; border-color: var(--clr-accent); }
 
 /* =========================================================================
@@ -1509,7 +1522,7 @@ body.home-page #site-header:not(.is-scrolled) .nav-link:hover {
    ========================================================================= */
 
 #toast-container { position: fixed; bottom: 1.5rem; right: 1.5rem; z-index: 9999; display: flex; flex-direction: column; gap: 0.75rem; pointer-events: none; }
-.toast { pointer-events: all; display: flex; align-items: center; gap: 0.75rem; padding: 0.9rem 1.25rem; border-radius: 1rem; font-size: 0.85rem; font-family: "IBM Plex Sans", sans-serif; box-shadow: 0 8px 32px rgba(11, 27, 51, 0.18); backdrop-filter: blur(12px); min-width: 260px; max-width: 380px; transform: translateX(120%); transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.35s; opacity: 0; }
+.toast { pointer-events: all; display: flex; align-items: center; gap: 0.75rem; padding: 0.9rem 1.25rem; border-radius: 1rem; font-size: 0.85rem; font-family: var(--font-ui); box-shadow: 0 8px 32px rgba(11, 27, 51, 0.18); backdrop-filter: blur(12px); min-width: 260px; max-width: 380px; transform: translateX(120%); transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.35s; opacity: 0; }
 .toast.is-visible { transform: translateX(0); opacity: 1; }
 .toast--success { background: linear-gradient(135deg, #0d7a5f, #059669); color: #fff; }
 .toast--error { background: linear-gradient(135deg, #b91c1c, #dc2626); color: #fff; }
@@ -3010,7 +3023,7 @@ body.light-page .text-muted, body.light-page [style*="color:var(--clr-text-muted
   border-radius: 0.4rem;
   font-size: 0.6rem;
   font-weight: 600;
-  font-family: 'Inter', sans-serif;
+  font-family: var(--font-ui);
   letter-spacing: 0.02em;
   color: #fff;
   backdrop-filter: blur(8px);
@@ -3028,7 +3041,7 @@ body.light-page .text-muted, body.light-page [style*="color:var(--clr-text-muted
   width: 100%;
 }
 .circular-card-name {
-  font-family: 'Inter', sans-serif;
+  font-family: var(--font-ui);
   font-weight: 600;
   font-size: 0.82rem;
   color: #0b1b33;
@@ -3039,7 +3052,9 @@ body.light-page .text-muted, body.light-page [style*="color:var(--clr-text-muted
   text-overflow: ellipsis;
 }
 .circular-card-roll {
-  font-family: 'Inter', monospace;
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1;
   font-size: 0.68rem;
   color: #1652c4;
   font-weight: 500;

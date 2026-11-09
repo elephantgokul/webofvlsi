@@ -56,17 +56,58 @@
 }
 
 /* Global Overrides */
+html, body {
+  overflow-x: hidden;
+}
 body {
-  font-family: var(--font-sans) !important;
   background-color: var(--bg-color) !important;
   color: var(--text-primary) !important;
   transition: background-color 0.3s ease, color 0.3s ease;
-  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-/* Typography & Colors */
-h1, h2, h3, h4, h5, h6, .font-display, .font-body, p, span, div {
-  font-family: var(--font-sans);
+/* Typography & Weights (400 to 600 only), sentence case, tabular figures & mono integrity */
+h1, h2, h3, h4, h5, h6,
+.font-bold, .font-extrabold, .font-black,
+b, strong {
+  font-weight: 600 !important;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  text-transform: none !important;
+}
+
+.font-mono {
+  font-family: var(--font-mono, monospace) !important;
+  font-variant-numeric: tabular-nums !important;
+  font-feature-settings: "tnum" 1, "zero" 1 !important;
+}
+
+/* Tabular figures for numbers, readouts, and stats */
+.readout-value,
+.stat-value,
+.podium-score,
+.rank-col,
+.bar-value,
+.donut-center-value,
+[data-count],
+table td,
+.data-table td,
+.leaderboard-table td {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1;
+}
+
+/* Modest letter-spacing on uppercase labels & no negative letter-spacing on small text */
+.eyebrow-tag {
+  letter-spacing: 0.06em !important;
+}
+th {
+  letter-spacing: 0.05em !important;
+}
+small, .text-xs, .text-sm {
+  letter-spacing: normal;
 }
 .text-ink-navy, .text-ink-light, .text-slate-900, .text-gray-900, .text-gray-800 {
   color: var(--text-primary) !important;
