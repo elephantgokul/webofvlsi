@@ -218,8 +218,8 @@
 <main id="main-content">
 
   <!-- ----------------------- HERO --------------------------- -->
-  <section id="hero" class="relative flex flex-col justify-center items-center text-center overflow-hidden"
-           style="min-height:100svh;padding:6rem 1.5rem 5rem">
+  <section id="hero" class="relative flex flex-col justify-center items-start text-left overflow-hidden"
+           style="min-height:100svh;padding:7rem 1.5rem 5rem">
 
     <!-- Background Video -->
     <video class="hero-bg-video" muted loop playsinline webkit-playsinline preload="none" poster="assets/images/department-hero-poster.svg" aria-hidden="true" tabindex="-1">
@@ -231,76 +231,79 @@
     <div class="hero-video-overlay" aria-hidden="true"></div>
 
     <!-- Hero content -->
-    <div class="relative z-10 max-w-4xl mx-auto">
+    <div class="relative z-10 max-w-screen-xl mx-auto px-5 lg:px-8 w-full">
+      <div class="max-w-3xl">
 
-      <!-- Eyebrow badge -->
-      <div class="hero-eyebrow eyebrow-tag inline-flex items-center gap-2 px-4 py-1.5 rounded-full mb-8"
-           style="background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.18);color:#ffffff">
-        <span class="w-1.5 h-1.5 rounded-full" style="background:rgba(255,255,255,0.8);animation:pulse 2s infinite"></span>
-        SIET &nbsp;&mdash;&nbsp; ESTABLISHED 1999 &nbsp;&mdash;&nbsp; NBA ACCREDITED
-      </div>
-
-      <!-- Headline -->
-      <h1 class="font-display font-bold text-white" style="color:#ffffff;line-height:1.07">
-        <span class="hero-line block text-4xl md:text-6xl lg:text-[4.25rem]">VLSI Design</span>
-        <span class="hero-line block text-4xl md:text-6xl lg:text-[4.25rem]">and Technology</span>
-      </h1>
-
-      <!-- Subheading -->
-      <p class="hero-subhead mt-6 max-w-2xl mx-auto leading-relaxed text-base md:text-lg" style="color:rgba(255,255,255,0.72)">
-        Coursework, laboratory practice, and circuit and system design for engineering students.
-      </p>
-
-      <!-- CTA row -->
-      <div class="hero-cta mt-8 flex flex-col sm:flex-row gap-4 justify-center">
-        <a href="#about"
-           class="btn-primary inline-flex items-center justify-center gap-2 px-6 py-3 rounded-2xl text-sm font-semibold text-white">
-          Explore Department <i class="fa-solid fa-arrow-down text-xs"></i>
-        </a>
-        <a href="pages/faculty.html"
-           class="btn-ghost inline-flex items-center justify-center gap-2 px-6 py-3 rounded-2xl text-sm font-semibold">
-          Meet the Faculty <i class="fa-solid fa-arrow-right text-xs"></i>
-        </a>
-      </div>
-
-      <!-- Stat badges -->
-      <div class="hero-badges mt-10 flex flex-wrap justify-center gap-6 md:gap-8">
-        <div class="flex items-center gap-2 text-xs font-mono" style="color:rgba(255,255,255,0.65)">
-          <i class="fa-solid fa-certificate" style="color:rgba(255,255,255,0.7)"></i> NBA Accredited
+        <!-- Eyebrow badge -->
+        <div class="hero-eyebrow eyebrow-tag inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full mb-8 font-mono text-xs"
+             style="background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.18);color:#ffffff">
+          <span class="w-1.5 h-1.5 rounded-full" style="background:rgba(255,255,255,0.8);animation:pulse 2s infinite"></span>
+          SIET &nbsp;&mdash;&nbsp; ESTABLISHED 1999 &nbsp;&mdash;&nbsp; NBA ACCREDITED
         </div>
-        <div class="flex items-center gap-2 text-xs font-mono" style="color:rgba(255,255,255,0.65)">
-          <i class="fa-solid fa-award" style="color:rgba(255,255,255,0.7)"></i> NAAC A Grade
+
+        <!-- Headline -->
+        <h1 class="font-display font-bold text-white tracking-tight" style="color:#ffffff;line-height:1.08">
+          <span class="hero-line block text-4xl sm:text-5xl md:text-6xl lg:text-[4.25rem]">VLSI Design</span>
+          <span class="hero-line block text-4xl sm:text-5xl md:text-6xl lg:text-[4.25rem]">and Technology</span>
+        </h1>
+
+        <!-- Subheading -->
+        <p class="hero-subhead mt-6 max-w-2xl text-left leading-relaxed text-base md:text-lg" style="color:rgba(255,255,255,0.72)">
+          Coursework, laboratory practice, and circuit and system design for engineering students.
+        </p>
+
+        <!-- CTA row -->
+        <div class="hero-cta mt-8 flex flex-col sm:flex-row gap-4 justify-start">
+          <a href="#about"
+             class="btn-primary inline-flex items-center justify-center gap-2 px-6 py-3 rounded-2xl text-sm font-semibold text-white">
+            Explore Department <i class="fa-solid fa-arrow-down text-xs"></i>
+          </a>
+          <a href="pages/faculty.html"
+             class="btn-ghost inline-flex items-center justify-center gap-2 px-6 py-3 rounded-2xl text-sm font-semibold">
+            Meet the Faculty <i class="fa-solid fa-arrow-right text-xs"></i>
+          </a>
         </div>
-        <div class="flex items-center gap-2 text-xs font-mono" style="color:rgba(255,255,255,0.65)">
-          <i class="fa-solid fa-users" style="color:rgba(255,255,255,0.7)"></i> 180+ Students
+
+        <!-- Stat badges -->
+        <div class="hero-badges mt-10 pt-6 flex flex-wrap justify-start gap-6 md:gap-8 border-t border-white/10">
+          <div class="flex items-center gap-2 text-xs font-mono" style="color:rgba(255,255,255,0.65)">
+            <i class="fa-solid fa-certificate" style="color:rgba(255,255,255,0.7)"></i> NBA Accredited
+          </div>
+          <div class="flex items-center gap-2 text-xs font-mono" style="color:rgba(255,255,255,0.65)">
+            <i class="fa-solid fa-award" style="color:rgba(255,255,255,0.7)"></i> NAAC A Grade
+          </div>
+          <div class="flex items-center gap-2 text-xs font-mono" style="color:rgba(255,255,255,0.65)">
+            <i class="fa-solid fa-users" style="color:rgba(255,255,255,0.7)"></i> 180+ Students
+          </div>
+          <div class="flex items-center gap-2 text-xs font-mono" style="color:rgba(255,255,255,0.65)">
+            <i class="fa-solid fa-microchip" style="color:rgba(255,255,255,0.7)"></i> VLSI Dept Established 2024
+          </div>
         </div>
-        <div class="flex items-center gap-2 text-xs font-mono" style="color:rgba(255,255,255,0.65)">
-          <i class="fa-solid fa-microchip" style="color:rgba(255,255,255,0.7)"></i> VLSI Dept Established 2024
-        </div>
+
       </div>
     </div>
 
     <!-- Scroll cue -->
-    <div class="hero-scroll-cue absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-3">
+    <div class="hero-scroll-cue absolute bottom-8 left-8 hidden md:flex items-center gap-3">
       <div class="scroll-cue" aria-hidden="true"></div>
       <span class="text-xs font-mono tracking-[0.06em]" style="color:rgba(255,255,255,0.45)">SCROLL</span>
     </div>
   </section>
 
   <!-- ----------------------- STATS BAND --------------------- -->
-  <section id="stats" class="py-16 md:py-20 bg-mist" aria-label="Department at a glance">
+  <section id="stats" class="py-12 md:py-16 bg-mist border-b border-slate-200 dark:border-slate-800" aria-label="Department at a glance">
     <div class="max-w-screen-xl mx-auto px-5 lg:px-8">
-      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 md:gap-5">
+      <div class="surface-card rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-800 grid grid-cols-1 sm:grid-cols-3 divide-y sm:divide-y-0 sm:divide-x divide-slate-200 dark:divide-slate-800" data-aos="fade-up">
 
-        <div class="readout-card surface-card p-6 text-center" data-target="2024" data-suffix="" data-format="plain" data-aos="fade-up" data-aos-delay="0">
+        <div class="readout-card p-6 md:p-8 text-center" data-target="2024" data-suffix="" data-format="plain">
           <p class="readout-value font-display font-bold text-4xl" style="color:#1652c4">2024</p>
           <p class="mt-2 text-xs font-mono uppercase tracking-widest" style="color:#5b6478">Established</p>
         </div>
-        <div class="readout-card surface-card p-6 text-center" data-target="180" data-suffix="+" data-aos="fade-up" data-aos-delay="60">
+        <div class="readout-card p-6 md:p-8 text-center" data-target="180" data-suffix="+">
           <p class="readout-value font-display font-bold text-4xl" style="color:#1652c4">0+</p>
           <p class="mt-2 text-xs font-mono uppercase tracking-widest" style="color:#5b6478">Students Enrolled</p>
         </div>
-        <div class="readout-card surface-card p-6 text-center" data-target="2028" data-suffix="" data-format="plain" data-aos="fade-up" data-aos-delay="120">
+        <div class="readout-card p-6 md:p-8 text-center" data-target="2028" data-suffix="" data-format="plain">
           <p class="readout-value font-display font-bold text-4xl" style="color:#1652c4">2028</p>
           <p class="mt-2 text-xs font-mono uppercase tracking-widest" style="color:#5b6478">First Batch Graduation</p>
         </div>
@@ -310,7 +313,7 @@
   </section>
 
   <!-- ----------------------- ABOUT -------------------------- -->
-  <section id="about" class="py-20 md:py-24 bg-white" aria-label="About the department">
+  <section id="about" class="py-20 md:py-24 bg-white overflow-hidden" aria-label="About the department">
     <div class="max-w-screen-xl mx-auto px-5 lg:px-8">
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
 
@@ -319,7 +322,7 @@
           <div class="signal-divider mb-5 md:mb-8" data-aos="fade-right"><span class="signal-dot"></span></div>
           <p class="eyebrow-tag font-mono text-xs uppercase tracking-widest mb-3 md:mb-4" style="color:#1652c4" data-aos="fade-right">About the Department</p>
           <h2 class="font-display font-bold text-3xl md:text-4xl leading-tight mb-6" style="color:#0b1b33" data-aos="fade-right" data-aos-delay="60">
-            VLSI, Embedded Systems<br/>and Semiconductor Design
+            <span class="font-mono text-sm text-circuit-blue mr-3 opacity-75 font-normal">01</span>VLSI, Embedded Systems<br/>and Semiconductor Design
           </h2>
           <div style="color:#5b6478;line-height:1.8;font-size:.93rem" data-aos="fade-right" data-aos-delay="120">
             <p>Established in 2024, the Department of VLSI Design and Technology at SIET is committed to building strong fundamentals in VLSI, Embedded Systems, and semiconductor design  -  preparing students for the evolving chip industry through hands-on labs and industry-aligned curriculum.</p>
@@ -353,9 +356,7 @@
               HOD's Message <i class="fa-solid fa-arrow-right text-xs"></i>
             </a>
             <a href="pages/faculty.html"
-               style="padding:.625rem 1.25rem;min-height:2.5rem;border:1.5px solid #e2e8f0;border-radius:.75rem;font-size:.85rem;font-weight:600;color:#5b6478;display:inline-flex;align-items:center;gap:.4rem;transition:all .3s"
-               onmouseover="this.style.borderColor='#1652c4';this.style.color='#1652c4'"
-               onmouseout="this.style.borderColor='#e2e8f0';this.style.color='#5b6478'">
+               class="btn-ghost inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold">
               Faculty Directory
             </a>
           </div>
@@ -365,50 +366,30 @@
         <div class="grid grid-cols-2 gap-4" data-aos="fade-left" data-aos-delay="80">
 
           <!-- Wide card -->
-          <div class="col-span-2 rounded-2xl relative overflow-hidden flex items-center justify-center border"
-               style="height:200px;background:#f8fafc;border-color:#e2e8f0">
-            <div aria-hidden="true" style="position:absolute;inset:0;opacity:.18">
-              <svg width="100%" height="100%">
-                <defs><pattern id="ag" width="40" height="40" patternUnits="userSpaceOnUse">
-                  <path d="M0 20H40M20 0V40" stroke="#cbd5e1" stroke-width=".9" fill="none"/>
-                  <circle cx="20" cy="20" r="1.5" fill="#94a3b8"/>
-                </pattern></defs>
-                <rect width="100%" height="100%" fill="url(#ag)"/>
-              </svg>
-            </div>
+          <div class="col-span-2 rounded-2xl relative overflow-hidden flex items-center justify-center border border-slate-200 dark:border-slate-800"
+               style="height:200px;background:#f8fafc">
             <div class="text-center relative z-10">
               <p class="font-mono font-bold text-5xl" style="color:#1652c4">2024</p>
               <p class="font-display font-semibold text-lg mt-1" style="color:#0b1b33">Department Established</p>
             </div>
           </div>
 
-          <div class="surface-card rounded-2xl p-6 group" style="transition:transform .3s,box-shadow .3s"
-               onmouseover="this.style.transform='translateY(-4px)';this.style.boxShadow='0 20px 40px -20px rgba(11,27,51,.2)'"
-               onmouseout="this.style.transform='';this.style.boxShadow=''">
+          <div class="surface-card rounded-2xl p-6 group">
             <i class="fa-solid fa-microchip text-2xl mb-3" style="color:#1652c4"></i>
             <p class="font-display font-semibold text-sm" style="color:#0b1b33">VLSI Design</p>
             <p style="font-size:.72rem;color:#5b6478;margin-top:.2rem">Cadence, Synopsys toolchain</p>
           </div>
-          <div class="surface-card rounded-2xl p-6"
-               style="transition:transform .3s,box-shadow .3s"
-               onmouseover="this.style.transform='translateY(-4px)';this.style.boxShadow='0 20px 40px -20px rgba(11,27,51,.2)'"
-               onmouseout="this.style.transform='';this.style.boxShadow=''">
+          <div class="surface-card rounded-2xl p-6 group">
             <i class="fa-solid fa-wifi text-2xl mb-3" style="color:#1652c4"></i>
             <p class="font-display font-semibold text-sm" style="color:#0b1b33">RF &amp; Antenna</p>
             <p style="font-size:.72rem;color:#5b6478;margin-top:.2rem">HFSS, ADS simulation</p>
           </div>
-          <div class="surface-card rounded-2xl p-6"
-               style="transition:transform .3s,box-shadow .3s"
-               onmouseover="this.style.transform='translateY(-4px)';this.style.boxShadow='0 20px 40px -20px rgba(11,27,51,.2)'"
-               onmouseout="this.style.transform='';this.style.boxShadow=''">
+          <div class="surface-card rounded-2xl p-6 group">
             <i class="fa-solid fa-cpu text-2xl mb-3" style="color:#1652c4"></i>
             <p class="font-display font-semibold text-sm" style="color:#0b1b33">Embedded Systems</p>
             <p style="font-size:.72rem;color:#5b6478;margin-top:.2rem">ARM, RTOS, IoT prototyping</p>
           </div>
-          <div class="surface-card rounded-2xl p-6"
-               style="transition:transform .3s,box-shadow .3s"
-               onmouseover="this.style.transform='translateY(-4px)';this.style.boxShadow='0 20px 40px -20px rgba(11,27,51,.2)'"
-               onmouseout="this.style.transform='';this.style.boxShadow=''">
+          <div class="surface-card rounded-2xl p-6 group">
             <i class="fa-solid fa-signal text-2xl mb-3" style="color:#1652c4"></i>
             <p class="font-display font-semibold text-sm" style="color:#0b1b33">Signal Processing</p>
             <p style="font-size:.72rem;color:#5b6478;margin-top:.2rem">MATLAB, LabVIEW</p>
@@ -420,11 +401,11 @@
   </section>
 
   <!-- ----------------------- VISION & MISSION --------------- -->
-  <section id="vision-mission" class="py-20 md:py-24" style="background:#f8fafc;border-top:1px solid #e2e8f0;border-bottom:1px solid #e2e8f0"
+  <section id="vision-mission" class="py-20 md:py-24 overflow-hidden" style="background:#f8fafc;border-top:1px solid #e2e8f0;border-bottom:1px solid #e2e8f0"
            aria-label="Vision and mission">
     <div class="max-w-screen-xl mx-auto px-5 lg:px-8">
       <div class="text-center mb-12" data-aos="fade-up">
-        <h2 class="font-display font-bold text-3xl md:text-4xl" style="color:#0b1b33">Vision &amp; Mission</h2>
+        <h2 class="font-display font-bold text-3xl md:text-4xl" style="color:#0b1b33"><span class="font-mono text-sm text-circuit-blue mr-3 opacity-75 font-normal">02</span>Vision &amp; Mission</h2>
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -487,9 +468,9 @@
     <div class="max-w-screen-xl mx-auto px-5 lg:px-8">
       <div class="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-10" data-aos="fade-up">
         <div>
-          <h2 class="font-display font-bold text-3xl md:text-4xl" style="color:#0b1b33">Upcoming Events</h2>
+          <h2 class="font-display font-bold text-3xl md:text-4xl" style="color:#0b1b33"><span class="font-mono text-sm text-circuit-blue mr-3 opacity-75 font-normal">03</span>Upcoming Events</h2>
         </div>
-        <a href="pages/events.html" class="inline-flex items-center gap-2 text-sm font-semibold transition-all" style="color:#1652c4" onmouseover="this.style.gap='.65rem'" onmouseout="this.style.gap='.5rem'">
+        <a href="pages/events.html" class="inline-flex items-center gap-2 text-sm font-semibold transition-all" style="color:#1652c4">
           View All Events <i class="fa-solid fa-arrow-right text-xs"></i>
         </a>
       </div>
@@ -508,12 +489,12 @@
     <div class="max-w-screen-xl mx-auto px-5 lg:px-8">
       <div class="text-center mb-12" data-aos="fade-up">
         <p class="eyebrow-tag font-mono text-xs uppercase tracking-widest mb-3" style="color:#1652c4">Student Projects</p>
-        <h2 class="font-display font-bold text-3xl md:text-4xl" style="color:#0b1b33">Featured Projects</h2>
+        <h2 class="font-display font-bold text-3xl md:text-4xl" style="color:#0b1b33"><span class="font-mono text-sm text-circuit-blue mr-3 opacity-75 font-normal">04</span>Featured Projects</h2>
         <p class="mt-3 max-w-xl mx-auto text-sm" style="color:#5b6478">Hands-on VLSI, embedded systems, and IoT projects developed as part of department coursework and research.</p>
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <div class="surface-card rounded-2xl overflow-hidden" style="transition:transform .3s,box-shadow .3s" onmouseover="this.style.transform='translateY(-5px)';this.style.boxShadow='0 20px 40px -18px rgba(11,27,51,.18)'" onmouseout="this.style.transform='';this.style.boxShadow=''" data-aos="fade-up">
+        <div class="surface-card rounded-2xl overflow-hidden group" data-aos="fade-up">
           <div class="h-40 flex items-center justify-center" style="background:#0f172a">
             <i class="fa-solid fa-microchip text-4xl text-white opacity-80"></i>
           </div>
@@ -531,7 +512,7 @@
           </div>
         </div>
 
-        <div class="surface-card rounded-2xl overflow-hidden" style="transition:transform .3s,box-shadow .3s" onmouseover="this.style.transform='translateY(-5px)';this.style.boxShadow='0 20px 40px -18px rgba(11,27,51,.18)'" onmouseout="this.style.transform='';this.style.boxShadow=''" data-aos="fade-up" data-aos-delay="80">
+        <div class="surface-card rounded-2xl overflow-hidden group" data-aos="fade-up" data-aos-delay="80">
           <div class="h-40 flex items-center justify-center" style="background:#0f172a">
             <i class="fa-solid fa-wifi text-4xl text-white opacity-80"></i>
           </div>
@@ -549,7 +530,7 @@
           </div>
         </div>
 
-        <div class="surface-card rounded-2xl overflow-hidden" style="transition:transform .3s,box-shadow .3s" onmouseover="this.style.transform='translateY(-5px)';this.style.boxShadow='0 20px 40px -18px rgba(11,27,51,.18)'" onmouseout="this.style.transform='';this.style.boxShadow=''" data-aos="fade-up" data-aos-delay="160">
+        <div class="surface-card rounded-2xl overflow-hidden group" data-aos="fade-up" data-aos-delay="160">
           <div class="h-40 flex items-center justify-center" style="background:#0f172a">
             <i class="fa-solid fa-signal text-4xl text-white opacity-80"></i>
           </div>
@@ -577,12 +558,12 @@
   </section>
 
   <!-- ----------------------- ANNOUNCEMENTS ------------------- -->
-  <section id="announcements" class="py-20 md:py-24 bg-white" aria-label="Department announcements" style="border-bottom:1px solid #e2e8f0">
+  <section id="announcements" class="py-20 md:py-24 bg-white overflow-hidden" aria-label="Department announcements" style="border-bottom:1px solid #e2e8f0">
     <div class="max-w-screen-xl mx-auto px-5 lg:px-8">
       <div class="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-10" data-aos="fade-up">
         <div>
           <p class="eyebrow-tag font-mono text-xs uppercase tracking-widest mb-3" style="color:#1652c4">Notices</p>
-          <h2 class="font-display font-bold text-3xl md:text-4xl" style="color:#0b1b33">Department Announcements</h2>
+          <h2 class="font-display font-bold text-3xl md:text-4xl" style="color:#0b1b33"><span class="font-mono text-sm text-circuit-blue mr-3 opacity-75 font-normal">05</span>Department Announcements</h2>
         </div>
         <a href="pages/notices.html" class="inline-flex items-center gap-2 text-sm font-semibold transition-all" style="color:#1652c4">
           All Notices <i class="fa-solid fa-arrow-right text-xs"></i>
@@ -613,7 +594,7 @@
   <section id="placements" class="py-16 md:py-20 bg-mist" aria-label="Placement updates">
     <div class="max-w-screen-xl mx-auto px-5 lg:px-8">
       <div class="text-center py-6" data-aos="fade-up">
-        <h3 class="text-2xl font-bold" style="color:#0b1b33">Placements</h3>
+        <h3 class="text-2xl font-bold" style="color:#0b1b33"><span class="font-mono text-sm text-circuit-blue mr-3 opacity-75 font-normal">06</span>Placements</h3>
         <p class="text-gray-600 mt-2">Our first batch (2024) will graduate in 2028. Placement updates will be shared here.</p>
       </div>
     </div>
@@ -637,22 +618,21 @@
   <section id="highlights" class="py-20 md:py-24 bg-white" aria-label="Department highlights">
     <div class="max-w-screen-xl mx-auto px-5 lg:px-8">
       <div class="text-center mb-12" data-aos="fade-up">
-        <h2 class="font-display font-bold text-3xl md:text-4xl" style="color:#0b1b33">Department Highlights</h2>
+        <h2 class="font-display font-bold text-3xl md:text-4xl" style="color:#0b1b33"><span class="font-mono text-sm text-circuit-blue mr-3 opacity-75 font-normal">07</span>Department Highlights</h2>
       </div>
 
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
 
         <div class="surface-card p-6 group" data-aos="fade-up" data-aos-delay="0">
           <div class="w-12 h-12 rounded-2xl flex items-center justify-center mb-5"
-               style="background:#f0f4ff;transition:transform .3s"
-               onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform=''">
+               style="background:#f0f4ff">
             <i class="fa-solid fa-microchip text-xl" style="color:#1652c4"></i>
           </div>
           <h3 class="font-display font-semibold text-base mb-2" style="color:#0b1b33">Modern Laboratories</h3>
           <p style="font-size:.83rem;color:#5b6478;line-height:1.7">Hands-on learning spaces for VLSI, embedded systems, and semiconductor design practice.</p>
         </div>
 
-        <div class="surface-card p-6" data-aos="fade-up" data-aos-delay="80">
+        <div class="surface-card p-6 group" data-aos="fade-up" data-aos-delay="80">
           <div class="w-12 h-12 rounded-2xl flex items-center justify-center mb-5" style="background:#f0f4ff">
             <i class="fa-solid fa-certificate text-xl" style="color:#1652c4"></i>
           </div>
@@ -660,7 +640,7 @@
           <p style="font-size:.83rem;color:#5b6478;line-height:1.7">Programs benchmarked against national quality standards, ensuring graduates meet the highest engineering education criteria.</p>
         </div>
 
-        <div class="surface-card p-6" data-aos="fade-up" data-aos-delay="160">
+        <div class="surface-card p-6 group" data-aos="fade-up" data-aos-delay="160">
           <div class="w-12 h-12 rounded-2xl flex items-center justify-center mb-5" style="background:#f0f4ff">
             <i class="fa-solid fa-handshake text-xl" style="color:#1652c4"></i>
           </div>
@@ -668,7 +648,7 @@
           <p style="font-size:.83rem;color:#5b6478;line-height:1.7">Active MoUs bridging academics and industry through live projects, internships, and placement drives.</p>
         </div>
 
-        <div class="surface-card p-6" data-aos="fade-up" data-aos-delay="240">
+        <div class="surface-card p-6 group" data-aos="fade-up" data-aos-delay="240">
           <div class="w-12 h-12 rounded-2xl flex items-center justify-center mb-5" style="background:#f0f4ff">
             <i class="fa-solid fa-flask text-xl" style="color:#1652c4"></i>
           </div>
@@ -684,18 +664,10 @@
   <section id="cta" class="py-20 md:py-24 relative overflow-hidden"
            style="background:#f8fafc;border-top:1px solid #e2e8f0;border-bottom:1px solid #e2e8f0"
            aria-label="Call to action">
-    <div aria-hidden="true" style="position:absolute;inset:0;opacity:.12;pointer-events:none">
-      <svg width="100%" height="100%">
-        <defs><pattern id="gc" width="60" height="60" patternUnits="userSpaceOnUse">
-          <path d="M0 30H60M30 0V60" stroke="#cbd5e1" stroke-width=".8" fill="none"/>
-        </pattern></defs>
-        <rect width="100%" height="100%" fill="url(#gc)"/>
-      </svg>
-    </div>
     <div class="max-w-screen-xl mx-auto px-5 text-center relative z-10">
       <p class="eyebrow-tag font-mono text-xs uppercase tracking-widest mb-5" style="color:#1652c4" data-aos="fade-up">Admissions &amp; Inquiries</p>
       <h2 class="font-display font-bold text-3xl md:text-5xl leading-tight mb-5" style="color:#0f172a" data-aos="fade-up" data-aos-delay="60">
-        Admissions and Academic<br class="hidden sm:block"/> Inquiries
+        <span class="font-mono text-sm md:text-base text-circuit-blue mr-3 opacity-75 font-normal">08</span>Admissions and Academic<br class="hidden sm:block"/> Inquiries
       </h2>
       <p class="max-w-xl mx-auto mb-8 text-sm md:text-base leading-relaxed" style="color:#5b6478" data-aos="fade-up" data-aos-delay="120">
         Specialized curriculum, modern laboratories, and direct industry mentorship at SIET VLSI.

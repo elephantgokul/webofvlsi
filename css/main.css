@@ -254,16 +254,9 @@ body.home-page #site-header:not(.is-scrolled) .nav-link:hover {
   text-shadow: 0 1px 8px rgba(0, 0, 0, 0.35);
 }
 
-/* Tiled circuit-grid texture */
+/* Hero texture: calm hairline background without decorative tiled SVG grid */
 #hero::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: 2;
-  opacity: 0.16;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 120 120'%3E%3Cg fill='none' stroke='%232fe6dd' stroke-width='1'%3E%3Cpath d='M0 60H40M80 60H120M60 0V40M60 80V120'/%3E%3Ccircle cx='60' cy='60' r='3'/%3E%3Ccircle cx='40' cy='60' r='2'/%3E%3Ccircle cx='80' cy='60' r='2'/%3E%3Ccircle cx='60' cy='40' r='2'/%3E%3Ccircle cx='60' cy='80' r='2'/%3E%3C/g%3E%3C/svg%3E");
-  background-size: 120px 120px;
-  pointer-events: none;
+  display: none;
 }
 
 .hero-scroll-cue {
