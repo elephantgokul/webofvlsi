@@ -636,9 +636,9 @@ body.home-page #site-header:not(.is-scrolled) .nav-link:hover {
 
 /* Responsive animations: convert off-screen horizontal translations to vertical on mobile */
 @media (max-width: 768px) {
-  [data-aos="fade-left"],
-  [data-aos="fade-right"] {
-    transform: translate3d(0, 20px, 0) !important;
+  [data-aos="fade-left"]:not(.aos-animate),
+  [data-aos="fade-right"]:not(.aos-animate) {
+    transform: translate3d(0, 20px, 0);
   }
 }
 
