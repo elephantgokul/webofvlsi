@@ -2697,20 +2697,12 @@ body.light-page .readout-card::after {
    APPLE-STYLE LIQUID GLASS REDESIGN
    ========================================================================= */
 
-/* --- 1. Page Background blobs --- */
+/* --- 1. Page Background blobs (disabled) --- */
 body, body.light-page {
-  background-color: #F5F7FA !important;
+  background-color: var(--paper) !important;
 }
 body::before, body.light-page::before {
-  content: '';
-  position: fixed;
-  inset: 0;
-  z-index: -2;
-  pointer-events: none;
-  background: 
-    radial-gradient(circle at 15% 30%, rgba(47, 230, 221, 0.18), transparent 45%),
-    radial-gradient(circle at 85% 20%, rgba(22, 82, 196, 0.15), transparent 45%),
-    radial-gradient(circle at 50% 80%, rgba(22, 82, 196, 0.12), transparent 50%);
+  display: none !important;
 }
 
 /* --- 2. Reusable .glass class --- */
@@ -3086,15 +3078,7 @@ body.light-page .text-muted, body.light-page [style*="color:var(--clr-text-muted
 
 /* Reflection / ground shadow */
 .circular-gallery-stage::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 10%;
-  width: 80%;
-  height: 60px;
-  background: radial-gradient(ellipse at center, rgba(22,82,196,0.06) 0%, transparent 70%);
-  border-radius: 50%;
-  pointer-events: none;
+  display: none !important;
 }
 
 /* Navigation controls */
