@@ -247,7 +247,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                     <div class="project-detail-header">
                         <div>
                             <div class="project-detail-title">${escapeHtml(proj.title)}</div>
-                            <span class="project-category-badge" style="background:${proj.categoryColor}15;color:${proj.categoryColor};border:1px solid ${proj.categoryColor}30;margin-top:4px">
+                            <span class="project-category-badge" style="background:${escapeHtml(proj.categoryColor)}15;color:${escapeHtml(proj.categoryColor)};border:1px solid ${escapeHtml(proj.categoryColor)}30;margin-top:4px">
                                 <i class="fa-solid fa-microchip" style="font-size:0.55rem"></i> ${escapeHtml(proj.categoryLabel)}
                             </span>
                         </div>
