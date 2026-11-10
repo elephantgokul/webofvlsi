@@ -6,10 +6,10 @@
 function setupAOS() {
   if (typeof AOS !== "undefined") {
     AOS.init({
-      duration: 480,
-      easing: "ease-out-cubic",
+      duration: 400,
+      easing: "cubic-bezier(0.2, 0, 0, 1)",
       once: true,
-      offset: 60,
+      offset: 40,
     });
     AOS.refresh();
   }

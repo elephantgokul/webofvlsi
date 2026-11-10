@@ -311,4 +311,12 @@ document.addEventListener('DOMContentLoaded', async () => {
         return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[character];
     });
     }
+
+    function generateSkeletons(count) {
+        let html = '';
+        for (let i = 0; i < count; i++) {
+            html += '<div class="skeleton-card"><div class="skeleton skeleton-img"></div><div class="skeleton skeleton-text"></div><div class="skeleton skeleton-text-short"></div></div>';
+        }
+        return html;
+    }
 });
