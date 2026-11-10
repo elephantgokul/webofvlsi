@@ -96,7 +96,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                     ${specialization.split(',').map(s => `<span class="px-2 py-0.5 rounded-md text-[10px] font-mono" style="background:#f0f4ff;color:#1652c4">${escapeHtml(s.trim())}</span>`).join('')}
                 </div>
                 <div class="flex gap-2 pt-3" style="border-top:1px solid #e2e8f0">
-                  <a href="mailto:${escapeHtml(fac.email)}" aria-label="Email" title="Email" class="w-8 h-8 rounded-lg flex items-center justify-center text-xs transition-all" style="background:#f0f4ff;color:#1652c4" onmouseover="this.style.background='#1652c4';this.style.color='#fff'" onmouseout="this.style.background='#f0f4ff';this.style.color='#1652c4'"><i class="fa-solid fa-envelope"></i></a>
+                  ${fac.email ? `<a href="mailto:${escapeHtml(fac.email)}" aria-label="Email" title="Email" class="w-8 h-8 rounded-lg flex items-center justify-center text-xs transition-all" style="background:#f0f4ff;color:#1652c4" onmouseover="this.style.background='#1652c4';this.style.color='#fff'" onmouseout="this.style.background='#f0f4ff';this.style.color='#1652c4'"><i class="fa-solid fa-envelope"></i></a>` : ''}
                   ${fac.orcid ? `<a href="https://orcid.org/${encodeURIComponent(fac.orcid)}" target="_blank" rel="noopener noreferrer" aria-label="ORCID" title="ORCID" class="w-8 h-8 rounded-lg flex items-center justify-center text-xs transition-all" style="background:#f0f4ff;color:#1652c4" onmouseover="this.style.background='#1652c4';this.style.color='#fff'" onmouseout="this.style.background='#f0f4ff';this.style.color='#1652c4'"><i class="fa-brands fa-orcid"></i></a>` : ''}
                 </div>
               </div>
