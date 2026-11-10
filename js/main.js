@@ -12,6 +12,30 @@ function escapeHtml(value) {
   }
 window.escapeHtml = escapeHtml;
 
+/* ---- Utility: safeUrl --------------------------------------------------- */
+function safeUrl(value, allowRelative) {
+  var raw = String(value == null ? '' : value).trim();
+  if (!raw || /[\u0000-\u001f\u007f]/.test(raw)) return '';
+  if (/^(?:javascript|data|vbscript):/i.test(raw)) return '';
+  if (/^(?:https?|mailto|tel):/i.test(raw)) {
+    try {
+      var parsed = new URL(raw, 'http://localhost');
+      if (parsed.protocol === 'https:' || parsed.protocol === 'http:' || parsed.protocol === 'mailto:' || parsed.protocol === 'tel:') {
+        return raw;
+      }
+    } catch (e) {
+      return '';
+    }
+    return '';
+  }
+  if (allowRelative) {
+    if (/^(?:\/\/|[a-z][a-z0-9+.-]*:)/i.test(raw)) return '';
+    return raw;
+  }
+  return '';
+}
+window.safeUrl = safeUrl;
+
 /* ---- Loading screen removed ---- */
 
 /* ---- Header: sticky background + mobile menu --------------------------- */
