@@ -545,8 +545,11 @@
         document.getElementById('event-reg-deadline').value = ev.registration_deadline || '';
         document.getElementById('event-poster-url').value = ev.poster_url || '';
         if (ev.poster_url) {
-          document.getElementById('poster-preview-img').src = ev.poster_url;
-          document.getElementById('poster-preview').classList.remove('hidden');
+          var safePoster = window.safeUrl ? window.safeUrl(ev.poster_url, true) : (function(u){ return /^https?:\/\//i.test(u) ? u : ''; })(ev.poster_url);
+          if (safePoster) {
+            document.getElementById('poster-preview-img').src = safePoster;
+            document.getElementById('poster-preview').classList.remove('hidden');
+          }
         }
       }
     } else {
