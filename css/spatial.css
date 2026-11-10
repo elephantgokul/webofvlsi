@@ -416,8 +416,40 @@ td { padding: 1rem; border-bottom: 1px solid var(--glass-border) !important; col
 tr:hover td { background: rgba(0, 0, 0, 0.02) !important; }
 [data-theme="dark"] tr:hover td { background: rgba(255, 255, 255, 0.02) !important; }
 
-/* Reduced Motion & Fallbacks */
+/* 7. Motion & Reduced Motion */
+[data-aos]:not(.aos-animate) {
+  opacity: 0 !important;
+  transform: translate3d(0, 12px, 0) !important;
+  transition-property: transform, opacity !important;
+}
+[data-aos].aos-animate {
+  opacity: 1 !important;
+  transform: none !important;
+  transition-duration: 400ms !important;
+  transition-timing-function: cubic-bezier(0.2, 0, 0, 1) !important;
+  transition-property: transform, opacity !important;
+}
+
 @media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto !important;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    transition-delay: 0ms !important;
+    scroll-behavior: auto !important;
+  }
+  [data-aos],
+  [data-aos]:not(.aos-animate),
+  [data-aos].aos-animate {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
   .surface-card:hover { transform: none !important; }
   .surface-card { transition: none !important; }
 }

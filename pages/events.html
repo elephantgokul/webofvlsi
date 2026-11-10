@@ -170,7 +170,7 @@
 <script src="../js/supabase-config.js"></script>
 <script src="../js/events-manager.js"></script>
 <script>
-AOS.init({duration:480,once:true,offset:60});
+AOS.init({duration:400,once:true,offset:40,easing:"cubic-bezier(0.2,0,0,1)"});
 
 // Load events from Supabase (with fallback)
 async function loadEventsPage() {
