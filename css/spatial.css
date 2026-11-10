@@ -175,13 +175,14 @@ small, .text-xs, .text-sm {
 /* 2. Radius Scale */
 /* 6px: Badges, tags, pills, buttons */
 .badge, .status-badge, .glass-pill, .eyebrow-tag,
-.btn-primary, .btn-ghost, .btn-secondary, button,
-[type="submit"], [type="button"], .tab-btn, .filter-btn {
+.btn-primary, .btn-ghost, .btn-secondary,
+button:not(.rounded-full):not(#back-to-top):not(.circular-nav-btn):not(.swiper-button-next):not(.swiper-button-prev):not(#lightbox-close):not(#lb-prev):not(#lb-next):not(.gallery-zoom-btn),
+[type="submit"], [type="button"]:not(.rounded-full), .tab-btn, .filter-btn {
   border-radius: 6px !important;
 }
 
 /* 8px: Inputs, selects, textareas, small cards, dropdowns */
-.glass-input, input, select, textarea,
+.glass-input, input:not([type="checkbox"]):not([type="radio"]), select, textarea,
 .readout-card, .dropdown-menu, .popover {
   border-radius: 8px !important;
 }
@@ -189,10 +190,36 @@ small, .text-xs, .text-sm {
 /* 12px: Large containers and cards (already set on .surface-card above) */
 
 /* Nested radius = outer radius (12px) minus padding (e.g. 16px) -> 6px for icon boxes */
-.surface-card > img,
-.surface-card .w-12,
-.surface-card [class*="rounded"] {
+.surface-card > img:not(.rounded-full),
+.surface-card .w-12:not(.rounded-full),
+.surface-card [class*="rounded"]:not(.rounded-full) {
   border-radius: 6px !important;
+}
+
+/* Circular elements: avatars and profile photos, status dots, spinners, toggle thumbs, icon-only round buttons, progress rings */
+.rounded-full,
+.avatar,
+[class*="avatar"],
+img.rounded-full,
+div.rounded-full,
+span.rounded-full,
+.status-dot,
+.signal-dot,
+.notice-dot,
+.pulse-dot,
+.spinner,
+.loading-spinner,
+.progress-ring,
+#back-to-top,
+.circular-nav-btn,
+.swiper-button-next,
+.swiper-button-prev,
+#lightbox-close,
+#lb-prev,
+#lb-next,
+.gallery-zoom-btn,
+.toggle-thumb {
+  border-radius: 50% !important;
 }
 
 .glass-input, input, select, textarea {
