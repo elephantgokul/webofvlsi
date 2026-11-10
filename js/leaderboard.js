@@ -102,7 +102,7 @@ function renderTable(students) {
     // Build category badges
     var categoryBadges = '';
     (scoring.projects || []).forEach(function(p) {
-      categoryBadges += '<span class="badge" style="background:' + p.categoryColor + '15;color:' + p.categoryColor + ';border:1px solid ' + p.categoryColor + '30;font-size:0.65rem;padding:2px 6px;margin:1px">' + escapeHtml(p.categoryLabel) + '</span>';
+      categoryBadges += '<span class="badge" style="background:' + escapeHtml(p.categoryColor) + '15;color:' + escapeHtml(p.categoryColor) + ';border:1px solid ' + escapeHtml(p.categoryColor) + '30;font-size:0.65rem;padding:2px 6px;margin:1px">' + escapeHtml(p.categoryLabel) + '</span>';
     });
 
     html += [

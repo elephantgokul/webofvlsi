@@ -220,7 +220,7 @@
     var posterSrc = safeHttpUrl(ev.poster_url, true);
     if (posterSrc) {
       posterHtml = '<div class="mb-3 rounded-xl overflow-hidden" style="max-height:180px">' +
-        '<img src="' + escapeHtml(ev.poster_url) + '" alt="' + escapeHtml(ev.title) + ' poster" class="w-full object-cover" style="max-height:180px" onerror="this.parentNode.style.display=\'none\'">' +
+        '<img src="' + escapeHtml(posterSrc) + '" alt="' + escapeHtml(ev.title) + ' poster" class="w-full object-cover" style="max-height:180px" onerror="this.parentNode.style.display=\'none\'">' +
         '</div>';
     }
 

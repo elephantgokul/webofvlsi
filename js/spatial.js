@@ -9,11 +9,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 2. Setup theme toggle
     const savedTheme = localStorage.getItem('theme');
-    if (savedTheme) {
-        document.documentElement.setAttribute('data-theme', savedTheme);
-    } else {
-        document.documentElement.setAttribute('data-theme', 'light');
-    }
+    const theme = savedTheme === 'dark' ? 'dark' : 'light';
+    document.documentElement.setAttribute('data-theme', theme);
 
     // Create a floating theme toggle button
     const toggleBtn = document.createElement('button');
