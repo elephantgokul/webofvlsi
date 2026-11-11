@@ -114,10 +114,11 @@
     <div class="max-w-screen-xl mx-auto px-5 lg:px-8 flex gap-0">
       <button class="ev-tab active px-6 py-4 text-sm font-semibold" id="tab-upcoming" onclick="switchEvTab('upcoming')">
         <i class="fa-solid fa-calendar-plus mr-2"></i>Upcoming
-        <span id="badge-upcoming" class="ml-2 px-2 py-0.5 text-xs rounded-full text-white" style="background:#1652c4;font-family:'IBM Plex Mono',monospace"></span>
+        <span id="badge-upcoming" class="ml-2 px-2 py-0.5 text-xs rounded-full text-white" style="background:#1652c4;font-family:'IBM Plex Mono',monospace">0</span>
       </button>
       <button class="ev-tab px-6 py-4 text-sm font-semibold" id="tab-past" onclick="switchEvTab('past')" style="color:#5b6478">
         <i class="fa-solid fa-clock-rotate-left mr-2"></i>Past Events
+        <span id="badge-past" class="ml-2 px-2 py-0.5 text-xs rounded-full text-white" style="background:#64748b;font-family:'IBM Plex Mono',monospace">0</span>
       </button>
     </div>
   </div>
@@ -166,13 +167,14 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js" integrity="sha384-n1AULnKdMJlK1oQCLNDL9qZsDgXtH6jRYFCpBtWFc+a9Yve0KSoMn575rk755NJZ" crossorigin="anonymous"></script>
 <script src="../js/main.js"></script>
+<script src="../data/events-data.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.119.0" integrity="sha384-gnyZit14c5lnGcarmA166QQjjJXpucw25ogZXuwH3HxxY904zHkBqmxVpelsPorb" crossorigin="anonymous"></script>
 <script src="../js/supabase-config.js"></script>
 <script src="../js/events-manager.js"></script>
 <script>
 AOS.init({duration:400,once:true,offset:40,easing:"cubic-bezier(0.2,0,0,1)"});
 
-// Load events from Supabase (with fallback)
+// Load events from shared data source / Supabase
 async function loadEventsPage() {
   try {
     var upcoming = await EventsManager.fetchEvents({ upcoming: true });
@@ -187,7 +189,8 @@ async function loadEventsPage() {
         return EventsManager.renderEventCard(ev, i);
       }).join('');
     }
-    document.getElementById('badge-upcoming').textContent = upcoming.length;
+    var badgeUpcoming = document.getElementById('badge-upcoming');
+    if (badgeUpcoming) badgeUpcoming.textContent = upcoming.length;
 
     // Render past
     var pastGrid = document.getElementById('past-grid');
@@ -198,11 +201,16 @@ async function loadEventsPage() {
         return EventsManager.renderEventCard(ev, i);
       }).join('');
     }
+    var badgePast = document.getElementById('badge-past');
+    if (badgePast) badgePast.textContent = past.length;
 
     if (typeof AOS !== 'undefined') AOS.refreshHard();
   } catch (err) {
     console.error('[Events Page] Error loading events:', err);
     var grid = document.getElementById('upcoming-grid');
+    grid.innerHTML = '<div class="col-span-full events-error"><i class="fa-solid fa-triangle-exclamation text-3xl mb-3"></i><p class="text-sm font-medium">Failed to load events</p><p class="text-xs mt-1" style="color:#aab4c8">Please try again later</p></div>';
+  }
+}
     grid.innerHTML = '<div class="col-span-full events-error"><i class="fa-solid fa-triangle-exclamation text-3xl mb-3"></i><p class="text-sm font-medium">Failed to load events</p><p class="text-xs mt-1" style="color:#aab4c8">Please try again later</p></div>';
   }
 }

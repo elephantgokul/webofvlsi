@@ -15,45 +15,7 @@
   --glass-shadow: 0 4px 16px -2px rgba(15, 23, 42, 0.05);
 }
 
-[data-theme="dark"] {
-  --bg-color: #141415;
-  --text-primary: #ededed;
-  --text-secondary: #a1a1a6;
-  --text-muted: #85858b;
-  
-  /* Lighter blue tint for dark mode text, links, icons and borders (7.24:1 contrast against #141415, 6.90:1 against #19191b) */
-  --accent-color: #60a5fa;
-  --accent-gradient: #60a5fa;
-  
-  --glass-bg: rgba(25, 25, 27, 0.96);
-  --glass-tint: rgba(25, 25, 27, 0.96);
-  --glass-border: rgba(255, 255, 255, 0.08);
-  --glass-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.4);
-}
 
-/* Dark Mode Accent Overrides for text, links, icons and borders */
-[data-theme="dark"] .text-accent,
-[data-theme="dark"] .readout-value,
-[data-theme="dark"] .eyebrow-tag,
-[data-theme="dark"] [style*="color:#1652c4"],
-[data-theme="dark"] [style*="color: #1652c4"] {
-  color: var(--accent-color) !important;
-}
-
-[data-theme="dark"] [style*="border-color:#1652c4"],
-[data-theme="dark"] [style*="border-color: #1652c4"] {
-  border-color: var(--accent-color) !important;
-}
-
-/* Fills with white text retain #1652c4 in dark mode (contrast 7.05:1 with white text) */
-[data-theme="dark"] .btn-primary {
-  background: #1652c4 !important;
-  color: #ffffff !important;
-}
-[data-theme="dark"] [style*="background:#1652c4"],
-[data-theme="dark"] [style*="background: #1652c4"] {
-  background: #1652c4 !important;
-}
 
 /* Global Overrides */
 body {
@@ -158,19 +120,7 @@ small, .text-xs, .text-sm {
   transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease !important;
   will-change: transform;
 }
-[data-theme="dark"] .surface-card,
-[data-theme="dark"] .surface-card-2,
-[data-theme="dark"] .glass,
-[data-theme="dark"] .glass-panel,
-[data-theme="dark"] .modal-content,
-[data-theme="dark"] .sidebar,
-[data-theme="dark"] #mobile-menu,
-[data-theme="dark"] article.card,
-[data-theme="dark"] .card {
-  background: #19191b !important;
-  border: 1px solid rgba(255, 255, 255, 0.08) !important;
-  box-shadow: none !important;
-}
+
 
 /* 2. Radius Scale */
 /* 6px: Badges, tags, pills, buttons */
@@ -227,16 +177,8 @@ span.rounded-full,
   background: #ffffff !important;
   border: 1px solid var(--clr-border) !important;
 }
-[data-theme="dark"] .glass-input,
-[data-theme="dark"] input,
-[data-theme="dark"] select,
-[data-theme="dark"] textarea {
-  background: #232325 !important;
-  color: #ededed !important;
-  border: 1px solid rgba(255, 255, 255, 0.1) !important;
-}
 
-/* 3. Focus Rings: 2px solid, 2px offset, brand blue #1652c4 in light, #60a5fa in dark */
+/* 3. Focus Rings: 2px solid, 2px offset, brand blue #1652c4 */
 *:focus-visible,
 a:focus-visible,
 button:focus-visible,
@@ -246,15 +188,7 @@ textarea:focus-visible {
   outline: 2px solid #1652c4 !important;
   outline-offset: 2px !important;
 }
-[data-theme="dark"] *:focus-visible,
-[data-theme="dark"] a:focus-visible,
-[data-theme="dark"] button:focus-visible,
-[data-theme="dark"] input:focus-visible,
-[data-theme="dark"] select:focus-visible,
-[data-theme="dark"] textarea:focus-visible {
-  outline: 2px solid #60a5fa !important;
-  outline-offset: 2px !important;
-}
+
 
 /* 4. Header: Rectangular bar with 1px hairline bottom border */
 #site-header {
@@ -305,42 +239,7 @@ textarea:focus-visible {
   color: #0f172a !important;
 }
 
-[data-theme="dark"] #site-header {
-  background: #141415 !important;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
-  box-shadow: none !important;
-}
-[data-theme="dark"] #site-header .brand-text {
-  color: #ffffff !important;
-}
-[data-theme="dark"] #site-header .brand-text.text-xs {
-  color: #cbd5e1 !important;
-  opacity: 1 !important;
-}
-[data-theme="dark"] #site-header .nav-link {
-  color: #cbd5e1 !important;
-}
-[data-theme="dark"] #site-header .nav-link:hover {
-  color: #60a5fa !important;
-}
-[data-theme="dark"] #site-header #menu-toggle {
-  color: #ffffff !important;
-}
-[data-theme="dark"] #mobile-menu {
-  background: #141415 !important;
-  border: 1px solid rgba(255, 255, 255, 0.08) !important;
-}
-[data-theme="dark"] #mobile-menu > div {
-  background: #141415 !important;
-  border-top: 1px solid rgba(255, 255, 255, 0.08) !important;
-}
-[data-theme="dark"] #mobile-menu a {
-  color: #ededed !important;
-}
-[data-theme="dark"] #mobile-menu a:hover {
-  color: #60a5fa !important;
-  background: rgba(255, 255, 255, 0.04) !important;
-}
+
 
 @media (max-width: 1024px) {
   #site-header {
@@ -367,12 +266,6 @@ textarea:focus-visible {
   transform: translateY(-1px) !important;
   box-shadow: 0 4px 12px -2px rgba(15, 23, 42, 0.12) !important;
 }
-[data-theme="dark"] .btn-primary,
-[data-theme="dark"] button[type="submit"] {
-  background: #1652c4 !important;
-  color: #ffffff !important;
-  box-shadow: none !important;
-}
 .btn-primary:active, .glass-pill:active, button:active, a:active {
   transform: scale(0.98) !important;
 }
@@ -383,11 +276,6 @@ textarea:focus-visible {
     transform: translateY(-2px) !important;
     border-color: rgba(22, 82, 196, 0.35) !important;
     box-shadow: 0 4px 12px -2px rgba(15, 23, 42, 0.06) !important;
-  }
-  [data-theme="dark"] .surface-card:hover {
-    transform: translateY(-2px) !important;
-    border-color: rgba(96, 165, 250, 0.35) !important;
-    box-shadow: none !important;
   }
 }
 .surface-card::before, .surface-card::after {
@@ -408,13 +296,8 @@ th {
   letter-spacing: 0.05em;
   padding: 1rem;
 }
-[data-theme="dark"] th {
-  background: #19191b !important;
-  color: var(--text-secondary) !important;
-}
 td { padding: 1rem; border-bottom: 1px solid var(--glass-border) !important; color: var(--text-primary) !important; }
 tr:hover td { background: rgba(0, 0, 0, 0.02) !important; }
-[data-theme="dark"] tr:hover td { background: rgba(255, 255, 255, 0.02) !important; }
 
 /* 7. Motion & Reduced Motion */
 [data-aos]:not(.aos-animate) {

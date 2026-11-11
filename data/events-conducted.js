@@ -3,6 +3,11 @@
 (function (window) {
   'use strict';
 
+  if (window.EVENTS_DATA && Array.isArray(window.EVENTS_DATA)) {
+    window.EVENTS_CONDUCTED = window.EVENTS_DATA;
+    return;
+  }
+
   window.EVENTS_CONDUCTED = [
     {
       id: 'altera-fpga',

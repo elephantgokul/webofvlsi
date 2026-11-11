@@ -39,31 +39,33 @@
           throw result.error;
         }
 
-        var events = (result.data || []).map(normalizeSupabaseEvent);
+        if (result.data && result.data.length > 0) {
+          var events = (result.data || []).map(normalizeSupabaseEvent);
 
-        if (opts.upcoming === true) {
-          var now = new Date();
-          now.setHours(0, 0, 0, 0);
-          events = events.filter(function (e) {
-            var eventDate = new Date(e.event_date);
-            return eventDate >= now;
-          });
-        } else if (opts.upcoming === false) {
-          var now2 = new Date();
-          now2.setHours(0, 0, 0, 0);
-          events = events.filter(function (e) {
-            var eventDate = new Date(e.event_date);
-            return eventDate < now2;
-          });
+          if (opts.upcoming === true) {
+            var now = new Date();
+            now.setHours(0, 0, 0, 0);
+            events = events.filter(function (e) {
+              var eventDate = new Date(e.event_date);
+              return eventDate >= now;
+            });
+          } else if (opts.upcoming === false) {
+            var now2 = new Date();
+            now2.setHours(0, 0, 0, 0);
+            events = events.filter(function (e) {
+              var eventDate = new Date(e.event_date);
+              return eventDate < now2;
+            });
+          }
+
+          if (events.length > 0) return events;
         }
-
-        return events;
       } catch (err) {
         console.warn('[Events] Supabase fetch failed, using fallback data:', err);
       }
     }
 
-    // Fallback: return hardcoded data from the existing events page
+    // Fallback: return shared dataset
     return getFallbackEvents(opts);
   }
 
@@ -122,36 +124,42 @@
   }
 
   /**
-   * Fallback hardcoded events (reusing existing data from events.html)
+   * Fallback hardcoded events using unified EVENTS_DATA
    */
   function getFallbackEvents(opts) {
-    var catColors = { symposium: '#1652c4', talk: '#0b6e8c', workshop: '#166444', competition: '#8c4516', cultural: '#c41652', alumni: '#6416c4' };
-
-    var allEvents = [
-      { cat: "symposium", day: "14", month: "JUL", year: "2026", title: "ELECNOVA 2026 — National Technical Symposium", venue: "Main Auditorium", time: "9:00 AM", desc: "Annual national-level technical symposium featuring paper presentations, project expo, workshops, and guest lectures from industry leaders.", reg: true, event_date: "2026-07-14", category: "symposium" },
-      { cat: "talk", day: "21", month: "JUL", year: "2026", title: "Expert Talk: 5G Networks & Open RAN Architecture", venue: "Seminar Hall 2", time: "2:00 PM", desc: "Industry expert from Ericsson India speaks on 5G NR, Open RAN, and what it means for VLSI engineers entering the workforce.", reg: true, event_date: "2026-07-21", category: "talk" },
-      { cat: "workshop", day: "02", month: "AUG", year: "2026", title: "Hands-on: PCB Design & Rapid Prototyping", venue: "Electronics Lab 3", time: "10:00 AM", desc: "Full-day workshop — design a PCB in KiCad, generate Gerbers, fabricate using lab's CNC milling machine, and solder live.", reg: true, event_date: "2026-08-02", category: "workshop" },
-      { cat: "competition", day: "10", month: "AUG", year: "2026", title: "Circuit Debugging Challenge 2026", venue: "Electronics Lab 1", time: "10:00 AM", desc: "Inter-batch circuit debugging competition. Teams of 2 race to identify and fix faults in pre-built PCBs within a time limit.", reg: true, event_date: "2026-08-10", category: "competition" },
-      { cat: "alumni", day: "16", month: "AUG", year: "2026", title: "Alumni Meet & Mentorship Day 2026", venue: "Dept Block Lawn", time: "4:00 PM", desc: "Annual alumni gathering — networking, mentorship panels, career guidance sessions, and department project showcase.", reg: false, event_date: "2026-08-16", category: "alumni" },
-      { cat: "cultural", day: "28", month: "AUG", year: "2026", title: "Freshers' Day 2026 — Welcome Celebration", venue: "College Auditorium", time: "5:30 PM", desc: "Welcome event for the new batch — cultural performances, faculty introductions, and department orientation.", reg: false, event_date: "2026-08-28", category: "cultural" },
-      { cat: "symposium", day: "14", month: "MAR", year: "2026", title: "ELECNOVA 2025 — National Technical Symposium", venue: "Main Auditorium", time: "9:00 AM", desc: "800+ participants from 40 colleges. Best paper and best project awards presented. Keynote by IEEE Fellow from IIT Madras.", reg: false, event_date: "2026-03-14", category: "symposium" },
-      { cat: "workshop", day: "14", month: "MAR", year: "2026", title: "PCB Design & Fabrication Workshop", venue: "Electronics Lab 3", time: "10:00 AM", desc: "85 students. End-to-end PCB design and fabrication. Students took home a self-designed board.", reg: false, event_date: "2026-03-14", category: "workshop" },
-      { cat: "talk", day: "18", month: "DEC", year: "2025", title: "Industry Talk — 5G Architecture & Beyond", venue: "Main Auditorium", time: "2:00 PM", desc: "220 attendees. Expert from Ericsson India. Live 5G signal measurement demo.", reg: false, event_date: "2025-12-18", category: "talk" },
-      { cat: "workshop", day: "22", month: "NOV", year: "2025", title: "Embedded Systems Workshop — RTOS", venue: "Embedded Lab", time: "10:00 AM", desc: "75 students. FreeRTOS on STM32. Motor control application built from scratch.", reg: false, event_date: "2025-11-22", category: "workshop" },
-      { cat: "competition", day: "10", month: "OCT", year: "2025", title: "HackVLSI — Department Hackathon 2025", venue: "All Labs", time: "9:00 AM", desc: "24-hour hackathon. 30 teams. Problem statements from IoT, VLSI, and signal processing domains.", reg: false, event_date: "2025-10-10", category: "competition" },
-      { cat: "alumni", day: "20", month: "SEP", year: "2025", title: "Alumni Guest Lecture Series — Batch 2020", venue: "Seminar Hall 1", time: "3:00 PM", desc: "4 alumni from TCS, Infosys, and Intel shared career journeys, placement tips, and industry insights.", reg: false, event_date: "2025-09-20", category: "alumni" }
-    ];
+    var source = (typeof window !== 'undefined' && Array.isArray(window.EVENTS_DATA))
+      ? window.EVENTS_DATA
+      : [];
 
     var now = new Date();
     now.setHours(0, 0, 0, 0);
 
-    if (opts.upcoming === true) {
-      return allEvents.filter(function (e) { return new Date(e.event_date) >= now; });
-    } else if (opts.upcoming === false) {
-      return allEvents.filter(function (e) { return new Date(e.event_date) < now; });
+    if (opts && opts.upcoming === true) {
+      return source.filter(function (e) {
+        if (e.has_exact_date === false) return false;
+        return new Date(e.event_date) >= now;
+      }).sort(function (a, b) {
+        return new Date(a.event_date) - new Date(b.event_date);
+      });
+    } else if (opts && opts.upcoming === false) {
+      var dated = source.filter(function (e) {
+        if (e.has_exact_date === false) return false;
+        return new Date(e.event_date) < now;
+      });
+      var undated = source.filter(function (e) {
+        return e.has_exact_date === false;
+      });
+
+      // Sort dated events: newest first
+      dated.sort(function (a, b) {
+        return new Date(b.event_date) - new Date(a.event_date);
+      });
+
+      // Undated events ("Date: 2026") placed at the end
+      return dated.concat(undated);
     }
 
-    return allEvents;
+    return source;
   }
 
   /* =========================================================================
@@ -203,8 +211,11 @@
     var now = new Date();
     now.setHours(0, 0, 0, 0);
     var eventDate = new Date(ev.event_date);
-    var isPast = eventDate < now;
-    var descText = (ev.desc || ev.description || '').substring(0, 90);
+    var isPast = ev.has_exact_date === false || eventDate < now;
+    var descText = ev.desc || ev.description || '';
+    if (descText.length > 180) {
+      descText = descText.substring(0, 175) + '…';
+    }
 
     var regButton = '';
     var registrationHref = safeHttpUrl(ev.registration_url);
@@ -213,39 +224,76 @@
     } else if (ev.reg) {
       regButton = '<span class="inline-flex items-center gap-1.5 text-xs font-semibold text-white rounded-lg px-3 py-1.5" style="background:' + c + '"><i class="fa-solid fa-registered text-[10px]"></i>Registration link unavailable</span>';
     } else {
-      regButton = '<span class="inline-flex items-center gap-1.5 text-xs font-mono rounded-lg px-3 py-1.5" style="background:#f4f7fb;color:#aab4c8">' + (isPast ? 'Event Completed' : 'Free Entry') + '</span>';
+      regButton = '<span class="inline-flex items-center gap-1.5 text-xs font-mono rounded-lg px-3 py-1.5" style="background:#f4f7fb;color:#64748b">' + (isPast ? 'Completed' : 'Free Entry') + '</span>';
+    }
+
+    var typeBadge = '';
+    if (ev.event_type === 'Conducted by Department') {
+      typeBadge = '<span class="text-[10px] font-semibold px-2 py-0.5 rounded-full inline-flex items-center gap-1" style="background:#e0f2fe;color:#0369a1;border:1px solid #bae6fd"><i class="fa-solid fa-building-columns text-[9px]"></i>Conducted by Department</span>';
+    } else if (ev.event_type === 'Participated') {
+      typeBadge = '<span class="text-[10px] font-semibold px-2 py-0.5 rounded-full inline-flex items-center gap-1" style="background:#fef3c7;color:#92400e;border:1px solid #fde68a"><i class="fa-solid fa-users-viewfinder text-[9px]"></i>Participated</span>';
+    }
+
+    var dateBoxHtml = '';
+    if (ev.has_exact_date === false) {
+      dateBoxHtml = [
+        '<div class="flex flex-col items-center justify-center px-4 py-6 flex-shrink-0 text-center" style="background:' + c + ';min-width:5.5rem">',
+        '<span class="font-display font-bold text-white text-xl leading-none">2026</span>',
+        '<span class="font-mono text-white text-[10px] mt-1 opacity-80 uppercase tracking-wider">Date: 2026</span>',
+        '</div>'
+      ].join('');
+    } else {
+      dateBoxHtml = [
+        '<div class="flex flex-col items-center justify-center px-5 py-6 flex-shrink-0" style="background:' + c + ';min-width:5.5rem">',
+        '<span class="font-display font-bold text-white text-3xl leading-none">' + escapeHtml(ev.day) + '</span>',
+        '<span class="font-mono text-white text-xs mt-1 opacity-75">' + escapeHtml(ev.month) + '</span>',
+        '<span class="font-mono text-white text-xs opacity-50">' + escapeHtml(ev.year) + '</span>',
+        '</div>'
+      ].join('');
     }
 
     var posterHtml = '';
     var posterSrc = safeHttpUrl(ev.poster_url, true);
     if (posterSrc) {
-      posterHtml = '<div class="mb-3 rounded-xl overflow-hidden" style="max-height:180px">' +
-        '<img src="' + escapeHtml(posterSrc) + '" alt="' + escapeHtml(ev.title) + ' poster" class="w-full object-cover" style="max-height:180px" onerror="this.parentNode.style.display=\'none\'">' +
+      posterHtml = '<div class="mb-3 rounded-xl overflow-hidden border border-slate-100" style="max-height:160px">' +
+        '<img src="' + escapeHtml(posterSrc) + '" alt="' + escapeHtml(ev.title) + ' poster" class="w-full object-cover" style="max-height:160px" onerror="this.parentNode.style.display=\'none\'">' +
         '</div>';
     }
 
+    var dateLabelHtml = ev.dateLabel
+      ? '<span><i class="fa-solid fa-calendar mr-1" style="color:#1652c4"></i>' + escapeHtml(ev.dateLabel) + '</span>'
+      : '';
+
+    var detailsButton = '';
+    if (ev.id) {
+      detailsButton = '<a href="event-detail.html?id=' + encodeURIComponent(ev.id) + '" class="text-xs font-semibold hover:underline inline-flex items-center gap-1" style="color:#1652c4">Details <i class="fa-solid fa-arrow-right text-[10px]"></i></a>';
+    }
+
     return [
-      '<article class="ev-card surface-card rounded-2xl overflow-hidden" data-aos="fade-up" data-aos-delay="' + ((index || 0) % 3 * 70) + '">',
-      '<div class="flex items-stretch">',
-      '<div class="flex flex-col items-center justify-center px-5 py-6 flex-shrink-0" style="background:' + c + ';min-width:5rem">',
-      '<span class="font-display font-bold text-white text-3xl leading-none">' + escapeHtml(ev.day) + '</span>',
-      '<span class="font-mono text-white text-xs mt-1 opacity-75">' + escapeHtml(ev.month) + '</span>',
-      '<span class="font-mono text-white text-xs opacity-50">' + escapeHtml(ev.year) + '</span>',
-      '</div>',
-      '<div class="p-5 flex-1 min-w-0">',
-      '<div class="flex items-center gap-2 mb-2">',
+      '<article class="ev-card surface-card rounded-2xl overflow-hidden flex flex-col justify-between border border-slate-100 shadow-sm" data-aos="fade-up" data-aos-delay="' + ((index || 0) % 3 * 70) + '">',
+      '<div class="flex items-stretch flex-1">',
+      dateBoxHtml,
+      '<div class="p-5 flex-1 min-w-0 flex flex-col justify-between">',
+      '<div>',
+      '<div class="flex flex-wrap items-center gap-2 mb-2">',
       '<span class="cat-dot" style="background:' + c + '"></span>',
-      '<span class="text-[10px] font-mono uppercase tracking-wide" style="color:' + c + '">' + escapeHtml(ev.cat || ev.category) + '</span>',
-      isPast ? '<span class="text-[10px] font-mono px-2 py-0.5 rounded-full" style="background:#f4f7fb;color:#aab4c8">Past</span>' : '',
+      '<span class="text-[10px] font-mono uppercase tracking-wide font-semibold" style="color:' + c + '">' + escapeHtml(ev.cat || ev.category) + '</span>',
+      typeBadge,
       '</div>',
       '<h3 class="font-display font-semibold text-sm leading-snug mb-2" style="color:#0b1b33">' + escapeHtml(ev.title) + '</h3>',
       posterHtml,
-      '<p class="text-xs leading-relaxed mb-3" style="color:#5b6478">' + escapeHtml(descText) + '…</p>',
-      '<div class="flex flex-wrap gap-3 mb-3" style="font-size:.72rem;color:#aab4c8">',
-      '<span><i class="fa-solid fa-location-dot mr-1" style="color:#1652c4"></i>' + escapeHtml(ev.venue) + '</span>',
-      '<span><i class="fa-solid fa-clock mr-1" style="color:#1652c4"></i>' + escapeHtml(ev.time || ev.event_time || '') + '</span>',
+      '<p class="text-xs leading-relaxed mb-3" style="color:#5b6478">' + escapeHtml(descText) + '</p>',
       '</div>',
+      '<div>',
+      '<div class="flex flex-wrap gap-3 mb-3 text-xs" style="color:#64748b">',
+      '<span><i class="fa-solid fa-location-dot mr-1" style="color:#1652c4"></i>' + escapeHtml(ev.venue) + '</span>',
+      dateLabelHtml,
+      '</div>',
+      '<div class="flex items-center justify-between gap-2 pt-2 border-t border-slate-100">',
       regButton,
+      detailsButton,
+      '</div>',
+      '</div>',
       '</div>',
       '</div>',
       '</article>'

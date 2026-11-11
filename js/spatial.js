@@ -7,32 +7,9 @@ document.addEventListener('DOMContentLoaded', () => {
         document.body.prepend(bg);
     }
 
-    // 2. Setup theme toggle
-    const savedTheme = localStorage.getItem('theme');
-    const theme = savedTheme === 'dark' ? 'dark' : 'light';
-    document.documentElement.setAttribute('data-theme', theme);
-
-    // Create a floating theme toggle button
-    const toggleBtn = document.createElement('button');
-    toggleBtn.className = 'glass-pill theme-toggle-btn';
-    toggleBtn.style.cssText = 'position: fixed; bottom: 20px; left: 20px; z-index: 9999; width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; cursor: pointer; border: 1px solid var(--glass-border); background: var(--glass-bg); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); color: var(--text-primary); transition: transform 0.2s;';
-    toggleBtn.setAttribute('aria-label', 'Toggle Theme');
-    
-    const updateIcon = () => {
-        const currentTheme = document.documentElement.getAttribute('data-theme');
-        toggleBtn.innerHTML = currentTheme === 'light' ? '<i class="fa-solid fa-moon"></i>' : '<i class="fa-solid fa-sun"></i>';
-    };
-    
-    toggleBtn.addEventListener('click', () => {
-        let current = document.documentElement.getAttribute('data-theme');
-        const next = current === 'light' ? 'dark' : 'light';
-        document.documentElement.setAttribute('data-theme', next);
-        localStorage.setItem('theme', next);
-        updateIcon();
-    });
-    
-    updateIcon();
-    document.body.appendChild(toggleBtn);
+    // 2. Enforce clean light theme
+    document.documentElement.setAttribute('data-theme', 'light');
+    try { localStorage.removeItem('theme'); } catch (e) { }
 
     // 3. Ultra-efficient pointer light effect using event delegation & RAF
     // Only runs when hovering directly over a .surface-card (zero DOM thrashing)
@@ -67,7 +44,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.02)`;
             });
         }, { passive: true });
-        
+
         card.addEventListener('mouseleave', () => {
             if (tiltRaf) {
                 cancelAnimationFrame(tiltRaf);

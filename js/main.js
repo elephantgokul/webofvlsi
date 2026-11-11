@@ -266,7 +266,7 @@ window.addEventListener("load", function () {
   }
 
   function reconcilePlayback() {
-    if (!heroVisible || shouldSkipMotion() || document.visibilityState !== "visible" || window.__entranceVideoActive) {
+    if (!heroVisible || shouldSkipMotion() || document.visibilityState !== "visible") {
       video.pause();
       return;
     }
@@ -291,7 +291,6 @@ window.addEventListener("load", function () {
   }
 
   document.addEventListener("visibilitychange", reconcilePlayback);
-  window.addEventListener("siet:entrance-video-done", reconcilePlayback);
   window.addEventListener("pagehide", function () { video.pause(); });
 
   if (motionPreference.addEventListener) motionPreference.addEventListener("change", reconcilePlayback);
