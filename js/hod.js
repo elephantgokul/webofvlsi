@@ -1,70 +1,102 @@
-// js/hod.js  -  HOD profile renderer, loads data from api.js & Supabase Storage
+// js/hod.js - HOD profile renderer with Resilient Supabase loading & Detail Modal
+
 document.addEventListener('DOMContentLoaded', async () => {
     const profileContainer = document.getElementById('hod-profile');
     if (!profileContainer) return;
 
-    // Show loading state
-    profileContainer.innerHTML = `
-        <div class="text-center py-16">
-            <i class="fa-solid fa-circle-notch fa-spin text-3xl" style="color:#1652c4"></i>
-            <p class="mt-4 text-sm" style="color:#5b6478">Loading HOD Profile...</p>
-        </div>`;
+    async function loadData() {
+        profileContainer.innerHTML = `
+            <div class="text-center py-16">
+                <i class="fa-solid fa-circle-notch fa-spin text-3xl" style="color:#1652c4"></i>
+                <p class="mt-4 text-sm font-medium text-slate-600">Loading HOD Profile...</p>
+            </div>
+        `;
 
-    try {
-        const data = await fetchDepartmentData();
-        const hod = data.hod;
+        try {
+            var data = null;
+            if (typeof window.fetchDepartmentData === 'function') {
+                data = await window.fetchDepartmentData();
+            } else if (typeof fetchDepartmentData === 'function') {
+                data = await fetchDepartmentData();
+            }
 
-        if (!hod) {
-            profileContainer.innerHTML = '<div class="text-center py-10 text-gray-500">HOD profile data not available.</div>';
-            return;
+            var hod = data ? data.hod : null;
+            if (!hod && window.DEPT_FALLBACK_DATA) {
+                hod = window.DEPT_FALLBACK_DATA.hod;
+            }
+
+            if (!hod) {
+                profileContainer.innerHTML = '<div class="text-center py-12 text-slate-500">HOD profile data not available.</div>';
+                return;
+            }
+
+            renderHODProfile(hod);
+        } catch (error) {
+            console.error('[HOD] Error loading HOD data:', error);
+            if (typeof window.renderSupabaseError === 'function') {
+                window.renderSupabaseError(profileContainer, 'Could not load HOD profile, please refresh', loadData);
+            } else {
+                profileContainer.innerHTML = `
+                    <div class="text-center py-12">
+                        <p class="text-red-500 font-semibold mb-3">Could not load HOD profile, please refresh</p>
+                        <button type="button" class="retry-btn inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-semibold bg-blue-600 text-white">Retry</button>
+                    </div>
+                `;
+                var btn = profileContainer.querySelector('.retry-btn');
+                if (btn) btn.addEventListener('click', loadData);
+            }
         }
-
-        renderHODProfile(hod);
-    } catch (error) {
-        console.error("Error loading HOD data:", error);
-        profileContainer.innerHTML = '<div class="text-center py-10 text-red-500">Failed to load HOD profile. Please try again later.</div>';
     }
 
     function renderHODProfile(hod) {
         const rawPhoto = hod.photoUrl || hod.image;
-        const photoSrc = typeof resolveSupabaseImageUrl === 'function'
-            ? resolveSupabaseImageUrl(rawPhoto, (typeof SUPABASE_BUCKETS !== 'undefined' ? SUPABASE_BUCKETS.faculty : 'faculty'), rawPhoto)
-            : resolveAssetPath(rawPhoto);
+        var photoSrc = '';
+        if (typeof resolveSupabaseImageUrl === 'function') {
+            photoSrc = resolveSupabaseImageUrl(rawPhoto, 'faculty', rawPhoto);
+        } else if (typeof resolveAssetPath === 'function') {
+            photoSrc = resolveAssetPath(rawPhoto);
+        } else {
+            photoSrc = '../assets/images/faculty/' + String(rawPhoto).split('/').pop();
+        }
 
-        const localFallback = typeof getLocalAssetFallback === 'function'
-            ? getLocalAssetFallback(rawPhoto, 'faculty')
-            : resolveAssetPath(rawPhoto);
+        const localFallback = '../assets/images/faculty/' + String(rawPhoto).split('/').pop();
 
-        const photoHtml = photoSrc
-            ? `<img src="${escapeHtml(photoSrc)}" alt="${escapeHtml(hod.name)}" class="w-40 h-40 rounded-full object-cover mx-auto mb-4 border-4 border-blue-600" data-fallback="${escapeHtml(localFallback)}" onerror="if(this.dataset.fallback && this.src !== this.dataset.fallback){ this.src = this.dataset.fallback; } else { this.style.display='none'; if(this.nextElementSibling) this.nextElementSibling.style.display='flex'; }"><div class="hod-photo-placeholder" style="display:none"><i class="fa-solid fa-user text-white text-5xl"></i></div>`
-            : `<div class="hod-photo-placeholder"><i class="fa-solid fa-user text-white text-5xl"></i></div>`;
+        const photoHtml = `
+            <div class="relative w-40 h-40 rounded-full overflow-hidden mx-auto mb-4 border-4 border-blue-600 shadow-md bg-white">
+                <img src="${escapeHtml(photoSrc)}" alt="${escapeHtml(hod.name)}" class="w-full h-full object-cover" data-fallback="${escapeHtml(localFallback)}" onerror="if(this.dataset.fallback && this.src !== this.dataset.fallback){ this.src = this.dataset.fallback; } else { this.onerror=null; this.src='../assets/images/department_logo.png'; }">
+            </div>
+        `;
 
         const researchTags = (hod.researchInterests || []).map(tag =>
-            `<span class="research-tag">${escapeHtml(tag)}</span>`
-        ).join('');
+            `<span class="dept-modal-tag">${escapeHtml(tag)}</span>`
+        ).join(' ');
 
         profileContainer.innerHTML = `
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                <!-- Profile Card -->
+                <!-- Profile Card (Clickable to detail modal) -->
                 <div class="lg:col-span-1" data-aos="fade-right">
-                    <div class="hod-profile-card">
+                    <div id="hod-main-card" class="hod-profile-card surface-card rounded-2xl p-6 text-center interactive-detail-card focus:outline-none focus:ring-2 focus:ring-blue-500 cursor-pointer" role="button" tabindex="0" aria-haspopup="dialog" aria-label="View full profile of ${escapeHtml(hod.name)}">
                         <div class="hod-photo-section">
                             ${photoHtml}
                         </div>
                         <div class="hod-info-section text-center">
-                            <h2 class="font-display font-bold text-xl" style="color:#0b1b33">${escapeHtml(hod.name)}</h2>
-                            <p class="text-sm font-medium mt-1" style="color:#1652c4">${escapeHtml(hod.designation || 'Head of Department')}</p>
-                            <p class="text-xs mt-1" style="color:#5b6478">${escapeHtml(hod.qualification)}</p>
+                            <h2 class="font-display font-bold text-xl text-slate-900">${escapeHtml(hod.name)}</h2>
+                            <p class="text-sm font-semibold mt-1 text-blue-600">${escapeHtml(hod.designation || 'Associate Professor & Head')}</p>
+                            <p class="text-xs mt-1 text-slate-500">${escapeHtml(hod.qualification)}</p>
 
-                            <div class="mt-6 pt-5 space-y-3" style="border-top:1px solid #e2e8f0">
-                                ${hod.contact ? `<div class="flex items-center justify-center gap-2 text-xs" style="color:#5b6478">
-                                    <i class="fa-solid fa-envelope" style="color:#2fe6dd"></i>
-                                    <a href="mailto:${escapeHtml(hod.contact)}" class="hover:underline" style="color:#1652c4">${escapeHtml(hod.contact)}</a>
+                            <div class="mt-6 pt-5 space-y-3 border-t border-slate-100">
+                                ${hod.contact ? `<div class="flex items-center justify-center gap-2 text-xs text-slate-600">
+                                    <i class="fa-solid fa-envelope text-blue-600"></i>
+                                    <a href="mailto:${escapeHtml(hod.contact)}" onclick="event.stopPropagation();" class="hover:underline text-blue-600">${escapeHtml(hod.contact)}</a>
                                 </div>` : ''}
-                                ${hod.phone ? `<div class="flex items-center justify-center gap-2 text-xs" style="color:#5b6478">
-                                    <i class="fa-solid fa-phone" style="color:#2fe6dd"></i>
+                                ${hod.phone ? `<div class="flex items-center justify-center gap-2 text-xs text-slate-600">
+                                    <i class="fa-solid fa-phone text-blue-600"></i>
                                     <span>${escapeHtml(hod.phone)}</span>
                                 </div>` : ''}
+                            </div>
+                            
+                            <div class="mt-5 pt-3 border-t border-slate-100">
+                                <span class="view-details-hint"><i class="fa-solid fa-arrow-up-right-from-square"></i> View Full Details</span>
                             </div>
                         </div>
                     </div>
@@ -74,10 +106,10 @@ document.addEventListener('DOMContentLoaded', async () => {
                 <div class="lg:col-span-2 space-y-8" data-aos="fade-left">
                     <!-- Message from HOD -->
                     <div class="surface-card rounded-2xl p-8">
-                        <h3 class="font-display font-bold text-lg mb-5 flex items-center gap-2" style="color:#0b1b33">
-                            <i class="fa-solid fa-quote-left" style="color:#1652c4"></i> Message from the HOD
+                        <h3 class="font-display font-bold text-lg mb-5 flex items-center gap-2 text-slate-900">
+                            <i class="fa-solid fa-quote-left text-blue-600"></i> Message from the HOD
                         </h3>
-                        <blockquote style="border-left:3px solid #1652c4;padding-left:1.25rem;margin:0">
+                        <blockquote class="dept-modal-quote">
                             <p style="color:#5b6478;line-height:1.85;font-size:.9rem;font-style:italic">${escapeHtml(hod.message)}</p>
                         </blockquote>
                     </div>
@@ -85,8 +117,8 @@ document.addEventListener('DOMContentLoaded', async () => {
                     <!-- Research Interests -->
                     ${researchTags ? `
                     <div class="surface-card rounded-2xl p-8">
-                        <h3 class="font-display font-bold text-lg mb-5 flex items-center gap-2" style="color:#0b1b33">
-                            <i class="fa-solid fa-flask" style="color:#1652c4"></i> Research Interests
+                        <h3 class="font-display font-bold text-lg mb-5 flex items-center gap-2 text-slate-900">
+                            <i class="fa-solid fa-flask text-blue-600"></i> Research Interests
                         </h3>
                         <div class="flex flex-wrap gap-2">
                             ${researchTags}
@@ -94,34 +126,51 @@ document.addEventListener('DOMContentLoaded', async () => {
                     </div>` : ''}
 
                     <!-- Quick Stats -->
-                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
                         <div class="surface-card rounded-xl p-5 text-center">
-                            <p class="font-display font-bold text-2xl" style="color:#1652c4">10+</p>
-                            <p class="text-xs font-mono mt-1 uppercase tracking-wider" style="color:#5b6478">Years Experience</p>
+                            <p class="font-display font-bold text-2xl text-blue-600">10+</p>
+                            <p class="text-xs font-mono mt-1 uppercase tracking-wider text-slate-500">Years Experience</p>
                         </div>
                         <div class="surface-card rounded-xl p-5 text-center">
-                            <p class="font-display font-bold text-2xl" style="color:#1652c4">20+</p>
-                            <p class="text-xs font-mono mt-1 uppercase tracking-wider" style="color:#5b6478">Publications</p>
+                            <p class="font-display font-bold text-2xl text-blue-600">2024</p>
+                            <p class="text-xs font-mono mt-1 uppercase tracking-wider text-slate-500">Established</p>
                         </div>
-                        <div class="surface-card rounded-xl p-5 text-center">
-                            <p class="font-display font-bold text-2xl" style="color:#1652c4">8+</p>
-                            <p class="text-xs font-mono mt-1 uppercase tracking-wider" style="color:#5b6478">PhD Guided</p>
-                        </div>
-                        <div class="surface-card rounded-xl p-5 text-center">
-                            <p class="font-display font-bold text-2xl" style="color:#1652c4">2+</p>
-                            <p class="text-xs font-mono mt-1 uppercase tracking-wider" style="color:#5b6478">Funded Projects</p>
+                        <div class="surface-card rounded-xl p-5 text-center col-span-2 md:col-span-1">
+                            <p class="font-display font-bold text-2xl text-blue-600">C2S</p>
+                            <p class="text-xs font-mono mt-1 uppercase tracking-wider text-slate-500">MeitY Initiatives</p>
                         </div>
                     </div>
                 </div>
             </div>
         `;
 
-        if (typeof AOS !== 'undefined') AOS.refreshHard();
+        // Card modal activation
+        const hodCard = document.getElementById('hod-main-card');
+        if (hodCard) {
+            function triggerHodModal() {
+                if (window.DeptModal && typeof window.DeptModal.openHOD === 'function') {
+                    window.DeptModal.openHOD(hod);
+                }
+            }
+            hodCard.addEventListener('click', triggerHodModal);
+            hodCard.addEventListener('keydown', function (e) {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    triggerHodModal();
+                }
+            });
+        }
+
+        if (typeof AOS !== 'undefined') {
+            AOS.refreshHard();
+        }
     }
 
     function escapeHtml(value) {
-    return (value == null ? '' : String(value)).replace(/[&<>"']/g, function (character) {
-      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[character];
-    });
-  }
+        return (value == null ? '' : String(value)).replace(/[&<>"']/g, function (c) {
+            return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+        });
+    }
+
+    loadData();
 });

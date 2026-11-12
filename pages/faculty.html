@@ -71,6 +71,7 @@
       <a href="hod.html"            class="nav-link px-3.5 py-2 text-sm font-medium rounded-lg transition-all">HOD</a>
       <a href="faculty.html"        class="nav-link px-3.5 py-2 text-sm font-medium rounded-lg transition-all" style="color:#1652c4">Faculty</a>
       <a href="students.html"       class="nav-link px-3.5 py-2 text-sm font-medium rounded-lg transition-all">Students</a>
+      <a href="events.html"         class="nav-link px-3.5 py-2 text-sm font-medium rounded-lg transition-all">Events</a>
       <a href="leaderboard.html" class="nav-link px-3.5 py-2 text-sm font-medium rounded-lg transition-all duration-200">Leaderboard</a>
       <a href="achievements.html"   class="nav-link px-3.5 py-2 text-sm font-medium rounded-lg transition-all">Achievements</a>
       <a href="placements.html"     class="nav-link px-3.5 py-2 text-sm font-medium rounded-lg transition-all">Placements</a>
@@ -87,6 +88,7 @@
       <a href="hod.html"            class="px-4 py-3 text-sm font-medium text-slate-700 hover:text-blue-600 rounded-xl hover:bg-blue-50 transition-all">HOD</a>
       <a href="faculty.html"        class="px-4 py-3 text-sm font-medium text-slate-700 hover:text-blue-600 rounded-xl hover:bg-blue-50 transition-all">Faculty</a>
       <a href="students.html"       class="px-4 py-3 text-sm font-medium text-slate-700 hover:text-blue-600 rounded-xl hover:bg-blue-50 transition-all">Students</a>
+      <a href="events.html"         class="px-4 py-3 text-sm font-medium text-slate-700 hover:text-blue-600 rounded-xl hover:bg-blue-50 transition-all">Events</a>
       <a href="leaderboard.html" class="px-4 py-3 text-sm font-medium text-white/75 hover:text-white rounded-xl hover:bg-white/10 transition-all">Leaderboard</a>
       <a href="achievements.html"   class="px-4 py-3 text-sm font-medium text-slate-700 hover:text-blue-600 rounded-xl hover:bg-blue-50 transition-all">Achievements</a>
       <a href="placements.html"     class="px-4 py-3 text-sm font-medium text-slate-700 hover:text-blue-600 rounded-xl hover:bg-blue-50 transition-all">Placements</a>
@@ -111,12 +113,8 @@
     <div class="max-w-screen-xl mx-auto px-5 lg:px-8">
       <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4">
         <div class="flex flex-wrap gap-2.5" id="filter-buttons" role="group" aria-label="Filter by specialization">
-          <button data-filter="all"         class="filter-btn active px-4 py-2 rounded-xl text-sm font-medium border" style="border-color:#e2e8f0;color:#0b1b33">All Faculty</button>
-          <button data-filter="vlsi"        class="filter-btn px-4 py-2 rounded-xl text-sm font-medium border" style="border-color:#e2e8f0;color:#5b6478">VLSI Design</button>
-          <button data-filter="embedded"    class="filter-btn px-4 py-2 rounded-xl text-sm font-medium border" style="border-color:#e2e8f0;color:#5b6478">Embedded Systems</button>
-          <button data-filter="signal"      class="filter-btn px-4 py-2 rounded-xl text-sm font-medium border" style="border-color:#e2e8f0;color:#5b6478">Signal Processing</button>
-          <button data-filter="rf"          class="filter-btn px-4 py-2 rounded-xl text-sm font-medium border" style="border-color:#e2e8f0;color:#5b6478">RF &amp; Antenna</button>
-          <button data-filter="iot"         class="filter-btn px-4 py-2 rounded-xl text-sm font-medium border" style="border-color:#e2e8f0;color:#5b6478">IoT &amp; Networks</button>
+          <button data-filter="all" class="filter-btn active px-4 py-2 rounded-xl text-sm font-medium border" style="border-color:#e2e8f0;color:#0b1b33">All Faculty</button>
+          <button data-filter="vlsi" class="filter-btn px-4 py-2 rounded-xl text-sm font-medium border" style="border-color:#e2e8f0;color:#5b6478">VLSI Design</button>
         </div>
         <div class="search-wrapper w-full lg:w-64">
           <i class="fa-solid fa-search search-icon"></i>
@@ -174,8 +172,11 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js" integrity="sha384-n1AULnKdMJlK1oQCLNDL9qZsDgXtH6jRYFCpBtWFc+a9Yve0KSoMn575rk755NJZ" crossorigin="anonymous"></script>
 <script src="../js/main.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.119.0" integrity="sha384-gnyZit14c5lnGcarmA166QQjjJXpucw25ogZXuwH3HxxY904zHkBqmxVpelsPorb" crossorigin="anonymous"></script>
+<script src="../data/fallback-data.js"></script>
 <script src="../js/supabase-config.js"></script>
+<script src="../js/supabaseClient.js"></script>
 <script src="../js/api.js"></script>
+<script src="../js/modal.js"></script>
 <script src="../js/faculty.js"></script>
 <script>
 AOS.init({duration:400,once:true,offset:40,easing:"cubic-bezier(0.2,0,0,1)"});

@@ -126,8 +126,12 @@ document.addEventListener('DOMContentLoaded', async () => {
             }
 
             const card = document.createElement('article');
-            card.className = 'student-item student-card surface-card rounded-2xl overflow-hidden';
+            card.className = 'student-item student-card surface-card rounded-2xl overflow-hidden interactive-detail-card focus:outline-none focus:ring-2 focus:ring-blue-500 cursor-pointer';
             card.dataset.year = student.yearToken;
+            card.setAttribute('role', 'button');
+            card.setAttribute('tabindex', '0');
+            card.setAttribute('aria-haspopup', 'dialog');
+            card.setAttribute('aria-label', `View profile of ${student.name}`);
             card.setAttribute('data-aos', 'fade-up');
             card.setAttribute('data-aos-delay', (index % 4) * 60);
 
@@ -137,20 +141,41 @@ document.addEventListener('DOMContentLoaded', async () => {
                 <span class="absolute top-3 right-3 px-2.5 py-1 rounded-lg text-xs font-mono font-medium" style="background:${colors.badge};color:${colors.text}">${escapeHtml(yearLabel)}</span>
                 ${batchHtml}
               </div>
-              <div class="p-5">
-                <h3 class="font-display font-semibold text-sm" style="color:#0b1b33">${escapeHtml(student.name)}</h3>
-                <div class="space-y-1.5 text-[0.75rem]" style="color:#5b6478">
-                  ${batchLine}
+              <div class="p-5 flex flex-col justify-between flex-1">
+                <div>
+                  <h3 class="font-display font-semibold text-sm" style="color:#0b1b33">${escapeHtml(student.name)}</h3>
+                  <div class="space-y-1.5 text-[0.75rem]" style="color:#5b6478">
+                    ${batchLine}
+                  </div>
+                  ${achievementPreview}
+                  ${projectsPreview}
+                  ${pointsBadgeHtml}
                 </div>
-                ${achievementPreview}
-                ${projectsPreview}
-                ${pointsBadgeHtml}
-                <div class="flex gap-2 pt-3 mt-3" style="border-top:1px solid #e2e8f0">
-                  ${linkedinBtn}
-                  <a href="${detailHref}" aria-label="View details" title="View Details" class="w-8 h-8 rounded-lg flex items-center justify-center text-xs transition-all" style="background:#f0f4ff;color:#1652c4" onmouseover="this.style.background='#1652c4';this.style.color='#fff'" onmouseout="this.style.background='#f0f4ff';this.style.color='#1652c4'"><i class="fa-solid fa-eye"></i></a>
+                <div class="flex items-center justify-between pt-3 mt-3" style="border-top:1px solid #e2e8f0">
+                  <span class="view-details-hint"><i class="fa-solid fa-arrow-up-right-from-square"></i> View Profile</span>
+                  <div class="flex gap-2">
+                    ${linkedinBtn}
+                    <button type="button" aria-label="View details" title="View Details" class="w-8 h-8 rounded-lg flex items-center justify-center text-xs transition-all text-blue-600 bg-blue-50 hover:bg-blue-600 hover:text-white"><i class="fa-solid fa-eye"></i></button>
+                  </div>
                 </div>
               </div>
             `;
+
+            function triggerStudentModal(e) {
+                if (e && e.target && e.target.closest('a')) return;
+                if (window.DeptModal && typeof window.DeptModal.openStudent === 'function') {
+                    window.DeptModal.openStudent(student);
+                }
+            }
+
+            card.addEventListener('click', triggerStudentModal);
+            card.addEventListener('keydown', function (e) {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    triggerStudentModal(e);
+                }
+            });
+
             fragment.appendChild(card);
         });
         grid.appendChild(fragment);

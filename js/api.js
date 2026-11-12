@@ -39,14 +39,43 @@ async function fetchDepartmentData() {
                 window.supabaseClient.from('hod').select('*')
             ]);
 
-            if (!studentsRes.error && !facultyRes.error && !hodRes.error) {
-                data = {
-                    students: studentsRes.data || [],
-                    faculty: facultyRes.data || [],
-                    hod: (hodRes.data && hodRes.data.length > 0) ? hodRes.data[0] : getFallbackData().hod
-                };
-                storeDepartmentCache(cacheKey, data);
+            var fallback = getFallbackData();
+            var studentsData = (studentsRes && !studentsRes.error && Array.isArray(studentsRes.data) && studentsRes.data.length > 0)
+                ? studentsRes.data
+                : fallback.students;
+
+            var facultyData = [];
+            if (facultyRes && !facultyRes.error && Array.isArray(facultyRes.data) && facultyRes.data.length > 0) {
+                var seen = new Set();
+                facultyRes.data.forEach(function (f) {
+                    var key = (f.name || '').toLowerCase().trim();
+                    if (!seen.has(key)) {
+                        seen.add(key);
+                        facultyData.push(f);
+                    }
+                });
+                // Ensure missing faculty members from fallback are appended so all 5 are present
+                fallback.faculty.forEach(function (fb) {
+                    var fbKey = (fb.name || '').toLowerCase().trim();
+                    if (!seen.has(fbKey)) {
+                        seen.add(fbKey);
+                        facultyData.push(fb);
+                    }
+                });
+            } else {
+                facultyData = fallback.faculty;
             }
+
+            var hodData = (hodRes && !hodRes.error && Array.isArray(hodRes.data) && hodRes.data.length > 0)
+                ? hodRes.data[0]
+                : fallback.hod;
+
+            data = {
+                students: studentsData,
+                faculty: facultyData,
+                hod: hodData
+            };
+            storeDepartmentCache(cacheKey, data);
         } catch (e) {
             console.warn("Supabase fetch failed, using fallback:", e);
         }
@@ -64,13 +93,41 @@ async function revalidateSupabaseDataInBackground(cacheKey) {
             window.supabaseClient.from('hod').select('*')
         ]);
 
-        if (!studentsRes.error && !facultyRes.error && !hodRes.error) {
-            storeDepartmentCache(cacheKey, {
-                students: studentsRes.data || [],
-                faculty: facultyRes.data || [],
-                hod: (hodRes.data && hodRes.data.length > 0) ? hodRes.data[0] : getFallbackData().hod
+        var fallback = getFallbackData();
+        var studentsData = (studentsRes && !studentsRes.error && Array.isArray(studentsRes.data) && studentsRes.data.length > 0)
+            ? studentsRes.data
+            : fallback.students;
+
+        var facultyData = [];
+        if (facultyRes && !facultyRes.error && Array.isArray(facultyRes.data) && facultyRes.data.length > 0) {
+            var seen = new Set();
+            facultyRes.data.forEach(function (f) {
+                var key = (f.name || '').toLowerCase().trim();
+                if (!seen.has(key)) {
+                    seen.add(key);
+                    facultyData.push(f);
+                }
             });
+            fallback.faculty.forEach(function (fb) {
+                var fbKey = (fb.name || '').toLowerCase().trim();
+                if (!seen.has(fbKey)) {
+                    seen.add(fbKey);
+                    facultyData.push(fb);
+                }
+            });
+        } else {
+            facultyData = fallback.faculty;
         }
+
+        var hodData = (hodRes && !hodRes.error && Array.isArray(hodRes.data) && hodRes.data.length > 0)
+            ? hodRes.data[0]
+            : fallback.hod;
+
+        storeDepartmentCache(cacheKey, {
+            students: studentsData,
+            faculty: facultyData,
+            hod: hodData
+        });
     } catch (e) {}
 }
 
@@ -157,10 +214,10 @@ function getFallbackData() {
         },
         faculty: [
             { id: 1, name: "Dr. P. Dhilipkumar", designation: "Associate Professor & Head", qualification: "M.E., Ph.D.", specialization: "VLSI Design and Technology", email: "dhilipkumarece@siet.ac.in", orcid: "", image: "dhilipkumar.jpg", photoUrl: "dhilipkumar.jpg" },
-            { id: 4, name: "Mrs. T. Renita Pearlin", designation: "Assistant Professor", qualification: "M.E.", specialization: "VLSI Design and Technology", email: "Trenitacdc@siet.ac.in", orcid: "", image: "renita.jpg", photoUrl: "renita.jpg" },
-            { id: 3, name: "Mrs. P. Priscilla Sophia", designation: "Assistant Professor", qualification: "M.E.", specialization: "VLSI Design and Technology", email: "Priscillasophiaece@siet.ac.in", orcid: "", image: "priscillasophia.jpg", photoUrl: "priscillasophia.jpg" },
-            { id: 2, name: "Mrs. C. Prema", designation: "Assistant Professor", qualification: "M.E.", specialization: "VLSI Design and Technology", email: "Premacece@siet.ac.in", orcid: "", image: "prema.jpg", photoUrl: "prema.jpg" },
-            { id: 5, name: "Mrs. R. Vasanthi", designation: "Assistant Professor", qualification: "M.E.", specialization: "VLSI Design and Technology", email: "Vasanthiece@siet.ac.in", orcid: "", image: "vasanthi.jpg", photoUrl: "vasanthi.jpg" }
+            { id: 2, name: "Mrs. T. Renita Pearlin", designation: "Assistant Professor", qualification: "M.E.", specialization: "VLSI Design and Technology", email: "Trenitacdc@siet.ac.in", orcid: "", image: "renita.jpg", photoUrl: "renita.jpg" },
+            { id: 3, name: "Mrs. Priscilla Sophia", designation: "Assistant Professor", qualification: "M.E.", specialization: "VLSI Design and Technology", email: "Priscillasophiaece@siet.ac.in", orcid: "", image: "priscillasophia.jpg", photoUrl: "priscillasophia.jpg" },
+            { id: 4, name: "Mrs. C. Prema", designation: "Assistant Professor", qualification: "M.E.", specialization: "VLSI Design and Technology", email: "Premacece@siet.ac.in", orcid: "", image: "prema.jpg", photoUrl: "prema.jpg" },
+            { id: 5, name: "Mrs. Vasanthi", designation: "Assistant Professor", qualification: "M.E.", specialization: "VLSI Design and Technology", email: "Vasanthiece@siet.ac.in", orcid: "", image: "vasanthi.jpg", photoUrl: "vasanthi.jpg" }
         ],
         students: [
             {
