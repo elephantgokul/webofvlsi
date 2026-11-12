@@ -10,30 +10,30 @@ WHERE a.id > b.id AND (
   OR (lower(trim(a.name)) = lower(trim(b.name)))
 );
 
--- 2. Insert missing faculty members (using the name "Mrs. Vasanthi" exactly without "R." initial)
+-- 2. Insert missing faculty members (emails set to NULL, Prema qualification "M.E., Ph.D.")
 INSERT INTO public.faculty (name, designation, qualification, specialization, email, orcid, image, photo_url)
-SELECT 'Mrs. Priscilla Sophia', 'Assistant Professor', 'M.E.', 'VLSI Design and Technology', 'Priscillasophiaece@siet.ac.in', '', 'priscillasophia.jpg', 'priscillasophia.jpg'
+SELECT 'Mrs. Priscilla Sophia', 'Assistant Professor', 'M.E.', 'VLSI Design and Technology', NULL, '', 'priscillasophia.jpg', 'priscillasophia.jpg'
 WHERE NOT EXISTS (
-  SELECT 1 FROM public.faculty WHERE lower(trim(email)) = 'priscillasophiaece@siet.ac.in' OR lower(trim(name)) = 'mrs. priscilla sophia'
+  SELECT 1 FROM public.faculty WHERE lower(trim(name)) = 'mrs. priscilla sophia'
 );
 
 INSERT INTO public.faculty (name, designation, qualification, specialization, email, orcid, image, photo_url)
-SELECT 'Mrs. C. Prema', 'Assistant Professor', 'M.E.', 'VLSI Design and Technology', 'Premacece@siet.ac.in', '', 'prema.jpg', 'prema.jpg'
+SELECT 'Mrs. C. Prema', 'Assistant Professor', 'M.E., Ph.D.', 'VLSI Design and Technology', NULL, '', 'prema.jpg', 'prema.jpg'
 WHERE NOT EXISTS (
-  SELECT 1 FROM public.faculty WHERE lower(trim(email)) = 'premacece@siet.ac.in' OR lower(trim(name)) = 'mrs. c. prema'
+  SELECT 1 FROM public.faculty WHERE lower(trim(name)) = 'mrs. c. prema'
 );
 
 INSERT INTO public.faculty (name, designation, qualification, specialization, email, orcid, image, photo_url)
-SELECT 'Mrs. Vasanthi', 'Assistant Professor', 'M.E.', 'VLSI Design and Technology', 'Vasanthiece@siet.ac.in', '', 'vasanthi.jpg', 'vasanthi.jpg'
+SELECT 'Mrs. Vasanthi', 'Assistant Professor', 'M.E.', 'VLSI Design and Technology', NULL, '', 'vasanthi.jpg', 'vasanthi.jpg'
 WHERE NOT EXISTS (
-  SELECT 1 FROM public.faculty WHERE lower(trim(email)) = 'vasanthiece@siet.ac.in' OR lower(trim(name)) = 'mrs. vasanthi'
+  SELECT 1 FROM public.faculty WHERE lower(trim(name)) = 'mrs. vasanthi'
 );
 
--- 3. Add UNIQUE constraint on faculty(email)
+-- 3. Add UNIQUE constraint on faculty(name)
 ALTER TABLE public.faculty
-  DROP CONSTRAINT IF EXISTS uq_faculty_email;
+  DROP CONSTRAINT IF EXISTS uq_faculty_name;
 ALTER TABLE public.faculty
-  ADD CONSTRAINT uq_faculty_email UNIQUE (email);
+  ADD CONSTRAINT uq_faculty_name UNIQUE (name);
 
 -- 4. Deduplicate public.hod (retain lowest ID per name)
 DELETE FROM public.hod a USING public.hod b

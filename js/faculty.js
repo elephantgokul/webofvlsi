@@ -37,26 +37,29 @@ document.addEventListener('DOMContentLoaded', async () => {
 
             var rawList = (data && Array.isArray(data.faculty)) ? data.faculty : [];
             
-            // Deduplicate faculty by email and name
+            // Deduplicate faculty by both name and email
             var seen = new Set();
             facultyList = [];
             for (var i = 0; i < rawList.length; i++) {
                 var f = rawList[i];
                 if (!f) continue;
-                var key = (f.email || f.name || '').toLowerCase().trim();
-                if (!key || seen.has(key)) continue;
-                seen.add(key);
+                var nameKey = (f.name || '').toLowerCase().trim();
+                var emailKey = (f.email || '').toLowerCase().trim();
+                if ((nameKey && seen.has(nameKey)) || (emailKey && seen.has(emailKey))) continue;
+                if (nameKey) seen.add(nameKey);
+                if (emailKey) seen.add(emailKey);
                 facultyList.push(f);
             }
 
             // Fallback ensure all 5 members are present
             if (window.DEPT_FALLBACK_DATA && Array.isArray(window.DEPT_FALLBACK_DATA.faculty)) {
                 window.DEPT_FALLBACK_DATA.faculty.forEach(function (fb) {
-                    var fbKey = (fb.email || fb.name || '').toLowerCase().trim();
-                    if (!seen.has(fbKey)) {
-                        seen.add(fbKey);
-                        facultyList.push(fb);
-                    }
+                    var fbName = (fb.name || '').toLowerCase().trim();
+                    var fbEmail = (fb.email || '').toLowerCase().trim();
+                    if ((fbName && seen.has(fbName)) || (fbEmail && seen.has(fbEmail))) return;
+                    if (fbName) seen.add(fbName);
+                    if (fbEmail) seen.add(fbEmail);
+                    facultyList.push(fb);
                 });
             }
 

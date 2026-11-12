@@ -88,9 +88,9 @@
 
       var faculty = [];
       if (!facultyRes.error && Array.isArray(facultyRes.data) && facultyRes.data.length > 0) {
-        // Deduplicate faculty from DB
+        // Deduplicate faculty from DB by name or email
         var dbFaculty = deduplicate(facultyRes.data, function (f) {
-          return f.email || f.name;
+          return (f.name || f.email || '').toLowerCase().trim();
         });
 
         // Ensure all 5 standard faculty members are present
