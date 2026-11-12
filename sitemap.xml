@@ -4,9 +4,13 @@
   <url><loc>https://elephantgokul.github.io/webofvlsi/pages/hod.html</loc><priority>0.8</priority></url>
   <url><loc>https://elephantgokul.github.io/webofvlsi/pages/faculty.html</loc><priority>0.8</priority></url>
   <url><loc>https://elephantgokul.github.io/webofvlsi/pages/students.html</loc><priority>0.8</priority></url>
+  <url><loc>https://elephantgokul.github.io/webofvlsi/pages/student-detail.html</loc><priority>0.6</priority></url>
   <url><loc>https://elephantgokul.github.io/webofvlsi/pages/labs.html</loc><priority>0.8</priority></url>
   <url><loc>https://elephantgokul.github.io/webofvlsi/pages/achievements.html</loc><priority>0.7</priority></url>
   <url><loc>https://elephantgokul.github.io/webofvlsi/pages/placements.html</loc><priority>0.8</priority></url>
+  <url><loc>https://elephantgokul.github.io/webofvlsi/pages/leaderboard.html</loc><priority>0.7</priority></url>
+  <url><loc>https://elephantgokul.github.io/webofvlsi/pages/calendar.html</loc><priority>0.7</priority></url>
+  <url><loc>https://elephantgokul.github.io/webofvlsi/pages/stats.html</loc><priority>0.7</priority></url>
   <url><loc>https://elephantgokul.github.io/webofvlsi/pages/gallery.html</loc><priority>0.6</priority></url>
   <url><loc>https://elephantgokul.github.io/webofvlsi/pages/workshops.html</loc><priority>0.7</priority></url>
   <url><loc>https://elephantgokul.github.io/webofvlsi/pages/events.html</loc><priority>0.7</priority></url>

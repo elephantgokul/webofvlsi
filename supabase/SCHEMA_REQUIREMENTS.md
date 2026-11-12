@@ -27,11 +27,12 @@ The old Gallery migration used the 8-digit version `20261031`; its current filen
 
 The Gallery migration uses UUID keys and references `events` and `gallery_categories`; deleting an event sets its media `event_id` to null, while deleting a category with media is restricted. No migration deletes application records.
 
-## Undocumented people schema
+## Schema-backed people tables
 
-- `public.students` must exist and have `name` or `student_name`. The hardening migration dynamically maps known candidate fields into `public.public_students`; this is an existing compatibility mechanism, not a complete baseline. Its candidate matches still need comparison with the real schema.
-- `public.faculty` and `public.hod` are queried by the frontend but have no table definitions or policies in repository SQL. The frontend uses `select('*')`. The UI consumes public-facing profile properties such as name, designation, qualification, specialization, photo, contact email, phone, message, and research interests. The actual column names, which of these fields are approved for public release, and the current table/column grants are unknown.
-- RLS enabled on `faculty` or `hod` alone does not prove column privacy. A schema-specific migration and frontend allowlist/view contract are required before the hardening migration can be treated as production-ready.
+- `public.students`: created or augmented idempotently by `20261031110000_people_schema.sql` (`ALTER TABLE ... ADD COLUMN IF NOT EXISTS`). Supports `name`, `programme`, `year`, `batch`, `achievement_title`, `achievement`, `description`, `projects_overview`, `image`, `photo_url`, `linkedin`, `linkedin_url`, `github_url`.
+- `public.faculty`: created or augmented idempotently with `id`, `name`, `designation`, `qualification`, `specialization`, `email`, `orcid`, `image`, `photo_url`, `created_at`.
+- `public.hod`: created or augmented idempotently with `id`, `name`, `designation`, `qualification`, `message`, `contact`, `phone`, `research_interests`, `photo_url`, `created_at`.
+- The hardening migration (`20261031120000_security_hardening.sql`) validates prerequisites in its preflight check (`students.name` / `students.student_name`, RLS on `faculty` and `hod`), dynamically maps known candidate fields into `public.public_students`, and enforces restrictive policy ceilings.
 
 ## Frontend database and Storage operations
 

@@ -1,8 +1,15 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html data-theme="light" lang="en" class="scroll-smooth">
 <head>
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://cdn.tailwindcss.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com https://cdn.jsdelivr.net; font-src 'self' data: https://fonts.gstatic.com https://cdnjs.cloudflare.com; img-src 'self' data: blob: https://fptnqolkmagfyjpedbix.supabase.co https://via.placeholder.com; connect-src 'self' https://fptnqolkmagfyjpedbix.supabase.co wss://fptnqolkmagfyjpedbix.supabase.co https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; media-src 'self' blob: https://fptnqolkmagfyjpedbix.supabase.co; frame-src 'self' https://maps.google.com https://www.google.com; object-src 'none'; base-uri 'self'; form-action 'self';">
-  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://cdn.tailwindcss.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com https://cdn.jsdelivr.net; font-src 'self' data: https://fonts.gstatic.com https://cdnjs.cloudflare.com; img-src 'self' data: blob: https://fptnqolkmagfyjpedbix.supabase.co; connect-src 'self' https://fptnqolkmagfyjpedbix.supabase.co wss://fptnqolkmagfyjpedbix.supabase.co https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; media-src 'self' blob: https://fptnqolkmagfyjpedbix.supabase.co; frame-src 'self' https://maps.google.com https://www.google.com; object-src 'none'; base-uri 'self'; form-action 'self';">
+  <meta charset="UTF-8"/>
+  <meta name="description" content="Alumni network, industry engagements, and career journeys of graduates from the SIET VLSI Department."/>
+  <link rel="canonical" href="https://elephantgokul.github.io/webofvlsi/pages/alumni.html"/>
+  <meta property="og:title" content="Alumni — VLSI | SIET"/>
+  <meta property="og:description" content="Alumni network, industry engagements, and career journeys of graduates from the SIET VLSI Department."/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:url" content="https://elephantgokul.github.io/webofvlsi/pages/alumni.html"/>
+  <meta property="og:image" content="https://elephantgokul.github.io/webofvlsi/assets/images/department_logo.png"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
   <title>Alumni — VLSI | SIET</title>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
@@ -59,8 +66,8 @@
 <header id="site-header">
   <div class="max-w-screen-xl mx-auto px-5 lg:px-8 flex items-center justify-between">
     <a href="../index.html" class="flex items-center gap-3">
-      <img src="../assets/images/college_logo.png" alt="SIET Logo" class="h-9 w-auto object-contain flex-shrink-0" onerror="this.src='https://via.placeholder.com/100x40?text=SIET'">
-      <img src="../assets/images/department_logo.png" alt="VLSI Logo" class="h-9 w-auto object-contain flex-shrink-0" onerror="this.src='https://via.placeholder.com/100x40?text=VLSI'">
+      <img src="../assets/images/college_logo.png" alt="SIET Logo" class="h-9 w-auto object-contain flex-shrink-0" onerror="this.style.display='none'">
+      <img src="../assets/images/department_logo.png" alt="VLSI Logo" class="h-9 w-auto object-contain flex-shrink-0" onerror="this.style.display='none'">
       <div><p class="brand-text font-display font-semibold text-sm transition-colors">SIET</p><p class="brand-text text-xs opacity-60 mt-0.5 transition-colors">VLSI Design and Technology</p></div>
     </a>
     <nav class="hidden lg:flex items-center gap-1">
@@ -153,7 +160,7 @@
           <p class="font-mono text-xs uppercase tracking-widest mb-4" style="color:#1652c4">Are you an Alumni?</p>
           <h3 class="font-display font-bold text-2xl md:text-3xl mb-4" style="color:#0b1b33">Register &amp; Stay Connected</h3>
           <p class="text-sm max-w-xl mx-auto mb-8" style="color:#5b6478">Update your profile, connect with batchmates, mentor current students, and participate in alumni events.</p>
-          <a href="#" class="btn-primary inline-flex items-center gap-2 text-white font-semibold text-sm rounded-xl px-7 py-3.5 transition-all">
+          <a href="contact.html" class="btn-primary inline-flex items-center gap-2 text-white font-semibold text-sm rounded-xl px-7 py-3.5 transition-all">
             <i class="fa-solid fa-user-plus text-xs"></i> Register as Alumni
           </a>
         </div>
@@ -253,7 +260,7 @@ function buildAlumniGrid(filter){
           '<p class="text-xs" style="color:#5b6478">'+a.role+'</p>',
         '</div>',
         '<div class="flex gap-2 pt-4" style="border-top:1px solid #e2e8f0">',
-          '<a href="#" aria-label="LinkedIn" class="flex-1 flex items-center justify-center gap-1.5 py-2 rounded-lg text-xs font-semibold transition-all" style="background:#f0f4ff;color:#1652c4" onmouseover="this.style.background=\'#1652c4\';this.style.color=\'#fff\'" onmouseout="this.style.background=\'#f0f4ff\';this.style.color=\'#1652c4\'"><i class="fa-brands fa-linkedin-in"></i>LinkedIn</a>',
+          '<a href="https://www.linkedin.com/in/siet-ee-vlsi-design-and-technology-6bb30541a?utm_source=share_via&utm_content=profile&utm_medium=member_android" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" class="flex-1 flex items-center justify-center gap-1.5 py-2 rounded-lg text-xs font-semibold transition-all" style="background:#f0f4ff;color:#1652c4" onmouseover="this.style.background=\'#1652c4\';this.style.color=\'#fff\'" onmouseout="this.style.background=\'#f0f4ff\';this.style.color=\'#1652c4\'"><i class="fa-brands fa-linkedin-in"></i>LinkedIn</a>',
         '</div>',
       '</article>'
     ].join('');

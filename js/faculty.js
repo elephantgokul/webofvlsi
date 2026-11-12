@@ -26,6 +26,8 @@ document.addEventListener('DOMContentLoaded', async () => {
         const orderMap = {
             "dr. p. dhilipkumar": 1,
             "mrs. t. renita pearlin": 2,
+            "mrs. p. priscilla sophia": 3,
+            "mrs. priscilla sophia": 3,
             "mrs. p. priscillasophia": 3,
             "mrs. c. prema": 4,
             "mrs. r. vasanthi": 5

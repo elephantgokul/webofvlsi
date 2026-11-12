@@ -10,16 +10,18 @@
      ========================================================================= */
 
   /**
-   * Fetch published events from Supabase 'events' table.
-   * Falls back to hardcoded data if Supabase is not configured or the table doesn't exist.
+   * Fetch published events.
+   * Merges Supabase 'events' (if configured/available) with the static EVENTS_DATA dataset,
+   * deduplicating by normalized title and event date.
    * @param {Object} [options] - { status: 'published', upcoming: true/false }
    * @returns {Promise<Array>}
    */
   async function fetchEvents(options) {
     var opts = options || {};
     var client = window.supabaseClient;
+    var supabaseEvents = [];
 
-    // Try Supabase first
+    // 1. Try Supabase first
     if (client && typeof window.isSupabaseConfigured === 'function' && window.isSupabaseConfigured()) {
       try {
         var query = client.from('events').select('*');
@@ -29,44 +31,88 @@
           query = query.eq('status', 'published');
         }
 
-        // Order by event_date
         query = query.order('event_date', { ascending: true });
 
         var result = await query;
-
         if (result.error) {
           console.warn('[Events] Supabase query error:', result.error.message);
-          throw result.error;
-        }
-
-        if (result.data && result.data.length > 0) {
-          var events = (result.data || []).map(normalizeSupabaseEvent);
+        } else if (result.data && result.data.length > 0) {
+          supabaseEvents = (result.data || []).map(normalizeSupabaseEvent);
 
           if (opts.upcoming === true) {
             var now = new Date();
             now.setHours(0, 0, 0, 0);
-            events = events.filter(function (e) {
-              var eventDate = new Date(e.event_date);
-              return eventDate >= now;
+            supabaseEvents = supabaseEvents.filter(function (e) {
+              return new Date(e.event_date) >= now;
             });
           } else if (opts.upcoming === false) {
             var now2 = new Date();
             now2.setHours(0, 0, 0, 0);
-            events = events.filter(function (e) {
-              var eventDate = new Date(e.event_date);
-              return eventDate < now2;
+            supabaseEvents = supabaseEvents.filter(function (e) {
+              return new Date(e.event_date) < now2;
             });
           }
-
-          if (events.length > 0) return events;
         }
       } catch (err) {
         console.warn('[Events] Supabase fetch failed, using fallback data:', err);
       }
     }
 
-    // Fallback: return shared dataset
-    return getFallbackEvents(opts);
+    // 2. Fetch static events
+    var staticEvents = getFallbackEvents(opts);
+
+    // 3. Merge both if Supabase events exist, deduplicating by title + date (Supabase takes precedence)
+    if (supabaseEvents.length > 0) {
+      return mergeAndDedupeEvents(supabaseEvents, staticEvents, opts);
+    }
+
+    return staticEvents;
+  }
+
+  /**
+   * Merge primary (Supabase) and secondary (static) events, deduplicating by title + date
+   */
+  function mergeAndDedupeEvents(primary, secondary, opts) {
+    var seen = new Set();
+    var merged = [];
+
+    function makeKey(e) {
+      var normTitle = (e.title || '').toLowerCase().replace(/[^a-z0-9]/g, '');
+      var normDate = (e.event_date || e.dateLabel || '').trim();
+      return normTitle + '|' + normDate;
+    }
+
+    (primary || []).forEach(function (e) {
+      var key = makeKey(e);
+      if (!seen.has(key)) {
+        seen.add(key);
+        merged.push(e);
+      }
+    });
+
+    (secondary || []).forEach(function (e) {
+      var key = makeKey(e);
+      if (!seen.has(key)) {
+        seen.add(key);
+        merged.push(e);
+      }
+    });
+
+    // Sort accordingly
+    if (opts && opts.upcoming === true) {
+      merged.sort(function (a, b) {
+        return new Date(a.event_date) - new Date(b.event_date);
+      });
+    } else if (opts && opts.upcoming === false) {
+      var dated = merged.filter(function (e) { return e.has_exact_date !== false; });
+      var undated = merged.filter(function (e) { return e.has_exact_date === false; });
+      dated.sort(function (a, b) {
+        return new Date(b.event_date) - new Date(a.event_date);
+      });
+      merged = dated.concat(undated);
+    }
+
+    return merged;
   }
 
   /**

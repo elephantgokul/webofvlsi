@@ -392,13 +392,13 @@
       duration: 'One Day',
       venue: 'SIET Campus LH 46',
       theme: 'Silicon Debugging Challenge',
-      description: 'Organized by TECKTORS featuring 3 competitive rounds: Boolean Logic, Circuit Challenge, and Debugging Arena. Staff Coordinator: Mrs. Prisilla Sophia; Student Coordinator: Subiksha L.',
+      description: 'Organized by TECKTORS featuring 3 competitive rounds: Boolean Logic, Circuit Challenge, and Debugging Arena. Staff Coordinator: Mrs. Priscilla Sophia; Student Coordinator: Subiksha L.',
       highlights: [
         'Organized by the TECKTORS student club under department guidance.',
         'Round 1: Boolean Logic & Combinational Analysis.',
         'Round 2: Circuit Challenge & Timing Analysis.',
         'Round 3: Debugging Arena — real-time hardware fault isolation.',
-        'Staff Coordinator: Mrs. Prisilla Sophia; Student Coordinator: Subiksha L.'
+        'Staff Coordinator: Mrs. Priscilla Sophia; Student Coordinator: Subiksha L.'
       ],
       outcomes: [
         'Tested participants on deep hardware understanding, logic synthesis bugs, and silicon diagnostic techniques.'

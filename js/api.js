@@ -149,7 +149,7 @@ function getFallbackData() {
             name: "Dr. P. Dhilipkumar",
             designation: "Associate Professor & Head",
             qualification: "M.E., Ph.D.",
-            message: "Welcome to the Department of VLSI Design and Technology at Sri Shakthi Institute of Engineering and Technology. Established in 2024, our department is committed to building strong fundamentals in VLSI, Embedded Systems, and semiconductor design through hands-on laboratories and an industry-aligned curriculum.",
+            message: "Welcome to the Department of Electronics Engineering (VLSI Design and Technology) at Sri Shakthi Institute of Engineering and Technology. Established in 2024, our department is committed to building strong fundamentals in digital electronics, semiconductor devices, VLSI architecture, RTL design, verification, and physical design.",
             contact: "dhilipkumarece@siet.ac.in",
             phone: "+91 96295 61731",
             researchInterests: ["VLSI Design", "Embedded Systems", "Semiconductor Design"],
@@ -158,7 +158,7 @@ function getFallbackData() {
         faculty: [
             { id: 1, name: "Dr. P. Dhilipkumar", designation: "Associate Professor & Head", qualification: "M.E., Ph.D.", specialization: "VLSI Design and Technology", email: "dhilipkumarece@siet.ac.in", orcid: "", image: "dhilipkumar.jpg", photoUrl: "dhilipkumar.jpg" },
             { id: 4, name: "Mrs. T. Renita Pearlin", designation: "Assistant Professor", qualification: "M.E.", specialization: "VLSI Design and Technology", email: "Trenitacdc@siet.ac.in", orcid: "", image: "renita.jpg", photoUrl: "renita.jpg" },
-            { id: 3, name: "Mrs. P. Priscillasophia", designation: "Assistant Professor", qualification: "M.E.", specialization: "VLSI Design and Technology", email: "Priscillasophiaece@siet.ac.in", orcid: "", image: "priscillasophia.jpg", photoUrl: "priscillasophia.jpg" },
+            { id: 3, name: "Mrs. P. Priscilla Sophia", designation: "Assistant Professor", qualification: "M.E.", specialization: "VLSI Design and Technology", email: "Priscillasophiaece@siet.ac.in", orcid: "", image: "priscillasophia.jpg", photoUrl: "priscillasophia.jpg" },
             { id: 2, name: "Mrs. C. Prema", designation: "Assistant Professor", qualification: "M.E.", specialization: "VLSI Design and Technology", email: "Premacece@siet.ac.in", orcid: "", image: "prema.jpg", photoUrl: "prema.jpg" },
             { id: 5, name: "Mrs. R. Vasanthi", designation: "Assistant Professor", qualification: "M.E.", specialization: "VLSI Design and Technology", email: "Vasanthiece@siet.ac.in", orcid: "", image: "vasanthi.jpg", photoUrl: "vasanthi.jpg" }
         ],

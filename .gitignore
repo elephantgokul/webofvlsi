@@ -4,11 +4,19 @@
 !.env.example
 supabase/functions/.env
 supabase/functions/.env.*
-!supabase/functions/.env.example
+!.supabase/functions/.env.example
 
 # Supabase CLI project link and local stack metadata
 supabase/.temp/
 
-# Scratch workspace and artifacts
+# Agent, skill locks, scripts and temporary artifacts
+.agents/
+skills-lock.json
+scripts/
 scratch/
-
+_work/
+__pycache__/
+*.pyc
+extract_magazine_photos.py
+verify_site.py
+check_all.py

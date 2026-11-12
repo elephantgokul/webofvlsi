@@ -217,8 +217,8 @@ BEGIN
 
   FOR field IN
     SELECT * FROM (VALUES
-      ('id', ARRAY['name','student_name']::TEXT[]),
-      ('name', ARRAY['name','student_name']::TEXT[]),
+      ('id', ARRAY['id','student_id','reg_no','roll_no']::TEXT[]),
+      ('name', ARRAY['name','student_name','full_name','fullname']::TEXT[]),
       ('programme', ARRAY['programme','program','course']::TEXT[]),
       ('year', ARRAY['year','academic_year']::TEXT[]),
       ('batch', ARRAY['batch']::TEXT[]),
@@ -227,7 +227,7 @@ BEGIN
       ('description', ARRAY['description']::TEXT[]),
       ('projectsOverview', ARRAY['projectsOverview','projects_overview','projects','project']::TEXT[]),
       ('image', ARRAY['image']::TEXT[]),
-      ('photoUrl', ARRAY['photoUrl','photo_url','photo']::TEXT[]),
+      ('photoUrl', ARRAY['photoUrl','photo_url','photo','image_url']::TEXT[]),
       ('linkedin', ARRAY['linkedin','linkedin_url','linkedinUrl']::TEXT[]),
       ('github', ARRAY['github','github_url','githubUrl']::TEXT[])
     ) AS fields(output_name, candidates)
@@ -272,15 +272,26 @@ BEGIN
   CREATE POLICY "security_public_students_read" ON public.students
     FOR SELECT TO anon, authenticated USING (true);
 
+  DROP POLICY IF EXISTS "Admins can manage students" ON public.students;
+  CREATE POLICY "Admins can manage students" ON public.students
+    FOR ALL TO authenticated
+    USING (public.is_site_admin())
+    WITH CHECK (public.is_site_admin());
+
   -- Use the public name as the detail identifier so institution IDs are never exposed.
   EXECUTE 'CREATE OR REPLACE VIEW public.public_students WITH (security_invoker = true) AS SELECT '
     || select_list || ' FROM public.students AS s';
-  EXECUTE 'GRANT SELECT (' ||
-    (SELECT string_agg(format('%I', column_name), ', ' ORDER BY ordinal_position)
-     FROM information_schema.columns
-     WHERE table_schema = 'public' AND table_name = 'students'
-       AND column_name = ANY(safe_columns))
-    || ') ON TABLE public.students TO anon, authenticated';
+
+  IF array_length(safe_columns, 1) > 0 THEN
+    EXECUTE 'GRANT SELECT (' ||
+      (SELECT string_agg(format('%I', column_name), ', ' ORDER BY ordinal_position)
+       FROM information_schema.columns
+       WHERE table_schema = 'public' AND table_name = 'students'
+         AND column_name = ANY(safe_columns))
+      || ') ON TABLE public.students TO anon, authenticated';
+  END IF;
+
+  GRANT INSERT, UPDATE, DELETE ON TABLE public.students TO authenticated;
 END;
 $block$;
 

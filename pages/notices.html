@@ -1,8 +1,15 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html data-theme="light" lang="en" class="scroll-smooth">
 <head>
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://cdn.tailwindcss.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com https://cdn.jsdelivr.net; font-src 'self' data: https://fonts.gstatic.com https://cdnjs.cloudflare.com; img-src 'self' data: blob: https://fptnqolkmagfyjpedbix.supabase.co https://via.placeholder.com; connect-src 'self' https://fptnqolkmagfyjpedbix.supabase.co wss://fptnqolkmagfyjpedbix.supabase.co https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; media-src 'self' blob: https://fptnqolkmagfyjpedbix.supabase.co; frame-src 'self' https://maps.google.com https://www.google.com; object-src 'none'; base-uri 'self'; form-action 'self';">
-  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://cdn.tailwindcss.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com https://cdn.jsdelivr.net; font-src 'self' data: https://fonts.gstatic.com https://cdnjs.cloudflare.com; img-src 'self' data: blob: https://fptnqolkmagfyjpedbix.supabase.co; connect-src 'self' https://fptnqolkmagfyjpedbix.supabase.co wss://fptnqolkmagfyjpedbix.supabase.co https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; media-src 'self' blob: https://fptnqolkmagfyjpedbix.supabase.co; frame-src 'self' https://maps.google.com https://www.google.com; object-src 'none'; base-uri 'self'; form-action 'self';">
+  <meta charset="UTF-8"/>
+  <meta name="description" content="Official circulars, examination schedules, workshop invitations, and student notices for the SIET VLSI Department."/>
+  <link rel="canonical" href="https://elephantgokul.github.io/webofvlsi/pages/notices.html"/>
+  <meta property="og:title" content="Notice Board — VLSI | SIET"/>
+  <meta property="og:description" content="Official circulars, examination schedules, workshop invitations, and student notices for the SIET VLSI Department."/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:url" content="https://elephantgokul.github.io/webofvlsi/pages/notices.html"/>
+  <meta property="og:image" content="https://elephantgokul.github.io/webofvlsi/assets/images/department_logo.png"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
   <title>Notice Board — VLSI | SIET</title>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
@@ -60,8 +67,8 @@
 <header id="site-header">
   <div class="max-w-screen-xl mx-auto px-5 lg:px-8 flex items-center justify-between">
     <a href="../index.html" class="flex items-center gap-3">
-      <img src="../assets/images/college_logo.png" alt="SIET Logo" class="h-9 w-auto object-contain flex-shrink-0" onerror="this.src='https://via.placeholder.com/100x40?text=SIET'">
-      <img src="../assets/images/department_logo.png" alt="VLSI Logo" class="h-9 w-auto object-contain flex-shrink-0" onerror="this.src='https://via.placeholder.com/100x40?text=VLSI'">
+      <img src="../assets/images/college_logo.png" alt="SIET Logo" class="h-9 w-auto object-contain flex-shrink-0" onerror="this.style.display='none'">
+      <img src="../assets/images/department_logo.png" alt="VLSI Logo" class="h-9 w-auto object-contain flex-shrink-0" onerror="this.style.display='none'">
       <div><p class="brand-text font-display font-semibold text-sm transition-colors">SIET</p><p class="brand-text text-xs opacity-60 mt-0.5 transition-colors">VLSI Design and Technology</p></div>
     </a>
     <nav class="hidden lg:flex items-center gap-1">
@@ -225,7 +232,7 @@ function renderNotices(list){
           '</div>',
           '<h3 class="font-display font-semibold text-sm leading-snug mb-1.5" style="color:#0b1b33">'+n.title+'</h3>',
           '<p class="text-xs leading-relaxed" style="color:#5b6478">'+n.body+'</p>',
-          n.attach?'<a href="#" class="mt-2 inline-flex items-center gap-1.5 text-xs font-semibold" style="color:#1652c4"><i class="fa-solid fa-paperclip text-[10px]"></i>View Attachment</a>':'',
+          n.attach?'<a href="resources.html" class="mt-2 inline-flex items-center gap-1.5 text-xs font-semibold" style="color:#1652c4"><i class="fa-solid fa-paperclip text-[10px]"></i>View Attachment</a>':'',
         '</div>',
       '</div>'
     ].join('');
