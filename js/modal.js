@@ -173,7 +173,7 @@
     var department = escapeHtml(faculty.department || 'Department of Electronics Engineering (VLSI Design and Technology)');
     var specialization = escapeHtml(faculty.specialization || 'VLSI Design and Technology');
     var email = faculty.email ? escapeHtml(faculty.email) : '';
-    var bio = faculty.bio ? escapeHtml(faculty.bio) : 'Dedicated faculty mentor providing instruction and laboratory guidance in digital VLSI systems, semiconductor architecture, and hands-on EDA practice.';
+    var bio = (faculty.bio && typeof faculty.bio === 'string' && faculty.bio.trim()) ? escapeHtml(faculty.bio.trim()) : '';
 
     var bodyHtml = [
       '<div class="dept-modal-profile">',
@@ -193,11 +193,13 @@
       '    </div>',
       '  </div>',
       '</div>',
-      '<div class="dept-modal-section">',
-      '  <h3 class="dept-modal-section-title"><i class="fa-solid fa-user-tie"></i> Biography & Academic Profile</h3>',
-      '  <p class="dept-modal-text">' + bio + '</p>',
-      '</div>'
-    ].join('\n');
+      bio ? [
+        '<div class="dept-modal-section">',
+        '  <h3 class="dept-modal-section-title"><i class="fa-solid fa-user-tie"></i> Biography & Academic Profile</h3>',
+        '  <p class="dept-modal-text">' + bio + '</p>',
+        '</div>'
+      ].join('\n') : ''
+    ].filter(Boolean).join('\n');
 
     openModal({
       badge: '<span class="dept-badge-pill"><i class="fa-solid fa-chalkboard-user mr-1.5"></i>Faculty Profile</span>',
@@ -317,7 +319,7 @@
       '  </div>',
       '  <div class="p-4 rounded-xl bg-slate-50 border border-slate-200">',
       '    <h4 class="font-bold text-sm text-slate-900 mb-1 flex items-center gap-2"><i class="fa-solid fa-laptop-code text-blue-600"></i> Synopsys Front-End Design Workshop</h4>',
-      '    <p class="text-xs text-slate-600 leading-relaxed">SystemVerilog RTL architecture, functional simulation, and constraint generation. Hands-on labs with Synopsys VCS simulator, Verdi debug platform, and Design Compiler logic synthesis.</p>',
+      '    <p class="text-xs text-slate-600 leading-relaxed">Conducted for two batches: external participants (covering RTL synthesis and verification) and 23 second-year internal participants (covering RTL synthesis and simulation). Hands-on labs with Synopsys VCS simulator, Verdi debug platform, and Design Compiler logic synthesis.</p>',
       '  </div>',
       '  <div class="p-4 rounded-xl bg-slate-50 border border-slate-200">',
       '    <h4 class="font-bold text-sm text-slate-900 mb-1 flex items-center gap-2"><i class="fa-solid fa-bolt text-blue-600"></i> VELTRAXX \'26 24-Hour Hackathon</h4>',

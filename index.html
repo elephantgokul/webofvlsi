@@ -755,6 +755,7 @@
   <script src="js/events-manager.js"></script>
   <script src="data/fallback-data.js"></script>
   <script src="js/supabaseClient.js"></script>
+  <script src="js/modal.js"></script>
   <script src="js/api.js"></script>
   <script src="js/animations.js"></script>
   <script src="js/sliders.js"></script>
@@ -783,6 +784,26 @@
             console.warn('[Homepage] Events load error:', err);
             grid.innerHTML = '<div class="col-span-full text-center py-10" style="color:#aab4c8"><p class="text-sm">Events will appear here once configured.</p></div>';
           }
+          grid.addEventListener('click', function(e) {
+            var card = e.target.closest('.ev-card');
+            if (!card || e.target.closest('a')) return;
+            var id = card.getAttribute('data-event-id');
+            var ev = (window.EVENTS_DATA || []).find(function(item) { return item.id === id; });
+            if (ev && window.DeptModal && typeof window.DeptModal.openEvent === 'function') {
+              var modalData = {
+                title: ev.title,
+                badge: ev.event_type || 'Conducted by Department',
+                date: ev.dateLabel || (ev.day + ' ' + ev.month + ' ' + ev.year),
+                venue: ev.venue || 'VLSI Research Lab, Sri Shakthi Tech Park',
+                coordinator: 'Department Faculty Coordinator',
+                descriptionHtml: '<div class="space-y-3 text-xs leading-relaxed text-slate-600"><p>' + (ev.description || '') + '</p>' +
+                  ((ev.highlights && Array.isArray(ev.highlights)) ? ('<h4 class="font-bold text-slate-800 mt-4 mb-2">Key Highlights:</h4><ul class="list-disc pl-5 space-y-1">' + ev.highlights.map(function(h){ return '<li>' + h + '</li>'; }).join('') + '</ul>') : '') +
+                  ((ev.outcomes && Array.isArray(ev.outcomes)) ? ('<h4 class="font-bold text-slate-800 mt-4 mb-2">Learning Outcomes:</h4><ul class="list-disc pl-5 space-y-1">' + ev.outcomes.map(function(o){ return '<li>' + o + '</li>'; }).join('') + '</ul>') : '') +
+                  '</div>'
+              };
+              window.DeptModal.openEvent(modalData);
+            }
+          });
         }
 
         // Populate news from site-data.js

@@ -61,6 +61,16 @@
     // 2. Fetch static events
     var staticEvents = getFallbackEvents(opts);
 
+    // Filter to ensure only events conducted by department are returned
+    if (opts.conducted_only !== false) {
+      supabaseEvents = supabaseEvents.filter(function (e) {
+        return !e.event_type || e.event_type === 'Conducted by Department';
+      });
+      staticEvents = staticEvents.filter(function (e) {
+        return !e.event_type || e.event_type === 'Conducted by Department';
+      });
+    }
+
     // 3. Merge both if Supabase events exist, deduplicating by title + date (Supabase takes precedence)
     if (supabaseEvents.length > 0) {
       return mergeAndDedupeEvents(supabaseEvents, staticEvents, opts);
@@ -316,7 +326,7 @@
     }
 
     return [
-      '<article class="ev-card surface-card rounded-2xl overflow-hidden flex flex-col justify-between border border-slate-100 shadow-sm" data-aos="fade-up" data-aos-delay="' + ((index || 0) % 3 * 70) + '">',
+      '<article class="ev-card surface-card rounded-2xl overflow-hidden flex flex-col justify-between border border-slate-100 shadow-sm interactive-detail-card cursor-pointer" data-event-id="' + escapeHtml(ev.id) + '" role="button" tabindex="0" aria-label="View details of ' + escapeHtml(ev.title) + '" data-aos="fade-up" data-aos-delay="' + ((index || 0) % 3 * 70) + '">',
       '<div class="flex items-stretch flex-1">',
       dateBoxHtml,
       '<div class="p-5 flex-1 min-w-0 flex flex-col justify-between">',

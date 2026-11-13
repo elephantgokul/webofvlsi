@@ -215,9 +215,9 @@ function getFallbackData() {
         faculty: [
             { id: 1, name: "Dr. P. Dhilipkumar", designation: "Associate Professor & Head", qualification: "M.E., Ph.D.", specialization: "VLSI Design and Technology", email: "dhilipkumarece@siet.ac.in", orcid: "", image: "dhilipkumar.jpg", photoUrl: "dhilipkumar.jpg" },
             { id: 2, name: "Mrs. T. Renita Pearlin", designation: "Assistant Professor", qualification: "M.E.", specialization: "VLSI Design and Technology", email: "Trenitacdc@siet.ac.in", orcid: "", image: "renita.jpg", photoUrl: "renita.jpg" },
-            { id: 3, name: "Mrs. Priscilla Sophia", designation: "Assistant Professor", qualification: "M.E.", specialization: "VLSI Design and Technology", email: "", orcid: "", image: "priscillasophia.jpg", photoUrl: "priscillasophia.jpg" },
-            { id: 4, name: "Mrs. C. Prema", designation: "Assistant Professor", qualification: "M.E., Ph.D.", specialization: "VLSI Design and Technology", email: "", orcid: "", image: "prema.jpg", photoUrl: "prema.jpg" },
-            { id: 5, name: "Mrs. Vasanthi", designation: "Assistant Professor", qualification: "M.E.", specialization: "VLSI Design and Technology", email: "", orcid: "", image: "vasanthi.jpg", photoUrl: "vasanthi.jpg" }
+            { id: 3, name: "Mrs. Priscilla Sophia", designation: "Assistant Professor", qualification: "M.E.", specialization: "VLSI Design and Technology", email: null, orcid: "", image: "priscillasophia.jpg", photoUrl: "priscillasophia.jpg" },
+            { id: 4, name: "Mrs. C. Prema", designation: "Assistant Professor", qualification: "M.E., Ph.D.", specialization: "VLSI Design and Technology", email: null, orcid: "", image: "prema.jpg", photoUrl: "prema.jpg" },
+            { id: 5, name: "Mrs. Vasanthi", designation: "Assistant Professor", qualification: "M.E.", specialization: "VLSI Design and Technology", email: null, orcid: "", image: "vasanthi.jpg", photoUrl: "vasanthi.jpg" }
         ],
         students: [
             {

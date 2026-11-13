@@ -103,74 +103,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         });
 
         list.forEach(function (fac, index) {
-            var isProf = fac.designation && fac.designation.toLowerCase().includes('head');
-            var isAssoc = fac.designation && fac.designation.toLowerCase().includes('associate');
-            var badgeBg = isProf ? '#1652c4' : (isAssoc ? '#7eb6ff' : '#2fe6a0');
-            var badgeColor = isProf ? '#fff' : (isAssoc ? '#0b1b33' : '#0a3320');
-            var outerBg = isProf ? 'linear-gradient(145deg,#e8edf5,#d0daea)' : 'linear-gradient(145deg,#edf0f5,#d8dae8)';
-
-            var rawPhoto = fac.photoUrl || fac.image;
-            var photoSrc = '';
-            if (typeof resolveSupabaseImageUrl === 'function') {
-                photoSrc = resolveSupabaseImageUrl(rawPhoto, 'faculty', rawPhoto);
-            } else if (typeof resolveAssetPath === 'function') {
-                photoSrc = resolveAssetPath(rawPhoto);
-            } else {
-                photoSrc = '../assets/images/faculty/' + String(rawPhoto).split('/').pop();
-            }
-
-            var localFallback = '../assets/images/faculty/' + String(rawPhoto).split('/').pop();
-            var designationLabel = (fac.designation || '').replace('Assistant Professor', 'Asst. Prof').replace('Associate Professor & Head', 'Assoc. Prof & Head');
-            var specialization = fac.specialization || 'VLSI Design and Technology';
-
-            var card = document.createElement('article');
-            card.className = 'faculty-item faculty-card surface-card rounded-2xl overflow-hidden interactive-detail-card focus:outline-none focus:ring-2 focus:ring-blue-500';
-            card.dataset.spec = 'vlsi';
-            card.setAttribute('role', 'button');
-            card.setAttribute('tabindex', '0');
-            card.setAttribute('aria-haspopup', 'dialog');
-            card.setAttribute('aria-label', `View profile of ${fac.name}`);
-            card.setAttribute('data-aos', 'fade-up');
-            card.setAttribute('data-aos-delay', String((index % 4) * 60));
-
-            card.innerHTML = `
-              <div class="h-44 flex items-center justify-center relative" style="background:${outerBg}">
-                <div class="relative w-24 h-24 rounded-full overflow-hidden border-2 border-white shadow-md bg-white">
-                  <img src="${escapeHtml(photoSrc)}" alt="${escapeHtml(fac.name)}" loading="lazy" decoding="async" class="w-full h-full object-cover" data-fallback="${escapeHtml(localFallback)}" onerror="if(this.dataset.fallback && this.src !== this.dataset.fallback){ this.src = this.dataset.fallback; } else { this.onerror=null; this.src='../assets/images/department_logo.png'; }">
-                </div>
-                <span class="absolute top-3 right-3 px-2.5 py-1 rounded-lg text-[11px] font-mono font-medium" style="background:${badgeBg};color:${badgeColor}">${escapeHtml(designationLabel)}</span>
-              </div>
-              <div class="p-5 flex flex-col justify-between flex-1">
-                <div>
-                  <h3 class="font-display font-semibold text-base text-slate-900">${escapeHtml(fac.name)}</h3>
-                  <p class="text-xs font-semibold text-blue-600 mt-0.5 mb-2">${escapeHtml(fac.designation)}</p>
-                  <div class="space-y-1 mb-3 text-xs text-slate-600">
-                    <p><i class="fa-solid fa-graduation-cap text-blue-600 w-4"></i> ${escapeHtml(fac.qualification)}</p>
-                    <p><i class="fa-solid fa-flask text-blue-600 w-4"></i> ${escapeHtml(specialization)}</p>
-                  </div>
-                </div>
-                <div class="pt-3 border-t border-slate-100 flex items-center justify-between">
-                  <span class="view-details-hint"><i class="fa-solid fa-arrow-up-right-from-square"></i> View Profile</span>
-                  ${fac.email ? `<a href="mailto:${escapeHtml(fac.email)}" onclick="event.stopPropagation();" aria-label="Email ${escapeHtml(fac.name)}" title="Email" class="w-8 h-8 rounded-lg flex items-center justify-center text-xs text-blue-600 bg-blue-50 hover:bg-blue-600 hover:text-white transition-all"><i class="fa-solid fa-envelope"></i></a>` : ''}
-                </div>
-              </div>
-            `;
-
-            // Click & keyboard activation for modal
-            function triggerModal() {
-                if (window.DeptModal && typeof window.DeptModal.openFaculty === 'function') {
-                    window.DeptModal.openFaculty(fac);
-                }
-            }
-
-            card.addEventListener('click', triggerModal);
-            card.addEventListener('keydown', function (e) {
-                if (e.key === 'Enter' || e.key === ' ') {
-                    e.preventDefault();
-                    triggerModal();
-                }
-            });
-
+            var card = createFacultyCardElement(fac, index);
             grid.appendChild(card);
         });
 
@@ -180,6 +113,85 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         isRendering = false;
     }
+
+    // Shared reusable function to render a faculty card (used by faculty.html and achievements.html)
+    function createFacultyCardElement(fac, index) {
+        var isProf = fac.designation && fac.designation.toLowerCase().includes('head');
+        var isAssoc = fac.designation && fac.designation.toLowerCase().includes('associate');
+        var badgeBg = isProf ? '#1652c4' : (isAssoc ? '#7eb6ff' : '#2fe6a0');
+        var badgeColor = isProf ? '#fff' : (isAssoc ? '#0b1b33' : '#0a3320');
+        var outerBg = isProf ? 'linear-gradient(145deg,#e8edf5,#d0daea)' : 'linear-gradient(145deg,#edf0f5,#d8dae8)';
+
+        var rawPhoto = fac.photoUrl || fac.image;
+        var photoSrc = '';
+        if (typeof resolveSupabaseImageUrl === 'function') {
+            photoSrc = resolveSupabaseImageUrl(rawPhoto, 'faculty', rawPhoto);
+        } else if (typeof resolveAssetPath === 'function') {
+            photoSrc = resolveAssetPath(rawPhoto);
+        } else {
+            photoSrc = '../assets/images/faculty/' + String(rawPhoto).split('/').pop();
+        }
+
+        var localFallback = '../assets/images/faculty/' + String(rawPhoto).split('/').pop();
+        var designationLabel = (fac.designation || '').replace('Assistant Professor', 'Asst. Prof').replace('Associate Professor & Head', 'Assoc. Prof & Head');
+        var specialization = fac.specialization || 'VLSI Design and Technology';
+
+        var card = document.createElement('article');
+        card.className = 'faculty-item faculty-card surface-card rounded-2xl overflow-hidden interactive-detail-card focus:outline-none focus:ring-2 focus:ring-blue-500';
+        card.dataset.spec = 'vlsi';
+        card.setAttribute('role', 'button');
+        card.setAttribute('tabindex', '0');
+        card.setAttribute('aria-haspopup', 'dialog');
+        card.setAttribute('aria-label', `View profile of ${fac.name}`);
+        card.setAttribute('data-aos', 'fade-up');
+        card.setAttribute('data-aos-delay', String(((index || 0) % 4) * 60));
+
+        var emailButton = (fac.email && String(fac.email).trim())
+          ? `<a href="mailto:${escapeHtml(fac.email.trim())}" onclick="event.stopPropagation();" aria-label="Email ${escapeHtml(fac.name)}" title="Email" class="w-8 h-8 rounded-lg flex items-center justify-center text-xs text-blue-600 bg-blue-50 hover:bg-blue-600 hover:text-white transition-all"><i class="fa-solid fa-envelope"></i></a>`
+          : '';
+
+        card.innerHTML = `
+          <div class="h-44 flex items-center justify-center relative" style="background:${outerBg}">
+            <div class="relative w-24 h-24 rounded-full overflow-hidden border-2 border-white shadow-md bg-white">
+              <img src="${escapeHtml(photoSrc)}" alt="${escapeHtml(fac.name)}" loading="lazy" decoding="async" class="w-full h-full object-cover" data-fallback="${escapeHtml(localFallback)}" onerror="if(this.dataset.fallback && this.src !== this.dataset.fallback){ this.src = this.dataset.fallback; } else { this.onerror=null; this.src='../assets/images/department_logo.png'; }">
+            </div>
+            <span class="absolute top-3 right-3 px-2.5 py-1 rounded-lg text-[11px] font-mono font-medium" style="background:${badgeBg};color:${badgeColor}">${escapeHtml(designationLabel)}</span>
+          </div>
+          <div class="p-5 flex flex-col justify-between flex-1">
+            <div>
+              <h3 class="font-display font-semibold text-base text-slate-900">${escapeHtml(fac.name)}</h3>
+              <p class="text-xs font-semibold text-blue-600 mt-0.5 mb-2">${escapeHtml(fac.designation)}</p>
+              <div class="space-y-1 mb-3 text-xs text-slate-600">
+                <p><i class="fa-solid fa-graduation-cap text-blue-600 w-4"></i> ${escapeHtml(fac.qualification)}</p>
+                <p><i class="fa-solid fa-flask text-blue-600 w-4"></i> ${escapeHtml(specialization)}</p>
+              </div>
+            </div>
+            <div class="pt-3 border-t border-slate-100 flex items-center justify-between">
+              <span class="view-details-hint"><i class="fa-solid fa-arrow-up-right-from-square"></i> View Profile</span>
+              ${emailButton}
+            </div>
+          </div>
+        `;
+
+        // Click & keyboard activation for modal
+        function triggerModal() {
+            if (window.DeptModal && typeof window.DeptModal.openFaculty === 'function') {
+                window.DeptModal.openFaculty(fac);
+            }
+        }
+
+        card.addEventListener('click', triggerModal);
+        card.addEventListener('keydown', function (e) {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                triggerModal();
+            }
+        });
+
+        return card;
+    }
+
+    window.createFacultyCardElement = createFacultyCardElement;
 
     function setupFilters() {
         const btns = document.querySelectorAll('.filter-btn');

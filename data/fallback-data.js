@@ -29,8 +29,7 @@
         email: "dhilipkumarece@siet.ac.in",
         orcid: "",
         image: "dhilipkumar.jpg",
-        photoUrl: "dhilipkumar.jpg",
-        bio: "Leading the Department of Electronics Engineering – VLSI Design and Technology. Experienced in curriculum development aligned with semiconductor industry demands, ASIC design methodologies, and coordinating C2S MeitY initiatives."
+        photoUrl: "dhilipkumar.jpg"
       },
       {
         id: 2,
@@ -42,8 +41,7 @@
         email: "Trenitacdc@siet.ac.in",
         orcid: "",
         image: "renita.jpg",
-        photoUrl: "renita.jpg",
-        bio: "Specializing in digital VLSI systems, low-power design, and EDA tool implementation. Actively mentoring students in RTL synthesis and verification."
+        photoUrl: "renita.jpg"
       },
       {
         id: 3,
@@ -52,11 +50,10 @@
         qualification: "M.E.",
         department: "EE – VLSI Design and Technology",
         specialization: "VLSI Design and Technology",
-        email: "",
+        email: null,
         orcid: "",
         image: "priscillasophia.jpg",
-        photoUrl: "priscillasophia.jpg",
-        bio: "Staff Coordinator for departmental technical challenges including THE LOST SILICON. Focuses on digital electronics, hardware debugging, and integrated circuits."
+        photoUrl: "priscillasophia.jpg"
       },
       {
         id: 4,
@@ -65,11 +62,10 @@
         qualification: "M.E., Ph.D.",
         department: "EE – VLSI Design and Technology",
         specialization: "VLSI Design and Technology",
-        email: "",
+        email: null,
         orcid: "",
         image: "prema.jpg",
-        photoUrl: "prema.jpg",
-        bio: "Mentoring students in ASIC design methodologies, front-end design, and digital system verification with industry-standard EDA tools."
+        photoUrl: "prema.jpg"
       },
       {
         id: 5,
@@ -78,11 +74,10 @@
         qualification: "M.E.",
         department: "EE – VLSI Design and Technology",
         specialization: "VLSI Design and Technology",
-        email: "",
+        email: null,
         orcid: "",
         image: "vasanthi.jpg",
-        photoUrl: "vasanthi.jpg",
-        bio: "Specializing in semiconductor devices, microelectronics, and hands-on laboratory experimentation in VLSI circuits."
+        photoUrl: "vasanthi.jpg"
       }
     ],
     students: [
