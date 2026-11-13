@@ -449,11 +449,11 @@
     "staff": 0,
     "photos": [
       {
-        "src": "../assets/images/achievements/neuromorphic_varsha.jpg",
-        "alt": "Varsha VR receiving 1st prize at Neuromorphic VLSI workshop"
+        "src": "../assets/images/achievements/neuromorphic-winners.jpg",
+        "alt": "Students at the Neuromorphic VLSI Outreach Workshop, Adishia College of Engineering, Kerala"
       }
     ],
-    "poster_url": "../assets/images/achievements/neuromorphic_varsha.jpg"
+    "poster_url": "../assets/images/achievements/neuromorphic-winners.jpg"
   },
   {
     "id": "quantum-pro-26",

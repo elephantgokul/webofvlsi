@@ -348,7 +348,7 @@
 
     var imageBlock = imageSrc ? [
       '<div class="dept-modal-achievement-media">',
-      '  <img src="' + escapeHtml(imageSrc) + '" alt="' + title + '" class="dept-modal-achievement-img" onerror="this.parentNode.style.display=\'none\';">',
+      '  <img src="' + escapeHtml(imageSrc) + '" alt="' + title + '" class="dept-modal-achievement-img" style="object-fit:contain;" onerror="this.parentNode.style.display=\'none\';">',
       '</div>'
     ].join('\n') : '';
 
