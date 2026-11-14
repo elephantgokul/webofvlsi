@@ -181,6 +181,12 @@
     var raw = String(pathOrFilename || fallbackLocalPath || '').trim();
     if (!raw) return '';
 
+    // Direct match: if already an absolute https URL pointing to our own Supabase storage host, return unchanged
+    var supabaseStoragePrefix = (SUPABASE_URL || '').replace(/\/+$/, '') + '/storage/v1/object/public/';
+    if (typeof raw === 'string' && raw.indexOf(supabaseStoragePrefix) === 0) {
+      return raw;
+    }
+
     // Accept only web URLs; data:, javascript:, and protocol-relative URLs are not image sources.
     if (/^https?:\/\//i.test(raw)) {
       try {
