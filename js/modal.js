@@ -153,11 +153,16 @@
   }
 
   // Helper for resolving image paths inside modal
-  function resolveModalPhoto(rawPhoto, category) {
-    if (!rawPhoto) return '';
+  function resolveModalPhoto(rawPhoto, category, fallbackLocal) {
+    var raw = String(rawPhoto || fallbackLocal || '').trim();
+    if (!raw) return '';
+    if (/^https?:\/\//i.test(raw)) return raw;
+    if (typeof window.resolveSupabaseImageUrl === 'function') {
+      return window.resolveSupabaseImageUrl(raw, category, fallbackLocal);
+    }
     var isInsidePages = typeof window !== 'undefined' && window.location && window.location.pathname.replace(/\\/g, '/').includes('/pages/');
     var prefix = isInsidePages ? '../assets/images/' : 'assets/images/';
-    var filename = String(rawPhoto).split('/').pop();
+    var filename = raw.split('/').pop();
     return prefix + (category || 'faculty') + '/' + filename;
   }
 
@@ -389,7 +394,12 @@
     var programme = escapeHtml(student.programme || 'B.E. VLSI Design and Technology');
     var year = escapeHtml(student.year || 'III Year');
     var batch = escapeHtml(student.batch || '2024 - 2028');
-    var photoSrc = resolveModalPhoto(student.photoUrl || student.image, 'students');
+    var primaryPhoto = student.photoUrl || student.image;
+    var fallbackPhoto = student.image || '';
+    var photoSrc = resolveModalPhoto(primaryPhoto, (typeof SUPABASE_BUCKETS !== 'undefined' ? SUPABASE_BUCKETS.students : 'photo'), fallbackPhoto);
+    var localFallback = (typeof window.getLocalAssetFallback === 'function')
+      ? window.getLocalAssetFallback(fallbackPhoto, 'students')
+      : resolveModalPhoto(fallbackPhoto, 'students');
     var achTitle = escapeHtml(student.achievementTitle || 'Achievements');
     var achievement = escapeHtml(student.achievement || 'To be updated');
     var projects = escapeHtml(student.projectsOverview || student.description || 'To be updated');
@@ -399,7 +409,7 @@
       '<div class="dept-modal-profile">',
       '  <div class="dept-modal-avatar-col">',
       '    <div class="dept-modal-avatar-wrapper">',
-      '      <img src="' + photoSrc + '" alt="' + name + '" class="dept-modal-avatar" onerror="this.onerror=null;this.src=\'../assets/images/department_logo.png\';">',
+      '      <img src="' + photoSrc + '" alt="' + name + '" class="dept-modal-avatar" data-fallback="' + escapeHtml(localFallback) + '" onerror="if(this.dataset.fallback && this.src !== this.dataset.fallback){ this.src = this.dataset.fallback; } else { this.onerror=null; this.src=\'../assets/images/department_logo.png\'; }">',
       '    </div>',
       '  </div>',
       '  <div class="dept-modal-info-col">',

@@ -45,14 +45,15 @@ document.addEventListener('DOMContentLoaded', async () => {
         };
         const colors = yearColors[student.yearToken] || yearColors['III'];
         const yearLabel = getYearLabel(student);
-        const rawPhoto = student.photoUrl || student.image;
+        const primaryPhoto = student.photoUrl || student.image;
+        const fallbackPhoto = student.image || '';
         const photoSrc = typeof resolveSupabaseImageUrl === 'function'
-            ? resolveSupabaseImageUrl(rawPhoto, (typeof SUPABASE_BUCKETS !== 'undefined' ? SUPABASE_BUCKETS.students : 'students'), rawPhoto)
-            : resolveAssetPath(rawPhoto);
+            ? resolveSupabaseImageUrl(primaryPhoto, (typeof SUPABASE_BUCKETS !== 'undefined' ? SUPABASE_BUCKETS.students : 'photo'), fallbackPhoto)
+            : resolveAssetPath(primaryPhoto || fallbackPhoto);
 
         const localFallback = typeof getLocalAssetFallback === 'function'
-            ? getLocalAssetFallback(rawPhoto, 'students')
-            : resolveAssetPath(rawPhoto);
+            ? getLocalAssetFallback(fallbackPhoto, 'students')
+            : resolveAssetPath(fallbackPhoto);
 
         const photoFallback = `<div class="w-20 h-20 rounded-full flex items-center justify-center" style="background:${colors.bg}"><i class="fa-solid fa-user-graduate text-white text-2xl"></i></div>`;
         const photoHtml = photoSrc
@@ -180,7 +181,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             achievement: student.achievement || '',
             description: student.description || '',
             projectsOverview: student.projectsOverview || student.projects_overview || student.projects || student.project || '',
-            image: student.image || student.photoUrl || student.photo_url || '',
+            image: student.image || '',
             photoUrl: student.photoUrl || student.photo_url || student.image || '',
             linkedin: student.linkedin || student.linkedin_url || student.linkedinUrl || '',
             github: student.github || student.github_url || student.githubUrl || '',

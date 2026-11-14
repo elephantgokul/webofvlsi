@@ -16,7 +16,7 @@
      ========================================================================= */
   var SUPABASE_BUCKETS = {
     faculty: "faculty",           // Faculty and HOD photos
-    students: "students",         // Student profile photos
+    students: "photo",            // Student profile photos in bucket 'photo', folder 'students'
     gallery: "gallery",           // Campus, lab, and event gallery images
     alumni: "alumni",             // Alumni portraits
     achievements: "achievements", // Achievement badge/trophy photos

@@ -141,7 +141,8 @@ function withDefaultStudentFields(data) {
         students: studentsList.map(student => {
             const row = student || {};
             const name = String(row.name || '').trim();
-            const image = row.image || row.photoUrl || row.photo_url || '';
+            const image = row.image || '';
+            const photoUrl = row.photoUrl || row.photo_url || image;
             const projectsOverview = row.projectsOverview || row.projects_overview || row.projects || row.project || '';
             const linkedin = row.linkedin || row.linkedin_url || row.linkedinUrl || '';
             const github = row.github || row.github_url || row.githubUrl || '';

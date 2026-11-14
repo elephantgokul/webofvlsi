@@ -15,14 +15,15 @@ function getStudentDetailHref(student) {
 }
 
 function resolveStudentPhoto(student) {
-  var rawPhoto = student.photoUrl || student.image || '';
+  var primaryPhoto = student.photoUrl || student.image || '';
+  var fallbackPhoto = student.image || '';
   if (typeof resolveSupabaseImageUrl === 'function') {
-    return resolveSupabaseImageUrl(rawPhoto, (typeof SUPABASE_BUCKETS !== 'undefined' ? SUPABASE_BUCKETS.students : 'students'), rawPhoto);
+    return resolveSupabaseImageUrl(primaryPhoto, (typeof SUPABASE_BUCKETS !== 'undefined' ? SUPABASE_BUCKETS.students : 'photo'), fallbackPhoto);
   }
   if (typeof getLocalAssetFallback === 'function') {
-    return getLocalAssetFallback(rawPhoto, 'students');
+    return getLocalAssetFallback(fallbackPhoto, 'students');
   }
-  return rawPhoto;
+  return primaryPhoto || fallbackPhoto;
 }
 
 function getPhotoHtml(student, size) {
@@ -35,7 +36,7 @@ function getPhotoHtml(student, size) {
 
   var localFallback = '';
   if (typeof getLocalAssetFallback === 'function') {
-    localFallback = getLocalAssetFallback(student.photoUrl || student.image || '', 'students');
+    localFallback = getLocalAssetFallback(student.image || '', 'students');
   }
 
   return '<div class="leaderboard-avatar" style="width:' + sz + 'px;height:' + sz + 'px">' +

@@ -2,7 +2,7 @@
    SERVICE WORKER (sw.js) — Lightweight offline support & cache
    ========================================================================= */
 
-var CACHE_NAME = 'vlsi-v21';
+var CACHE_NAME = 'vlsi-v22';
 
 self.addEventListener('install', function(e) {
   self.skipWaiting();

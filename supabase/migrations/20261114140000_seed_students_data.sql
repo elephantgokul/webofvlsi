@@ -1,7 +1,7 @@
 -- 20261114140000_seed_students_data.sql
 -- Seed all 28 students into public.students table with upsert on (name, batch).
--- 12 students with bucket photos reference https://jwtynencyqwiybsspiih.supabase.co/storage/v1/object/public/photo/students/<file>
--- The other 16 students retain local asset images in the image column with photo_url set to NULL.
+-- All 28 students have photo_url set to their public bucket URL in https://jwtynencyqwiybsspiih.supabase.co/storage/v1/object/public/photo/students/
+-- Local asset filenames are preserved in the image column as fallback.
 
 BEGIN;
 
@@ -140,7 +140,7 @@ Objectives:
 - To display hours, minutes, and seconds accurately
 - To understand the working of digital time-display systems
 - To learn how timing and counting operations are used in digital systems
-- To provide a simple and user-friendly digital clock simulation', 'A Digital Clock Simulation is a project that displays the current time in digital format using hours, minutes, and seconds. The clock continuously updates the time and can be implemented using programming or digital electronic components. This project demonstrates understanding of timing, counting operations, and digital display systems.', 'Digital Clock Simulation', 'sankames-vs.jpg', NULL, 'https://www.linkedin.com/in/sankames-sankames-4b2116339', 'https://www.linkedin.com/in/sankames-sankames-4b2116339', NULL),
+- To provide a simple and user-friendly digital clock simulation', 'A Digital Clock Simulation is a project that displays the current time in digital format using hours, minutes, and seconds. The clock continuously updates the time and can be implemented using programming or digital electronic components. This project demonstrates understanding of timing, counting operations, and digital display systems.', 'Digital Clock Simulation', 'sankames-vs.jpg', 'https://jwtynencyqwiybsspiih.supabase.co/storage/v1/object/public/photo/students/sankames-vs.jpg', 'https://www.linkedin.com/in/sankames-sankames-4b2116339', 'https://www.linkedin.com/in/sankames-sankames-4b2116339', NULL),
   ('V T RAGHUL VASUN', 'B.E. VLSI Design and Technology', 'III Year', '2024 - 2028', 'Internships, Training & Technical Programs', 'Completed multiple technical internships and training programs:
 - Chip Crafts – VLSI Layout Internship
 - Career Ladder – Java Programming
@@ -155,7 +155,7 @@ Workshops:
 
 2. Booth Multiplier: Design a signed Booth Multiplier for efficient binary multiplication, focusing on arithmetic datapath design and ASIC synthesis. Objectives include implementing signed multiplication using Booth''s algorithm, developing partial-product and control logic, verifying the multiplier for different input conditions, and analyzing synthesized timing and area characteristics.
 
-3. TCAM: Design a Ternary Content-Addressable Memory architecture that supports parallel pattern matching using binary and don''t-care states. Objectives include implementing ternary comparison and search logic, developing match-line evaluation and result generation, verifying exact matches, masked matches, and no-match conditions, and analyzing the RTL architecture using ASIC synthesis tools.', '8-bit ALU, Booth Multiplier, TCAM', 'v-t-raghul-vasun.jpg', NULL, 'https://www.linkedin.com/in/raghul-vasun-vt-3a804941a', 'https://www.linkedin.com/in/raghul-vasun-vt-3a804941a', NULL),
+3. TCAM: Design a Ternary Content-Addressable Memory architecture that supports parallel pattern matching using binary and don''t-care states. Objectives include implementing ternary comparison and search logic, developing match-line evaluation and result generation, verifying exact matches, masked matches, and no-match conditions, and analyzing the RTL architecture using ASIC synthesis tools.', '8-bit ALU, Booth Multiplier, TCAM', 'v-t-raghul-vasun.jpg', 'https://jwtynencyqwiybsspiih.supabase.co/storage/v1/object/public/photo/students/v-t-raghul-vasun.jpg', 'https://www.linkedin.com/in/raghul-vasun-vt-3a804941a', 'https://www.linkedin.com/in/raghul-vasun-vt-3a804941a', NULL),
   ('Kavya M', 'B.E. VLSI Design and Technology', 'III Year', '2024 - 2028', 'Hackathons, Workshops & Technical Events', '1. ROBOCHIPX – A 24-Hours Hackathon (AI / CHIP / ROBOTICS) at Rajalakshmi Institute of Technology, Chennai – July 9 & 10, 2026 (2 days)
 2. RISC-V Hands-on Training Workshop at IIT Madras – March 21 & 22, 2026 (2 days)
 3. ECE Paper Presentation at FIESTAA''26, KPR Institute of Engineering and Technology – February 20 & 21, 2026
@@ -165,7 +165,7 @@ Workshops:
 7. VLSI DAY 2025 at PSG College of Technology (VLSI Society of India) – September 20, 2025
 8. VDAT 30th Conference Fellowship at Jaypee Institute of Information Technology – August 20–22, 2025 (3 days)
 9. On-Campus Training: Chip Design using Cadence Tool Chain (RTL to GDSII) – July 16–22, 2026 (7 days)
-10. Workshop Fiasta at KPR Institute of Engineering and Technology – February 20 & 21', NULL, NULL, 'kavya-m.jpg', NULL, 'https://www.linkedin.com/in/kavya-m-9376a2322', 'https://www.linkedin.com/in/kavya-m-9376a2322', NULL),
+10. Workshop Fiasta at KPR Institute of Engineering and Technology – February 20 & 21', NULL, NULL, 'kavya-m.jpg', 'https://jwtynencyqwiybsspiih.supabase.co/storage/v1/object/public/photo/students/kavya-m.jpg', 'https://www.linkedin.com/in/kavya-m-9376a2322', 'https://www.linkedin.com/in/kavya-m-9376a2322', NULL),
   ('Subhashini N', 'B.E. VLSI Design and Technology', 'III Year', '2024 - 2028', 'Workshops & Internships', 'Workshops:
 - PCB Design and Fabrication at KPR Institute of Engineering and Technology – March 14, 2025 (1 day)
 - VLSI TEST Workshop at PSG College of Technology – October 10–12, 2025 (3 days)
@@ -178,7 +178,7 @@ Internships:
 - Career Ladder – Programming Paradigm using Java (September 11–16, 2025)
 - EnthuTech – PCB Designing', '1. RTL-to-GDSII Implementation of a Low-Power Edge-AI Safety Monitoring SoC for Real-Time Emergency Detection Using Synopsys ASIC Flow
 
-2. Design and FPGA/ASIC Implementation of an Edge-AI SoC for Advanced Driver Assistance Systems (ADAS) (Group Project)', 'RTL-to-GDSII Implementation of a Low-Power Edge-AI Safety Monitoring SoC, Edge-AI SoC for ADAS', 'subhashini-n.jpg', NULL, 'https://www.linkedin.com/in/subhashini-nallasamy-4ab745328', 'https://www.linkedin.com/in/subhashini-nallasamy-4ab745328', NULL),
+2. Design and FPGA/ASIC Implementation of an Edge-AI SoC for Advanced Driver Assistance Systems (ADAS) (Group Project)', 'RTL-to-GDSII Implementation of a Low-Power Edge-AI Safety Monitoring SoC, Edge-AI SoC for ADAS', 'subhashini-n.jpg', 'https://jwtynencyqwiybsspiih.supabase.co/storage/v1/object/public/photo/students/subhashini-n.jpg', 'https://www.linkedin.com/in/subhashini-nallasamy-4ab745328', 'https://www.linkedin.com/in/subhashini-nallasamy-4ab745328', NULL),
   ('Varsha V R', 'B.E. VLSI Design and Technology', 'III Year', '2024 - 2028', 'Internships, Workshops & Hackathons', 'Internships:
 - SystemVerilog Internship at SM AI MOJO TECH
 - STM32 Microcontroller Design Intern at Manfree Technology
@@ -197,9 +197,9 @@ Hackathons:
 
 Project 2: AMBA AXI4-Lite Master and Slave Interface Design – Designed and implemented an AMBA AXI4-Lite compliant Master and Slave interface for memory-mapped communication using Verilog HDL. Developed and verified read/write transaction handling, address decoding, and control logic. Synthesized through the Synopsys RTL-to-GDSII ASIC flow.
 
-Project 3: SPI Protocol Controller Design – Designed and implemented an SPI controller using Verilog HDL for synchronous serial communication between master and slave devices. Successfully completed ASIC implementation using the Tiny Tapeout flow, generating and analyzing the final GDSII chip layout and 3D visualization.', 'Adaptive Dynamic-Precision Sparse Neural Network Accelerator, AMBA AXI4-Lite Master/Slave, SPI Protocol Controller', 'varsha-v-r.jpg', NULL, 'https://www.linkedin.com/in/varsha-ramesh-58840a338', 'https://www.linkedin.com/in/varsha-ramesh-58840a338', NULL),
-  ('Winston Churchil', 'B.E. VLSI Design and Technology', 'III Year', '2024 - 2028', 'Projects & Development', 'Developing innovative web-based projects combining 3D visualization and AI technologies for career guidance and portfolio presentation.', '3D Portfolio Websites and AI Career Roadmap Generator Web Application – Developing interactive 3D portfolio websites and an AI-powered career roadmap generator web application that helps users visualize career paths and plan their professional development.', '3d Portfolio websites and AI career roadmap generator web application', 'winston-churchil.jpg', NULL, 'https://www.linkedin.com/in/winstonchurchil21', 'https://www.linkedin.com/in/winstonchurchil21', NULL),
-  ('K.R.Nitin', 'B.E. VLSI Design and Technology', 'III Year', '2024 - 2028', 'Internships & Workshops', 'Completed various internships and workshops related to VLSI design and semiconductor technology.', 'RTL-to-GDSII Design and Physical Implementation of a 16-bit Multiply-Accumulate Unit Using the Synopsys ASIC Design Flow – This project presents the design and physical implementation of a 16-bit Multiply-Accumulate (MAC) unit realized through a complete RTL-to-GDSII ASIC design flow using industry-standard Synopsys EDA tools. The MAC unit, described in synthesizable Verilog HDL, computes the product of two 16-bit operands and accumulates the result in a 32-bit register under the control of a four-state Moore finite-state machine (FSM). Functional correctness was verified using Synopsys VCS, and the design was synthesized with Synopsys Design Compiler.', 'RTL-to-GDSII Design and Physical Implementation of a 16-bit Multiply-Accumulate Unit Using Synopsys', 'k-r-nitin.jpg', NULL, 'https://www.linkedin.com/in/nitin-nitin-63640b', 'https://www.linkedin.com/in/nitin-nitin-63640b', NULL),
+Project 3: SPI Protocol Controller Design – Designed and implemented an SPI controller using Verilog HDL for synchronous serial communication between master and slave devices. Successfully completed ASIC implementation using the Tiny Tapeout flow, generating and analyzing the final GDSII chip layout and 3D visualization.', 'Adaptive Dynamic-Precision Sparse Neural Network Accelerator, AMBA AXI4-Lite Master/Slave, SPI Protocol Controller', 'varsha-v-r.jpg', 'https://jwtynencyqwiybsspiih.supabase.co/storage/v1/object/public/photo/students/varsha-v-r.jpg', 'https://www.linkedin.com/in/varsha-ramesh-58840a338', 'https://www.linkedin.com/in/varsha-ramesh-58840a338', NULL),
+  ('Winston Churchil', 'B.E. VLSI Design and Technology', 'III Year', '2024 - 2028', 'Projects & Development', 'Developing innovative web-based projects combining 3D visualization and AI technologies for career guidance and portfolio presentation.', '3D Portfolio Websites and AI Career Roadmap Generator Web Application – Developing interactive 3D portfolio websites and an AI-powered career roadmap generator web application that helps users visualize career paths and plan their professional development.', '3d Portfolio websites and AI career roadmap generator web application', 'winston-churchil.jpg', 'https://jwtynencyqwiybsspiih.supabase.co/storage/v1/object/public/photo/students/winston-churchil.jpg', 'https://www.linkedin.com/in/winstonchurchil21', 'https://www.linkedin.com/in/winstonchurchil21', NULL),
+  ('K.R.Nitin', 'B.E. VLSI Design and Technology', 'III Year', '2024 - 2028', 'Internships & Workshops', 'Completed various internships and workshops related to VLSI design and semiconductor technology.', 'RTL-to-GDSII Design and Physical Implementation of a 16-bit Multiply-Accumulate Unit Using the Synopsys ASIC Design Flow – This project presents the design and physical implementation of a 16-bit Multiply-Accumulate (MAC) unit realized through a complete RTL-to-GDSII ASIC design flow using industry-standard Synopsys EDA tools. The MAC unit, described in synthesizable Verilog HDL, computes the product of two 16-bit operands and accumulates the result in a 32-bit register under the control of a four-state Moore finite-state machine (FSM). Functional correctness was verified using Synopsys VCS, and the design was synthesized with Synopsys Design Compiler.', 'RTL-to-GDSII Design and Physical Implementation of a 16-bit Multiply-Accumulate Unit Using Synopsys', 'k-r-nitin.jpg', 'https://jwtynencyqwiybsspiih.supabase.co/storage/v1/object/public/photo/students/k-r-nitin.jpg', 'https://www.linkedin.com/in/nitin-nitin-63640b', 'https://www.linkedin.com/in/nitin-nitin-63640b', NULL),
   ('Sakthishree D', 'B.E. VLSI Design and Technology', 'III Year', '2024 - 2028', 'Rank Holder & Certifications', 'Academic Excellence: 1st Semester – 3rd Rank Holder; 2nd, 3rd & 4th Semester – 1st Rank Holder.
 
 Internships:
@@ -222,7 +222,7 @@ Certifications:
 - Static Timing Analysis – Udemy', '1. 32-bit RISC V BASED ADAPTIVE PRECISION ACCELERATOR using AMBA APB protocol
 2. Multi-GPU Architecture with Predictive Task Migration and Fault-Tolerant Resource Management
 3. Build In Self Test Controller For ALU Verification
-4. Communication Protocols – UART, SPI, MAC, BOOTH MULTIPLIER', '32 bit RISC V BASED ADAPTIVE PRECISION ACCELERATOR, Multi-GPU Architecture, BIST Controller', 'sakthishree-d.jpg', NULL, 'https://www.linkedin.com/in/sakthishree-d-746115339', 'https://www.linkedin.com/in/sakthishree-d-746115339', NULL),
+4. Communication Protocols – UART, SPI, MAC, BOOTH MULTIPLIER', '32 bit RISC V BASED ADAPTIVE PRECISION ACCELERATOR, Multi-GPU Architecture, BIST Controller', 'sakthishree-d.jpg', 'https://jwtynencyqwiybsspiih.supabase.co/storage/v1/object/public/photo/students/sakthishree-d.jpg', 'https://www.linkedin.com/in/sakthishree-d-746115339', 'https://www.linkedin.com/in/sakthishree-d-746115339', NULL),
   ('Kiruthika S', 'B.E. VLSI Design and Technology', 'III Year', '2024 - 2028', 'Workshops & Internships', '10-Day Cadence VLSI Design Workshop – Entuple Technologies
 2-Day IoT Workshop – KALAM 2025
 2-Day FPGA Workshop – Chip Crafts
@@ -240,7 +240,7 @@ CGPA: 8.77', '1. Fault Controller for Medical Devices – Designed a safety-orie
 8. UART Communication – Designed an RTL-based UART transmitter and receiver for asynchronous serial communication.
 9. AXI4-Lite Interface – Designed an AXI4-Lite interface for register-level read and write communication.
 10. MAC Unit – Designed a Multiply-Accumulate unit for digital signal-processing applications.
-11. CAN Protocol – Designed and studied a CAN communication module for reliable communication between multiple electronic control units.', 'Fault Controller for Medical Devices, Booth Multiplier, SPI, BIST, UART, AXI4-Lite, MAC Unit, CAN Protocol', 'kiruthika-s.jpg', NULL, 'https://www.linkedin.com/in/kiruthika-shanmugam-5a6092330', 'https://www.linkedin.com/in/kiruthika-shanmugam-5a6092330', NULL),
+11. CAN Protocol – Designed and studied a CAN communication module for reliable communication between multiple electronic control units.', 'Fault Controller for Medical Devices, Booth Multiplier, SPI, BIST, UART, AXI4-Lite, MAC Unit, CAN Protocol', 'kiruthika-s.jpg', 'https://jwtynencyqwiybsspiih.supabase.co/storage/v1/object/public/photo/students/kiruthika-s.jpg', 'https://www.linkedin.com/in/kiruthika-shanmugam-5a6092330', 'https://www.linkedin.com/in/kiruthika-shanmugam-5a6092330', NULL),
   ('Roobashri S', 'B.E. VLSI Design and Technology', 'III Year', '2024 - 2028', 'Workshops, Internships & Hackathons', 'Workshops:
 - PCB Design and Fabrication at KPR Institute of Engineering and Technology – March 14, 2025
 - VLSI TEST Workshop at PSG College of Technology – October 10–12, 2025
@@ -258,7 +258,7 @@ Hackathon:
 
 2. STM32F446RE PCB Controller Board — 6-Axis Robotic Arm – Designed and developed a custom multilayer STM32F446RE controller PCB in Altium Designer for synchronized control of a 6-axis robotic arm. Integrated motor-control interfaces and CAN communication.
 
-3. Smart 3S BMS with AI-Based SOC/SOH Estimation (Ongoing) – A dual-MCU PCB (STM32F446RE + ESP32-WROOM-32) for 3S Li-ion battery management, combining real-time protection with AI-based state estimation. Designed in KiCad.', 'Reconfigurable Neuromorphic Processor, STM32F446RE PCB Controller Board, Smart 3S BMS', 'roobashri-s.jpg', NULL, 'https://www.linkedin.com/in/roobashri-senthilmurugan', 'https://www.linkedin.com/in/roobashri-senthilmurugan', NULL),
+3. Smart 3S BMS with AI-Based SOC/SOH Estimation (Ongoing) – A dual-MCU PCB (STM32F446RE + ESP32-WROOM-32) for 3S Li-ion battery management, combining real-time protection with AI-based state estimation. Designed in KiCad.', 'Reconfigurable Neuromorphic Processor, STM32F446RE PCB Controller Board, Smart 3S BMS', 'roobashri-s.jpg', 'https://jwtynencyqwiybsspiih.supabase.co/storage/v1/object/public/photo/students/roobashri-s.jpg', 'https://www.linkedin.com/in/roobashri-senthilmurugan', 'https://www.linkedin.com/in/roobashri-senthilmurugan', NULL),
   ('Soorya Velaa P', 'B.E. VLSI Design and Technology', 'III Year', '2024 - 2028', 'Workshops, Training & NCC', 'Workshops:
 - 10-day Cadence Workshop
 - 2-day IOT Workshop (KALAM 2025)
@@ -276,7 +276,7 @@ Internship Certificates:
 - SM AI MOJO TECH
 
 Achievements:
-- NCC CADET – B Certificate holder with A grade', 'Projects: Booth Multiplier, Pipeline Design, SPI Protocol, MFCC Accelerator', 'Booth multiplier, PIPELINE, SPI, MFCC Accelerator', 'soorya-velaa-p.jpg', NULL, 'https://www.linkedin.com/in/soorya-velaa', 'https://www.linkedin.com/in/soorya-velaa', NULL),
+- NCC CADET – B Certificate holder with A grade', 'Projects: Booth Multiplier, Pipeline Design, SPI Protocol, MFCC Accelerator', 'Booth multiplier, PIPELINE, SPI, MFCC Accelerator', 'soorya-velaa-p.jpg', 'https://jwtynencyqwiybsspiih.supabase.co/storage/v1/object/public/photo/students/soorya-velaa-p.jpg', 'https://www.linkedin.com/in/soorya-velaa', 'https://www.linkedin.com/in/soorya-velaa', NULL),
   ('SRI VATSAN P', 'B.E. VLSI Design and Technology', 'III Year', '2024 - 2028', 'Internships, Workshops & Certifications', 'Internships / Industrial Training:
 - Embuzz Technologies Pvt. Ltd. – Embedded Programming using Arduino
 - Chip Craft – VLSI Layout Design & FPGA Implementation
@@ -308,7 +308,7 @@ Certifications:
 
 4. QoS-Aware AXI4 Interconnect with Adaptive Arbitration – Design and implement a QoS-aware AXI4 interconnect using SystemVerilog.
 
-5. ECC-Based Self-Scrubbing SRAM Memory IP – Design an SRAM memory IP with Error Correcting Code (ECC) and self-scrubbing functionality.', 'Configurable Dynamic Memory-Aware AXI4-Stream Sparse Matrix Acceleration Engine, DDR SDRAM Controller', 'sri-vatsan-p.jpg', NULL, 'https://www.linkedin.com/in/sri-vatsan-84990a338', 'https://www.linkedin.com/in/sri-vatsan-84990a338', NULL),
+5. ECC-Based Self-Scrubbing SRAM Memory IP – Design an SRAM memory IP with Error Correcting Code (ECC) and self-scrubbing functionality.', 'Configurable Dynamic Memory-Aware AXI4-Stream Sparse Matrix Acceleration Engine, DDR SDRAM Controller', 'sri-vatsan-p.jpg', 'https://jwtynencyqwiybsspiih.supabase.co/storage/v1/object/public/photo/students/sri-vatsan-p.jpg', 'https://www.linkedin.com/in/sri-vatsan-84990a338', 'https://www.linkedin.com/in/sri-vatsan-84990a338', NULL),
   ('Pratheep D', 'B.E. VLSI Design and Technology', 'III Year', '2024 - 2028', 'Certifications & Training', '- Completed MATLAB Onramp Certification
 - Participated in an Inter-College Cadence Workshop covering Verilog HDL, testbench development, logic gates, Half Adder design, Xcelium simulation, and code coverage
 - Completed training in RISC Processor Architecture
@@ -322,7 +322,7 @@ Objectives:
 - Verify the RTL functionality using simulation and testbenches
 - Perform RTL synthesis and physical design using Cadence tools
 - Study the complete RTL-to-GDSII implementation flow
-- Explore hardware architectures suitable for efficient and low-power AI acceleration', 'RTL-to-GDSII Implementation of a Sparse Multi-Head Attention Accelerator for Transformer-Based Large Language Model Inference', 'pratheep-d.jpg', NULL, 'https://www.linkedin.com/in/pratheep-vlsi', 'https://www.linkedin.com/in/pratheep-vlsi', NULL),
+- Explore hardware architectures suitable for efficient and low-power AI acceleration', 'RTL-to-GDSII Implementation of a Sparse Multi-Head Attention Accelerator for Transformer-Based Large Language Model Inference', 'pratheep-d.jpg', 'https://jwtynencyqwiybsspiih.supabase.co/storage/v1/object/public/photo/students/pratheep-d.jpg', 'https://www.linkedin.com/in/pratheep-vlsi', 'https://www.linkedin.com/in/pratheep-vlsi', NULL),
   ('PUGAZHENDHI S', 'B.E. VLSI Design and Technology', 'III Year', '2024 - 2028', 'Training & Internships', '- Chip Design Using Cadence Tool Chain (RTL to GDSII) – Sri Shakthi Institute, on-campus training, July 2026
 - Back-End Design of Digital Logic Circuits Using Cadence – Chip to Start-Up, June 2026
 - VLSI Layout Design Internship – Chip Crafts, September 2025
@@ -333,7 +333,7 @@ Objectives:
 3. Low Power 8-bit ALU – RTL-to-GDSII, 90nm
 4. Serial Peripheral Interface (SPI) Controller – RTL-to-GDSII, 90nm
 5. Traffic Flow Controller – FSM / Digital Design
-6. 8:1 Multiplexer - Schematic to Layout – CMOS / VLSI Layout', 'RISC-V Processor with External Memory, PPA Optimization of Hardware Accelerator, Low Power 8-bit ALU', 'pugazhendhi-s.jpg', NULL, 'https://www.linkedin.com/in/s-pugazh-pugazhendhi-657907338', 'https://www.linkedin.com/in/s-pugazh-pugazhendhi-657907338', NULL),
+6. 8:1 Multiplexer - Schematic to Layout – CMOS / VLSI Layout', 'RISC-V Processor with External Memory, PPA Optimization of Hardware Accelerator, Low Power 8-bit ALU', 'pugazhendhi-s.jpg', 'https://jwtynencyqwiybsspiih.supabase.co/storage/v1/object/public/photo/students/pugazhendhi-s.jpg', 'https://www.linkedin.com/in/s-pugazh-pugazhendhi-657907338', 'https://www.linkedin.com/in/s-pugazh-pugazhendhi-657907338', NULL),
   ('Mohammed Ayman M', 'B.E. VLSI Design and Technology', 'III Year', '2024 - 2028', 'Projects, Internships & Hackathons', '- VLSI & Semiconductor Domain Projects – Developed and explored practical projects focused on VLSI, digital design, embedded systems, and semiconductor-oriented applications
 - VLSI Internship – SM AI Mojo Tech – Gained practical exposure to VLSI concepts, semiconductor design methodologies, digital logic, and industry-oriented workflows
 - SEMICON / Semiconductor Hackathon Participation – Worked on SEMIRESTORE-AI, an AI-assisted semiconductor inspection concept
@@ -345,7 +345,7 @@ Objectives:
 - Reduce noise and improve image quality while preserving critical semiconductor features
 - Enhance edges, patterns, and structural information required for defect analysis
 - Explore Computer Vision and Deep Learning techniques for semiconductor inspection
-- Build a foundation for intelligent, automated, and scalable semiconductor inspection systems', 'SEMIRESTORE-AI: AI-Based Restoration of Degraded Images for Semiconductor Inspection', 'mohammed-ayman-m.jpg', NULL, 'https://www.linkedin.com/in/mohammed-ayman-m', 'https://www.linkedin.com/in/mohammed-ayman-m', NULL),
+- Build a foundation for intelligent, automated, and scalable semiconductor inspection systems', 'SEMIRESTORE-AI: AI-Based Restoration of Degraded Images for Semiconductor Inspection', 'mohammed-ayman-m.jpg', 'https://jwtynencyqwiybsspiih.supabase.co/storage/v1/object/public/photo/students/mohammed-ayman-m.jpg', 'https://www.linkedin.com/in/mohammed-ayman-m', 'https://www.linkedin.com/in/mohammed-ayman-m', NULL),
   ('S. Thirumurugan', 'B.E. VLSI Design and Technology', 'III Year', '2024 - 2028', 'Internships, Training & Workshops', 'Internships, Training & Technical Programs:
 - Chip Crafts – VLSI Layout Internship
 - Embuzz Technologies – Arduino GPIO Programming
@@ -365,7 +365,7 @@ Workshops:
 
 4. Booth Multiplier – Design a signed Booth Multiplier for efficient binary multiplication, focusing on arithmetic datapath design and ASIC synthesis.
 
-5. TCAM – Design a Ternary Content-Addressable Memory architecture that supports parallel pattern matching using binary and don''t-care states.', 'RISC-V CPU, Secure VPU, 8-bit ALU, Booth Multiplier, TCAM', 's-thirumurugan.jpg', NULL, 'https://linkedin.com/in/thiru-murugan-264111339', 'https://linkedin.com/in/thiru-murugan-264111339', NULL),
+5. TCAM – Design a Ternary Content-Addressable Memory architecture that supports parallel pattern matching using binary and don''t-care states.', 'RISC-V CPU, Secure VPU, 8-bit ALU, Booth Multiplier, TCAM', 's-thirumurugan.jpg', 'https://jwtynencyqwiybsspiih.supabase.co/storage/v1/object/public/photo/students/s-thirumurugan.jpg', 'https://linkedin.com/in/thiru-murugan-264111339', 'https://linkedin.com/in/thiru-murugan-264111339', NULL),
   ('SANJEEV GH', 'B.E. VLSI Design and Technology', 'III Year', '2024 - 2028', 'Internships & Technical Achievements', 'Internships:
 - ChipCrafts – VLSI Internship (Microwind, digital circuit design, layout implementation)
 - Manfree Technologies – Embedded Systems Internship

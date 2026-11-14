@@ -75,10 +75,11 @@ document.addEventListener('DOMContentLoaded', async () => {
             const colors = yearColors[student.yearToken] || yearColors['III'];
             const yearLabel = getYearLabel(student);
             const detailHref = escapeHtml(getStudentDetailHref(student));
-            const rawPhoto = student.photoUrl || student.image;
+            const primaryPhoto = student.photoUrl || student.image;
+            const fallbackPhoto = student.image || '';
             const photoSrc = typeof resolveSupabaseImageUrl === 'function'
-                ? resolveSupabaseImageUrl(rawPhoto, (typeof SUPABASE_BUCKETS !== 'undefined' ? SUPABASE_BUCKETS.students : 'students'), rawPhoto)
-                : resolveAssetPath(rawPhoto);
+                ? resolveSupabaseImageUrl(primaryPhoto, (typeof SUPABASE_BUCKETS !== 'undefined' ? SUPABASE_BUCKETS.students : 'photo'), fallbackPhoto)
+                : resolveAssetPath(primaryPhoto || fallbackPhoto);
 
             const photoFallback = `<div class="w-16 h-16 rounded-full flex items-center justify-center" style="background:${colors.bg}"><i class="fa-solid fa-user-graduate text-white text-xl"></i></div>`;
             const batchHtml = student.batch
@@ -106,8 +107,8 @@ document.addEventListener('DOMContentLoaded', async () => {
                 : '';
 
             const localFallback = typeof getLocalAssetFallback === 'function'
-                ? getLocalAssetFallback(rawPhoto, 'students')
-                : resolveAssetPath(rawPhoto);
+                ? getLocalAssetFallback(fallbackPhoto, 'students')
+                : resolveAssetPath(fallbackPhoto);
 
             const photoHtml = photoSrc
                 ? `<div class="relative w-16 h-16 rounded-full">${photoFallback}<img src="${escapeHtml(photoSrc)}" alt="${escapeHtml(student.name)}" loading="lazy" decoding="async" class="absolute inset-0 w-16 h-16 rounded-full object-cover shadow-lg border-2 border-white bg-white" data-fallback="${escapeHtml(localFallback)}" onerror="if(this.dataset.fallback && this.src !== this.dataset.fallback){ this.src = this.dataset.fallback; } else { this.style.display='none'; }"></div>`
@@ -273,7 +274,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             achievement: student.achievement || '',
             description: student.description || '',
             projectsOverview: student.projectsOverview || student.projects_overview || student.projects || student.project || '',
-            image: student.image || student.photoUrl || student.photo_url || '',
+            image: student.image || '',
             photoUrl: student.photoUrl || student.photo_url || student.image || '',
             linkedin: student.linkedin || student.linkedin_url || student.linkedinUrl || '',
             github: student.github || student.github_url || student.githubUrl || '',
