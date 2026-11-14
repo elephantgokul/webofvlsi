@@ -409,7 +409,7 @@
       '<div class="dept-modal-profile">',
       '  <div class="dept-modal-avatar-col">',
       '    <div class="dept-modal-avatar-wrapper">',
-      '      <img src="' + photoSrc + '" alt="' + name + '" class="dept-modal-avatar" data-fallback="' + escapeHtml(localFallback) + '" onerror="if(this.dataset.fallback && this.src !== this.dataset.fallback){ this.src = this.dataset.fallback; } else { this.onerror=null; this.src=\'../assets/images/department_logo.png\'; }">',
+      '      <img src="' + photoSrc + '" alt="' + name + '" class="dept-modal-avatar" data-fallback="' + escapeHtml(localFallback) + '" onerror="if(this.dataset.fallback && !this.dataset.tried){ this.dataset.tried=\'1\'; this.src=this.dataset.fallback; } else { this.onerror=null; this.src=\'../assets/images/department_logo.png\'; }">',
       '    </div>',
       '  </div>',
       '  <div class="dept-modal-info-col">',
