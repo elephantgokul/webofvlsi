@@ -39,7 +39,6 @@ CREATE TABLE IF NOT EXISTS public.students (
 
 -- Safely ensure all columns exist if the table was pre-existing with partial columns
 ALTER TABLE public.students
-  ADD COLUMN IF NOT EXISTS id SERIAL,
   ADD COLUMN IF NOT EXISTS name TEXT,
   ADD COLUMN IF NOT EXISTS programme TEXT,
   ADD COLUMN IF NOT EXISTS year TEXT,
@@ -88,7 +87,6 @@ CREATE TABLE IF NOT EXISTS public.faculty (
 
 -- Safely ensure all columns exist if the table was pre-existing with partial columns
 ALTER TABLE public.faculty
-  ADD COLUMN IF NOT EXISTS id SERIAL,
   ADD COLUMN IF NOT EXISTS name TEXT,
   ADD COLUMN IF NOT EXISTS designation TEXT,
   ADD COLUMN IF NOT EXISTS qualification TEXT,
@@ -132,7 +130,6 @@ CREATE TABLE IF NOT EXISTS public.hod (
 
 -- Safely ensure all columns exist if the table was pre-existing with partial columns
 ALTER TABLE public.hod
-  ADD COLUMN IF NOT EXISTS id SERIAL,
   ADD COLUMN IF NOT EXISTS name TEXT,
   ADD COLUMN IF NOT EXISTS designation TEXT,
   ADD COLUMN IF NOT EXISTS qualification TEXT,
