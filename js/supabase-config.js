@@ -16,7 +16,7 @@
      ========================================================================= */
   var SUPABASE_BUCKETS = {
     faculty: "faculty",           // Faculty and HOD photos
-    students: "students",         // Student profile photos
+    students: "photo",            // Student profile photos in bucket 'photo', folder 'students'
     gallery: "gallery",           // Campus, lab, and event gallery images
     alumni: "alumni",             // Alumni portraits
     achievements: "achievements", // Achievement badge/trophy photos
@@ -70,7 +70,13 @@
    */
   function getSupabasePublicUrl(bucket, filePath) {
     if (!bucket || !filePath) return '';
-    var allowedBucket = Object.keys(SUPABASE_BUCKETS).some(function (key) { return SUPABASE_BUCKETS[key] === bucket; });
+    var targetBucket = bucket;
+    if (targetBucket === 'students' && SUPABASE_BUCKETS && SUPABASE_BUCKETS.students) {
+      targetBucket = SUPABASE_BUCKETS.students;
+    }
+    var allowedBucket = Object.keys(SUPABASE_BUCKETS).some(function (key) {
+      return SUPABASE_BUCKETS[key] === targetBucket || key === targetBucket;
+    });
     if (!allowedBucket) return '';
     var cleanFile = String(filePath).replace(/\\/g, '/').split('/')
       .filter(function (part) { return part && part !== '.' && part !== '..'; })
@@ -78,7 +84,7 @@
       .join('/');
     if (!cleanFile) return '';
     var baseUrl = (SUPABASE_URL || '').replace(/\/+$/, '');
-    return baseUrl + '/storage/v1/object/public/' + encodeURIComponent(bucket) + '/' + cleanFile;
+    return baseUrl + '/storage/v1/object/public/' + encodeURIComponent(targetBucket) + '/' + cleanFile;
   }
 
   /**
@@ -175,6 +181,12 @@
     var raw = String(pathOrFilename || fallbackLocalPath || '').trim();
     if (!raw) return '';
 
+    // Direct match: if already an absolute https URL pointing to our own Supabase storage host, return unchanged
+    var supabaseStoragePrefix = (SUPABASE_URL || '').replace(/\/+$/, '') + '/storage/v1/object/public/';
+    if (typeof raw === 'string' && raw.indexOf(supabaseStoragePrefix) === 0) {
+      return raw;
+    }
+
     // Accept only web URLs; data:, javascript:, and protocol-relative URLs are not image sources.
     if (/^https?:\/\//i.test(raw)) {
       try {
@@ -187,11 +199,15 @@
     if (/^(?:[a-z][a-z0-9+.-]*:|\/\/)/i.test(raw)) return '';
 
     if (isConfigured()) {
+      var effectiveBucket = bucket;
+      if (effectiveBucket === 'students') {
+        effectiveBucket = (SUPABASE_BUCKETS && SUPABASE_BUCKETS.students) ? SUPABASE_BUCKETS.students : 'photo';
+      }
       var filePath = raw;
-      if (bucket === 'photo' && !filePath.startsWith('students/')) {
+      if ((effectiveBucket === 'photo' || bucket === 'students') && !filePath.startsWith('students/')) {
         filePath = 'students/' + filePath;
       }
-      return getSupabasePublicUrl(bucket, filePath);
+      return getSupabasePublicUrl(effectiveBucket, filePath);
     }
 
     // Instantly return local asset path for 0ms latency with zero network 404 delays
