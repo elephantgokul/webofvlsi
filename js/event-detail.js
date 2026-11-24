@@ -1,7 +1,8 @@
 (function (window, document) {
   'use strict';
 
-  var eventList = Array.isArray(window.EVENTS_CONDUCTED) ? window.EVENTS_CONDUCTED : [];
+  var eventList = (Array.isArray(window.EVENTS_CONDUCTED) ? window.EVENTS_CONDUCTED : [])
+    .concat(Array.isArray(window.PARTICIPATED_EVENTS_ARCHIVE) ? window.PARTICIPATED_EVENTS_ARCHIVE : []);
   var categories = {
     workshops: 'Workshops',
     'technical-training': 'Technical Training',
@@ -9,7 +10,7 @@
     hackathons: 'Hackathons',
     'innovation-activities': 'Innovation Activities'
   };
-  var imagePathPattern = /^\.\.\/assets\/images\/events\/[a-z0-9-]+\/[a-z0-9._-]+\.(?:avif|jpe?g|png|webp)$/i;
+  var imagePathPattern = /^\.\.\/assets\/images\/(?:events\/[a-z0-9-]+\/|achievements\/)[a-z0-9._-]+\.(?:avif|jpe?g|png|webp)$/i;
   var currentPhotos = [];
   var currentPhotoIndex = 0;
   var transitionTimer = 0;

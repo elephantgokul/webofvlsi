@@ -181,7 +181,15 @@
       {
         "src": "../assets/images/achievements/lost_silicon.jpg",
         "alt": "THE LOST SILICON challenge event"
+      },
+      {
+        "src": "../assets/images/achievements/lost-silicon-quiz.jpeg",
+        "alt": "THE LOST SILICON VLSI Technical Quiz & Debugging Challenge"
       }
+    ],
+    "gallery": [
+      "../assets/images/achievements/lost_silicon.jpg",
+      "../assets/images/achievements/lost-silicon-quiz.jpeg"
     ],
     "poster_url": "../assets/images/achievements/lost_silicon.jpg"
   },
@@ -390,6 +398,54 @@
   // Archive of Participated Events (external hackathons, symposiums, certifications)
   var PARTICIPATED_EVENTS_ARCHIVE = [
   {
+    "id": "nptel-certification-2026",
+    "title": "NPTEL Certification 2026",
+    "event_type": "Participated",
+    "category": "academic",
+    "cat": "academic",
+    "dateLabel": "25.10.2026",
+    "event_date": "2026-10-25",
+    "day": "25",
+    "month": "OCT",
+    "year": "2026",
+    "academicYear": "2026–2027",
+    "duration": "One Day",
+    "venue": "Multiple exam centres in Coimbatore",
+    "theme": "AI in Drones & TCAD",
+    "description": "Students from the Department of EE-VLSI Design and Technology, Sri Shakthi Institute of Engineering and Technology, cleared the NPTEL national certification examinations held on 25 October 2026 in TCAD and \"AI driven Perception, Learning and Mapping for Drones\", with several students earning Elite, Silver and Gold certificates.",
+    "highlights": [
+      "NPTEL national certification examinations cleared on 25 October 2026 across multiple Coimbatore centres.",
+      "AI driven Perception, Learning and Mapping for Drones: Elite + Gold (Varsha V R - 91%), Elite + Silver (Subhashini N - 87%), and 5 Elite honours.",
+      "TCAD: Mohamed Jaim successfully passed with 55%.",
+      "12 third-year VLSI Design and Technology students successfully certified."
+    ],
+    "outcomes": [
+      "Demonstrated outstanding technical proficiency in autonomous drone perception, computer vision algorithms, and TCAD semiconductor device physics."
+    ],
+    "students": 12,
+    "staff": 0,
+    "photos": [
+      {
+        "src": "../assets/images/achievements/nptel-drones-elite-scorers.jpeg",
+        "alt": "NPTEL AI driven Perception, Learning and Mapping for Drones - Elite, Silver and Gold Scorers"
+      },
+      {
+        "src": "../assets/images/achievements/nptel-drones-participants.jpeg",
+        "alt": "NPTEL AI driven Perception, Learning and Mapping for Drones - Successful Participants"
+      },
+      {
+        "src": "../assets/images/achievements/nptel-tcad-mohamed-jaim.jpeg",
+        "alt": "NPTEL TCAD Certification - Mohamed Jaim"
+      }
+    ],
+    "gallery": [
+      "../assets/images/achievements/nptel-drones-elite-scorers.jpeg",
+      "../assets/images/achievements/nptel-drones-participants.jpeg",
+      "../assets/images/achievements/nptel-tcad-mohamed-jaim.jpeg"
+    ],
+    "poster_url": "../assets/images/achievements/nptel-drones-elite-scorers.jpeg"
+  },
+  {
     "id": "matlab-workshop",
     "title": "MATLAB Workshop",
     "event_type": "Participated",
@@ -449,11 +505,19 @@
     "staff": 0,
     "photos": [
       {
-        "src": "../assets/images/achievements/neuromorphic-winners.jpg",
-        "alt": "Students at the Neuromorphic VLSI Outreach Workshop, Adishia College of Engineering, Kerala"
+        "src": "../assets/images/achievements/neuromorphic-ieee-neuro26.jpeg",
+        "alt": "Four VLSI students at the IEEE NEURO '26 backdrop, Neuromorphic VLSI Outreach Workshop"
+      },
+      {
+        "src": "../assets/images/achievements/neuromorphic_varsha.jpg",
+        "alt": "Varsha VR at the Neuromorphic VLSI Outreach Workshop"
       }
     ],
-    "poster_url": "../assets/images/achievements/neuromorphic-winners.jpg"
+    "gallery": [
+      "../assets/images/achievements/neuromorphic-ieee-neuro26.jpeg",
+      "../assets/images/achievements/neuromorphic_varsha.jpg"
+    ],
+    "poster_url": "../assets/images/achievements/neuromorphic-ieee-neuro26.jpeg"
   },
   {
     "id": "quantum-pro-26",
@@ -483,40 +547,6 @@
     "staff": 0,
     "photos": [],
     "poster_url": ""
-  },
-  {
-    "id": "nptel-vlsi-interconnects",
-    "title": "NPTEL Examination: VLSI Interconnects",
-    "event_type": "Participated",
-    "category": "academic",
-    "cat": "academic",
-    "dateLabel": "20.09.2026",
-    "event_date": "2026-09-20",
-    "day": "20",
-    "month": "SEP",
-    "year": "2026",
-    "academicYear": "2026–2027",
-    "duration": "One Day",
-    "venue": "KPR Institute of Engineering and Technology, Coimbatore",
-    "theme": "On-Chip Interconnects & Parasitics",
-    "description": "18 third and second-year VLSI students appeared for the national NPTEL certification exam on VLSI Interconnects. Three students earned Elite distinction: Nithikkanannan J S, Sakthishree D, and Harish R.",
-    "highlights": [
-      "National NPTEL examination on VLSI Interconnects and parasitic modeling.",
-      "18 EE-VDT students from III & II year participated.",
-      "Elite NPTEL Achievers: Nithikkanannan J S, Sakthishree D, Harish R."
-    ],
-    "outcomes": [
-      "Demonstrated academic rigor with multiple Elite honours in advanced interconnect physics and parasitic extraction."
-    ],
-    "students": 18,
-    "staff": 0,
-    "photos": [
-      {
-        "src": "../assets/images/achievements/nptel_elite.jpg",
-        "alt": "Elite NPTEL achievers from VLSI department"
-      }
-    ],
-    "poster_url": "../assets/images/achievements/nptel_elite.jpg"
   },
   {
     "id": "semicon-india-2026",
@@ -642,8 +672,16 @@
     ],
     "students": 10,
     "staff": 0,
-    "photos": [],
-    "poster_url": ""
+    "photos": [
+      {
+        "src": "../assets/images/achievements/iit-tirupati.jpeg",
+        "alt": "Five SIET VLSI students in front of the IIT Tirupati gate"
+      }
+    ],
+    "gallery": [
+      "../assets/images/achievements/iit-tirupati.jpeg"
+    ],
+    "poster_url": "../assets/images/achievements/iit-tirupati.jpeg"
   },
   {
     "id": "iit-riscv-participation",
@@ -712,7 +750,7 @@
   }
 ];
 
-  window.EVENTS_DATA = CONDUCTED_EVENTS;
+  window.EVENTS_DATA = CONDUCTED_EVENTS.concat(PARTICIPATED_EVENTS_ARCHIVE);
   window.EVENTS_CONDUCTED = CONDUCTED_EVENTS;
   window.PARTICIPATED_EVENTS_ARCHIVE = PARTICIPATED_EVENTS_ARCHIVE;
 

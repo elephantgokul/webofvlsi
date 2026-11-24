@@ -142,13 +142,13 @@
     if (!dialog) return;
 
     if (typeof dialog.close === 'function') {
-      try { dialog.close(); } catch (err) {}
+      try { dialog.close(); } catch (err) { }
     }
     dialog.removeAttribute('open');
     document.body.classList.remove('dept-modal-open');
 
     if (lastFocusedElement && typeof lastFocusedElement.focus === 'function') {
-      try { lastFocusedElement.focus(); } catch (err) {}
+      try { lastFocusedElement.focus(); } catch (err) { }
     }
   }
 
@@ -280,6 +280,24 @@
     var venue = escapeHtml(eventData.venue || 'SIET Campus');
     var coordinator = escapeHtml(eventData.coordinator || 'Department Faculty');
     var description = eventData.descriptionHtml || ('<p class="dept-modal-text">' + escapeHtml(eventData.description || '') + '</p>');
+    var eventImages = Array.isArray(eventData.photos)
+      ? eventData.photos.map(function (p) { return typeof p === 'string' ? p : (p && p.src ? p.src : ''); }).filter(Boolean)
+      : (Array.isArray(eventData.gallery)
+        ? eventData.gallery.filter(Boolean)
+        : (eventData.image ? [String(eventData.image)] : []));
+
+    var mediaBlock = '';
+    if (eventImages.length > 1) {
+      mediaBlock = [
+        '<div class="dept-modal-event-media grid grid-cols-1 sm:grid-cols-2 gap-2 mt-4 p-2 bg-slate-50 rounded-xl border border-slate-200/60">',
+        eventImages.map(function (src) {
+          return '  <div class="overflow-hidden rounded-lg bg-slate-100 max-h-56"><img src="' + escapeHtml(src) + '" alt="' + title + '" class="w-full h-full object-cover" style="max-height:220px;object-fit:cover;" onerror="this.parentNode.style.display=\'none\';"></div>';
+        }).join('\n'),
+        '</div>'
+      ].join('\n');
+    } else if (eventImages.length === 1) {
+      mediaBlock = '<div class="dept-modal-event-media mt-4 overflow-hidden rounded-xl border border-slate-200/60 max-h-64"><img src="' + escapeHtml(eventImages[0]) + '" alt="' + title + '" class="w-full h-full object-cover" style="max-height:260px;object-fit:cover;" onerror="this.parentNode.style.display=\'none\';"></div>';
+    }
 
     var bodyHtml = [
       '<div class="dept-modal-event-header">',
@@ -290,6 +308,7 @@
       '    <div class="dept-modal-meta-item"><i class="fa-solid fa-user-check"></i> <span><strong>Coordinator:</strong> ' + coordinator + '</span></div>',
       '  </div>',
       '</div>',
+      mediaBlock,
       '<div class="dept-modal-section mt-6">',
       '  <h3 class="dept-modal-section-title"><i class="fa-solid fa-circle-info"></i> Event Overview & Schedule</h3>',
       '  ' + description,
@@ -346,11 +365,31 @@
     var fullDescription = data.descriptionHtml || ('<p class="dept-modal-text">' + escapeHtml(data.description || '') + '</p>');
     var participantsHtml = data.participantsHtml || '';
 
-    var imageBlock = imageSrc ? [
-      '<div class="dept-modal-achievement-media">',
-      '  <img src="' + escapeHtml(imageSrc) + '" alt="' + title + '" class="dept-modal-achievement-img" style="object-fit:contain;" onerror="this.parentNode.style.display=\'none\';">',
-      '</div>'
-    ].join('\n') : '';
+    var achImages = Array.isArray(data.images)
+      ? data.images.filter(Boolean)
+      : (Array.isArray(data.gallery)
+        ? data.gallery.filter(Boolean)
+        : (imageSrc ? [imageSrc] : []));
+
+    var imageBlock = '';
+    if (achImages.length > 1) {
+      var gridCols = achImages.length >= 3 ? 'grid-cols-1 md:grid-cols-3' : 'grid-cols-1 sm:grid-cols-2';
+      imageBlock = [
+        '<div class="dept-modal-achievement-media grid ' + gridCols + ' gap-3 p-2 bg-slate-50 rounded-xl">',
+        achImages.map(function(item) {
+          var src = typeof item === 'string' ? item : (item && item.src ? item.src : '');
+          var alt = typeof item === 'object' && item && item.alt ? item.alt : title;
+          return '  <div class="overflow-hidden rounded-lg bg-slate-100 flex items-center justify-center p-1"><img src="' + escapeHtml(src) + '" alt="' + escapeHtml(alt) + '" class="dept-modal-achievement-img w-full h-full object-contain" style="max-height:380px;object-fit:contain;" onerror="this.parentNode.style.display=\'none\';"></div>';
+        }).join('\n'),
+        '</div>'
+      ].join('\n');
+    } else if (imageSrc) {
+      imageBlock = [
+        '<div class="dept-modal-achievement-media">',
+        '  <img src="' + escapeHtml(imageSrc) + '" alt="' + title + '" class="dept-modal-achievement-img" style="object-fit:contain;" onerror="this.parentNode.style.display=\'none\';">',
+        '</div>'
+      ].join('\n');
+    }
 
     var bodyHtml = [
       imageBlock,
@@ -360,6 +399,7 @@
       '    <div class="dept-modal-meta-item"><i class="fa-solid fa-trophy"></i> <span><strong>Category:</strong> ' + category + '</span></div>',
       '    <div class="dept-modal-meta-item"><i class="fa-solid fa-calendar-day"></i> <span><strong>Date:</strong> ' + date + '</span></div>',
       venue ? ('    <div class="dept-modal-meta-item"><i class="fa-solid fa-location-dot"></i> <span><strong>Venue:</strong> ' + venue + '</span></div>') : '',
+      data.examCentres ? ('    <div class="dept-modal-meta-item"><i class="fa-solid fa-building-columns"></i> <span><strong>Exam Centres:</strong> ' + escapeHtml(data.examCentres) + '</span></div>') : '',
       '  </div>',
       '  <div class="dept-modal-section mt-5">',
       '    <h3 class="dept-modal-section-title"><i class="fa-solid fa-align-left"></i> Full Description & Highlights</h3>',

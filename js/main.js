@@ -210,32 +210,6 @@ window.safeUrl = safeUrl;
   };
 })();
 
-/* ---- PWA Install Prompt ---- */
-(function pwaInstall() {
-  var deferredPrompt;
-  window.addEventListener('beforeinstallprompt', function(e) {
-    e.preventDefault();
-    deferredPrompt = e;
-    var banner = document.createElement('div');
-    banner.id = 'install-banner';
-    banner.innerHTML = [
-      '<div style="display:flex;align-items:center;gap:1rem;padding:.85rem 1.25rem;background:linear-gradient(135deg,#1652c4,#2fe6dd);color:#fff;border-radius:1rem;box-shadow:0 8px 32px rgba(22,82,196,.3);font-family:\'IBM Plex Sans\',sans-serif;font-size:.85rem">',
-        '<i class="fa-solid fa-mobile-screen-button" style="font-size:1.2rem"></i>',
-        '<span>Add VLSI Portal to your home screen for quick access</span>',
-        '<button id="install-yes" style="margin-left:auto;background:rgba(255,255,255,.2);border:none;color:#fff;padding:.4rem 1rem;border-radius:.6rem;cursor:pointer;font-weight:600;white-space:nowrap">Install</button>',
-        '<button id="install-no" style="background:none;border:none;color:rgba(255,255,255,.7);cursor:pointer;font-size:1rem;margin-left:.25rem">&times;</button>',
-      '</div>'
-    ].join('');
-    Object.assign(banner.style, { position:'fixed', bottom:'1.5rem', left:'50%', transform:'translateX(-50%)', zIndex:'8000', width:'calc(100% - 2rem)', maxWidth:'560px' });
-    document.body.appendChild(banner);
-    document.getElementById('install-yes').addEventListener('click', function() {
-      deferredPrompt.prompt();
-      deferredPrompt.userChoice.then(function(){ banner.remove(); deferredPrompt = null; });
-    });
-    document.getElementById('install-no').addEventListener('click', function() { banner.remove(); });
-  });
-})();
-
 /* ---- AOS & Animation Safety Net ----------------------------------------- */
 window.addEventListener("load", function () {
   if (typeof AOS === "undefined") {
